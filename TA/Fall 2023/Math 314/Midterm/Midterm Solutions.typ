@@ -1,6 +1,7 @@
-#import "generic.typ": generic
-#import "question.typ": question_heading
+#import "../../../../Templates/generic.typ": generic
+#import "../../../../Templates/question.typ": question_heading
 #import "@preview/metro:0.1.0": unit, units, prefixes
+#import "@preview/cetz:0.1.2"
 #import units: gram, metre, second
 #import prefixes: kilo, centi
 #show: doc => generic(title: "Midterm Solutions", name: "Jacob Reznikov", question_heading(doc))
@@ -44,9 +45,6 @@ $
 30 unit(kilo gram / s)
 $
 giving us $(diff m)/(diff t) = -6 unit(kilo gram / s)$
-
-
-#pagebreak(weak: true)
 = Question 2
 == Statement
 Consider the region $R = { (x, y) | x^2 + y^2 <= 1 }$. For which of the following functions is the point (0.8, 0.6) an absolute maximum over $R$?
@@ -159,7 +157,34 @@ and so $a$ is the right answer.
 
 = Question 5
 == Statement
-Find the dimensions of a rectangular tile with maximal area subject to the constraint that the total perimeter of the tile is $64 unit(centi metre^2)$. Please show all your work. (Hint: set this question up as a Lagrange multiper problem).
+Find the dimensions of a rectangular tile with maximal area subject to the constraint that the total perimeter of the tile is $64 unit(centi metre)$. Please show all your work. (Hint: set this question up as a Lagrange multiper problem).
 == Solution
-We 
+Let us consider a rectangular tile with side lengths $x thin unit(centi metre)$ and $y thin unit(centi metre)$.  It is clear that the area is given by $x y$ and the perimeter is given by $2x + 2y$. We thus want to maximize $x y$ subject to the constraint that $2x + 2y = 64 unit(centi metre)$. To that end we find the gradient of this constraint, it is clearly given by $(2x,2y)$. The gradient of the function we are trying to optimize is $(y,x)$ we then want
+$
+  (y,x) = lambda (2x,2y) 
+$
+for some $lambda$. We also have the equation $2x + 2y = 64 unit(centi metre)$ and so we can deduce 
+$
+  32 unit(centi metre) = y + x = lambda (2x + 2y) = lambda 64 unit(centi metre)
+$
+and so we must have $lambda = 1/2$ and so we must have $x = y$. Under the constraint $2x + 2y = 64 unit(centi metre)$ we get $x = y = 16 unit(centi metre)$ which has maximimal area $256 unit(centi metre^2)$
+
+= Question 6
+== Statement
+Let $E$ be the region between the surfaces
+$S_1 = { (x,y,z) in RR^3, z = 3 - x^2 - y^2 }$ and $S_2 = { (x,y,z) in RR^3, z = 2x^2 + 2y^2 }$. Sketch the region $E$ and compute its volume. Please show all your work.
+== Solution
+First we need to sketch the surface, we notice immediately that $S_1$ is a downward pointing paraboloid and $S_2$ is an upward pointing paraboloid, and that both are centered on the $z$ axis. Their intersection is given by the set of points where 
+$
+  3 - x^2 - y^2 = 2x^2 + 2y^2 ==> 1 = x^2 + y^2
+$
+and so is a circle. We can thus try and sketch this region. We should get something like this
+#align(center)[#image("../../../../Storage/Paraboloid intersection.png", width: 80%)]
+From this sketch we can easily see that to get the volume we want to integrate the difference between the heights of the two paraboloids over the circle $x^2 + y^2 <= 1$.
+The top paraboloid in polar coordinates is given by $z = 3 - r^2$ and the bottom one is given by $2r^2$. We thus get that the difference is $3 - 3r^2$. Thus our volume is 
+$
+V = integral_0^(2 pi) integral_0^1 (3 - 3r^2) r dif r dif theta
+= integral_0^(2 pi) 3/2 - 3/4 dif theta
+= 3/2 pi
+$
 
