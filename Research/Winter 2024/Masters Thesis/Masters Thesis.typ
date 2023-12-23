@@ -30,7 +30,10 @@
 
 #pagebreak(weak:true)
 = Abstract
-The main 
+This thesis aims to loosly cover the subject of geometric flows, and more specifically a variant of the mean curvature flow.
+The subject of geometric flows uses results in PDE theory theory, more specifically parabolic PDEs, to gain new insight about Riemannian geometry. 
+One of the biggest problems often tackled by mean curvature flows is the Isoperimetric problem. The Isoperimetric problem asks us to classify the spaces that minimize perimeter for a given volume (hence the name) 
+
 
 #pagebreak(weak:true)
 = Acknowledgements
@@ -49,4 +52,7 @@ This thesis covers mean
 #pagebreak(weak: true)
 = Review of Literature
 The field of Geometric Analysis is one vast with techniques and ideas to solve the hardest of problems relating geometric spaces and Partial Differential Equations (PDEs).
-One of the most influencial techniques of the last couple of decades has been that of the geometric flow
+One of the most influencial techniques of the last couple of decades has been that of the geometric flow, 
+
+#pagebreak(weak: true)
+#bibliography("Thesis.bib")

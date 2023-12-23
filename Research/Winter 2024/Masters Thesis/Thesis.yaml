@@ -1,0 +1,67 @@
+---
+references:
+- id: guanMeanCurvatureType2013a
+  abstract: >-
+    In this article, we introduce a new type of mean curvature flow for bounded
+    star-shaped domains in space forms and prove its longtime existence,
+    exponential convergence without any curvature assumption. Along this flow,
+    the enclosed volume is a constant and the surface area evolves
+    monotonically. Moreover, for a bounded convex domain in R n+1, the
+    quermassintegrals evolve monotonically along the flow which allows us to
+    prove a class of Alexandrov-Fenchel inequalities of quermassintegrals.
+  accessed:
+    - year: 2023
+      month: 12
+      day: 21
+  author:
+    - family: Guan
+      given: Pengfei
+    - family: Li
+      given: Junfang
+  citation-key: guanMeanCurvatureType2013a
+  DOI: 10.48550/arXiv.1309.5099
+  issued:
+    - year: 2013
+      month: 9
+      day: 19
+  number: arXiv:1309.5099
+  publisher: arXiv
+  source: arXiv.org
+  title: A mean curvature type flow in space forms
+  type: article
+  URL: http://arxiv.org/abs/1309.5099
+
+- id: guanVolumePreservingFlow2018
+  abstract: >-
+    In this article, we continue the work in [7] and study a normalized
+    hypersurface ﬂow in the more general ambient setting of warped product
+    spaces. This ﬂow preserves the volume of the bounded domain enclosed by a
+    graphical hypersurface, and monotonically decreases the hypersurface area.
+    As an application, the isoperimetric problem in warped product spaces is
+    solved for such domains.
+  accessed:
+    - year: 2023
+      month: 2
+      day: 18
+  author:
+    - family: Guan
+      given: Pengfei
+    - family: Li
+      given: Junfang
+    - family: Wang
+      given: Mu-Tao
+  citation-key: guanVolumePreservingFlow2018
+  issued:
+    - year: 2018
+      month: 7
+      day: 16
+  language: en
+  number: arXiv:1609.08238
+  publisher: arXiv
+  source: arXiv.org
+  title: >-
+    A volume preserving flow and the isoperimetric problem in warped product
+    spaces
+  type: article
+  URL: http://arxiv.org/abs/1609.08238
+...
