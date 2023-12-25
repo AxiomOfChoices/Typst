@@ -56,12 +56,18 @@ The body of the thesis is largely taken from the paper co-authored by myself and
 #pagebreak(weak:true)
 = Introduction
 == Background on the Isoperimetric Problem
+
+The Isoperimetric Problem asks a seemingly simple question:\ Among all regions occupying a given volume which has the least perimeter?
+
+In the simple case of 2 and 3 dimensions we all know that the answer is a circle and a sphere respectively, and when we extend it to $n$ dimensions in Euclidean space, the answer remains the $n-1$ dimensional hypersphere. However, if we try to generalize this question to a larger domain the answer very quickly becomes intractable. 
+
+One of the ways to answer such a question is with the method of geometric flows, we will start with a shape which will likely not be optimal, and then we will morph it over time to make it optimal. 
+
+
+== Concepts and notation
 This document assumes general knowledge of differential and Riemannian geometry, see #cite(<leeIntroductionSmoothManifolds2012>) and #cite(<leeIntroductionRiemannianManifolds2018>) for great introductions, respectively.
 
 For the rest of this document we will use the following notation, $N$ is an $n+1$ dimensional Riemannian manifold with metric $ov(g)$ within which we have a compact domain $Omega$ with boundary $diff Omega = M$ such that $F : M -> N$ is an embedding making $M$ a Riemannian hypersurface. We then set $g := F^* ov(g)$ to be the induced metric on $M$. We will in general identify $M$ with its image $F(M)$ and use the two interchangeably.
-
-The Isoperimetric
-
 #pagebreak(weak: true)
 
 #bibliography("Thesis.bib")
