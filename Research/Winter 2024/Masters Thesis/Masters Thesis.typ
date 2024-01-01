@@ -52,8 +52,6 @@ Finally I would like to thank my family, and especially my mom, for always being
 This thesis and each chapter within was written solely by myself, with occasional assistance from colleagues regarding phrasing. 
 The body of the thesis is largely taken from the paper co-authored by myself and Joshua Flynn.
 
-S
-
 #show: chapter_headings
 #pagebreak(weak:true)
 = Introduction
