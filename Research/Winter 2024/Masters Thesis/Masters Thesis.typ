@@ -24,6 +24,8 @@
 #let ve = $epsilon$
 #let seq = $subset.eq$
 #let ov(el) = $overline(g)$
+#let Area = math.op("Area")
+#let Volume = math.op("Volume")
 
 #show: outline_style
 
@@ -50,7 +52,7 @@ Finally I would like to thank my family, and especially my mom, for always being
 This thesis and each chapter within was written solely by myself, with occasional assistance from colleagues regarding phrasing. 
 The body of the thesis is largely taken from the paper co-authored by myself and Joshua Flynn.
 
-
+S
 
 #show: chapter_headings
 #pagebreak(weak:true)
@@ -67,7 +69,29 @@ One of the ways to answer such a question is with the method of geometric flows,
 == Concepts and notation
 This document assumes general knowledge of differential and Riemannian geometry, see #cite(<leeIntroductionSmoothManifolds2012>) and #cite(<leeIntroductionRiemannianManifolds2018>) for great introductions, respectively.
 
-For the rest of this document we will use the following notation, $N$ is an $n+1$ dimensional Riemannian manifold with metric $ov(g)$ within which we have a compact domain $Omega$ with boundary $diff Omega = M$ such that $F : M -> N$ is an embedding making $M$ a Riemannian hypersurface. We then set $g := F^* ov(g)$ to be the induced metric on $M$. We will in general identify $M$ with its image $F(M)$ and use the two interchangeably.
+For the rest of this document we will use the following notation, $N$ is an $n+1$ dimensional Riemannian manifold with metric $ov(g)$ within which we have a compact domain $Omega$ with boundary $diff Omega = M$ such that $F : M -> N$ is an embedding making $M$ a Riemannian hypersurface. We then set $g := F^* ov(g)$ to be the induced metric on $M$. We will in general identify $M$ with its image $F(M)$ and use the two interchangeably. We will call $frak(X)(N)$ the set of surfaces that can be defined as above.
+
+The Riemannian metric $ov(g)$ defines with it a Riemannian volume form which we will call $dif V$, this form can be restricted to $Omega$ to give and allow us to define 
+$
+  Volume(Omega) = integral_Omega dif V,
+$
+we will often write $Volume(M)$ as our $Omega$ can be determined uniquely an orientation on $M$ (more on that later). Similarly the metric $g$ defines a volume form on $M$ which we will call $dif S$, using which we define 
+$
+  Area(M) = integral_M dif S.
+$
+We can now define the Isoperimetric profile of $N$ to be the function 
+$
+  I(v) := inf { Area(M) : M in frak(X)(N) "and" Volume(M) = v},
+$
+The Isoperimetric Problem now asks us to 
++ Show there exist elements $M in frak(X)(N)$ that attain the infimum above.
++ Characterize these elements.
+
+We will now start to build up the concepts that allow us to solve this problem.
+
+=== Extrinsic Riemannian geometry
+
+
 #pagebreak(weak: true)
 
 #bibliography("Thesis.bib")
