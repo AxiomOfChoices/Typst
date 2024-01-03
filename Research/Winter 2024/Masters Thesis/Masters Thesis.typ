@@ -22,6 +22,7 @@
   doc)
 #show: thmrules
 #let ve = $epsilon$
+#let ip(x,y) = $lr(angle.l #x, #y angle.r)$
 #let seq = $subset.eq$
 #let ov(el) = $overline(g)$
 #let Area = math.op("Area")
@@ -65,9 +66,11 @@ One of the ways to answer such a question is with the method of geometric flows,
 
 
 == Concepts and notation
-This document assumes general knowledge of differential and Riemannian geometry, see #cite(<leeIntroductionSmoothManifolds2012>) and #cite(<leeIntroductionRiemannianManifolds2018>) for great introductions, respectively.
+This document assumes general knowledge of differential and Riemannian geometry, see @leeIntroductionSmoothManifolds2012 and @leeIntroductionRiemannianManifolds2018b for great introductions, respectively.
 
 For the rest of this document we will use the following notation, $N$ is an $n+1$ dimensional Riemannian manifold with metric $ov(g)$ within which we have a compact domain $Omega$ with boundary $diff Omega = M$ such that $F : M -> N$ is an embedding making $M$ a Riemannian hypersurface. We then set $g := F^* ov(g)$ to be the induced metric on $M$. We will in general identify $M$ with its image $F(M)$ and use the two interchangeably. We will call $frak(X)(N)$ the set of surfaces that can be defined as above.
+
+We can use the Riemannian metric $ov(g)$ to take inner products of tangent vectors in the same tangent space $T_p N$, for tangent vectors $X,Y in T_p N$ we will write this as $ip(X,Y)$. Since the metric $g$ is just the restriction of $ov(g)$ onto $T_p M$ when we think of it as a subspace of $T_p N$, because of this we will use the same notation $ip(X,Y)$ for $X,Y in T_p M$.
 
 The Riemannian metric $ov(g)$ defines with it a Riemannian volume form which we will call $dif V$, this form can be restricted to $Omega$ to give and allow us to define 
 $
@@ -88,8 +91,27 @@ The Isoperimetric Problem now asks us to
 We will now start to build up the concepts that allow us to solve this problem.
 
 === Extrinsic Riemannian geometry
+We will almost always be working in orthonormal coordinates on $M$, that is, at any point $p$ there are coordinates $x^1,...,x^n$ such that the vector fields 
+$
+  e_i = diff/(diff x^i)
+$
+form an orthonormal basis _at the point $p$_, we cannot, in general, assume that they form an orthonormal basis in any neighborhood of $p$.
+
+Recall that since $M$ is the boundary of a manifold it must be orientable,
+it thus has a canonical 'outward' pointing unit normal vector field, which we will call $nu$.
+Then we define the second fundamental form $h$ to be the bilinear form given by 
+$
+   h(X,Y) = ip(X, ov(nabla)_Y nu).
+$
+This second fundamental form encodes within itself how the manifold $M$ lies inside $N$, it also carries with it a number of useful properties, the most important of which is that it is symmetric, see @leeIntroductionRiemannianManifolds2018b[p.~227] for details.
+
+More concretely, in the orthonormal coordinates above the fundamental form takes 
+
 
 
 #pagebreak(weak: true)
 
 #bibliography("Thesis.bib")
+
+
+
