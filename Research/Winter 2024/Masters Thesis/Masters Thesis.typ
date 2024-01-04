@@ -111,14 +111,14 @@ Let us write up some properties of the second fundamental form.
 #proposition[
 Let $e_i$ be an orthonormal frame at $p$, the following are true:
 #block(width: 100%, inset: (x: 2em))[
-  + $h$ can be written in coordinates as $h_(i j) = ip(e_i, ov(nabla)_(e_j) nu)$. <prop:h_coords>
-  + $ov(nabla)_i nu = h_(i j) e_j$. <prop:h_applied>
-  + $ov(nabla)_i e_j = - h_(i j) nu$. <prop:h_neg>
-  + If $f$ is a function $N -> RR$, then $ov(Delta) f = Delta f + Hess_f (nu,nu) + H nu(f)$ <prop:h_laplac>
+  + $h$ can be written in coordinates as $h_(i j) = ip(e_i, ov(nabla)_(e_j) nu)$. <prop-h_coords>
+  + $ov(nabla)_i nu = h_(i j) e_j$. <prop-h_applied>
+  + $ov(nabla)_i e_j = - h_(i j) nu$. <prop-h_neg>
+  + If $f$ is a function $N -> RR$, then $ov(Delta) f = Delta f + Hess_f (nu,nu) + H nu(f)$ <prop-h_laplac>
   ]
 ]
 #proof[
-#link(<prop:h_coords>)[(a)] is directly from definition, to see #link(<prop:h_applied>)[(b)] note that ${ e_1, ..., e_n } union { nu }$ form a basis for the tangent space $T_p M$ and thus we have 
+#link(<prop-h_coords>)[(a)] is directly from definition, to see #link(<prop-h_applied>)[(b)] note that ${ e_1, ..., e_n } union { nu }$ form a basis for the tangent space $T_p M$ and thus we have 
 $
   nabla_i nu = a^j e_j + b nu 
 $
@@ -132,7 +132,7 @@ $
 $
 proving the claim.
 
-Now for #link(<prop:h_neg>)[(c)] we note first that $nabla_X Y = ( ov(nabla)_Y X)^top$ for $X,Y in T_p M$, see, for instance, @jostRiemannianGeometryGeometric2011[p.~223]. This will mean that since $e_i$ are orthonormal then 
+Now for #link(<prop-h_neg>)[(c)] we note first that $nabla_X Y = ( ov(nabla)_Y X)^top$ for $X,Y in T_p M$, see, for instance, @jostRiemannianGeometryGeometric2011[p.~223]. This will mean that since $e_i$ are orthonormal then 
 $
   (ov(nabla)_i e_j)^top = nabla_i e_j = 0
 $
@@ -145,12 +145,13 @@ $
 $
 which proves the claim.
 
-Finally we have for #link(<prop:h_laplac>)[(d)], we have
+Finally for #link(<prop-h_laplac>)[(d)], we have
 $
   ov(Delta) f 
   & = ip(ov(nabla)_i ov(nabla) f, e_i) + ip(ov(nabla)_nu ov(nabla), nu)
   = ov(nabla)_i ip(ov(nabla) f, e_i) - ip(ov(nabla) f, ov(nabla)_i e_i) + ip(ov(nabla)_nu ov(nabla), nu)
   \ & = nabla_i ip(nabla f, e_i) - ip(ov(nabla) f, -H nu) + ip(ov(nabla)_nu ov(nabla), nu)
+  \ & = Delta f + H nu(f)  + ip(ov(nabla)_nu ov(nabla), nu)
 $
 ]
 
