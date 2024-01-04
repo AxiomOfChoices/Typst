@@ -24,10 +24,10 @@
 #let ve = $epsilon$
 #let ip(x,y) = $lr(angle.l #x, #y angle.r)$
 #let seq = $subset.eq$
-#let ov(el) = $overline(g)$
+#let ov(el) = $overline(#el)$
 #let Area = math.op("Area")
 #let Volume = math.op("Volume")
-
+#let Hess = math.op("Hess")
 #show: outline_style
 
 
@@ -66,9 +66,11 @@ One of the ways to answer such a question is with the method of geometric flows,
 
 
 == Concepts and notation
-This document assumes general knowledge of differential and Riemannian geometry, see @leeIntroductionSmoothManifolds2012 and @leeIntroductionRiemannianManifolds2018b for great introductions, respectively.
+This document assumes general knowledge of differential and Riemannian geometry, see @leeIntroductionSmoothManifolds2012 and @leeIntroductionRiemannianManifolds2018a for great introductions, respectively.
 
 For the rest of this document we will use the following notation, $N$ is an $n+1$ dimensional Riemannian manifold with metric $ov(g)$ within which we have a compact domain $Omega$ with boundary $diff Omega = M$ such that $F : M -> N$ is an embedding making $M$ a Riemannian hypersurface. We then set $g := F^* ov(g)$ to be the induced metric on $M$. We will in general identify $M$ with its image $F(M)$ and use the two interchangeably. We will call $frak(X)(N)$ the set of surfaces that can be defined as above.
+
+In general, tensorial constructions defined on $N$ will be written with an overline and their versions on $M$ will be written normally. We will write the covariant derivatives on $M$ and $N$ as $nabla$ and $ov(nabla)$ respectively. We will write the laplacian on $N$ and $M$ as $Delta$ and $ov(Delta)$ respectively. We will use Einstein summation notation for all tensor equations.
 
 We can use the Riemannian metric $ov(g)$ to take inner products of tangent vectors in the same tangent space $T_p N$, for tangent vectors $X,Y in T_p N$ we will write this as $ip(X,Y)$. Since the metric $g$ is just the restriction of $ov(g)$ onto $T_p M$ when we think of it as a subspace of $T_p N$, because of this we will use the same notation $ip(X,Y)$ for $X,Y in T_p M$.
 
@@ -90,12 +92,12 @@ The Isoperimetric Problem now asks us to
 
 We will now start to build up the concepts that allow us to solve this problem.
 
-=== Extrinsic Riemannian geometry
+== Extrinsic Riemannian geometry
 We will almost always be working in orthonormal coordinates on $M$, that is, at any point $p$ there are coordinates $x^1,...,x^n$ such that the vector fields 
 $
   e_i = diff/(diff x^i)
 $
-form an orthonormal basis _at the point $p$_, we cannot, in general, assume that they form an orthonormal basis in any neighborhood of $p$.
+form an orthonormal basis _at the point $p$_, we cannot, in general, assume that they form an orthonormal basis in any neighborhood of $p$. We will also call $e_i$ an orthonormal frame at $p$.
 
 Recall that since $M$ is the boundary of a manifold it must be orientable,
 it thus has a canonical 'outward' pointing unit normal vector field, which we will call $nu$.
@@ -103,11 +105,54 @@ Then we define the second fundamental form $h$ to be the bilinear form given by
 $
    h(X,Y) = ip(X, ov(nabla)_Y nu).
 $
-This second fundamental form encodes within itself how the manifold $M$ lies inside $N$, it also carries with it a number of useful properties, the most important of which is that it is symmetric, see @leeIntroductionRiemannianManifolds2018b[p.~227] for details.
+This second fundamental form encodes within itself how the manifold $M$ lies inside $N$, it also carries with it a number of useful properties, the most important of which is that it is symmetric, see @leeIntroductionRiemannianManifolds2018a[p.~227] for details. Of much importance is the trace of this form, taken with respect to the metric $H = h_(i i)$ called the _mean curvature_.
 
-More concretely, in the orthonormal coordinates above the fundamental form takes 
+Let us write up some properties of the second fundamental form.
+#proposition[
+Let $e_i$ be an orthonormal frame at $p$, the following are true:
+#block(width: 100%, inset: (x: 2em))[
+  + $h$ can be written in coordinates as $h_(i j) = ip(e_i, ov(nabla)_(e_j) nu)$. <prop:h_coords>
+  + $ov(nabla)_i nu = h_(i j) e_j$. <prop:h_applied>
+  + $ov(nabla)_i e_j = - h_(i j) nu$. <prop:h_neg>
+  + If $f$ is a function $N -> RR$, then $ov(Delta) f = Delta f + Hess_f (nu,nu) + H nu(f)$ <prop:h_laplac>
+  ]
+]
+#proof[
+#link(<prop:h_coords>)[(a)] is directly from definition, to see #link(<prop:h_applied>)[(b)] note that ${ e_1, ..., e_n } union { nu }$ form a basis for the tangent space $T_p M$ and thus we have 
+$
+  nabla_i nu = a^j e_j + b nu 
+$
+for some coefficients $a^j,b in RR$. But now consider,
+$
+  0 = nabla_j ip(nu,nu) = 2 ip(nabla_j nu, nu) = 2 b
+$
+and so we have $b = 0$. We then get,
+$
+  a^j = ip(nabla_i nu, e_j) = h_(i j)
+$
+proving the claim.
 
+Now for #link(<prop:h_neg>)[(c)] we note first that $nabla_X Y = ( ov(nabla)_Y X)^top$ for $X,Y in T_p M$, see, for instance, @jostRiemannianGeometryGeometric2011[p.~223]. This will mean that since $e_i$ are orthonormal then 
+$
+  (ov(nabla)_i e_j)^top = nabla_i e_j = 0
+$
+for all $i,j$ and so $ov(nabla)_i e_j = b_(i j) nu$ for some matrix $b$ of coefficients. Now we have 
+$
+  0 
+  = ov(nabla)_i ip(e_j, nu) 
+  = ip(ov(nabla)_i e_j, nu) + ip(e_j, ov(nabla)_i nu) 
+  = b_(i j) + h_(i j)
+$
+which proves the claim.
 
+Finally we have for #link(<prop:h_laplac>)[(d)], we have
+$
+  ov(Delta) f 
+  & = ip(ov(nabla)_i ov(nabla) f, e_i) + ip(ov(nabla)_nu ov(nabla), nu)
+  = ov(nabla)_i ip(ov(nabla) f, e_i) - ip(ov(nabla) f, ov(nabla)_i e_i) + ip(ov(nabla)_nu ov(nabla), nu)
+  \ & = nabla_i ip(nabla f, e_i) - ip(ov(nabla) f, -H nu) + ip(ov(nabla)_nu ov(nabla), nu)
+$
+]
 
 #pagebreak(weak: true)
 

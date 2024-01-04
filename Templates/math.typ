@@ -9,9 +9,13 @@
   base: "theorem",
   titlefmt: strong
 )
-#let definition = thmbox("theorem", "Definition", base: "heading" , inset: (x: 1.2em))
+#let definition = thmbox("theorem", "Definition", base: "heading", inset: (x: 1.2em))
 
-#let proposition = thmplain("theorem", "Proposition", base: "heading")
+#let proposition = thmplain("theorem", "Proposition", base: "heading", inset: (x: 0em), bodyfmt: body => 
+[
+  #set enum(numbering: "(a)") 
+  #body
+])
 
 #let example = thmplain("example", "Example").with(numbering: none)
 #let proof = thmplain(
