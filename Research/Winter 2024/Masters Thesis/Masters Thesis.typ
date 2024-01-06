@@ -28,6 +28,9 @@
 #let Area = math.op("Area")
 #let Volume = math.op("Volume")
 #let Hess = math.op("Hess")
+#let Rm = math.op("Rm")
+#let lie = $cal(L)$
+#let Sym = math.op("Sym")
 #show: outline_style
 
 
@@ -147,13 +150,62 @@ which proves the claim.
 
 Finally for #link(<prop-h_laplac>)[(d)], we have
 $
-  ov(Delta) f 
+    ov(Delta) f 
   & = ip(ov(nabla)_i ov(nabla) f, e_i) + ip(ov(nabla)_nu ov(nabla), nu)
   = ov(nabla)_i ip(ov(nabla) f, e_i) - ip(ov(nabla) f, ov(nabla)_i e_i) + ip(ov(nabla)_nu ov(nabla), nu)
   \ & = nabla_i ip(nabla f, e_i) - ip(ov(nabla) f, -H nu) + ip(ov(nabla)_nu ov(nabla), nu)
-  \ & = Delta f + H nu(f)  + ip(ov(nabla)_nu ov(nabla), nu)
+  \ & = Delta f + H nu(f) + ip(ov(nabla)_nu ov(nabla), nu)
 $
 ]
+
+We will also need another well known geometric identity,
+#lemma("Codazzi Equation")[
+  We have for any $X,Y,Z in T_p M$ 
+  $
+    ov(Rm)(X,Y,Z,nu) = - (nabla h)(Z,X,Y) + (nabla h)(Z,Y,X)
+  $
+  in particular in coordinates we have 
+  $
+    ov(Rm)_(i j k nu) = - h_(k i; j) + h_(k j; i)
+  $
+]
+#proof[
+  See @leeIntroductionRiemannianManifolds2018a[p.~237],
+]
+
+A conformal vector field is a vector field $X$ with the property that $lie_X ov(g) = 2 phi g$, where $phi$ is any smooth function called the _factor_ of $X$. The Lie derivative is a little hard to work with for our purposes so we will follow the calculations of @deshmukhGeometryConformalVector2017 to obtain better formulations for the properties of conformal vector fields
+
+#proposition[
+  Let $X$ be a vector field on $N$, then for any $Y,Z in T_p N$ we have
+  $
+    2ip(ov(nabla)_Y X, Z) = (lie_X g)(Y,Z) + dif eta (Y,Z)
+  $
+  where $eta$ is the dual one form to $X$ defined by $eta(Z) = ip(X,Z)$
+]
+#proof[
+  We have by Koszul's formula (@leeIntroductionRiemannianManifolds2018a[p.~123]) 
+  $
+    2ip(ov(nabla)_Y X, Z) =& Y(ip(X,Z)) + X(ip(Y,Z)) - Z(ip(X,Y))
+    \ &- ip([X,Y],Z) - ip([Y,Z],X) - ip([X,Z],Y)
+    \ =& lie_X (ip(Y,Z)) + lie_Y (eta(Z)) - lie_Z (eta(Y))
+    \ &- ip(Z,lie_X Y) - eta(lie_Y Z) - ip(Y, lie_X Z)
+    \ =& (lie_X ov(g)) (Y,Z) + lie_Y (eta(Z)) - lie_Z (eta(Y)) - eta(lie_Y Z) 
+    \ =& (lie_X ov(g)) (Y,Z) + (lie_Y eta)(Z) - lie_Z (eta(Y))
+  $
+  Now we can use Cartan's magic formula (@leeIntroductionSmoothManifolds2012[p.~372]) applied to the second term to get
+  $ 
+    2ip(ov(nabla)_Y X, Z) &= (lie_X ov(g)) (Y,Z) + dif eta(Y,Z) + dif (eta(Y))(Z) - lie_Z (eta(Y))
+    \ & = (lie_X ov(g)) (Y,Z) + dif eta(Y,Z)
+  $
+]
+From this we see that an equivalent characterization of a Conformal Killing vector field is $2ip(ov(nabla)_Y X, Z) = 2 phi ip(Y,Z) + dif eta(Y,Z)$
+
+
+In the special case that $phi = 0$ we call $X$ a Killing vector field.
+
+== Partial Differential Equations
+The Partial Differential Equations (PDEs) we will be dealing with most in this are parabolic PDEs
+
 
 #pagebreak(weak: true)
 
