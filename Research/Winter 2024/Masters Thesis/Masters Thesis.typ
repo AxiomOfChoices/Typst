@@ -199,12 +199,24 @@ A conformal vector field is a vector field $X$ with the property that $lie_X ov(
   $
 ]
 From this we see that an equivalent characterization of a Conformal Killing vector field is $2ip(ov(nabla)_Y X, Z) = 2 phi ip(Y,Z) + dif eta(Y,Z)$
-
+#pagebreak(weak: true)
+We now define the skew-symmetric endomorphism $psi$ by 
+$
+dif eta(Y,Z) = 2ip(psi Y,Z)
+$
+This endomorphism is then called the _associate tensor field_ of $X$.
 
 In the special case that $phi = 0$ we call $X$ a Killing vector field.
 
 == Partial Differential Equations
-The Partial Differential Equations (PDEs) we will be dealing with most in this are parabolic PDEs
+The Partial Differential Equations (PDEs) we will be dealing with most in this document are parabolic PDEs, so we will go over their properties first.
+
+Let $T in (0,infinity]$ and $U seq M$ a smooth open domain, a function $u_t : [0,T] times U$ is said to solve a *parabolic PDE* if it satisfies a differential equation of the form
+$
+  u_t = F_(i j) nabla_i nabla_j u + G
+$
+where $F$ is symmetric positive definite matrix. 
+
 
 
 #pagebreak(weak: true)
