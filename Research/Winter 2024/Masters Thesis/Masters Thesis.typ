@@ -3,6 +3,7 @@
 #import "@preview/ctheorems:1.1.0": *
 #import "../../../Templates/math.typ": *
 #show: style
+#show: equation_references
 #show: doc => frontpage(
   toptitle: [Conformally Induced\ Mean Curvature Flow], 
   name: [Jacob Reznikov 
@@ -48,7 +49,7 @@ This thesis continues the effort to use such flows, together with my collaborato
 
 #pagebreak(weak:true)
 = Acknowledgements
-First I would like to thank my supervisor, Professor Pengfei Guan, for his regular assistance both before and after the start of my Masters program. He was always there to help me understand concepts I would otherwise spend weeks grappling with. Secondly, I would like to thank my collaborator, Doctor Joshua Flynn, without whom this project would have never happened. He would always chime in with timely ideas whenever we would get stuck. I would additionally like to thank my two good friends, Sam Zeitler and Bart Syroka for always being there to bounce ideas of or listen to my insane ramblings. 
+First I would like to thank my supervisor, Professor Pengfei Guan, for his regular assistance both before and after the start of my Masters program. He was always there to help me understand concepts I would otherwise spend weeks grappling with. Secondly, I would like to thank my collaborator, Doctor Joshua Flynn, without whom this project would have never happened. He would always chime in with timely ideas whenever we would get stuck. I would additionally like to thank my two good friends, Sam Zeitler and Bart Syroka for always being there to bounce ideas of or listen to my insane ramblings.
 Finally I would like to thank my family, and especially my mom, for always being there to help and support me whenever I would feel down and lost.
 
 #pagebreak(weak:true)
@@ -178,14 +179,14 @@ A conformal vector field is a vector field $X$ with the property that $lie_X ov(
 #proposition[
   Let $X$ be a vector field on $N$, then for any $Y,Z in T_p N$ we have
   $
-    2ip(ov(nabla)_Y X, Z) = (lie_X g)(Y,Z) + dif eta (Y,Z)
+    2 ip(ov(nabla)_Y X, Z) = (lie_X g)(Y,Z) + dif eta (Y,Z)
   $
   where $eta$ is the dual one form to $X$ defined by $eta(Z) = ip(X,Z)$
 ]
 #proof[
   We have by Koszul's formula (@leeIntroductionRiemannianManifolds2018a[p.~123]) 
   $
-    2ip(ov(nabla)_Y X, Z) =& Y(ip(X,Z)) + X(ip(Y,Z)) - Z(ip(X,Y))
+    2 ip(ov(nabla)_Y X, Z) =& Y(ip(X,Z)) + X(ip(Y,Z)) - Z(ip(X,Y))
     \ &- ip([X,Y],Z) - ip([Y,Z],X) - ip([X,Z],Y)
     \ =& lie_X (ip(Y,Z)) + lie_Y (eta(Z)) - lie_Z (eta(Y))
     \ &- ip(Z,lie_X Y) - eta(lie_Y Z) - ip(Y, lie_X Z)
@@ -194,15 +195,15 @@ A conformal vector field is a vector field $X$ with the property that $lie_X ov(
   $
   Now we can use Cartan's magic formula (@leeIntroductionSmoothManifolds2012[p.~372]) applied to the second term to get
   $ 
-    2ip(ov(nabla)_Y X, Z) &= (lie_X ov(g)) (Y,Z) + dif eta(Y,Z) + dif (eta(Y))(Z) - lie_Z (eta(Y))
+    2 ip(ov(nabla)_Y X, Z) &= (lie_X ov(g)) (Y,Z) + dif eta(Y,Z) + dif (eta(Y))(Z) - lie_Z (eta(Y))
     \ & = (lie_X ov(g)) (Y,Z) + dif eta(Y,Z)
   $
 ]
-From this we see that an equivalent characterization of a Conformal Killing vector field is $2ip(ov(nabla)_Y X, Z) = 2 phi ip(Y,Z) + dif eta(Y,Z)$
+From this we see that an equivalent characterization of a Conformal Killing vector field is $2 ip(ov(nabla)_Y X, Z) = 2 phi ip(Y,Z) + dif eta(Y,Z)$
 #pagebreak(weak: true)
 We now define the skew-symmetric endomorphism $psi$ by 
 $
-dif eta(Y,Z) = 2ip(psi Y,Z)
+dif eta(Y,Z) = 2 ip(psi Y,Z)
 $
 This endomorphism is then called the _associate tensor field_ of $X$.
 
@@ -211,11 +212,32 @@ In the special case that $phi = 0$ we call $X$ a Killing vector field.
 == Partial Differential Equations
 The Partial Differential Equations (PDEs) we will be dealing with most in this document are parabolic PDEs, so we will go over their properties first.
 
-Let $T in (0,infinity]$ and $U seq M$ a smooth open domain, a function $u_t : [0,T] times U$ is said to solve a *parabolic PDE* if it satisfies a differential equation of the form
+Let $T in (0,infinity]$ and $U seq M$ a smooth open domain, a function $u_t : [0,T] times U$ is said to solve a *quasi-linear parabolic PDE* if it satisfies a differential equation of the form 
+#math.equation(block: true, numbering: "(1)",
+  $ u_t (x,t) = a^(i j)(x,t,u,nabla u) nabla_i nabla_j u + G(x,t,u,nabla u) $
+)
+<eqn-parabolic_pde>
+where $a$ is symmetric positive definite matrix.
+
+We say that the PDE in @eqn-parabolic_pde is _uniformly parabolic_ if there exist constants $A,B$ such that 
 $
-  u_t = F_(i j) nabla_i nabla_j u + G
+  A|v|^2 <= a^(i j) v_i v_j <= B|v|^2
 $
-where $F$ is symmetric positive definite matrix. 
+for all $v in T_p M$ everywhere.
+
+#proposition[
+  Assume $u$ solves @eqn-parabolic_pde and at a maximum of $u$ we have $G(x,t,u,nabla u) < f(t)$ then we have 
+  $
+    sup_(x in U) u(x,t) <= sup_(x in U) u(x,0) + integral_0^t f(s) dif s
+  $
+  additionally if $G(x,t,u,nabla u) < B u(x,t)$ for some constant $B in RR$ and so 
+  $
+    sup_(x in U) u(x,t) <= (sup_(x in U) u(x,0)) e^(B t)
+  $
+]
+
+
+
 
 
 

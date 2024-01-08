@@ -24,3 +24,21 @@
   base: "theorem",
   bodyfmt: body => [#body #h(1fr) $square$]
 ).with(numbering: none)
+
+#let equation_references(doc) = {
+  // set math.equation(numbering: "(1)")
+  show ref: it => {
+    let eq = math.equation
+    let el = it.element
+    if el != none and el.func() == eq{
+      // el.fields()
+      numbering(el.numbering,
+        ..counter(eq)
+        .at(el.location()))
+    }
+    else {
+      it
+    }
+  }
+  doc
+}
