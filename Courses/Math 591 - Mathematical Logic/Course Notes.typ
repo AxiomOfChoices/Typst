@@ -10,7 +10,7 @@
 #let Mink = math.op("Mink")
 #let fu = $frak(U)$
 #let pb() = {pagebreak(weak: true)}
-
+#let sat = $tack.r.double$
 
 
 General ideas: Mathematical structures from a higher perspective. 
@@ -21,14 +21,17 @@ We will study introductory Model Theory, end with #link("https://en.wikipedia.or
 
 #definition[
   A *model* or *structure* is a tuple $ cal(M) = (M, (f_i)_(i in I), (R_j)_(j in J), (c_k)_(k in K)) $
-  where $M$ is a set called the universe, $f_i$ are functions $f: M^(a_i) -> M$, $R_j$ are relations $R_j seq M^(a_j)$ and $c_k$ are constants $c_k in M$. 
-  // TODO: MAKE IT LOOK NICER
+  where 
+  - $M$ is a set called the universe
+  - $f_i$ are functions $f: M^(a_i) -> M$
+  - $R_j$ are relations $R_j seq M^(a_j)$
+  - $c_k$ are constants $c_k in M$. 
 ]
 
 
-// TODO: MAKE THIS A REMARK
-
-Sometimes constants can be seen as $0$-ary functions.
+#remark[
+  Sometimes constants can be seen as $0$-ary functions.
+]
 
 #example[
   Consider the model $(CC, +,dot, exp)$, consisting of the universe $CC$ with the 3 functions $+,dot,exp$. Note that we will often write out the functions inside the brackets as above, it will be clear if an object is a function,relation or constant from context.
@@ -65,24 +68,25 @@ All of this is very semantic encoding of a mathematical structure, but we will a
     a_i = a_i',
     a_j = a_j'
   $
+  If $cal(M)$ is an $L$-structure then the *interpretations* of the symbols of the language are defined as
+  $
+  (f_i')^cal(M) = f_i, (R_j')^cal(M) = R_j, (c_k')^(cal(M)) = c_k
+  $
 ]
 
-// TODO: MAKE THIS A REMARK
+#remark[
+  For a model $cal(M)$ we will sometimes denote $|cal(M)|$ to refer to the universe of a model and $||cal(M)||$ to denote the cardinality of said universe.
+]
 
-For a model $cal(M)$ we will sometimes denote $|cal(M)|$ to refer to the universe of a model and $||cal(M)||$ to denote the cardinality of said universe.
-
-If $cal(M)$ is an $L$-structure then the *interpretations* of the symbols of the language are 
-$ (f_i')^cal(M) = f_i$, $(R_j')^cal(M) = R_j, (c_k')^(cal(M)) = c_k $
-
-Now how do we speak in $L$? We will need the following
+We have defined the symbols of $L$ but how do we speak it? We will need the following
 - Logical symbols, these will consist of 
-  - Connectives - $or, and, not, =>, <=>$
-  - Quantifiers - $exists, forall$
-- Auxilary symbols - Parentheses, Commas
-- Variables - $x,y,z,v$
-- Equivalency Symbol - $=$
+  - Connectives: $or, and, not, =>, <=>$
+  - Quantifiers: $exists, forall$
+- Auxiliary symbols: Parentheses, Commas
+- Variables: $x,y,z,v$
+- Equivalency Symbol: $=$
 
-As with any language we will build up our syntactical language first with nouns and then with phrases.
+As with any language we will build up our language first with nouns and then with phrases.
 
 #definition[
   $L$-terms are defined inductively as follows
@@ -114,19 +118,20 @@ As with any language we will build up our syntactical language first with nouns 
 ]
 
 #definition[
-  An $L$-formula is also defined inductively
+  An $L$-*formula* is also defined inductively
   - If $tau_1, tau_2$ are $L$ terms then $tau_1 = tau_2$ is an $L$-formula
-  - If $tau_1,...,tau_n$ are $L$-terms then $R_j(tau_1,...,tau_n)$ is a formula if $R_j$ is an $n$-ary relation.
+  - If $tau_1,...,tau_n$ are $L$-terms then $R_j (tau_1,...,tau_n)$ is a formula if $R_j$ is an $n$-ary relation.
   - If $phi_1, phi_2$ are $L$-formulas, then 
-  $
-    phi_1 or phi_2, phi_1 and phi_2, not phi_1, phi_1 => phi_2, phi_1 <=> phi_2 
-  $
-  are all $L$-formulas.
+    $
+      phi_1 or phi_2, phi_1 and phi_2, not phi_1, phi_1 => phi_2, phi_1 <=> phi_2 
+    $
+    are all $L$-formulas.
   - If $phi$ is an $L$-formula, $x$ is a variable, then
-  $
-    forall x thin phi, exists x thin phi
-  $
-  are both $L$-formulas.
+    $
+      forall x thin phi, exists x thin phi
+    $
+    are both $L$-formulas.
+  The first 2 of these are called *atomic* $L$-formula.
 ]
 
 #example[
@@ -145,17 +150,23 @@ As with any language we will build up our syntactical language first with nouns 
 
 Now this is all first order logic, but one might wonder, what makes it "first", this comes from what things we can quantify over. In first order logic we can only quantify over elements $x in M$, in _second_ order logic we can quantify over subsets $S seq M$ like all relations for example.We can also see this as $S in cal(P)(M)$. Third order logic would then be quantification over $S in cal(P)(cal(P)(M))$.
 
+In this course, however, we will only be looking at first order logic.
+
+#definition[
+  If $phi$ is an $L$-formula then in the formulas
+  $ phi' = forall x thin phi "or" phi' = exists x thin phi $
+  we say that all occurrences of $x$ are *bound* in $phi'$, and we say that $phi$ is the *range* of $forall x$ or $exists x$ respectively.
+
+  An occurrence of a variable $x$ in a formula $phi$ is *free* if it is not bound in $phi$. 
+
+  An $L$-*sentence* is an $L$-formula with no free variable.
+]
+
+
+
+
 
 // TODO: COMPLETE FIRST LESSON
-
-
-
-
-
-
-
-
-
 
 
 
