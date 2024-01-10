@@ -19,7 +19,7 @@ log info ($env.PWD)
 ./publish.exe
 cd tmp
 git add -A
-{
+do {
     let current_date_time = date now | format date "%Y-%m-%d %H:%M:%S"
     git commit -m $"Updated online notes, ($current_date_time)"
 }
