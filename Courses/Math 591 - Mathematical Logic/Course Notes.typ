@@ -14,13 +14,15 @@
 
 
 General ideas: Mathematical structures from a higher perspective. 
+
 First developed by Tarski, then demonstrated use in algebra, grew to be its own field.
+
 We will study introductory Model Theory, end with #link("https://en.wikipedia.org/wiki/Categorical_theory")[Morley's categoricity theorem].
 
 = Basic Definitions and Concepts
-
+== Models and Languages
 #definition[
-  A *model* or *structure* is a tuple $ cal(M) = (M, (f_i)_(i in I), (R_j)_(j in J), (c_k)_(k in K)) $
+  A _model_ or _structure_ is a tuple $ cal(M) = (M, (f_i)_(i in I), (R_j)_(j in J), (c_k)_(k in K)) $
   where 
   - $M$ is a set called the universe
   - $f_i$ are functions $f: M^(a_i) -> M$
@@ -54,11 +56,11 @@ We can see already that models can encode many objects that we study in math, an
 All of this is very semantic encoding of a mathematical structure, but we will also be concerned with the syntactical encoding.
 
 #definition[
-  A *language* (or *signature*) is a tuple
+  A _language_ (or _signature_) is a tuple
   $
     L = ((underline(f)_i)_(i in I'),(underline(R)_j)_(j in J'), (underline(c)_k)_(k in K'))
   $
-  where now the $f_i$ are function *symbols* with arity $a_i' in NN$, each $R_j$ are relation *symbols* with arity $a_j' in NN$, and $c_j$ are constant *symbols*.
+  where now the $f_i$ are function _symbols_ with arity $a_i' in NN$, each $R_j$ are relation _symbols_ with arity $a_j' in NN$, and $c_j$ are constant _symbols_.
 
   A model $cal(M)$ is an $L$-structure if 
   $
@@ -68,7 +70,7 @@ All of this is very semantic encoding of a mathematical structure, but we will a
     a_i = a_i',
     a_j = a_j'
   $
-  If $cal(M)$ is an $L$-structure then the *interpretations* of the symbols of the language are defined as
+  If $cal(M)$ is an $L$-structure then the _interpretations_ of the symbols of the language are defined as
   $
   (f_i')^cal(M) = f_i, (R_j')^cal(M) = R_j, (c_k')^(cal(M)) = c_k
   $
@@ -89,7 +91,7 @@ We have defined the symbols of $L$ but how do we speak it? We will need the foll
 As with any language we will build up our language first with nouns and then with phrases.
 
 #definition[
-  $L$-terms are defined inductively as follows
+  $L$-_terms_ are defined inductively as follows
   - Any constant symbol is an $L$-term
   - Any variable symbol is an $L$-term
   - If $tau_1,...,tau_n$ are $L$-terms $f_i$ is a function with arity $n$ then 
@@ -98,11 +100,11 @@ As with any language we will build up our language first with nouns and then wit
   $
   is a term.
 
-  An $L$-term is said to be constant if it does not contain any variables.
+  An $L$-term is said to be _constant_ if it does not contain any variables.
 ]
 
 #definition[
-  If $M$ is an $L$-structure and $tau$ is a constant $L$-term then the *interpretation* of $tau$, $tau^cal(M)$, is defined equivalently
+  If $cal(M)$ is an $L$-structure and $tau$ is a constant $L$-term then the _interpretation_ of $tau$, $tau^cal(M)$, is defined equivalently
   - If $tau = c_k$ then $tau^cal(M) = c_k^cal(M)$
   - If $tau = f_i (tau_1,...,tau_n)$ then $tau^cal(M) = f_i^cal(M) (tau_1^cal(M), ..., tau_n^cal(M)) in M$
 ]
@@ -118,7 +120,7 @@ As with any language we will build up our language first with nouns and then wit
 ]
 
 #definition[
-  An $L$-*formula* is also defined inductively
+  An $L$-_formula_ is also defined inductively
   - If $tau_1, tau_2$ are $L$ terms then $tau_1 = tau_2$ is an $L$-formula
   - If $tau_1,...,tau_n$ are $L$-terms then $R_j (tau_1,...,tau_n)$ is a formula if $R_j$ is an $n$-ary relation.
   - If $phi_1, phi_2$ are $L$-formulas, then 
@@ -131,7 +133,7 @@ As with any language we will build up our language first with nouns and then wit
       forall x thin phi, exists x thin phi
     $
     are both $L$-formulas.
-  The first 2 of these are called *atomic* $L$-formula.
+  The first 2 of these are called _atomic_ $L$-formula.
 ]
 
 #example[
@@ -148,25 +150,36 @@ As with any language we will build up our language first with nouns and then wit
   $
 ]
 
-Now this is all first order logic, but one might wonder, what makes it "first", this comes from what things we can quantify over. In first order logic we can only quantify over elements $x in M$, in _second_ order logic we can quantify over subsets $S seq M$ like all relations for example.We can also see this as $S in cal(P)(M)$. Third order logic would then be quantification over $S in cal(P)(cal(P)(M))$.
+Now this is all first order logic, but one might wonder, what makes it "first"? This comes from what things we can quantify over. In first order logic we can only quantify over elements $x in |cal(M)|$, in _second_ order logic we can quantify over subsets $S seq |cal(M)|$ like all relations for example. We can also see this as $S in cal(P)(|cal(M)|)$. Third order logic would then be quantification over $S in cal(P)(cal(P)(|cal(M)|))$, and so on.
 
 In this course, however, we will only be looking at first order logic.
 
 #definition[
   If $phi$ is an $L$-formula then in the formulas
   $ phi' = forall x thin phi "or" phi' = exists x thin phi $
-  we say that all occurrences of $x$ are *bound* in $phi'$, and we say that $phi$ is the *range* of $forall x$ or $exists x$ respectively.
+  we say that all occurrences of $x$ are _bound_ in $phi'$, and we say that $phi$ is the _range_ of $forall x$ or $exists x$ respectively.
 
-  An occurrence of a variable $x$ in a formula $phi$ is *free* if it is not bound in $phi$. 
+  An occurrence of a variable $x$ in a formula $phi$ is _free_ if it is not bound in $phi$. 
 
-  An $L$-*sentence* is an $L$-formula with no free variable.
+  An $L$-_sentence_ is an $L$-formula with no free variable.
 ]
 
+We will use the notation $cal(M) sat sigma$ to mean that sentence $sigma$ is true in the model $cal(M)$.
 
+#definition[
+  Let $phi$ be a formula containing $x$, $phi(tau/x)$ will denote the formula obtained by replacing every free occurrence of $x$ by $tau$.
+]
 
+Now one would expect that substitution should never change the meaning of a logical statement, but in fact, this is not quite right. 
+Consider the case $phi = forall y (y=x)$, the substitution $phi(y/x)$ is changes the meaning of the statement from "all $y$ are equal to $x$" to "all $y$ are equal to themselves". We want to avoid this outcome, which we can formalize as follows.
+#definition[
+  A substitution $phi(tau/x)$ is called _correct_ if no free variable of $tau$ becomes bound in $phi(tau/x)$
+]
 
-
-// TODO: COMPLETE FIRST LESSON
+#definition[
+  If $A seq |cal(M)|$ and $cal(M)$ is an $L$-structure then $L(A)$ is the language 
+  $ L union {a : a in A} $
+]
 
 
 
