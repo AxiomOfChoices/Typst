@@ -112,7 +112,7 @@ As with any language we will build up our language first with nouns and then wit
 ]
 
 #example[
-  $L = (+, dot, 0, 1)$ then $M = (NN, +, dot, 0, 1)$ is an $L$-structure in which the $L$-term 
+  $L = (+, dot, 0, 1)$ then $mM = (NN, +, dot, 0, 1)$ is an $L$-structure in which the $L$-term 
   $
     tau = 1 + 1 + 1
   $
@@ -172,7 +172,7 @@ In this course, however, we will only be looking at first order logic.
 ]
 
 Now one would expect that substitution should never change the meaning of a logical statement, but in fact, this is not quite right. 
-Consider the case $phi = forall y (y=x)$, the substitution $phi(y/x)$ is changes the meaning of the statement from "all $y$ are equal to $x$" to "all $y$ are equal to themselves". We want to avoid this outcome, which we can formalize as follows.
+Consider the case $phi = forall y (y=x)$, the substitution $phi(subs(y,x))$ is changes the meaning of the statement from "all $y$ are equal to $x$" to "all $y$ are equal to themselves". We want to avoid this outcome, which we can formalize as follows.
 #definition[
   A substitution $phi(subs(tau,x))$ is called _correct_ if no free variable of $tau$ becomes bound in $phi(subs(tau,x))$
 ]
@@ -202,7 +202,7 @@ We extend our definition of interpretation of terms to terms of $L(|mM|)$ by set
   
   We say that two $L$-structures, $mM$ and $mN$, are elementary equivalent, and write $mM equiv mN$ if $Th(mM) = Th(mN)$.
 
-  We write that $mM seq mN$ to mean that $mM$ is a substructure of $mN$, meaning that 
+  We write that $mM seq mN$ to mean that $mM$ is a substructure of $mN$, meaning that
   $ 
   |mM| seq |mN|, underline(f_i)^mM seq underline(f_i)^mN, underline(R_j)^mM = underline(R_j)^mN sect |mM|^(a_j), thin thin "and" underline(c_k)^mM = underline(c_k)^mN 
   $
@@ -215,16 +215,16 @@ We extend our definition of interpretation of terms to terms of $L(|mM|)$ by set
   f(underline(f_i)^mM (a_1,...,a_n)) = underline(f_i)^mN (a_1,...,a_n)
   $
 
-  We write $mM lt.curly(eq.prec) thin thin mN$ to mean $mM$ is an elementary substructure of $mN$ which is true if $|M| seq |N|$ and for every formula $phi(bar(x))$ and for every $bar(a) seq M$ we have 
+  We write $mM lt.curly(eq.prec) thin thin mN$ to mean $mM$ is an elementary substructure of $mN$ which is true if $|mM| seq |mN|$ and for every formula $phi(bar(x))$ and for every $bar(a) seq |mM|$ we have 
   $ 
-  M sat phi(bar(a)) <=> N sat phi(bar(a))
+  mM sat phi(bar(a)) <=> mN sat phi(bar(a))
   $
 ]
 
 #theorem("Tarski-Vaught test")[
   Suppose $mM$ is an $L$-structure, $A seq |mM|$, then $A$ is the universe of an elementary substructure iff the following condition holds, called the Tarski-Vaught test
 
-  #block(inset: (x: 2em))[For every formula $phi(x, bar(y))$ in $L$ and every $bar(a) seq A$, if $mM sat exists x thin phi(x, bar(a))$ then there exists $b in A$ such that $M sat phi(b, bar(a))$]
+  #block(inset: (x: 2em))[For every formula $phi(x, bar(y))$ in $L$ and every $bar(a) seq A$, if $mM sat exists x thin phi(x, bar(a))$ then there exists $b in A$ such that $mM sat phi(b, bar(a))$]
 ]
 #proof[
   First the $arrow.l.double$ direction, assume that the T-V test holds, then we need to show that $A$ is a substructure. First we use $phi = (x=c)$ to show that $A$ contains all constants of $mM$, then $phi = (x = phi_i (bar(a)))$ for $bar(a) seq A$, and we define the interpretation of $underline(R_j)$ to be exactly $underline(R_j)^mM sect A^(a_j)$ to make it a substructure.
@@ -235,11 +235,11 @@ We extend our definition of interpretation of terms to terms of $L(|mM|)$ by set
   $
   for all $bar(a) seq A$ and $phi$ being an _atomic_ formula. So now we only need to prove this is true for the other formula types.
   - The connective types are immediate.
-  - Let us assume $phi(bar(x)) = exists y thin psi(y, bar(x))$. Then $M sat phi(bar(a))$ iff $mM sat exists y thin psi(y, bar(a))$ iff there exists $b in A$ with $mM sat psi(b, bar(a))$. But by definition this last form is equivalent to $A sat exists y thin psi(y, bar(a))$
+  - Let us assume $phi(bar(x)) = exists y thin psi(y, bar(x))$. Then $mM sat phi(bar(a))$ iff $mM sat exists y thin psi(y, bar(a))$ iff there exists $b in A$ with $mM sat psi(b, bar(a))$. But by definition this last form is equivalent to $A sat exists y thin psi(y, bar(a))$
 ]
 
 #theorem("Lowenheim-Skolem downwards Theorem")[
-  Let $L$ be countable, for any $L$-structure $mM$ and every $A seq |mM|$, there exists an elementary substructure $N lt.curly M$with $A seq |mN|$ 
+  Let $L$ be countable, for any $L$-structure $mM$ and every $A seq |mM|$, there exists an elementary substructure $mN lt.curly mM$with $A seq |mN|$ 
   $
     ||mN|| = |A| + |L| + aleph_0
   $
