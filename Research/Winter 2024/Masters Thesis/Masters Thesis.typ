@@ -29,6 +29,7 @@
 #let Volume = math.op("Volume")
 #let Hess = math.op("Hess")
 #let Rm = math.op("Rm")
+#let Ric = math.op("Ric")
 #let lie = $cal(L)$
 #let Sym = math.op("Sym")
 #show: outline_style
@@ -97,7 +98,7 @@ The Isoperimetric Problem now asks us to
 
 We will now start to build up the concepts that allow us to solve this problem.
 
-== Extrinsic Riemannian geometry
+== Riemannian geometry
 We will almost always be working in orthonormal coordinates on $M$, that is, at any point $p$ there are coordinates $x^1,...,x^n$ such that the vector fields 
 $
   e_i = diff/(diff x^i)
@@ -200,7 +201,7 @@ A conformal vector field is a vector field $X$ with the property that $lie_X ov(
     \ & = (lie_X ov(g)) (Y,Z) + dif eta(Y,Z)
   $
 ]
-From this we see that an equivalent characterization of a Conformal Killing vector field is $2 ip(ov(nabla)_Y X, Z) = 2 phi ip(Y,Z) + dif eta(Y,Z)$
+From this we see that an equivalent characterization of a Conformal vector field is $2 ip(ov(nabla)_Y X, Z) = 2 phi ip(Y,Z) + dif eta(Y,Z)$
 #pagebreak(weak: true)
 We now define the skew-symmetric endomorphism $psi$ by 
 $
@@ -209,6 +210,24 @@ $
 This endomorphism is then called the _associate tensor field_ of $X$.
 
 In the special case that $phi = 0$ we call $X$ a Killing vector field.
+
+To see why conformal vector fields are so useful in the study of the Isoperimetric inequality, we will now derive a key result that was the basis of the results by Guan, Li and Wang and will also be the basis of the results in this thesis.
+
+#lemma[
+  Let $M seq N$ be an admissible hypersurface as defined above, and let $X$ be a conformal vector field on $N$ with conformal factor $phi$, the following identities hold
+  $
+    integral_M n phi - H u = 0 
+  $
+  and 
+  $
+    integral_M H (n phi - H u) = n/(n-1) integral_M u ip(ov(Rm)(nu, e_i)e_i, X - u nu) - integral_M u sum_(i < j) (kappa_i - kappa_j)^2
+  $
+  where $u = ip(X, nu)$ is called the support function.
+]
+#proof[
+  First we will define the vector field $Y = X - u nu$, which is the projection of $X$ onto the tangent space of $M$. Now consider
+]
+
 
 == Partial Differential Equations
 The Partial Differential Equations (PDEs) we will be dealing with most in this document are parabolic PDEs, so we will go over their properties first.
@@ -306,6 +325,8 @@ It is this decomposition that we aim to generalize with the warped product space
   where $x,y$ are points of $M$ and $N$ respectively. This is called the _warped product space_ with the _warping factor_ $f$ being a function $f : M -> RR_(> 0)$, it is often denoted $M times_f N$
 ]
 
+Note that in practice we will always suppress, the projections $pi_1$ and $pi_2$ for clarity.
+
 The most common warped product spaces we see in practice are those of the form $RR_+ times_f N$ for some $N$, for example the 3 space forms, $S^n, RR^n, HH^n$, are of the form 
 $
   RR_+ times_(sin r) S^n, quad
@@ -314,7 +335,25 @@ $
 $
 respectively.
 
-These spaces carry a lot of nice properties, but the most important one for us is that they carry a natural conformal vector field, $f(r) diff_r$.
+These spaces carry a lot of nice properties, but the most important one for us is that they carry a natural conformal vector field.
+
+#proposition[
+  Let $RR_+ times_f N$ be a warped space and let $r$ be a coordinate on $RR_+$, then the vector field $X = f(r) diff_r$ is a conformal vector field with conformal factor $f'(r)$.
+]
+#proof[
+  Let us compute the Lie derivative $lie_X g$, 
+  $
+    lie_X g 
+    &= lie_X (d r^2 + f^2(r) g_N^2)
+    = 2 d r lie_X (d r) + g_N^2 lie_X (f^2(r))
+    \ &= 2 d r (d (lie_X r)) + 2 g_N^2 f^2(r) f'(r)
+    = 2 d r (d f(r)) + 2 f'(r) f^2(r) g_N^2
+    \ &= 2 f'(r) d r^2 + 2 f'(r) f^2(r) g_N^2
+    = 2 f'(r) (d r^2 + f^2(r) g_N^2)
+  $
+]
+
+It just so happens that we can encode many
 
 #pagebreak(weak: true)
 
