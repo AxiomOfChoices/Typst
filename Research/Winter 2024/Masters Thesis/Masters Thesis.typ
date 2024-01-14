@@ -1,4 +1,3 @@
-// cSpell:ignore frontpage toptitle linebreak middletitle bottomtitle datetime thmrules pagebreak ctheorems
 #import "../../../Templates/monograph.typ": style, frontpage, outline_style, chapter_headings, start_outline
 #import "@preview/ctheorems:1.1.0": *
 #import "../../../Templates/math.typ": *
@@ -75,6 +74,8 @@ This document assumes general knowledge of differential and Riemannian geometry,
 For the rest of this document we will use the following notation, $N$ is an $n+1$ dimensional Riemannian manifold with metric $ov(g)$ within which we have a compact domain $Omega$ with boundary $diff Omega = M$ such that $F : M -> N$ is an embedding making $M$ a Riemannian hypersurface. We then set $g := F^* ov(g)$ to be the induced metric on $M$. We will in general identify $M$ with its image $F(M)$ and use the two interchangeably. We will call $frak(X)(N)$ the set of surfaces that can be defined as above.
 
 In general, tensorial constructions defined on $N$ will be written with an overline and their versions on $M$ will be written normally. We will write the covariant derivatives on $M$ and $N$ as $nabla$ and $ov(nabla)$ respectively. We will write the laplacian on $N$ and $M$ as $Delta$ and $ov(Delta)$ respectively. We will use Einstein summation notation for all tensor equations.
+
+Often for a matrix $M_(i j)$ we will use the notation $M_(i j) >= #h(0em) (>) med med 0$ to denote the fact that $M_(i j)$ is positive semi-definite (definite), and similarly for $M_(i j) <= #h(0em) (<) med med 0$.
 
 We can use the Riemannian metric $ov(g)$ to take inner products of tangent vectors in the same tangent space $T_p N$, for tangent vectors $X,Y in T_p N$ we will write this as $ip(X,Y)$. Since the metric $g$ is just the restriction of $ov(g)$ onto $T_p M$ when we think of it as a subspace of $T_p N$, because of this we will use the same notation $ip(X,Y)$ for $X,Y in T_p M$.
 
@@ -174,7 +175,7 @@ We will also need another well known geometric identity,
   See @leeIntroductionRiemannianManifolds2018a[p.~237],
 ]
 
-A conformal vector field is a vector field $X$ with the property that $lie_X ov(g) = 2 phi g$, where $phi$ is any smooth function called the _factor_ of $X$. The Lie derivative is a little hard to work with for our purposes so we will follow the calculations of @deshmukhGeometryConformalVector2017 to obtain better formulations for the properties of conformal vector fields
+A conformal vector field is a vector field $X$ with the property that $lie_X ov(g) = 2 phi g$, where $phi$ is any smooth function called the _conformal factor_ of $X$. The Lie derivative is a little hard to work with for our purposes so we will follow the calculations of @deshmukhGeometryConformalVector2017 to obtain better formulations for the properties of conformal vector fields
 
 #proposition[
   Let $X$ be a vector field on $N$, then for any $Y,Z in T_p N$ we have
@@ -212,6 +213,8 @@ In the special case that $phi = 0$ we call $X$ a Killing vector field.
 == Partial Differential Equations
 The Partial Differential Equations (PDEs) we will be dealing with most in this document are parabolic PDEs, so we will go over their properties first.
 
+
+
 Let $T in (0,infinity]$ and $U seq M$ a smooth open domain, a function $u_t : [0,T] times U$ is said to solve a *quasi-linear parabolic PDE* if it satisfies a differential equation of the form 
 #math.equation(block: true, numbering: "(1)",
   $ u_t (x,t) = a^(i j)(x,t,u,nabla u) nabla_i nabla_j u + G(x,t,u,nabla u) $
@@ -219,27 +222,99 @@ Let $T in (0,infinity]$ and $U seq M$ a smooth open domain, a function $u_t : [0
 <eqn-parabolic_pde>
 where $a$ is symmetric positive definite matrix.
 
-We say that the PDE in @eqn-parabolic_pde is _uniformly parabolic_ if there exist constants $A,B$ such that 
+We say that the PDE in @eqn-parabolic_pde is _uniformly parabolic_ if there exist constants $A,B$ such that
 $
   A|v|^2 <= a^(i j) v_i v_j <= B|v|^2
 $
 for all $v in T_p M$ everywhere.
 
+The most important tool in the analysis of parabolic PDEs is the maximum principle, a form of which we will now prove.
+
 #proposition[
-  Assume $u$ solves @eqn-parabolic_pde and at a maximum of $u$ we have $G(x,t,u,nabla u) < f(t)$ then we have 
+  Assume $u$ solves @eqn-parabolic_pde and that at a maximum of $u$ we the inequality $G(x,t,u,nabla u) < f(t)$ holds, then we have for all $t in [0,T]$
+  #math.equation(block: true, numbering: "(1)",
+    $ sup_(x in U) u(x,t) <= sup_(x in U) u(x,0) + integral_0^t f(s) dif s $
+  )<eqn-max_priniciple_linear>
+  if instead we have $G(x,t,u,nabla u) < B u(x,t)$ for some constant $B in RR$ then we have
+  #math.equation(block: true, numbering: "(1)", 
+    $ sup_(x in U) u(x,t) <= (sup_(x in U) u(x,0)) e^(B t) $
+  )<eqn-max_priniciple_exp>
+]
+#proof[
+  First for @eqn-max_priniciple_linear consider the auxiliary function
+  $ v(x,t) = u(x,t) - integral_0^t f(s) dif s - sup_(x in U) u(x,0) $
+  which then solves
   $
-    sup_(x in U) u(x,t) <= sup_(x in U) u(x,0) + integral_0^t f(s) dif s
+    diff_t v(x,t) = a^(i j)(x,t,v,nabla v) nabla_i nabla_j v + G(x,t, v, nabla v) - f(t)
   $
-  additionally if $G(x,t,u,nabla u) < B u(x,t)$ for some constant $B in RR$ and so 
+  and also $v(x,0) <= 0$ on $U$.
+  Now assume that @eqn-max_priniciple_linear fails to hold, that is, at some point $(y,t)$, we have
   $
-    sup_(x in U) u(x,t) <= (sup_(x in U) u(x,0)) e^(B t)
+    u(y,t) > sup_(x in U) u(x,0) + integral_0^t f(s) dif s
   $
+  then we also have
+  $
+    v(y, t) > 0
+  $
+  and so the maximum of $v$ is positive. But now let $(z,t')$ be said maximum, we have that
+  $
+    nabla v(z,t') = 0, nabla_i nabla_j v(z,t') <= 0 "as well as" diff_t v(z,t') >= 0
+  $
+  we thus have 
+  $
+    0 <= diff_t v(x,t) = a^(i j)(x,t,v,nabla v) nabla_i nabla_j v + G(x,t, v, nabla v) - f(t)
+    < 0
+  $
+  this is a contradiction.
+
+  For @eqn-max_priniciple_exp we use an identical argument except that we instead use
+  $ v(x,t) = e^(-B t) u(x,t) - sup_(x in U) u(x,0) $
 ]
 
+#pagebreak(weak: true)
+= Warped Product-Like Spaces
+With the preliminaries out of the way we can begin to discuss how we can attempt to attack the Isoperimetric problem in the class of warped product spaces, and specifically the key properties exhibited by these spaces that we will later use to generalize these methods.
 
+== Polar coordinates
+Warped products are in essence a generalization of the Polar coordinates in $RR^2$ so let us first look at those. The Polar coordinates $(r,theta)$ in $RR^2$ are defined implicitly in terms of standard Euclidean coordinates, through $(x,y) = (r cos(theta), r sin(theta))$, where we have $r > 0$ and $-pi/2 < theta < pi/2$. Now the Euclidean metric is given by $g = dif x^2 + dif y^2$ and so we can compute its form in polar coordinates as
+$
+  g &= dif x^2 + dif y^2 = (dif (r cos theta))^2 + (dif (r sin theta))^2
+  \ &= (cos theta dif r - r sin theta dif theta)^2 + (sin theta dif r + r cos theta dif theta)^2
+  \ &= cos^2 theta dif r^2 - 2 r cos theta sin theta dif r dif theta + r^2 sin^2 theta dif theta^2
+  \ &+ sin^2 theta dif r^2 + 2 r sin theta cos theta dif r dif theta + r^2 cos^2 theta dif theta^2
+  \ &= dif r^2 + r^2 dif theta^2
+$
+Note that if we instead consider the function $(r, theta) -> (r cos(theta), r sin(theta))$ as a function from $RR_+ times S^1 -> RR^2$, where $S^1$ is the unit circle, then this almost gives us a decomposition
+$
+  g_(RR^2) = g_RR + r^2 g_S^1
+$
+Note that this is not exactly the case because we first need to project a given vector down to its components in $RR$ and $S^1$ respectively and then apply the appropriate metrics. That is we actually have 
+$
+  g_(RR^2) = g_RR compose pi_1 + g_S^1 compose pi_2
+$
+where $pi_1,pi_2$ are projections onto the tangent spaces of $RR$ and $S^1$ respectively.
 
+A similar constructions works in higher dimensions, where we have $RR^n = RR_+ times S^(n - 1)$.
 
+It is this decomposition that we aim to generalize with the warped product space.
 
+#definition[
+  Let $(M,g_M)$ and $(N,g_n)$ be Riemannian manifolds, we can define a metric on $M times N$ by 
+  $
+    g(x,y) = g_M (x) compose pi_1 + f^2(x) g_N (y) compose pi_2,
+  $
+  where $x,y$ are points of $M$ and $N$ respectively. This is called the _warped product space_ with the _warping factor_ $f$ being a function $f : M -> RR_(> 0)$, it is often denoted $M times_f N$
+]
+
+The most common warped product spaces we see in practice are those of the form $RR_+ times_f N$ for some $N$, for example the 3 space forms, $S^n, RR^n, HH^n$, are of the form 
+$
+  RR_+ times_(sin r) S^n, quad
+  RR_+ times_(r) S^n, quad
+  RR_+ times_(sinh r) S^n
+$
+respectively.
+
+These spaces carry a lot of nice properties, but the most important one for us is that they carry a natural conformal vector field, $f(r) diff_r$.
 
 #pagebreak(weak: true)
 
