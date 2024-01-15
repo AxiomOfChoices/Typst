@@ -225,7 +225,7 @@ To see why conformal vector fields are so useful in the study of the Isoperimetr
   where $u = ip(X, nu)$ is called the support function.
 ]
 #proof[
-  First we will define the vector field $Y = X - u nu$, which is the projection of $X$ onto the tangent space of $M$. Now consider
+  First we will define the vector field $Y = X - u nu$, which is the projection of $X$ onto the tangent space of $M$. Now consider the divergence of $X$, we can rewrite it as
 ]
 
 
