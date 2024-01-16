@@ -11,6 +11,8 @@
 #let fu = $frak(U)$
 #let pb() = {pagebreak(weak: true)}
 #let sat = $tack.r.double$
+#let proves = $tack.r$
+#let subm = $lt.curly$
 #let Th = math.op("Th")
 #let mM = $cal(M)$
 #let mN = $cal(N)$
@@ -108,7 +110,7 @@ As with any language we will build up our language first with nouns and then wit
 #definition[
   If $mM$ is an $L$-structure and $tau$ is a constant $L$-term then the _interpretation_ of $tau$, $tau^mM$, is defined equivalently
   - If $tau = c_k$ then $tau^mM = c_k^mM$
-  - If $tau = f_i (tau_1,...,tau_n)$ then $tau^mM = f_i^mM (tau_1^mM, ..., tau_n^mM) in M$
+  - If $tau = f_i (tau_1,...,tau_n)$ then $tau^mM = f_i^mM (tau_1^mM, ..., tau_n^mM) in |mM|$
 ]
 
 #example[
@@ -207,7 +209,7 @@ We extend our definition of interpretation of terms to terms of $L(|mM|)$ by set
   |mM| seq |mN|, underline(f_i)^mM seq underline(f_i)^mN, underline(R_j)^mM = underline(R_j)^mN sect |mM|^(a_j), thin thin "and" underline(c_k)^mM = underline(c_k)^mN 
   $
   
-  We write $mM equiv mN$ and say that $mM$ and $mN$ are isomorphic if there is a bijection $g$ with 
+  We write $mM tilde.eq mN$ and say that $mM$ and $mN$ are isomorphic if there is a bijection $g$ with 
   $
   g(underline(c_k)^mM) = underline(c_k)^mN\
   (a_1,...,a_n) in underline(R_j)^mM <=>
@@ -215,7 +217,7 @@ We extend our definition of interpretation of terms to terms of $L(|mM|)$ by set
   f(underline(f_i)^mM (a_1,...,a_n)) = underline(f_i)^mN (a_1,...,a_n)
   $
 
-  We write $mM lt.curly(eq.prec) thin thin mN$ to mean $mM$ is an elementary substructure of $mN$ which is true if $|mM| seq |mN|$ and for every formula $phi(bar(x))$ and for every $bar(a) seq |mM|$ we have 
+  We write $mM subm(eq.prec) thin thin mN$ to mean $mM$ is an elementary substructure of $mN$ which is true if $mM seq mN$ and for every formula $phi(bar(x))$ and for every $bar(a) seq |mM|$ we have 
   $ 
   mM sat phi(bar(a)) <=> mN sat phi(bar(a))
   $
@@ -236,15 +238,116 @@ We extend our definition of interpretation of terms to terms of $L(|mM|)$ by set
   for all $bar(a) seq A$ and $phi$ being an _atomic_ formula. So now we only need to prove this is true for the other formula types.
   - The connective types are immediate.
   - Let us assume $phi(bar(x)) = exists y thin psi(y, bar(x))$. Then $mM sat phi(bar(a))$ iff $mM sat exists y thin psi(y, bar(a))$ iff there exists $b in A$ with $mM sat psi(b, bar(a))$. But by definition this last form is equivalent to $A sat exists y thin psi(y, bar(a))$
+
+  Assume on the other hand that $A$ is the universe of an elementary substructure $cal(A)$, then we need to prove the T-V test holds, assume then that for some formula $phi(x,overline(y))$ in $L$ and some $overline(a) seq A$ we have $mM sat exists x thin phi(x, overline(a))$ and so since it is an elementary substructure we also have that $cal(A) sat exists x thin phi(x, overline(a))$ and so we must have some $x in A$ such that $phi(x,overline(a))$ holds.
 ]
 
+
 #theorem("Lowenheim-Skolem downwards Theorem")[
-  Let $L$ be countable, for any $L$-structure $mM$ and every $A seq |mM|$, there exists an elementary substructure $mN lt.curly mM$with $A seq |mN|$ 
+  Let $L$ be countable, for any $L$-structure $mM$ and every $A seq |mM|$, there exists an elementary substructure $mN subm mM$ with $A seq |mN|$
   $
     ||mN|| = |A| + |L| + aleph_0
   $
-]
+]<thrm-downwards>
 
 #proof[
   Set $kappa = |A| + |L| + aleph_0$, by transfinite induction on $kappa$ we will define a sequence $a_alpha$ for $alpha < kappa$ of elements in $mM$, where at each step $alpha$ we will try to satisfy a formula $phi_a (x) in L(A union a_(< alpha))$, we will then set $|mN| = { a_alpha : alpha < kappa }$.
+
+  To formalize this, consider $kappa times kappa$ with lexicographical ordering, then for all elements $(0,alpha)$ we will enumerate the formulas of $L$ and the substitutions of $A$ elements as parameters, pick an element $a_(0,alpha)$ in $|mM|$ making the formula true, and add it to $A$. For all elements $(1,alpha)$ we do the same thing but now our parameters can also include $a_(0,0)$, for $(2,alpha)$ our parameters can include $a_(0,1)$, for $(3,alpha)$ our parameters can include $a_(1,0)$, and we will continue in this pattern and eventually include witnesses to every formula we need. The statement follows then from the fact that $|kappa times kappa| = |kappa|$ for all ordinals larger than $omega_0$.  
 ]
+
+#remark("Skolem's Paradox")[
+  Let $Z F C^* seq Z F C$ be a finite substructure which proves cantor's theorem. Let $V sat Z F C^*$. By the previous theorem we can find a countable $mM subm V$ for which $mM sat Z F C^*$ and $mM sat "\"exists an uncountable set\""$.
+]
+
+#definition[
+  In FOL we have the concept of a _proof system_, consisting of two parts. 
+  _Axioms_, and _proofs_ which is a finite sequence of $L$-formulas such that every step is either an axiom of follows from the previous steps using an inference rule.
+
+]
+
+#example[
+  An example proof system has the following 4 types of axioms.
+  - All instances of propositional tautologies are axioms.
+  - $[forall x thin phi -> psi] -> [phi -> forall psi]$  as long as $x$ is not free in $phi$.
+  - $forall x -> phi(subs(t,s))$ where $t$ is any $L$-term where the substitution is correct.
+  - $x = x$, \ $x = y -> t(...,x,...) = t(...,y,...)$ for any $L$-term, \ $x = y -> (phi(...,x,...) -> phi(...,y,...))$
+
+  And the following inference rules.
+  - If $phi$ and $phi -> psi$ then $psi$.
+  - If $phi$ then $forall x thin phi$.
+]
+
+We will use the notation $Gamma proves phi$ to mean "$Gamma$ proves $phi$" and define it as the existence of a proof whose final step is $phi$ and every step is either an axiom or an element of $Gamma$ or follows from a previous step or by an inference in $phi$.
+
+#definition[
+  We say that $Gamma$ is consistent if there exists $phi$ such that $Gamma tack.r.not phi$.
+]
+
+By a famous theorem of Gödel that we will not prove in this class we can actually not care about any proof system details.
+#theorem("Gödel's completeness theorem")[
+  Let $Gamma$ be a set of sentences in $L$ then $Gamma$ is consistent if and only if $Gamma$ has a model.
+]
+
+We will not prove this theorem in this class but we will use an important corollary of it.
+
+#corollary("Compactness Theorem")[
+  Let $Gamma$ be a set of $L$-sentences, $Gamma$ has a model if and only if every finite subset of $Gamma$ has a model.
+]
+#proof[
+  The $=>$ direction is immediate, the hard part is the $arrow.l.double$ direction. By Gödel's completeness theorem, we can replace "having a model" with "is consistent".
+  
+    We now prove this by contrapositive, assume that $Gamma$ is inconsistent, then we have $Gamma proves exists x thin (x = x) and (not (x=x))$, now this proof consists of finitely many steps and thus can only use finitely many statements in $Gamma$, let $Gamma_0$ be that subset of statements. Since we can prove a contradiction using $Gamma_0$ it must also be inconsistent, thus one of the finite subsets of $Gamma$ is inconsistent.
+]
+
+As an example use we have the following theorem.
+
+#theorem("Lowenheim-Skolem upwards Theorem")[
+  If $mM$ is an infinite $L$-structure then $forall k > ||mM||$ there exists $mM subm mN$ such that $||mN|| = k$
+]
+#proof[
+  Let us consider the language $L' = L(mM) union {c_alpha : alpha < kappa}$ where $c_alpha$ are new constants.
+  Now set 
+  $
+    Gamma = Th(mM) union { c_alpha eq.not c_beta : alpha eq.not beta < kappa}
+  $
+
+  We want to show now that $Gamma$ is consistent, to see this we use compactness and take an arbitrary finite subset $Gamma_0$. Let $alpha_1,...,alpha_n$ be such that 
+  $ Gamma_0 seq Th(M) union { c_(alpha_i) eq.not c_(alpha_j) : i eq.not j } $
+  choose then any $a_1, ..., a_n$ which are distinct and interpret $c_alpha_i$ as $a_i$ to get a model of $Gamma_0$, hence $Gamma_0$ is consistent.
+
+  Now we have by Gödel's completeness theorem that there exists a model $mN$ such that $mN sat Gamma$ then by construction we have $mM subm mN$ and $||mN|| >= kappa$ and so by #link(<thrm-downwards>)[downwards theorem] we can now decrease the cardinality until we reach $kappa$.
+]
+
+#definition[
+  A _theory_ is a set $Gamma$ of sentences such that if $Gamma proves phi$ then $phi in Gamma$.
+
+  A theory $T$ is _complete_ if for every sentence $phi$ either $phi in T$ or $not phi in T$.
+]
+
+#remark[
+  - For any model $mM$ the theory $Th(mM)$ is complete.
+
+  - For any theory $T$ which is complete, there exists a model $mM$ with $T = Th(mM)$.
+]
+
+#corollary[
+  If $mM$ is infinite then there exists $mN$ such that $mM equiv mN$ but $mM tilde.eq.not mN$.
+]
+#proof[
+  We simply pick some $kappa > ||mM||$ and then use the upwards theorem to get a model $mN$ with $mM subm mN$ with $||mN|| = kappa$, now there can't exist a bijection between the two since they have different cardinalities.
+]
+
+#definition[
+  Let $kappa$ be an infinite cardinal, a theory $T$ is $kappa$-categorical if it has infinitely many models but exactly one model (up to isomorphism) of size $kappa$.
+]
+#proposition[
+  If $T$ is $kappa$-categorical, then $T$ is complete.
+]
+#proof[
+  Suppose that $T$ is not complete, let $sigma$ be such that $sigma in.not T$ and $not sigma in.not T$, then let $T_1 = T union {sigma}$ and $T_2 = T union {not sigma}$. Both are consistent but are not isomorphic, this contradicts the fact that there is only one model of this size.
+]
+
+
+
+
