@@ -80,12 +80,12 @@ All of this is very semantic encoding of a mathematical structure, but we will a
   For a model $mM$ we will sometimes denote $|mM|$ to refer to the universe of a model and $||mM||$ to denote the cardinality of said universe.
 ]
 
-We have defined the symbols of $L$ but how do we speak it? We will need the following
+We have defined the symbols of $L$, but how do we speak it? We will need the following
 - Logical symbols, these will consist of 
   - Connectives: $or, and, not, =>, <=>$
   - Quantifiers: $exists, forall$
 - Auxiliary symbols: Parentheses, Commas
-- Variables: $x,y,z,v$
+- Variables: $x,y,z,v,...$
 - Equivalency Symbol: $=$
 
 As with any language we will build up our language first with nouns and then with phrases.
@@ -165,12 +165,12 @@ In this course, however, we will only be looking at first order logic.
 
   An occurrence of a variable $x$ in a formula $phi$ is _free_ if it is not bound in $phi$. 
 
-  An $L$-_sentence_ is an $L$-formula with no free variable.
+  An $L$-_sentence_ is an $L$-formula with no free variables.
 ]
 
 
 #definition[
-  Let $phi$ be a formula containing $x$, $phi(subs(tau, x))$ will denote the formula obtained by replacing every free occurrence of $x$ by $tau$.
+  Let $phi$ be a formula containing $x$ (which we will follow denote as $phi(x)$), $phi(subs(tau, x))$ will denote the formula obtained by replacing every free occurrence of $x$ by $tau$.
 ]
 
 Now one would expect that substitution should never change the meaning of a logical statement, but in fact, this is not quite right. 
@@ -192,7 +192,7 @@ We extend our definition of interpretation of terms to terms of $L(|mM|)$ by set
   - If $sigma$ is of the form $tau_1 = tau_2$ then $M sat sigma$ if and only if $tau_1^mM = tau_2^mM$ (note that while this may look circular, the first equality is in the space of _terms_ while the second is in the universe $|mM|$)
   - If $sigma$ is of the form $underline(R)_j (tau_1, ..., tau_n)$, then $mM sat sigma$ if and only if $(tau_1^mM, ..., tau_n^mM) in R_j$
   - If $sigma$ is of the form $sigma_1 and sigma_2$ then $mM sat sigma_1 and sigma_2$ if $mM sat sigma_1$ and $mM sat sigma_2$. A similar definition follows for the other logical connectives.
-  - If $sigma$ is of the form $exists x thin phi$ then $mM sat phi$ if there exists $a in |mM|$ with $mM sat phi(subs(underline(a),x))$. Similarly for $forall x thin phi$.
+  - If $sigma$ is of the form $exists x thin phi$ then $mM sat sigma$ if there exists $a in |mM|$ with $mM sat phi(subs(underline(a),x))$. Similarly for $forall x thin phi$.
 ]
 
 
@@ -213,8 +213,8 @@ We extend our definition of interpretation of terms to terms of $L(|mM|)$ by set
   $
   g(underline(c_k)^mM) = underline(c_k)^mN\
   (a_1,...,a_n) in underline(R_j)^mM <=>
-  (f(a_1),...,f(a_n)) in underline(R_j)^mN\
-  f(underline(f_i)^mM (a_1,...,a_n)) = underline(f_i)^mN (a_1,...,a_n)
+  (g(a_1),...,f(a_n)) in underline(R_j)^mN\
+  g(underline(f_i)^mM (a_1,...,a_n)) = underline(f_i)^mN (a_1,...,a_n)
   $
 
   We write $mM subm(eq.prec) thin thin mN$ to mean $mM$ is an elementary substructure of $mN$ which is true if $mM seq mN$ and for every formula $phi(bar(x))$ and for every $bar(a) seq |mM|$ we have 
