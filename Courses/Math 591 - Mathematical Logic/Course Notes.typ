@@ -196,14 +196,14 @@ We extend our definition of interpretation of terms to terms of $L(|mM|)$ by set
   - If $sigma$ is of the form $exists x thin phi$ then $mM sat sigma$ if there exists $a in |mM|$ with $mM sat phi(subs(underline(a),x))$. Similarly for $forall x thin phi$.
 ]
 
-
+== Model equivalences
 #definition[
   Let $mM$ be a model. The _theory_ of $mM$ is defined also
   $
   Th(mM) = { sigma "is an" L"-sentence" : mM sat sigma}
   $
   
-  We say that two $L$-structures, $mM$ and $mN$, are elementary equivalent, and write $mM equiv mN$ if $Th(mM) = Th(mN)$.
+  We say that two $L$-structures, $mM$ and $mN$, are elementarily equivalent, and write $mM equiv mN$ if $Th(mM) = Th(mN)$.
 
   We write that $mM seq mN$ to mean that $mM$ is a substructure of $mN$, meaning that
   $ 
@@ -338,7 +338,7 @@ As an example use we have the following theorem.
 #proof[
   We simply pick some $kappa > ||mM||$ and then use the upwards theorem to get a model $mN$ with $mM subm mN$ with $||mN|| = kappa$, now there can't exist a bijection between the two since they have different cardinalities.
 ]
-
+== Categoricity
 #definition[
   Let $kappa$ be an infinite cardinal, a theory $T$ is $kappa$-categorical if it has infinitely many models but exactly one model (up to isomorphism) of size $kappa$.
 ]

@@ -2,7 +2,7 @@
 #import "@preview/ctheorems:1.1.0": *
 #import "../../../Templates/math.typ": *
 #import "../../../Templates/assignment.typ": *
-#show: doc => generic(title: "Mathematical Logic Notes", name: "Jacob Reznikov", doc)
+#show: doc => generic(title: "Assignment 1", name: "Jacob Reznikov", doc)
 #show: doc => NumberingAfter(doc)
 #show: thmrules
 #let ve = $epsilon$
@@ -65,7 +65,7 @@ $
 $
 we then need to check that all functions map as we expect, for any function $f_j$ with arity $k_j$ define the auxiliary function $i(j,c_1,c_2,...,c_(k_j))$ implicitly by
 $
-  (a_(i(j,c_1,c_2,...,c_(k_j))) = f_j^mM (a_(c_1), a_(c_2), ..., a_(c_(k_j))) 
+  a_(i(j,c_1,c_2,...,c_(k_j))) = f_j^mM (a_(c_1), a_(c_2), ..., a_(c_(k_j))) 
 $
 it is essentially the index translation of $f_j$. We then have the formula
 $
@@ -95,7 +95,7 @@ $
 $
 Finally then, our statement $sigma$ is 
 $
-    exists y_1 thin exists y_2 thin ... thin exists y_n 
+   sigma = exists y_1 thin exists y_2 thin ... thin exists y_n 
   thin
   (and.big_(i eq.not j) (y_i eq.not y_j)
   thin
@@ -109,7 +109,7 @@ $
   and
   S C)
 $
-
+If this statement holds then the map $a_i -> y_i$ will form an isomorphism.
 #pagebreak(weak: true)
 
 = Question
@@ -151,26 +151,22 @@ First we will need a small lemma to help us.
 First we will enumerate $A$ as ${a_0,a_1,...}$ and $B$ as ${b_0,b_1,...}$.
 We now construct an isomorphism $f : A -> B$ with the back and forth method. Our base case will be the function $f : {0,1} -> {0,1}$ defined as identity. In the inductive case we will assume we have constructed a partial isomorphism $f_n : A_n -> B_n$ with $A_n seq A$, $B_n seq B$ and both $A_n$ and $B_n$ are boolean subalgebra (closed under $or,and,not$).
 #pagebreak(weak: true)
-For an even step $n = 2k$ we take $a_i$ to be the element of $A backslash A_n$ of smallest index. Now $a_i$ can be related to elements of $A_n$ in one of 4 ways 
-  - $a_i <= x$ for some $x in A_n$
-  - $a_i >= x$ for some $x in A_n$
+For an even step $n = 2k$ we take $a_i$ to be the element of $A backslash A_n$ of smallest index. Now since $A_n$ is a subalgebra $a_i$ can be related to elements of $A_n$ in one of 2 ways 
   - $a_i or x = y$ for some $x,y in A_n$
   - $a_i and x = y$ for some $x,y in A_n$
 We will use the previous lemma to convert all of these relations into upper and lower bounds.
-  - A relation of the form $a_i <= x$ will contribute the upper bound $u = x$
-  - A relation of the form $a_i >= x$ will contribute the lower bound $l = x$
   - A relation of the form $a_i or x = y$ will contribute the lower bound $l = y and (not x)$ and also contribute the upper bound $u = y$
   - A relation of the form $a_i and x = y$ contributes the upper bound $u = (not x) or y$ and the lower bound $l = y$
 We then congregate all of these lower and upper bounds into a set of lower bounds $L$ and a set of upper bounds $U$, we then set $u' = min(U)$ and $l' = max(L)$.
-Then all the relations of $a_i$ are completely encoded by $l' < a_j < u'$ where by inductive hypothesis both $l'$ and $u'$ are in $A_n$.
-We then want to find an element $b_i$ such that $f(l') < b_i < f(u')$. 
+Then all the relations of $a_i$ are completely encoded by $l' < a_j < u'$ where both $l'$ and $u'$ are in $A_n$ since its a subalgebra.
+We then want to find an element $b_j$ such that $f(l') < b_j < f(u')$. 
 #lemma(numbering: none)[
   Any model $mM$ of $ICAB$ is dense.
 ]
 #proof[
   Let $x < y$ then since it is atomless there exist a nontrivial element $z$ such that $z < y and (not x)$ then $x < x or z < y$.
 ] 
-And so we can always find an appropriate $b_j$ and so we set $f(a_i) = b_j$ and then we set $A_(n+1) = angle.l A_n union {a_i} angle.r$ and then extend $f$ from $A_n union {a_i}$ to $A_(n+1)$ in the natural way.
+From this lemma we can always find an appropriate $b_j$ and so we set $f(a_i) = b_j$ and then we set $A_(n+1) = angle.l A_n union {a_i} angle.r$ and then extend $f$ from $A_n union {a_i}$ to $A_(n+1)$ in the natural way.
 
 On odd steps we do the exact same thing but from $B$ to $A$ instead.
 
@@ -201,9 +197,11 @@ and define the standard metric on $|mM|$, $d_mM (x,y) = |x-y|$.
 Now we construct the winning strategy for the prover, we will denote by $A_k$ the current paired elements of $|mM|$, by $B_k$ the current paired elements of $|mN|$ and by $f_k$ the current partial isomorphism.
 
 At step $k$, if the spoiler picks $a in |mM|$, we first check if $d(a, A_k) > 2^(n-k)$. 
-  - If it is then we pick some $b in |mN|$ such that $d(b,B_k) >= d(a,A_k)$ and pair $a$ with $b$, that is we set $f_(k+1)(a) = b$. 
+  - If it is then we pick some $b in |mN|$ such that $d(b,B_k) >= d(a,A_k)$ and pair $a$ with $b$, that is we set $f_(k+1)(a) = b$.
   - If instead we have $d(a,A_k) <= 2^(n-k)$ then let $a_i$ be the closest element of $A_k$ to $a$. Then if $f_k (a_i) = (n,j)$ then we set $f_(k+1)(a) = (n - a_i + a, j)$.
-If the spoiler picks $b in |mM|$ we do the exact same thing but backwards.
+If the spoiler picks $b in |mM|$, we first check if $d(b, B_k) > 2^(n-k)$
+  - If it is then we pick some $a in |mM|$ such that $d(a,A_k) >= d(b,B_k)$ and pair $a$ with $b$, that is we set $f_(k+1)(a) = b$.
+  - If instead we have $d(b, B_k) <= 2^(n-k)$ then let $b_i$ be the closest element of $B_k$ to $b$. Since their distance is not infinity we have that both $b$ and $b_i$ are in the same branch so we have $b = (n,j), b_i = (n_i,j)$ for some $j$. Then since $b_i in B_k$ we have $f_k (a_i) = b_i$ for some $a_i in A_k$. We then set $f(a_i - n_i + n) = b$.
 
 We now prove that this process is well defined (it might not be since in the second case there is no immediate guarantee that $(n - a_i + a,j)$ isn't already in the image of something), and that it results in a partial isomorphism.
 
@@ -218,8 +216,8 @@ We now prove that this process is well defined (it might not be since in the sec
 ]
 #proof[
   We prove by induction, at the start we have no pairings $(a',b')$ so this statement holds trivially. Now assume that this is true at step $k - 1$. 
-  - If the pair $(a,b)$ is added as in the first case then they might not be related to any other pairing but both $a$ and $b$ are at least $2^(n-k)$ distance away from all other elements of $A_n,B_n$.
-  - If the pair $(a,b)$ is added as in the second case, then by construction they are related to $(a_i, f_k (a_i))$. We can also easily see that $R$ is transitive and so
+  - If the pair $(a,b)$ is added as in the first or third case then they might not be related to any other pairing but both $a$ and $b$ are at least $2^(n-k)$ distance away from all other elements of $A_n,B_n$.
+  - If the pair $(a,b)$ is added as in the second or fourth case case, then by construction they are related to $(a_i, f_k (a_i))$. We can also easily see that $R$ is transitive and so
     $
       (a, b) cancel(R) (a',b') &=> (a_i,f_k (a_i)) cancel(R) (a',b') 
       \ &=> d(a_i, a') >= 2^(n-k+1) and d(f_k (a_i),b') >= 2^(n-k+1)
@@ -241,7 +239,9 @@ This also proves that the end result is a partial isomorphism, to see this note 
 $
   forall a thin forall a' (d(a,a') <= 1 or d(f(a), f(a')) <= 1 => (a, f(a)) R (a', f(a')))
 $
-and so the lemma applied to step $k = n$ is precisely the contrapositive.
+Now notice that the lemma's statement only applies to the last placed pair, but for all the other pairs their distance to their closest unrelated pair can only decrease if a new pair is placed so in fact the lemma holds for all the pairs that exist at step $k$.
+
+But after this modification, the lemma when applied with step $n = k$ is exactly the contrapositive of the statement above.
 
 //  - If the spoiler chooses an element $a in |mM|$ with $d(a, C_i) > 3^n$ for all $i$, then the prover adds $a$ to any empty collection $C_(i_0)$, finds an element $b in |mN|$ with $d(b, D_i) >= d(a,C_i)$ for all $i$, adds $b$ to $D_(i_0)$, and finally maps $a$ to $b$.
 //  - If the spoiler chooses an element $b in |mN|$ with $d(b, D_i) > 3^n$ for all $i$, then the prover adds $b$ to any empty collection $D_(i_0)$, finds an element $a in |mM|$ with $d(a, C_i) >= d(b, D_i)$ for all $i$, adds $a$ to $C_(i_0)$, and finally maps $a$ to $b$.
