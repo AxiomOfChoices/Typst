@@ -239,7 +239,7 @@ We extend our definition of interpretation of terms to terms of $L(|mM|)$ by set
   - The connective types are immediate.
   - Let us assume $phi(bar(x)) = exists y thin psi(y, bar(x))$. Then $mM sat phi(bar(a))$ iff $mM sat exists y thin psi(y, bar(a))$ iff there exists $b in A$ with $mM sat psi(b, bar(a))$. But by definition this last form is equivalent to $A sat exists y thin psi(y, bar(a))$
 
-  Assume on the other hand that $A$ is the universe of an elementary substructure $cal(A)$, then we need to prove the T-V test holds, assume then that for some formula $phi(x,overline(y))$ in $L$ and some $overline(a) seq A$ we have $mM sat exists x thin phi(x, overline(a))$ and so since it is an elementary substructure we also have that $cal(A) sat exists x thin phi(x, overline(a))$ and so we must have some $x in A$ such that $phi(x,overline(a))$ holds.
+  Assume, on the other hand, that $A$ is the universe of an elementary substructure $cal(A)$, then we need to prove the T-V test holds, assume then that for some formula $phi(x,overline(y))$ in $L$ and some $overline(a) seq A$ we have $mM sat exists x thin phi(x, overline(a))$ and so since it is an elementary substructure we also have that $cal(A) sat exists x thin phi(x, overline(a))$ and so we must have some $x in A$ such that $phi(x,overline(a))$ holds.
 ]
 
 
@@ -251,9 +251,9 @@ We extend our definition of interpretation of terms to terms of $L(|mM|)$ by set
 ]<thrm-downwards>
 
 #proof[
-  Set $kappa = |A| + |L| + aleph_0$, by transfinite induction on $kappa$ we will define a sequence $a_alpha$ for $alpha < kappa$ of elements in $mM$, where at each step $alpha$ we will try to satisfy a formula $phi_a (x) in L(A union a_(< alpha))$, we will then set $|mN| = { a_alpha : alpha < kappa }$.
+  Using induction we will define a sequence $A_n$ of subsets of $mM$, where at each step $n$ we will try to satisfy all statements in $L(A_(n-1))$, we will then set $|mN| = union.big_(n) A_n$.
 
-  To formalize this, consider $kappa times kappa$ with lexicographical ordering, then for all elements $(0,alpha)$ we will enumerate the formulas of $L$ and the substitutions of $A$ elements as parameters, pick an element $a_(0,alpha)$ in $|mM|$ making the formula true, and add it to $A$. For all elements $(1,alpha)$ we do the same thing but now our parameters can also include $a_(0,0)$, for $(2,alpha)$ our parameters can include $a_(0,1)$, for $(3,alpha)$ our parameters can include $a_(1,0)$, and we will continue in this pattern and eventually include witnesses to every formula we need. The statement follows then from the fact that $|kappa times kappa| = |kappa|$ for all ordinals larger than $omega_0$.  
+  First we set $A_0 = A$, then at step $n > 0$, we will consider all formulas in $L(A_(n-1))$ (there are $|kappa times ZZ| = |kappa|$ many of them) and for each formula $phi(overline(x))$ we will pick some collection of elements $overline(a) seq |mM|$ such that $mM sat phi(overline(a))$, then we will add $overline(a)$ to $A_(n-1)$, adding these elements for each formula gives us $A_n$.
 ]
 
 #remark("Skolem's Paradox")[
