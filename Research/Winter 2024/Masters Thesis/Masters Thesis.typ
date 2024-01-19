@@ -112,7 +112,7 @@ Then we define the second fundamental form $h$ to be the bilinear form given by
 $
    h(X,Y) = ip(X, ov(nabla)_Y nu).
 $
-This second fundamental form encodes within itself how the manifold $M$ lies inside $N$, it also carries with it a number of useful properties, the most important of which is that it is symmetric, see @leeIntroductionRiemannianManifolds2018a[p.~227] for details. Also of much importance is the trace of this form, taken with respect to the metric, which we write as $H = h_(i i)$, which is called the _mean curvature_.
+This second fundamental form encodes within itself how the manifold $M$ lies inside $N$, it also carries with it a number of useful properties, the most important of which is that it is symmetric, see @leeIntroductionRiemannianManifolds2018a[p.~227] for details. Also of much importance is the trace of this form, taken with respect to the metric, which we write as $H = h_(i i)$, which is called the _mean curvature_. Also its eigenvalues $kappa_i$ called _principle curvatures_.
 
 
 Let us write up some properties of the second fundamental form.
@@ -171,17 +171,17 @@ and we will also use the notation $|A|^2$ to denote the squared norm of $h$ or $
 
 We will also need another well known geometric identity,
 #lemma("Codazzi Equation")[
-  We have for any $X,Y,Z in T_p M$ 
+  We have for any $X,Y,Z in T_p M$
   $
-    ov(Rm)(X,Y,Z,nu) = - (nabla h)(Z,X,Y) + (nabla h)(Z,Y,X)
+    ov(Rm)(X,Y,Z,nu) = - (nabla_X h)(Y,Z) + (nabla_Y h)(X,Z)
   $
   in particular in coordinates we have 
   $
-    ov(Rm)_(i j k nu) = - nabla_j h_(k i) + nabla_i h_(k j)
+    ov(Rm)_(i j k nu) = - nabla_i h_(j k) + nabla_j h_(i k)
   $
 ]<lemma-codazzi>
 #proof[
-  See @leeIntroductionRiemannianManifolds2018a[p.~237],
+  See @petersenRiemannianGeometry2016[p.~93], note that some references have a similar equation of opposite sign due to difference in defining the second fundamental form.
 ]
 
 A conformal vector field is a vector field $X$ with the property that $lie_X ov(g) = 2 phi g$, where $phi$ is any smooth function called the _conformal factor_ of $X$. The Lie derivative is a little hard to work with for our purposes so we will follow the calculations of @deshmukhGeometryConformalVector2017 to obtain better formulations for the properties of conformal vector fields
@@ -210,8 +210,8 @@ A conformal vector field is a vector field $X$ with the property that $lie_X ov(
   $
 ]
 From this we see that an equivalent characterization of a Conformal vector field is $2 ip(ov(nabla)_Y X, Z) = 2 phi ip(Y,Z) + dif eta(Y,Z)$
-#pagebreak(weak: true)
-We now define the skew-symmetric endomorphism $psi$ by 
+
+We now define the skew-symmetric endomorphism $psi$ by
 $
 dif eta(Y,Z) = 2 ip(psi Y,Z)
 $
@@ -238,25 +238,25 @@ To see why conformal vector fields are so useful in the study of the Isoperimetr
 #lemma[
   Let $M seq N$ be an admissible hypersurface as defined above, and let $X$ be a conformal vector field on $N$ with conformal factor $phi$, the following identities hold
   $
-    integral_M n phi - H u = 0 
+    integral_M n phi - H u = 0
   $
   and 
   $
-    integral_M H (n phi - H u) = n/(n-1) integral_M ip(ov(Rm)(nu, e_i)e_i, X - u nu) - integral_M u sum_(i < j) (kappa_i - kappa_j)^2
+    integral_M H (n phi - H u) = n/(n-1) integral_M ov(Ric)(nu, X - u nu) - 1/n integral_M u sum_(i < j) (kappa_i - kappa_j)^2
   $
   where $u = ip(X, nu)$ is called the support function.
 ]
 #proof[
-  First we will define the vector field $Y = X - u nu$, which is the projection of $X$ onto the tangent space of $M$. Now consider the divergence of $Y$ on $M$, for an orthonormal frame $e_i$ of $M$ we have 
+  First we will define the vector field $Y = X - u nu$, which is the projection of $X$ onto the tangent space of $M$. Now consider the divergence of $Y$ on $M$, for an orthonormal frame $e_i$ of $M$ we have
   $
-    div_M (Y) = tr(nabla_j ip(Y, e_i)) 
+    div_M (Y) = tr(nabla_j ip(Y, e_i))
     = tr(ov(nabla)_j ip(X, e_i))
     = tr(ip(ov(nabla)_j X, e_i) + ip(X, ov(nabla)_j e_i)).
   $
   Now we combine the fact that $X$ is a conformal vector field and the fact that the trace of an endomorphism is the same as the trace of its symmetrization, giving us that 
   $
-    tr(ip(ov(nabla)_j X, e_i)) = tr((ov(nabla) X)_(j i)) 
-    = tr(Sym(ov(nabla) X)_(i j)) 
+    tr(ip(ov(nabla)_j X, e_i)) = tr((ov(nabla) X)_(j i))
+    = tr(Sym(ov(nabla) X)_(i j))
     = tr(phi ov(g)_(i j))
   $
   Now knowing that in our coordinates $ov(g)_(i j) = delta_(i j)$ and that the trace of $delta_(i j)$ is $dim M$ we get
@@ -281,7 +281,20 @@ To see why conformal vector fields are so useful in the study of the Isoperimetr
     \ &= ip(X, e_k) (nabla_k h_(ell ell) - nabla_i h_(j k)) + H(n phi - H u) - H phi + u|A|^2
     \ &= ip(X, e_k) (nabla_k h_(ell ell) - nabla_ell h_(ell k)) + H((n-1)phi - H u) + u|A|^2
   $
-  We now use the #link(<lemma-codazzi>)[Codazzi equation]
+  We now use the #link(<lemma-codazzi>)[Codazzi equation] to get
+  $
+    div_M Y'
+    & = ip(X, e_k) ov(Rm)_(ell k ell nu) + H((n-1)phi - H u) + u|A|^2
+    \ &= ip(ov(Rm)(e_ell, Y) e_ell, nu) + H((n-1)phi - H u) + u|A|^2
+  $
+  now swapping the last two indices on the Riemann tensor flips its sign gives us the Ricci tensor, then applying divergence theorem once more gives us
+  $
+    integral_M H ((n - 1)phi - H u) &= integral_M ov(Ric)(nu, Y) - integral_M u|A|^2
+    \ (n-1)/n integral_M H (n phi - n/(n-1) H u) &= integral_M ov(Ric)(nu, Y) - integral_M u|A|^2
+    \ integral_M H (n phi - n/(n-1) H u) &= n/(n-1) integral_M ov(Ric)(nu, Y) - integral_M n/(n-1) u|A|^2
+    \ integral_M H (n phi - H u) &= n/(n-1) integral_M ov(Ric)(nu, Y) - integral_M u(n|A|^2 - H^2)/(n - 1)
+    \ integral_M H (n phi - H u) &= n/(n-1) integral_M ov(Ric)(nu, Y) - 1/(n - 1) integral_M u sum_(i < j) (kappa_i - kappa_j)^2
+  $
 ]
 
 == Partial Differential Equations
