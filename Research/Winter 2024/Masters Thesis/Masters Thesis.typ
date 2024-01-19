@@ -32,6 +32,7 @@
 #let Ric = math.op("Ric")
 #let lie = $cal(L)$
 #let Sym = math.op("Sym")
+#let div = math.op("div")
 #show: outline_style
 
 
@@ -111,7 +112,8 @@ Then we define the second fundamental form $h$ to be the bilinear form given by
 $
    h(X,Y) = ip(X, ov(nabla)_Y nu).
 $
-This second fundamental form encodes within itself how the manifold $M$ lies inside $N$, it also carries with it a number of useful properties, the most important of which is that it is symmetric, see @leeIntroductionRiemannianManifolds2018a[p.~227] for details. Of much importance is the trace of this form, taken with respect to the metric $H = h_(i i)$ called the _mean curvature_.
+This second fundamental form encodes within itself how the manifold $M$ lies inside $N$, it also carries with it a number of useful properties, the most important of which is that it is symmetric, see @leeIntroductionRiemannianManifolds2018a[p.~227] for details. Also of much importance is the trace of this form, taken with respect to the metric, which we write as $H = h_(i i)$, which is called the _mean curvature_.
+
 
 Let us write up some properties of the second fundamental form.
 #proposition[
@@ -161,6 +163,12 @@ $
 $
 ]
 
+#remark[We will also use the notation $A(X)$ to mean the endomorphism satisfying
+$ h(X,Y) = ip(A(X), Y) $
+which is given in coordinates by $A^i_j = g^(i k) h_(k j)$
+and we will also use the notation $|A|^2$ to denote the squared norm of $h$ or $A$.
+]
+
 We will also need another well known geometric identity,
 #lemma("Codazzi Equation")[
   We have for any $X,Y,Z in T_p M$ 
@@ -169,9 +177,9 @@ We will also need another well known geometric identity,
   $
   in particular in coordinates we have 
   $
-    ov(Rm)_(i j k nu) = - h_(k i; j) + h_(k j; i)
+    ov(Rm)_(i j k nu) = - nabla_j h_(k i) + nabla_i h_(k j)
   $
-]
+]<lemma-codazzi>
 #proof[
   See @leeIntroductionRiemannianManifolds2018a[p.~237],
 ]
@@ -207,9 +215,23 @@ We now define the skew-symmetric endomorphism $psi$ by
 $
 dif eta(Y,Z) = 2 ip(psi Y,Z)
 $
-This endomorphism is then called the _associate tensor field_ of $X$.
+This endomorphism is then called the _associate tensor field_ of $X$, and with it we can rewrite the above equation as
+$
+  ip(nabla_Y X, Z) = phi ip(Y,Z) + ip(psi Y, Z).
+$
+Note that this is also the decomposition of the $nabla X$ into its symmetric and anti-symmetric parts, that is $
+  Sym(nabla X) = phi g
+$
 
 In the special case that $phi = 0$ we call $X$ a Killing vector field.
+
+#definition[
+  Given a fixed vector field $X$ on $N$ we define the support function $u_X$ on $M$ by
+  $
+    u_X := ip(X,nu)
+  $
+  where $nu$ is the normal vector to $M$.
+]
 
 To see why conformal vector fields are so useful in the study of the Isoperimetric inequality, we will now derive a key result that was the basis of the results by Guan, Li and Wang and will also be the basis of the results in this thesis.
 
@@ -220,14 +242,47 @@ To see why conformal vector fields are so useful in the study of the Isoperimetr
   $
   and 
   $
-    integral_M H (n phi - H u) = n/(n-1) integral_M u ip(ov(Rm)(nu, e_i)e_i, X - u nu) - integral_M u sum_(i < j) (kappa_i - kappa_j)^2
+    integral_M H (n phi - H u) = n/(n-1) integral_M ip(ov(Rm)(nu, e_i)e_i, X - u nu) - integral_M u sum_(i < j) (kappa_i - kappa_j)^2
   $
   where $u = ip(X, nu)$ is called the support function.
 ]
 #proof[
-  First we will define the vector field $Y = X - u nu$, which is the projection of $X$ onto the tangent space of $M$. Now consider the divergence of $X$, we can rewrite it as
-]
+  First we will define the vector field $Y = X - u nu$, which is the projection of $X$ onto the tangent space of $M$. Now consider the divergence of $Y$ on $M$, for an orthonormal frame $e_i$ of $M$ we have 
+  $
+    div_M (Y) = tr(nabla_j ip(Y, e_i)) 
+    = tr(ov(nabla)_j ip(X, e_i))
+    = tr(ip(ov(nabla)_j X, e_i) + ip(X, ov(nabla)_j e_i)).
+  $
+  Now we combine the fact that $X$ is a conformal vector field and the fact that the trace of an endomorphism is the same as the trace of its symmetrization, giving us that 
+  $
+    tr(ip(ov(nabla)_j X, e_i)) = tr((ov(nabla) X)_(j i)) 
+    = tr(Sym(ov(nabla) X)_(i j)) 
+    = tr(phi ov(g)_(i j))
+  $
+  Now knowing that in our coordinates $ov(g)_(i j) = delta_(i j)$ and that the trace of $delta_(i j)$ is $dim M$ we get
+  $
+    div_M (Y) = tr(phi ov(g) + ip(X, -h_(i j) nu))
+    = n phi - H u
+  $
+  then since $M$ is closed we have by divergence theorem
+  $
+    integral_M div_M (Y) = integral_M n phi - H u = 0
+  $
 
+  Secondly we will consider the vector field $Y' = (H I - A) Y$, its divergence gives us
+  $
+    div_M Y'
+    & =
+    tr(nabla_j (H I - A)^i_k Y^k)
+    =
+    tr(nabla_j ((H I - A)^i_k ip(X, e_k)))
+    \ &= tr(ip(X, e_k) nabla_j (H I - A)^i_k + (H I - A)^i_k ov(nabla)_j ip(X, e_k))
+    \ &= tr(ip(X, e_k) (nabla_j h_(ell ell) delta^i_k - nabla_j h_(i k)) + (H I - A)^i_k (phi delta_(j k) - u h_(j k)))
+    \ &= ip(X, e_k) (nabla_k h_(ell ell) - nabla_i h_(j k)) + H(n phi - H u) - H phi + u|A|^2
+    \ &= ip(X, e_k) (nabla_k h_(ell ell) - nabla_ell h_(ell k)) + H((n-1)phi - H u) + u|A|^2
+  $
+  We now use the #link(<lemma-codazzi>)[Codazzi equation]
+]
 
 == Partial Differential Equations
 The Partial Differential Equations (PDEs) we will be dealing with most in this document are parabolic PDEs, so we will go over their properties first.
