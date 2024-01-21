@@ -1,9 +1,10 @@
-#import "../../Templates/generic.typ": generic
+#import "../../Templates/generic.typ": latex
 #import "../../Templates/notes.typ": chapter_heading
 #import "@preview/ctheorems:1.1.0": *
 #import "../../Templates/math.typ": *
-#show: doc => generic(title: "Mathematical Logic Notes", name: "Jacob Reznikov", doc)
-#show: doc => chapter_heading(doc)
+#import "../../Templates/monograph.typ": frontpage
+#show: latex
+#show: chapter_heading
 #show: thmrules
 #let ve = $epsilon$
 #let seq = $subset.eq$
@@ -19,6 +20,12 @@
 #let mN = $cal(N)$
 #let bar(el) = $overline(#el)$
 #let subs(a, b) = { return $attach(slash, tl: #a, br: #b)$ }
+
+#show: doc => frontpage(
+  toptitle: [Mathematical Logic],
+  name: [Jacob Reznikov],
+middletitle: [My course notes for the Winter 2024 Mathematical Logic course by #link("https://www.math.mcgill.ca/msabok/")[Marcin Sabok] at McGill],
+doc)
 
 
 = Basic Definitions and Concepts

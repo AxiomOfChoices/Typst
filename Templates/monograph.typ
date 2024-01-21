@@ -98,5 +98,6 @@ align(center)[
 #info
 ]
 
+pagebreak(weak: true)
 doc
 }
