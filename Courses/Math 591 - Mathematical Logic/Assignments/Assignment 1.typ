@@ -118,57 +118,111 @@ Show that the theory of the infinite countable atomless Boolean algebra is $alep
 
 == Solution
 #let ICAB = $I C A B$
-We will let $ICAB$ denote the set of statements encoding generating Let $(A, or, and, not)$ and $(B, or, and, not)$ be two models of $ICAB$.
-We write $x <= y$ to denote $exists z : x or z = y$ or equivalently $exists z : y and z = x$.
-First we will need a small lemma to help us.
-#lemma(numbering: none)[
-  Assuming $x <= y$ then for any $b$
-  $
-    b or x = y <=> y and (not x) <= b <= y
-    \
-    b and y = x <=> x <= b <= (not y) or x
-  $
-]
-#proof[
-  For the first statement we first prove the $=>$ direction, clearly since $b or x = y$ we have that $b <= y$. We also have 
-  $
-    b and (not x) = (b or x) and (not x) = y and (not x)
-  $
-  and so $y and (not x) <= b$
+We will let $ICAB$ denote the set of statements encoding an infinite countable atomless Boolean algebra.
+Let $(A, or, and, not)$ and $(B, or, and, not)$ be two models of $ICAB$.
+// We write $x <= y$ to denote $x or y = y$ or equivalently $y and x = x$. It is trivially a partial order on the universe.
 
-  For the other direction assume that $y and (not x) <= b <= y$
-  then we have 
-  $
-    b or x <= y or y = y
-  $
-  and also
-  $
-    y = x or (y and (not x)) <= x or b
-  $
-  and thus $b or x = y$
-]
+We will find an isomorphism between the two using a modified back-and-forth method. We will construct a partial isomorphism $f_n : A_n -> B_n$ in steps where at each step $n$ we have $A_n$ is a finite subalgebra of $A$ and $B_n$ is a finite subalgebra of $B$. At step $0$ we start with the trivial subalgebra ${0,1}$ for both $A_0$ and $B_0$, and we induct as follows.
 
-First we will enumerate $A$ as ${a_0,a_1,...}$ and $B$ as ${b_0,b_1,...}$.
-We now construct an isomorphism $f : A -> B$ with the back and forth method. Our base case will be the function $f : {0,1} -> {0,1}$ defined as identity. In the inductive case we will assume we have constructed a partial isomorphism $f_n : A_n -> B_n$ with $A_n seq A$, $B_n seq B$ and both $A_n$ and $B_n$ are boolean subalgebra (closed under $or,and,not$).
-#pagebreak(weak: true)
-For an even step $n = 2k$ we take $a_i$ to be the element of $A backslash A_n$ of smallest index. Now since $A_n$ is a subalgebra $a_i$ can be related to elements of $A_n$ in one of 2 ways 
-  - $a_i or x = y$ for some $x,y in A_n$
-  - $a_i and x = y$ for some $x,y in A_n$
-We will use the previous lemma to convert all of these relations into upper and lower bounds.
-  - A relation of the form $a_i or x = y$ will contribute the lower bound $l = y and (not x)$ and also contribute the upper bound $u = y$
-  - A relation of the form $a_i and x = y$ contributes the upper bound $u = (not x) or y$ and the lower bound $l = y$
-We then congregate all of these lower and upper bounds into a set of lower bounds $L$ and a set of upper bounds $U$, we then set $u' = min(U)$ and $l' = max(L)$.
-Then all the relations of $a_i$ are completely encoded by $l' < a_j < u'$ where both $l'$ and $u'$ are in $A_n$ since its a subalgebra.
-We then want to find an element $b_j$ such that $f(l') < b_j < f(u')$. 
-#lemma(numbering: none)[
-  Any model $mM$ of $ICAB$ is dense.
-]
-#proof[
-  Let $x < y$ then since it is atomless there exist a nontrivial element $z$ such that $z < y and (not x)$ then $x < x or z < y$.
-] 
-From this lemma we can always find an appropriate $b_j$ and so we set $f(a_i) = b_j$ and then we set $A_(n+1) = angle.l A_n union {a_i} angle.r$ and then extend $f$ from $A_n union {a_i}$ to $A_(n+1)$ in the natural way.
+First note that $A_(n-1),B_(n-1)$ are both atomic since they are finite and thus have bases of atoms ${a_1,...,a_k}, {b_1,...,b_k}$ such that $f_(n-1)(a_i) = b_i$. We want to add an element $a in A backslash A_(n-1)$ to $A_(n-1)$, extend the map $f_(n-1)$ to map $a$ to some element $b in B$, and then extend it naturally on $A_n := angle.l a,A_(n-1) angle.r$, giving us $f_n$.
 
-On odd steps we do the exact same thing but from $B$ to $A$ instead.
+The key part here is finding an appropriate element $b$ that related to $B_(n-1)$ in the same way that $a$ related to $A_(n-1)$. Our atoms then will be quite helpful as the relations of $a$ with the atoms $a_i$ will encode all the information we need. In particular, there are only 3 ways in which $a$ can relate to a given basis element $a_i$, these are
+$
+  phi_1(a,a_i) &= (a and a_i = 0) "or" \
+  phi_2(a,a_i) &= (0 < a and a_i < a_i) "or"\
+  phi_3(a,a_i) &= (a and a_i = a_i).
+$
+It is easy to see that one of these formulas must hold for every $i$. We can then say that for some indices $c_i in {1,2,3}$ we have that the statement
+$
+  and.big_(i in [k]) phi_(c_i) (a, a_i)
+$
+holds true.
+Our job then becomes to find an element $b in B$ such that the statement
+$
+  and.big_(i in [k]) phi_(c_i) (b, f_(n-1) (a_i))
+$
+is true. This is quite simple, for each $i$, if $c_i = 1$ we set $d_i = 0$, if $c_i = 2$ we use atomlessness to set $d_i$ to be anything satisfying with $d_i < f(a_i)$, if $c_i = 3$ we set $d_i = f(a_i)$. Finally we just union the $d_i$'s together and that will be our desired $b$. 
+
+// Let us first derive a small lemma about the structure of Boolean algebras.
+// #lemma(numbering: none)[
+//   Assuming $x <= y$ then for any $b$
+//   $
+//     b or x = y <=> y and (not x) <= b <= y
+//     \
+//     b and y = x <=> x <= b <= (not y) or x
+//   $
+// ]
+// #proof[
+//   For the first statement we first prove the $=>$ direction, clearly since $b or x = y$ we have that $b <= y$. We also have 
+//   $
+//     b and (not x) = (b or x) and (not x) = y and (not x)
+//   $
+//   and so $y and (not x) <= b$
+//
+//   For the other direction assume that $y and (not x) <= b <= y$
+//   then we have 
+//   $
+//     b or x <= y or y = y
+//   $
+//   and also
+//   $
+//     y = x or (y and (not x)) <= x or b
+//   $
+//   and thus $b or x = y$
+// ]
+//
+// From this lemma we see that the relations of a given element $b$ to a subalgebra $S$ are entirely encoded by relations of the form $b <= x, b >= x$ for $x in S$.
+//
+// We now define the procedure we will use as our version of density in the back and forth argument.
+// #definition(numbering: none)[
+//   Let $U$ be the universe of our $ICAB$ model then for a subalgebra $S seq U$ and a symbol $a$. We define a _summary_ of $a$ with respect to $S$ to be a partition of $S$ into sets $G T, L T, I$, which we will think of representing the elements of $S$ larger than, smaller than and incomparable to $a$, respectively.
+//
+//   We say that a summary is _consistent_ if the following two statements holds 
+//   $
+//     forall x forall y (x <= y => ((x in G T => y in G T) and (y in L T => x in L T)))
+//     \ forall x forall y (x in L T and y in G T => x <= y)
+//     \ forall x forall y (x,y in L T => x or y in L T) and (x,y in G T => x and y in G T)
+//   $
+// ]
+// In essence a consistent summary will encode the different relations an element $a$ could have to a subalgebra $S$, one easily checks that the conditions for consistency are all satisfied for any element $x in U backslash S$.
+// The usefulness of this definition comes from the fact that these conditions are also, in a sense, sufficient.
+// #lemma(numbering: none)[
+//   Let $G T, L T, I$ be a summary of a symbol $a$ with respect to an algebra $S$. If the summary is consistent then there exists an element $x in U$ that instantiates this summary, in the sense that
+//   $
+//     G T = { y in S : x <= y }, L T = { y in S : x >= y }, I = S backslash (G T union L T)
+//   $
+// ]
+// #proof[
+//   First let $u = and.big_(x in G T) x, l = or.big_(x in L T)$ then we certainly need $l <= x <= u$ to have any hope of instantiation. Such an $x$ is easy to find, the second statement of consistency gives us that $l < u$ and so since our model is atomless we have infinitely many elements $x'$ with $x' < u and (not l)$, then setting $x = x' or l$ is sufficient. But we are still not done since we could have too many relations, that is, there might be elements $y in I$ with $x <= y$ or $x >= y$.
+//
+//   Now we will fix these relations, let $y in I$, by the first condition of consistency we have that $y and (not z) eq.not 0$ for all $z in L T$ as well as $z and (not y) eq.not 0$ for all $z in G T$. By the third condition of consistency we then have $y and (not l) eq.not 0$ and $u or (not y) eq.not 0$.
+//
+//   We now set $l' = l or.big_(y in I) (u and (not y))$
+// ]
+//
+//
+//
+// First we will enumerate $A$ as ${a_0,a_1,...}$ and $B$ as ${b_0,b_1,...}$.
+// We now construct an isomorphism $f : A -> B$ with the back and forth method. Our base case will be the function $f : {0,1} -> {0,1}$ defined as identity. In the inductive case we will assume we have constructed a partial isomorphism $f_n : A_n -> B_n$ with $A_n seq A$, $B_n seq B$ and both $A_n$ and $B_n$ are boolean subalgebra (closed under $or,and,not$).
+// #pagebreak(weak: true)
+// For an even step $n = 2k$ we take $a_i$ to be the element of $A backslash A_n$ of smallest index. Now since $A_n$ is a subalgebra $a_i$ can be related to elements of $A_n$ in one of 2 ways 
+//   - $a_i or x = y$ for some $x,y in A_n$
+//   - $a_i and x = y$ for some $x,y in A_n$
+// We will use the previous lemma to convert all of these relations into upper and lower bounds.
+//   - A relation of the form $a_i or x = y$ will contribute the lower bound $l = y and (not x)$ and also contribute the upper bound $u = y$
+//   - A relation of the form $a_i and x = y$ contributes the upper bound $u = (not x) or y$ and the lower bound $l = y$
+// We then congregate all of these lower and upper bounds into a set of lower bounds $L$ and a set of upper bounds $U$, we then set $u' = min(U)$ and $l' = max(L)$.
+// Then all the relations of $a_i$ are completely encoded by $l' < a_j < u'$ where both $l'$ and $u'$ are in $A_n$ since its a subalgebra.
+// We then want to find an element $b_j$ such that $f(l') < b_j < f(u')$. 
+// #lemma(numbering: none)[
+//   Any model $mM$ of $ICAB$ is dense.
+// ]
+// #proof[
+//   Let $x < y$ then since it is atomless there exist a nontrivial element $z$ such that $z < y and (not x)$ then $x < x or z < y$.
+// ] 
+// From this lemma we can always find an appropriate $b_j$ and so we set $f(a_i) = b_j$ and then we set $A_(n+1) = angle.l A_n union {a_i} angle.r$ and then extend $f$ from $A_n union {a_i}$ to $A_(n+1)$ in the natural way.
+//
+// On odd steps we do the exact same thing but from $B$ to $A$ instead.
 
 #pagebreak(weak: true)
 = Question
