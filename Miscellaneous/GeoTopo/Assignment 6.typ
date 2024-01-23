@@ -1,7 +1,9 @@
-#import "../../Templates/generic.typ": generic
+#import "../../Templates/generic.typ": latex, header
 #import "../../Templates/question.typ": question_heading
 #import "@preview/cetz:0.1.2"
-#show: doc => generic(title: "Assignment 6", name: "Jacob Reznikov", question_heading(doc))
+#show: doc => header(title: "Assignment 6", name: "Jacob Reznikov", doc)
+#show: latex
+#show: question_heading
 #let ve = $epsilon$
 #let ip(..x) = $lr(angle.l #x.pos().join(",") angle.r)$
 

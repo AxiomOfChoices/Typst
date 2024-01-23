@@ -125,7 +125,7 @@ Let $(A, or, and, not)$ and $(B, or, and, not)$ be two models of $ICAB$.
 
 We will find an isomorphism between the two using a modified back-and-forth method. We will construct a partial isomorphism $f_n : A_n -> B_n$ in steps where at each step $n$ we have $A_n$ is a finite subalgebra of $A$ and $B_n$ is a finite subalgebra of $B$. At step $0$ we start with the trivial subalgebra ${0,1}$ for both $A_0$ and $B_0$, and we induct as follows.
 
-First note that $A_(n-1),B_(n-1)$ are both atomic since they are finite and thus have bases of atoms ${a_1,...,a_k}, {b_1,...,b_k}$ such that $f_(n-1)(a_i) = b_i$. We want to add an element $a in A backslash A_(n-1)$ to $A_(n-1)$, extend the map $f_(n-1)$ to map $a$ to some element $b in B$, and then extend it naturally on $A_n := angle.l a,A_(n-1) angle.r$, giving us $f_n$.
+First note that $A_(n-1),B_(n-1)$ are both atomic since they are finite and thus have bases of atoms ${a_1,...,a_k}, {b_1,...,b_k}$ such that $f_(n-1)(a_i) = b_i$. On even steps we want to add an element $a in A backslash A_(n-1)$ to $A_(n-1)$, extend the map $f_(n-1)$ to map $a$ to some element $b in B$, and then extend it naturally on $A_n := angle.l a,A_(n-1) angle.r$, giving us $f_n$. On even steps we want to do the same but swapping $B$ and $A$.
 
 The key part here is finding an appropriate element $b$ that related to $B_(n-1)$ in the same way that $a$ related to $A_(n-1)$. Our atoms then will be quite helpful as the relations of $a$ with the atoms $a_i$ will encode all the information we need. In particular, there are only 3 ways in which $a$ can relate to a given basis element $a_i$, these are
 $
@@ -142,88 +142,7 @@ Our job then becomes to find an element $b in B$ such that the statement
 $
   and.big_(i in [k]) phi_(c_i) (b, f_(n-1) (a_i))
 $
-is true. This is quite simple, for each $i$, if $c_i = 1$ we set $d_i = 0$, if $c_i = 2$ we use atomlessness to set $d_i$ to be anything satisfying with $d_i < f(a_i)$, if $c_i = 3$ we set $d_i = f(a_i)$. Finally we just union the $d_i$'s together and that will be our desired $b$. 
-
-// Let us first derive a small lemma about the structure of Boolean algebras.
-// #lemma(numbering: none)[
-//   Assuming $x <= y$ then for any $b$
-//   $
-//     b or x = y <=> y and (not x) <= b <= y
-//     \
-//     b and y = x <=> x <= b <= (not y) or x
-//   $
-// ]
-// #proof[
-//   For the first statement we first prove the $=>$ direction, clearly since $b or x = y$ we have that $b <= y$. We also have 
-//   $
-//     b and (not x) = (b or x) and (not x) = y and (not x)
-//   $
-//   and so $y and (not x) <= b$
-//
-//   For the other direction assume that $y and (not x) <= b <= y$
-//   then we have 
-//   $
-//     b or x <= y or y = y
-//   $
-//   and also
-//   $
-//     y = x or (y and (not x)) <= x or b
-//   $
-//   and thus $b or x = y$
-// ]
-//
-// From this lemma we see that the relations of a given element $b$ to a subalgebra $S$ are entirely encoded by relations of the form $b <= x, b >= x$ for $x in S$.
-//
-// We now define the procedure we will use as our version of density in the back and forth argument.
-// #definition(numbering: none)[
-//   Let $U$ be the universe of our $ICAB$ model then for a subalgebra $S seq U$ and a symbol $a$. We define a _summary_ of $a$ with respect to $S$ to be a partition of $S$ into sets $G T, L T, I$, which we will think of representing the elements of $S$ larger than, smaller than and incomparable to $a$, respectively.
-//
-//   We say that a summary is _consistent_ if the following two statements holds 
-//   $
-//     forall x forall y (x <= y => ((x in G T => y in G T) and (y in L T => x in L T)))
-//     \ forall x forall y (x in L T and y in G T => x <= y)
-//     \ forall x forall y (x,y in L T => x or y in L T) and (x,y in G T => x and y in G T)
-//   $
-// ]
-// In essence a consistent summary will encode the different relations an element $a$ could have to a subalgebra $S$, one easily checks that the conditions for consistency are all satisfied for any element $x in U backslash S$.
-// The usefulness of this definition comes from the fact that these conditions are also, in a sense, sufficient.
-// #lemma(numbering: none)[
-//   Let $G T, L T, I$ be a summary of a symbol $a$ with respect to an algebra $S$. If the summary is consistent then there exists an element $x in U$ that instantiates this summary, in the sense that
-//   $
-//     G T = { y in S : x <= y }, L T = { y in S : x >= y }, I = S backslash (G T union L T)
-//   $
-// ]
-// #proof[
-//   First let $u = and.big_(x in G T) x, l = or.big_(x in L T)$ then we certainly need $l <= x <= u$ to have any hope of instantiation. Such an $x$ is easy to find, the second statement of consistency gives us that $l < u$ and so since our model is atomless we have infinitely many elements $x'$ with $x' < u and (not l)$, then setting $x = x' or l$ is sufficient. But we are still not done since we could have too many relations, that is, there might be elements $y in I$ with $x <= y$ or $x >= y$.
-//
-//   Now we will fix these relations, let $y in I$, by the first condition of consistency we have that $y and (not z) eq.not 0$ for all $z in L T$ as well as $z and (not y) eq.not 0$ for all $z in G T$. By the third condition of consistency we then have $y and (not l) eq.not 0$ and $u or (not y) eq.not 0$.
-//
-//   We now set $l' = l or.big_(y in I) (u and (not y))$
-// ]
-//
-//
-//
-// First we will enumerate $A$ as ${a_0,a_1,...}$ and $B$ as ${b_0,b_1,...}$.
-// We now construct an isomorphism $f : A -> B$ with the back and forth method. Our base case will be the function $f : {0,1} -> {0,1}$ defined as identity. In the inductive case we will assume we have constructed a partial isomorphism $f_n : A_n -> B_n$ with $A_n seq A$, $B_n seq B$ and both $A_n$ and $B_n$ are boolean subalgebra (closed under $or,and,not$).
-// #pagebreak(weak: true)
-// For an even step $n = 2k$ we take $a_i$ to be the element of $A backslash A_n$ of smallest index. Now since $A_n$ is a subalgebra $a_i$ can be related to elements of $A_n$ in one of 2 ways 
-//   - $a_i or x = y$ for some $x,y in A_n$
-//   - $a_i and x = y$ for some $x,y in A_n$
-// We will use the previous lemma to convert all of these relations into upper and lower bounds.
-//   - A relation of the form $a_i or x = y$ will contribute the lower bound $l = y and (not x)$ and also contribute the upper bound $u = y$
-//   - A relation of the form $a_i and x = y$ contributes the upper bound $u = (not x) or y$ and the lower bound $l = y$
-// We then congregate all of these lower and upper bounds into a set of lower bounds $L$ and a set of upper bounds $U$, we then set $u' = min(U)$ and $l' = max(L)$.
-// Then all the relations of $a_i$ are completely encoded by $l' < a_j < u'$ where both $l'$ and $u'$ are in $A_n$ since its a subalgebra.
-// We then want to find an element $b_j$ such that $f(l') < b_j < f(u')$. 
-// #lemma(numbering: none)[
-//   Any model $mM$ of $ICAB$ is dense.
-// ]
-// #proof[
-//   Let $x < y$ then since it is atomless there exist a nontrivial element $z$ such that $z < y and (not x)$ then $x < x or z < y$.
-// ] 
-// From this lemma we can always find an appropriate $b_j$ and so we set $f(a_i) = b_j$ and then we set $A_(n+1) = angle.l A_n union {a_i} angle.r$ and then extend $f$ from $A_n union {a_i}$ to $A_(n+1)$ in the natural way.
-//
-// On odd steps we do the exact same thing but from $B$ to $A$ instead.
+is true. This is quite simple, for each $i$, if $c_i = 1$ we set $d_i = 0$, if $c_i = 2$ we use atomlessness to set $d_i$ to be anything satisfying with $d_i < f(a_i)$, if $c_i = 3$ we set $d_i = f(a_i)$. Finally we just union the $d_i$'s together and that will be our desired $b$.
 
 #pagebreak(weak: true)
 = Question
@@ -232,23 +151,25 @@ Find an example of two countable structures which are elementarily equivalent bu
 
 == Solution
 #let suc = math.op("succ")
+
+=== Normal example
+#let clos = math.op("closure")
+Language of algebraically closed fields, we have $clos(QQ) tilde.eq.not clos(QQ[pi])$ but since the theory is complete they are both elementarily equivalent.
+
+=== Cursed example
+
 My two example structures are $mM = (ZZ,suc)$ and $mN = (ZZ union.sq ZZ,suc)$ where $suc$ is the _relation_ corresponding to the successor function. We think of $mN$ as consisting of two _branches_ of $ZZ$.
 
 We can show that $mM$ and $mN$ are not isomorphic, assume that they are, then we have an isomorphism $f : |mM| -> |mN|$. Now we have $f(0) = (n,i)$ for some $(n,i)$, then we can easily see that $f(x) = (n+x,i)$ for all $x in |mM|$ due to how we define the relations. But then we have nothing that maps to $(n,1-i)$ and so we get a contradiction.
 
 Now we need to show that they are elementarily equivalent, to show that we can use the Ehreufeucht-Fraisse Game $Gamma(mM,mN)_n$.
-//
-// Now our strategy will have two stages, while the spoiler has not picked any elements in $B^c$ the prover will use the map $f(x) = b + 2(x-a)$ to map the pairing elements.
-//
-// After the first turn when the spoiler picks an element $b' in B^c$, we will switch strategy and instead consider the current set of matched elements $A seq |mM|$, then we map $b'$ to $sup A + 3^n$, after this when we pick
-//
+
 First define the following metric on $|mN|$,
 $
   d_mN ((x,i),(y,j)) = cases(|x - y| &"if" i = j \ infinity &"if" i eq.not j)
 $
 and define the standard metric on $|mM|$, $d_mM (x,y) = |x-y|$.
 
-// #pagebreak(weak: true)
 Now we construct the winning strategy for the prover, we will denote by $A_k$ the current paired elements of $|mM|$, by $B_k$ the current paired elements of $|mN|$ and by $f_k$ the current partial isomorphism.
 
 At step $k$, if the spoiler picks $a in |mM|$, we first check if $d(a, A_k) > 2^(n-k)$. 
@@ -297,11 +218,4 @@ $
 Now notice that the lemma's statement only applies to the last placed pair, but for all the other pairs their distance to their closest unrelated pair can only decrease if a new pair is placed so in fact the lemma holds for all the pairs that exist at step $k$.
 
 But after this modification, the lemma when applied with step $n = k$ is exactly the contrapositive of the statement above.
-
-//  - If the spoiler chooses an element $a in |mM|$ with $d(a, C_i) > 3^n$ for all $i$, then the prover adds $a$ to any empty collection $C_(i_0)$, finds an element $b in |mN|$ with $d(b, D_i) >= d(a,C_i)$ for all $i$, adds $b$ to $D_(i_0)$, and finally maps $a$ to $b$.
-//  - If the spoiler chooses an element $b in |mN|$ with $d(b, D_i) > 3^n$ for all $i$, then the prover adds $b$ to any empty collection $D_(i_0)$, finds an element $a in |mM|$ with $d(a, C_i) >= d(b, D_i)$ for all $i$, adds $a$ to $C_(i_0)$, and finally maps $a$ to $b$.
-//  - If the spoiler chooses an element $a in |mM|$ with $d(a, C_i) <= 3^n$ for some $i$ then for some $i_0$ we have $a in N(C_i)$. As we will show shortly, $N(C_i)$ and $N(D_i)$ have the same size for the same $i$ and so can be mapped to each other monotonically. 
-
-
-
 

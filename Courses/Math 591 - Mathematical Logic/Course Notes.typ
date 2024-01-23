@@ -415,16 +415,103 @@ We now want to discuss how to check that two models are elementarily equivalent.
 ]
 
 We now define a tool for proving such partial equivalences.
-#definition("Ehreufeucht-Fraisse Games")[
+#definition("Ehreufeucht-Fraisse (E-F) Games")[
   Let $L$ be finite relational, $Gamma(mM,mN)$ is a two player game where player I is called the spoiler and player II is called the prover. Together they will construct a function $f : A -> B$ where $A seq |mM|$ and $B seq |mN|$.
 
   Player I plays first and either plays an element of $m in |mM|$, challenging player II to put $m$ in the domain of $f$, or they play an element $n in |mN|$ challenging player II to put it in the range of $f$. Player II then plays the corresponding pairing for whatever player I played. Then player II starts again and they continue forever. Player II wins if the resulting $f$ is an isomorphism of the induced structures on $A$ and $B$.
+
+  We will also define a finite version of this game which we will denote $Gamma(mM,mN)_n$, it is the same as the regular game except that it ends at step $n$ and prover wins if when it ends it is a finite partial isomorphism.
 ]
+
 
 #theorem[
-  TFAE
+  Let $mM$ and $mN$ be $L$-structures where $L$ is a finite relational language. TFAE
   - $mM equiv mN$
-  - The prover has a winning strategy in $Gamma(mM,mN)$.
+  - The prover has a winning strategy in $Gamma(mM,mN)_n$ for every $n$.
 ]
 
+To prove this we will need a lemma first.
 
+#lemma[
+  We say that formulas $phi(overline(x)), psi(overline(x))$ are equivalent if $forall overline(x) thin phi(overline(x)) <=> psi(overline(x))$ is true in every model. Equivalently if $forall overline(x) thin phi <=> psi$ is provable from the empty set of axioms.
+
+  For each $n, ell$ there exists a finite list $Phi_1, ..., Phi_k$ of formulas with $qd(n)$ in $ell$ variables such that every formula $phi$ with $qd(phi) <= n$ in $ell$ variables is equivalent to $phi_i$ for some $i <= k$.
+]
+#proof[
+  We induct on $n$, $n = 0$, there are finitely many atomic formulas so we are done.
+  If $phi$ is quantifier free, then it is a boolean combination of formulas $tau_1,...,tau_m$ then $phi$ is equivalent to
+  $
+    or.big_(X in S) (and.big_(i in X) sigma_i and.big_(i in.not X) (not sigma_i))
+  $
+  where $S$ is a collection of subsets of ${1,...,m}$, this case then follows from the fact that $S$ is finite. 
+  Now assume this holds for quantifier depth at most $n$, if $phi$ is of quantifier depth at most $n + 1$, then $phi$ is equivalent to a disjunction of conjunctions of formulas of the form $exists x thin phi'$ or $forall x thin phi'$, where $qd(phi') <= n$. By inductive hypothesis we then have $phi'$ is equivalent to one of finitely many formulas $Phi'_k$, then $exists x thin phi'$ is equivalent to $exists x thin Phi'_k$ and similarly for $forall$.
+]
+
+We will now use this lemma to prove a slightly weaker statement that will then use to prove the main theorem.
+// TODO: REMOVE DISCLAIMER
+#lemma("This is different from what he wrote in class but what he wrote in class was wrong")[
+  TFAE
+  - $mM equiv_n mN$
+  - Prover has a winning strategy in $Gamma(mM, mN)_n$.
+]
+#proof[
+  We show equivalence by induction on $n$.
+  For $n = 0$ this is obvious since the two conditions are empty. For $n > 0$ we know that one of the two players has a winning strategy since its a finite length game. 
+
+  Assume then that $mM equiv_n mN$, we want to show the prover has a winning strategy. Suppose spoiler plays $a in M$, by the previous lemma there exists a formula $phi(x)$ of quantifier depth at most $n - 1$ such that $mM sat phi(a)$ where $ mN sat phi(b) <=> (mM, a) equiv_(n-1) (mN, b). $
+  Since $mM sat exists x thin phi(x)$, the quantifier depth of $exists x thin phi(x) <= n$, and by our assumption $mM equiv_n mN$ we have that $mN sat exists x thin phi(x)$ so there is some $b$ such that $mN sat phi(b)$. Our strategy is to just play $b$ and then continue with whatever strategy we have for the $n-1$ step game.
+
+  Now assume that $mM equiv.not_n mN$, but that the duplicator has a winning strategy, so there exists a formula $exists x thin phi(x)$ where the quantifier depth of $phi$ is at most $n - 1$ such that 
+  $
+    mM sat exists x thin phi(x) "but" mN tack.r.double.not exists x thin phi(x)
+  $
+  Choose $a in mM$ such that $mM sat phi(a)$ and make $a$ the first move of the spoiler. Let $b$ be the response of the duplicator, then in $Gamma_(n-1) (mM(a), mN(b))$ the prover still has a winning strategy so by inductive hypothesis $(mM,a) equiv_(n-1) (mN, b)$ which contradicts the above assertion.
+]
+
+#proposition[
+  If $mM$ and $mN$ are countable then we also have 
+  $
+    mM tilde.eq mN <=> "The prover has a winning strategy in" Gamma(mM,mN)
+  $
+]
+#proof[
+  Exercise
+]
+
+#corollary[
+  In a finite relational language two countable structures are isomorphic iff they are elementarily related.
+]
+
+== Ultrafilters and Ultraproducts
+
+#definition[
+  A family $cal(F) seq cal(P)(I)$ is called a filter if it is non empty, does not contain the empty set and satisfies the two conditions 
+  - $A in cal(F), B in cal(F) => A sect B in cal(F)$
+  - $A in cal(F), A seq B => B in F$.
+]
+
+#example[
+  The collection of cofinite subsets of $NN$, the set of neighborhoods of any point in a topological points, the set of subsets containing a fixed element in any set.
+
+  This last example is called a principle filter.
+]
+
+#definition[
+  A filter is called maximal if it is not strictly contained in any other filter, also sometimes called ultrafilter.
+]
+
+#remark[
+  By Zorn's lemma every filter is contained in at least one maximal filter. Since the collection of cofinite subsets is not a maximal filter and is not contained in the principle filter this proves that there are non-principle ultrafilters (assuming ZFC).
+]
+
+#proposition[
+  Let $cal(F)$ be a filter. TFAE 
+  - $cal(F)$ is an ultrafilter
+  - For any $A seq I$ we either have $A in cal(F)$ or $A in.not cal(F)$.
+]
+
+#definition[
+  If $(mM_i)_(i in I)$ are $L$-structures we can define $product_(i in I) mM_i$ to be an $L$-structure with the natural pointwise interpretation of all the constants, relations, and functions.
+]
+
+This definition is not really satisfying from the point of view of model theory since it rarely preserves any structure. For example the product of two fields is not a field. However, we can take the quotient of the product by a maximal ideal to get a field, this is the approach we will try to mimic with model theory and ultrafilters.
