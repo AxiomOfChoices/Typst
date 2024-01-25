@@ -1,6 +1,6 @@
-#import "../../../Templates/monograph.typ": style, frontpage, outline_style, chapter_headings, start_outline
+#import "/Templates/monograph.typ": style, frontpage, outline_style, chapter_headings, start_outline
 #import "@preview/ctheorems:1.1.0": *
-#import "../../../Templates/math.typ": *
+#import "/Templates/math.typ": *
 #show: style
 #show: equation_references
 #show: doc => frontpage(
@@ -70,10 +70,10 @@ In the simple case of 2 and 3 dimensions we all know that the answer is a circle
 One of the ways to answer such a question is with the method of geometric flows, we will start with a shape which will likely not be optimal, and then we will morph it over time to make it optimal. 
 
 
-== Concepts and notation
+== Concepts and Notation
 This document assumes general knowledge of differential and Riemannian geometry, see @leeIntroductionSmoothManifolds2012 and @leeIntroductionRiemannianManifolds2018a for great introductions, respectively.
 
-For the rest of this document we will use the following notation, $N$ is an $n+1$ dimensional Riemannian manifold with metric $ov(g)$ within which we have a compact domain $Omega$ with boundary $diff Omega = M$ such that $F : M -> N$ is an embedding making $M$ a Riemannian hypersurface. We then set $g := F^* ov(g)$ to be the induced metric on $M$. We will in general identify $M$ with its image $F(M)$ and use the two interchangeably. We will call $frak(X)(N)$ the set of surfaces that can be defined as above.
+For the rest of this document we will use the following notation, $N$ is an $n+1$ dimensional Riemannian manifold with metric $ov(g)$ within which we have a compact domain $Omega$ with boundary $diff Omega = M$ such that $F : M -> N$ is an embedding making $M$ a Riemannian hypersurface. We then set $g := F^* ov(g)$ to be the induced metric on $M$. We will in general identify $M$ with its image $F(M)$ and use the two interchangeably. We will write $frak(X)(N)$ to the set of surfaces that can be defined as above and call any such surface any such surface an _admissable_ hypersurface.
 
 In general, tensorial constructions defined on $N$ will be written with an overline and their versions on $M$ will be written normally. We will write the covariant derivatives on $M$ and $N$ as $nabla$ and $ov(nabla)$ respectively. We will write the laplacian on $N$ and $M$ as $Delta$ and $ov(Delta)$ respectively. We will use Einstein summation notation for all tensor equations.
 
@@ -99,7 +99,7 @@ The Isoperimetric Problem now asks us to
 
 We will now start to build up the concepts that allow us to solve this problem.
 
-== Riemannian geometry
+== Riemannian Geometry
 We will almost always be working in orthonormal coordinates on $M$, that is, at any point $p$ there are coordinates $x^1,...,x^n$ such that the vector fields 
 $
   e_i = diff/(diff x^i)
@@ -235,17 +235,17 @@ In the special case that $phi = 0$ we call $X$ a Killing vector field.
 
 To see why conformal vector fields are so useful in the study of the Isoperimetric inequality, we will now derive a key result that was the basis of the results by Guan, Li and Wang and will also be the basis of the results in this thesis.
 
-#lemma[
+#lemma("Conformal Integral Identities")[
   Let $M seq N$ be an admissible hypersurface as defined above, and let $X$ be a conformal vector field on $N$ with conformal factor $phi$, the following identities hold
   $
-    integral_M n phi - H u = 0
+    integral_M (n phi - H u) dif S = 0
   $
   and 
   $
-    integral_M H (n phi - H u) = n/(n-1) integral_M ov(Ric)(nu, X - u nu) - 1/n integral_M u sum_(i < j) (kappa_i - kappa_j)^2
+    integral_M H (n phi - H u) dif S = n/(n-1) integral_M ov(Ric)(nu, X - u nu) dif S - 1/n integral_M u sum_(i < j) (kappa_i - kappa_j)^2 dif S
   $
   where $u = ip(X, nu)$ is called the support function.
-]
+]<lemma-integral_identities>
 #proof[
   First we will define the vector field $Y = X - u nu$, which is the projection of $X$ onto the tangent space of $M$. Now consider the divergence of $Y$ on $M$, for an orthonormal frame $e_i$ of $M$ we have
   $
@@ -266,7 +266,7 @@ To see why conformal vector fields are so useful in the study of the Isoperimetr
   $
   then since $M$ is closed we have by divergence theorem
   $
-    integral_M div_M (Y) = integral_M n phi - H u = 0
+    integral_M div_M (Y) dif S = integral_M (n phi - H u) dif S = 0
   $
 
   Secondly we will consider the vector field $Y' = (H I - A) Y$, its divergence gives us
@@ -289,11 +289,11 @@ To see why conformal vector fields are so useful in the study of the Isoperimetr
   $
   now swapping the last two indices on the Riemann tensor flips its sign gives us the Ricci tensor, then applying divergence theorem once more gives us
   $
-    integral_M H ((n - 1)phi - H u) &= integral_M ov(Ric)(nu, Y) - integral_M u|A|^2
-    \ (n-1)/n integral_M H (n phi - n/(n-1) H u) &= integral_M ov(Ric)(nu, Y) - integral_M u|A|^2
-    \ integral_M H (n phi - n/(n-1) H u) &= n/(n-1) integral_M ov(Ric)(nu, Y) - integral_M n/(n-1) u|A|^2
-    \ integral_M H (n phi - H u) &= n/(n-1) integral_M ov(Ric)(nu, Y) - integral_M u(n|A|^2 - H^2)/(n - 1)
-    \ integral_M H (n phi - H u) &= n/(n-1) integral_M ov(Ric)(nu, Y) - 1/(n - 1) integral_M u sum_(i < j) (kappa_i - kappa_j)^2
+    & integral_M H ((n - 1)phi - H u) dif S = integral_M ov(Ric)(nu, Y) dif S - integral_M u|A|^2 dif S
+    \ &(n-1)/n integral_M H (n phi - n/(n-1) H u) dif S = integral_M ov(Ric)(nu, Y) dif S - integral_M u|A|^2 dif S 
+    \ &integral_M H (n phi - n/(n-1) H u) dif S = n/(n-1) integral_M ov(Ric)(nu, Y) dif S - integral_M n/(n-1) u|A|^2 dif S
+    \ &integral_M H (n phi - H u) dif S = n/(n-1) integral_M ov(Ric)(nu, Y) dif S - integral_M u(n|A|^2 - H^2)/(n - 1) dif S
+    \ &integral_M H (n phi - H u) dif S = 1/(n-1) (integral_M n ov(Ric)(nu, Y) dif S - integral_M u sum_(i < j) (kappa_i - kappa_j)^2 dif S)
   $
 ]
 
@@ -358,11 +358,39 @@ The most important tool in the analysis of parabolic PDEs is the maximum princip
   $ v(x,t) = e^(-B t) u(x,t) - sup_(x in U) u(x,0) $
 ]
 
+== Evolving Hypersurfaces
+
+Now that we are familiar with geometry and PDEs we can start to use them together to attack the Isoperimetric problem.
+#definition[
+  Let $F : M -> N$ be an admissible hypersurface. Let $F_t$ be a function $F : I times M -> N$, where $I = [0,T)$ for some fixed $T$ and $F_0 = F$ on $M$. $F_t$ is called a _normal flow_ with _normal velocity_ $f$ if 
+  $
+    diff_t F_t (x) = f(t,x) nu(x)
+  $
+  where $nu(x)$ is the normal vector to $F_t (M)$ at $F_t (x)$.
+]
+
+#remark[
+  We will often refer to $F_t (M)$ as $M_t$ for brevity.
+]
+
+As a manifold flows it's various properties, both local and global, will change, the equations governing these changes are called _evolution equations_. We will now derive some of these evolution equations. Let us first start with the global properties that are the most important for the Isoperimetric problem.
+
+#proposition[
+  Let $F_t$ be a normal flow with velocity $f$, we have the following evolution equations for $V(M_t)$ and $A(M_t)$,
+  $
+    diff_t V(M_t) = integral_M f dif S, quad 
+    diff_t A(M_t) = integral_M H f dif S
+  $
+]
+#proof[
+  
+]
+
 #pagebreak(weak: true)
 = Warped Product-Like Spaces
 With the preliminaries out of the way we can begin to discuss how we can attempt to attack the Isoperimetric problem in the class of warped product spaces, and specifically the key properties exhibited by these spaces that we will later use to generalize these methods.
 
-== Polar coordinates
+== Warped Product Spaces
 Warped products are in essence a generalization of the Polar coordinates in $RR^2$ so let us first look at those. The Polar coordinates $(r,theta)$ in $RR^2$ are defined implicitly in terms of standard Euclidean coordinates, through $(x,y) = (r cos(theta), r sin(theta))$, where we have $r > 0$ and $-pi/2 < theta < pi/2$. Now the Euclidean metric is given by $g = dif x^2 + dif y^2$ and so we can compute its form in polar coordinates as
 $
   g &= dif x^2 + dif y^2 = (dif (r cos theta))^2 + (dif (r sin theta))^2
@@ -406,7 +434,7 @@ respectively.
 These spaces carry a lot of nice properties, but the most important one for us is that they carry a natural conformal vector field.
 
 #proposition[
-  Let $RR_+ times_f N$ be a warped space and let $r$ be a coordinate on $RR_+$, then the vector field $X = f(r) diff_r$ is a conformal vector field with conformal factor $f'(r)$.
+  Let $RR_+ times_f N$ be a warped space and let $r$ be a coordinate on $RR_+$, then the vector field $X = f(r) diff_r$ is a conformal vector field with conformal factor $f'(r)$. Furthermore its associated tensor $psi$ vanishes.
 ]
 #proof[
   Let us compute the Lie derivative $lie_X g$, 
@@ -417,11 +445,19 @@ These spaces carry a lot of nice properties, but the most important one for us i
     \ &= 2 d r (d (lie_X r)) + 2 g_N^2 f^2(r) f'(r)
     = 2 d r (d f(r)) + 2 f'(r) f^2(r) g_N^2
     \ &= 2 f'(r) d r^2 + 2 f'(r) f^2(r) g_N^2
-    = 2 f'(r) (d r^2 + f^2(r) g_N^2)
+    = 2 f'(r) (d r^2 + f^2(r) g_N^2).
   $
+  Note that if we set $Phi(r) = integral_0^r f(s) dif s$ then $nabla Phi(r) = f(r) diff_r$ and so $ip(nabla_Y X, Z)$ is just $Hess_f (Y,Z)$ and so it is symmetric and so its anti-symmetric component vanishes.
 ]
 
-It just so happens that we can encode many
+Note that since its a gradient, $X$ in the above proposition is closed.
+
+Apart from being a closed conformal vector field, this vector field also has other properties that help us with the flow we want to create. Recall that in Euclidean space spheres are the optimal shapes for the Isoperimetric inequality, in polar coordinates spheres take the simple form of sets where $r = r_0$ for some fixed $r_0$. 
+
+== Quasi-Closed Conformal Vector Fields
+Now it turns out that these closed conformal vector fields characterize warped products of the form above, namely, if a manifold admits a closed conformal then it can be written in the form $RR_+ times_f N$ for some manifolds $N$ and function $f$.
+
+
 
 #pagebreak(weak: true)
 

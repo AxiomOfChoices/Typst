@@ -1,7 +1,7 @@
-#import "../../../Templates/generic.typ": latex, header
+#import "/Templates/generic.typ": latex, header
 #import "@preview/ctheorems:1.1.0": *
-#import "../../../Templates/math.typ": *
-#import "../../../Templates/assignment.typ": *
+#import "/Templates/math.typ": *
+#import "/Templates/assignment.typ": *
 #show: doc => header(title: "Assignment 1", name: "Jacob Reznikov", doc)
 #show: latex
 #show: NumberingAfter
