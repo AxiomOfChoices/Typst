@@ -419,18 +419,18 @@ We now want to discuss how to check that two models are elementarily equivalent.
 
 We now define a tool for proving such partial equivalences.
 #definition("Ehreufeucht-Fraisse (E-F) Games")[
-  Let $L$ be finite relational, $Gamma(mM,mN)$ is a two player game where player I is called the spoiler and player II is called the prover. Together they will construct a function $f : A -> B$ where $A seq |mM|$ and $B seq |mN|$.
+  Let $L$ be finite relational, $Gamma(mM,mN)$ is a two player game where player I is called the Spoiler and player II is called the Prover. Together they will construct a function $f : A -> B$ where $A seq |mM|$ and $B seq |mN|$.
 
   Player I plays first and either plays an element of $m in |mM|$, challenging player II to put $m$ in the domain of $f$, or they play an element $n in |mN|$ challenging player II to put it in the range of $f$. Player II then plays the corresponding pairing for whatever player I played. Then player II starts again and they continue forever. Player II wins if the resulting $f$ is an isomorphism of the induced structures on $A$ and $B$.
 
-  We will also define a finite version of this game which we will denote $Gamma(mM,mN)_n$, it is the same as the regular game except that it ends at step $n$ and prover wins if when it ends it is a finite partial isomorphism.
+  We will also define a finite version of this game which we will denote $Gamma(mM,mN)_n$, it is the same as the regular game except that it ends at step $n$ and Prover wins if when it ends it is a finite partial isomorphism.
 ]
 
 
 #theorem[
   Let $mM$ and $mN$ be $L$-structures where $L$ is a finite relational language. TFAE
   - $mM equiv mN$
-  - The prover has a winning strategy in $Gamma(mM,mN)_n$ for every $n$.
+  - The Prover has a winning strategy in $Gamma(mM,mN)_n$ for every $n$.
 ]
 
 To prove this we will need a lemma first.
@@ -460,24 +460,26 @@ We will now use this lemma to prove a slightly weaker statement that will then u
   We show equivalence by induction on $n$.
   For $n = 0$ this is obvious since the two conditions are empty. For $n > 0$ we know that one of the two players has a winning strategy since its a finite length game. 
 
-  Assume then that $mM equiv_n mN$, we want to show the prover has a winning strategy. Suppose spoiler plays $a in M$, by the previous lemma there exists a formula $phi(x)$ of quantifier depth at most $n - 1$ such that $mM sat phi(a)$ where $ mN sat phi(b) <=> (mM, a) equiv_(n-1) (mN, b). $
+  Assume then that $mM equiv_n mN$, we want to show the Prover has a winning strategy. Suppose Spoiler plays $a in M$, by the previous lemma there exists a formula $phi(x)$ of quantifier depth at most $n - 1$ such that $mM sat phi(a)$ where $ mN sat phi(b) <=> (mM, a) equiv_(n-1) (mN, b). $
   Since $mM sat exists x thin phi(x)$, the quantifier depth of $exists x thin phi(x) <= n$, and by our assumption $mM equiv_n mN$ we have that $mN sat exists x thin phi(x)$ so there is some $b$ such that $mN sat phi(b)$. Our strategy is to just play $b$ and then continue with whatever strategy we have for the $n-1$ step game.
 
   Now assume that $mM equiv.not_n mN$, but that the duplicator has a winning strategy, so there exists a formula $exists x thin phi(x)$ where the quantifier depth of $phi$ is at most $n - 1$ such that 
   $
     mM sat exists x thin phi(x) "but" mN tack.r.double.not exists x thin phi(x)
   $
-  Choose $a in |mM|$ such that $mM sat phi(a)$ and make $a$ the first move of the spoiler. Let $b$ be the response of the duplicator, then in $Gamma_(n-1) (mM(a), mN(b))$ the prover still has a winning strategy so by inductive hypothesis $(mM,a) equiv_(n-1) (mN, b)$ which contradicts the above assertion.
+  Choose $a in |mM|$ such that $mM sat phi(a)$ and make $a$ the first move of the Spoiler. Let $b$ be the response of the duplicator, then in $Gamma_(n-1) (mM(a), mN(b))$ the Prover still has a winning strategy so by inductive hypothesis $(mM,a) equiv_(n-1) (mN, b)$ which contradicts the above assertion.
 ]
 
 #proposition[
   If $mM$ and $mN$ are countable then we also have 
   $
-    mM tilde.eq mN <=> "The prover has a winning strategy in" Gamma(mM,mN)
+    mM tilde.eq mN <=> "The Prover has a winning strategy in" Gamma(mM,mN)
   $
 ]
 #proof[
-  We can take the role of the Spoiler and enumerate $|mM|$ and $|mN|$, we can then force the Prover to map every single element of both by simply picking elements of the enumeration. Since the Prover still wins $union.big f_i$ must be an isomorphism between $mM$ and $mN$.
+  Exercise, will add proof after deadline.
+  // TODO: ADD BACK PROOF
+  // We can take the role of the Spoiler and enumerate $|mM|$ and $|mN|$, we can then force the Prover to map every single element of both by simply picking elements of the enumeration. Since the Prover still wins $union.big f_i$ must be an isomorphism between $mM$ and $mN$.
 ]
 
 == Ultrafilters and Ultraproducts

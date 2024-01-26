@@ -1,7 +1,7 @@
 #let latex(
   doc
 ) = {
-set page(margin: (x: 2.5cm, top: 4cm, bottom: 4.5cm),
+set page(margin: (x: 2cm, top: 4cm, bottom: 2cm),
 header-ascent: 18%)
 set par(leading: 0.55em, first-line-indent: 1.8em, justify: true)
 set text(font: "New Computer Modern", size: 12pt)
