@@ -29,6 +29,7 @@
 middletitle: [My course notes for the Winter 2024 Mathematical Logic course by #link("https://www.math.mcgill.ca/msabok/")[Marcin Sabok] at McGill],
 doc)
 
+#set page(margin: (x: 2cm, top: 2cm, bottom: 2cm))
 
 = Basic Definitions and Concepts
 == Models and Languages
@@ -204,7 +205,7 @@ We extend our definition of interpretation of terms to terms of $L(|mM|)$ by set
   - If $sigma$ is of the form $sigma_1 and sigma_2$ then $mM sat sigma_1 and sigma_2$ if $mM sat sigma_1$ and $mM sat sigma_2$. A similar definition follows for the other logical connectives.
   - If $sigma$ is of the form $exists x thin phi$ then $mM sat sigma$ if there exists $a in |mM|$ with $mM sat phi(subs(underline(a),x))$. Similarly for $forall x thin phi$.
 ]
-
+#pagebreak(weak: true)
 == Model equivalences
 #definition[
   Let $mM$ be a model. The _theory_ of $mM$ is defined also
@@ -329,17 +330,7 @@ As an example use we have the following theorem.
   Now we have by Gödel's completeness theorem that there exists a model $mN$ such that $mN sat Gamma$ then by construction we have $mM subm mN$ and $||mN|| >= kappa$ and so by #link(<thrm-downwards>)[downwards theorem] we can now decrease the cardinality until we reach $kappa$.
 ]
 
-#definition[
-  A _theory_ is a set $Gamma$ of sentences such that if $Gamma proves phi$ then $phi in Gamma$.
 
-  A theory $T$ is _complete_ if for every sentence $phi$ either $phi in T$ or $not phi in T$.
-]
-
-#remark[
-  - For any model $mM$ the theory $Th(mM)$ is complete.
-
-  - For any theory $T$ which is complete, there exists a model $mM$ with $T = Th(mM)$.
-]
 
 #corollary[
   If $mM$ is infinite then there exists $mN$ such that $mM equiv mN$ but $mM tilde.eq.not mN$.
@@ -347,6 +338,16 @@ As an example use we have the following theorem.
 #proof[
   We simply pick some $kappa > ||mM||$ and then use the upwards theorem to get a model $mN$ with $mM subm mN$ with $||mN|| = kappa$, now there can't exist a bijection between the two since they have different cardinalities.
 ]
+#definition[
+  A _theory_ is a set $Gamma$ of sentences such that if $Gamma proves phi$ then $phi in Gamma$.
+  A theory $T$ is _complete_ if for every sentence $phi$ either $phi in T$ or $not phi in T$.
+]
+#remark[
+  - For any model $mM$ the theory $Th(mM)$ is complete.
+
+  - For any theory $T$ which is complete and consistent, there exists a model $mM$ with $T = Th(mM)$.
+]
+
 == Categoricity
 #definition[
   Let $kappa$ be an infinite cardinal, a theory $T$ is $kappa$-categorical if it has infinitely many models but exactly one model (up to isomorphism) of size $kappa$.
@@ -355,7 +356,7 @@ As an example use we have the following theorem.
   If $T$ is $kappa$-categorical, then $T$ is complete.
 ]
 #proof[
-  Suppose that $T$ is not complete, let $sigma$ be such that $sigma in.not T$ and $not sigma in.not T$, then let $T_1 = T union {sigma}$ and $T_2 = T union {not sigma}$. Both are consistent but are not isomorphic, this contradicts the fact that there is only one model of this size.
+  Suppose that $T$ is not complete, let $sigma$ be such that $sigma in.not T$ and $not sigma in.not T$, then let $T_1 = T union {sigma}$ and $T_2 = T union {not sigma}$. Both are consistent, and thus have models of size $kappa$ which are both models of $T$, but the models are not isomorphic. This contradicts the fact that there is only one model of this size.
 ]
 
 #example[
@@ -466,7 +467,7 @@ We will now use this lemma to prove a slightly weaker statement that will then u
   $
     mM sat exists x thin phi(x) "but" mN tack.r.double.not exists x thin phi(x)
   $
-  Choose $a in mM$ such that $mM sat phi(a)$ and make $a$ the first move of the spoiler. Let $b$ be the response of the duplicator, then in $Gamma_(n-1) (mM(a), mN(b))$ the prover still has a winning strategy so by inductive hypothesis $(mM,a) equiv_(n-1) (mN, b)$ which contradicts the above assertion.
+  Choose $a in |mM|$ such that $mM sat phi(a)$ and make $a$ the first move of the spoiler. Let $b$ be the response of the duplicator, then in $Gamma_(n-1) (mM(a), mN(b))$ the prover still has a winning strategy so by inductive hypothesis $(mM,a) equiv_(n-1) (mN, b)$ which contradicts the above assertion.
 ]
 
 #proposition[
@@ -476,7 +477,7 @@ We will now use this lemma to prove a slightly weaker statement that will then u
   $
 ]
 #proof[
-  Exercise
+  We can take the role of the Spoiler and enumerate $|mM|$ and $|mN|$, we can then force the Prover to map every single element of both by simply picking elements of the enumeration. Since the Prover still wins $union.big f_i$ must be an isomorphism between $mM$ and $mN$.
 ]
 
 == Ultrafilters and Ultraproducts
@@ -488,7 +489,9 @@ We will now use this lemma to prove a slightly weaker statement that will then u
 ]
 
 #example[
-  The collection of cofinite subsets of $NN$, the set of neighborhoods of any point in a topological points, the set of subsets containing a fixed element in any set.
+  - The collection of cofinite subsets of $NN$
+  - The set of neighborhoods of any point in a topological space
+  - The set of subsets containing a fixed element in any set.
 
   This last example is called a principal filter.
 ]
@@ -498,11 +501,11 @@ We will now use this lemma to prove a slightly weaker statement that will then u
 ]
 
 #remark[
-  By Zorn's lemma every filter is contained in at least one ultrafilter. Since the collection of cofinite subsets is not an ultrafilter and is not contained in the principal filter this proves that there are non-principal ultrafilters (assuming ZFC).
+  By Zorn's lemma every filter is contained in at least one ultrafilter. Since the collection of cofinite subsets is not contained in the principal filter this proves that every infinite set admits a non-principal ultrafilter (assuming ZFC).
 ]
 
 #proposition[
-  Let $cal(U)$ be a filter. TFAE 
+  Let $cal(U)$ be a filter. TFAE
   - $cal(U)$ is an ultrafilter
   - For any $A seq I$ we either have $A in cal(U)$ or $A in.not cal(U)$.
 ]<prop-ultrafilter>
@@ -525,7 +528,7 @@ This definition is not really satisfying from the point of view of model theory 
   $
   is defined as follows.
 
-  On $product_(i in I) mM_i$ we define the equivalence relation $tilde_cal(U)$ by 
+  On $product_(i in I) |mM_i|$ we define the equivalence relation $tilde_cal(U)$ by 
   $
     (a_i) tilde_cal(U) (b_i) "if" { i in I : a_i = b_i } in cal(U)
   $
@@ -539,7 +542,7 @@ This definition is not really satisfying from the point of view of model theory 
   $
 ]
 #remark[
-  One needs to check that the last two interpretations are well defined, but this is easy to do by definition of an ultrafilter.
+  One needs to check that the last two interpretations are well defined, but this is easy to do by the definition of an ultrafilter.
 ]
 #remark[
   If $cal(U)$ is the principal ultrafilter generated by $i_0 in I$ then 
@@ -560,7 +563,8 @@ This definition is not really satisfying from the point of view of model theory 
   We now induce on the complexity of $phi$, 
   - For $phi = phi_1 and phi_2$ we have by definition
   $
-    product mM_i slash.big cal(U) sat phi <=> product mM_i slash.big cal(U) sat phi_1 "and" 
+    product mM_i slash.big cal(U) sat phi <=> 
+    product mM_i slash.big cal(U) sat phi_1 "and" 
     product mM_i slash.big cal(U) sat phi_2
   $
   now set 
@@ -568,7 +572,14 @@ This definition is not really satisfying from the point of view of model theory 
     A = { i in I : mM_i sat phi_1 } quad 
     B = { i in I : mM_i sat phi_2 }
   $
-  then we know that for any $A,B$ we have $A in cal(U), B in cal(U) <=> A sect B in cal(U)$, so in particular we get exactly what we want.
+  then we know that for any $A,B$ we have $ A in cal(U), B in cal(U) <=> A sect B in cal(U) $ now by inductive hypothesis we have 
+  $
+    product mM_i slash.big cal(U) sat phi_1 "and" 
+    product mM_i slash.big cal(U) sat phi_2
+    <=>
+    A in cal(U) "and" B in cal(U)
+  $
+  and so combined this gives us exactly what we want.
   - For $phi = not phi_1$ we have 
   $
     product mM_i slash.big cal(U) sat phi <=> product mM_i slash.big cal(U) tack.r.double.not phi_1
@@ -577,7 +588,7 @@ This definition is not really satisfying from the point of view of model theory 
   $
     { i in I : mM_i sat phi } in cal(U) <=> { i in I : mM_i sat phi_1 } in.not cal(U)
   $
-  which is exactly what we want. This also gives us the disjunction case
+  which is exactly what we want. This also gives us the disjunction case.
   - For $phi = exists psi$ we have 
   $
     uproduct sat phi <=> exists (a_i) in product mM_i : uproduct sat psi([a_i])
