@@ -4,7 +4,8 @@
     numbering: (..numbers) =>
     if numbers.pos().len() <= level {
       return numbering("1", ..numbers)
-    }
+    },
+    supplement: "Question"
   )
   show heading: it => {
     if (it.numbering == none or it.level > 1) { return it }
