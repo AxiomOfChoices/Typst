@@ -201,7 +201,7 @@ Let $mM^*$ be an ultrapower of $mM$. Show that the diagonal map $iota$ mapping $
 == Solution
 Let $a$ be a vector of elements in $mM$ and $tilde(a)$ is the image of that vector of elements under $iota$, then let $phi(overline(x))$ be a formula, we have that ${ i in I : mM_i sat (tilde(a))_i }$
 is either equal to $I$ or the empty set.
-Then we have by Loś's Theorem we have that
+Then we have by Łoś's Theorem we have that
 $
   mM sat a <=> { i in I : mM_i sat (tilde(a))_i } = I <=> { i in I : mM_i sat (tilde(a))_i } in cal(U)
   <=> mM^* sat tilde(a).
@@ -273,7 +273,7 @@ $
   )
 $
 to show that this is an embedding it is enough to show that if $phi(overline(x))$ is an atomic $L$-formula and $mM sat phi(overline(a))$ iff $mN^* sat phi(iota(overline(a)))$.
-To see this we use Loś's Theorem to get
+To see this we use Łoś's Theorem to get
 $
   mN^* sat phi(iota(overline(a))) <=> A_phi := { Delta in F : mN_Delta sat iota(overline(a))_Delta } in cal(U)
 $
