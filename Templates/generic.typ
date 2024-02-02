@@ -13,9 +13,9 @@ doc
 }
 
 #let header(
-  title: none,
-  name: none,
-  doc
+  body,
+  title: "replace me",
+  name: "Jacob Reznikov"
 ) = {
 set page(header: [
   #text(name) #h(1fr) *#text(size: 18pt,title)* #h(1fr) #datetime.today().display("[month repr:long] [day padding:none], [year]")
@@ -23,5 +23,5 @@ set page(header: [
   #line(length: 100%, stroke: 0.5pt)
 ],
 )
-doc
+body
 }

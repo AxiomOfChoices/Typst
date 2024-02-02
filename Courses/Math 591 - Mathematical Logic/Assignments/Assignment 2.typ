@@ -2,25 +2,12 @@
 #import "@preview/ctheorems:1.1.0": *
 #import "/Templates/math.typ": *
 #import "/Templates/assignment.typ": *
-#show: doc => header(title: "Assignment 2", name: "Jacob Reznikov", doc)
+#let head(doc) = header(doc, title: "Assignment 2")
+#show: head
 #show: latex
 #show: NumberingAfter
 #show: thmrules
-#let ve = $epsilon$
-#let seq = $subset.eq$
-#let Mink = math.op("Mink")
-#let Cn = math.op("Cn")
-#let fu = $frak(U)$
-#let pb() = {pagebreak(weak: true)}
-#let sat = $tack.r.double$
-#let satn = $tack.r.double.not$
-#let proves = $tack.r$
-#let subm = $lt.curly$
-#let Th = math.op("Th")
-#let mM = $cal(M)$
-#let mN = $cal(N)$
-#let bar(el) = $overline(#el)$
-#let subs(a, b) = { return $attach(slash, tl: #a, br: #b)$ }
+#show: symbol_replacing
 
 #set page(margin: (x: 1.6cm, top: 2.5cm, bottom: 2cm))
 #show math.equation: it => {
@@ -115,27 +102,27 @@ For the other direction we have a lot more work to do. Assume that models of $T$
 
 Now assume that $Gamma$ is inconsistent, then by compactness let $T' union C' union S'$ be a finite subset that achieves a contradiction, then construct the sentence 
 $
-  phi = 
-  exists overline(x)_1 ... exists overline(x)_n 
+  phi =
+  exists overline(x)_1 ... exists overline(x)_n
   (and.big_(phi_i (overline(a)) in C') phi_i (overline(x)_i))
 $
-and the sentence 
+and the sentence
 $
   phi' = and.big_(psi in S) psi
 $
 then if $T' union { phi, phi' }$ is consistent then by interpreting the $overline(x)_i$ given to us by $phi$ as the constants in $C'$ we get that $T' union C' union S'$ is consistent. On the other hand if $T union {phi, phi' }$ is inconsistent then $T' proves not (phi and phi')$, but one can easily check that $not (phi and phi')$ is an $forall exists$-sentence and thus is in $T_(forall exists)$. But then $mM sat not (phi and phi')$, which contradicts the construction of $C$ and $S$. It is clear that a model $mN$ of $Gamma$ is a superstructure of $mM$ which satisfies $T$ and also satisfies all $exists forall$-statements that are true in $mM$.
 
 Now set $mM_0 = mM$ and $mN_0 = mN$, we will construct the sequences $mM_i,mN_i$ inductively in two steps. On even steps we will construct $mN_i$ from $mM_i$ exactly as we did above, with $mN_i equiv mN_0$ and $mM_i seq mN_i$. 
-We construct $mM_i$ as a superstructure of $mN_(i-1)$ which is also an elementary superstructure of $mM$. To do construct such a superstructure we need to check that $S(mM) union C(mN_(i-1))$ where $S(mM)$ is the set of all $L(|mM|)$-sentences that are true in $mM$ and $C(mN_(i-1))$ is the set of all atomic $L(|mN_(i-1)|)$-sentences that are true in $mN_(i-1)$. Assume that this set is inconsistent, then by compactness let $S' union C'$ be an inconsistent finite subset. Now define the sentence 
+We construct $mM_i$ as a superstructure of $mN_(i-1)$ which is also an elementary superstructure of $mM$. To do construct such a superstructure we need to check that $S(mM) union C(mN_(i-1))$ where $S(mM)$ is the set of all $L(|mM|)$-sentences that are true in $mM$ and $C(mN_(i-1))$ is the set of all atomic $L(|mN_(i-1)|)$-sentences that are true in $mN_(i-1)$. Assume that this set is inconsistent, then by compactness let $S' union C'$ be an inconsistent finite subset. Now define the sentence
 $
   phi = exists overline(x)_1 ... exists overline(x)_n 
   (and.big_(phi_i (overline(a)) in C') phi_i (overline(x)_i))
 $
-by the exact same argument as above either $S(mM) union { phi }$ is consistent, which would contradict inconsistency above, or it is inconsistent so $S(mM) proves not phi$, then $not phi$ is an $exists forall$-sentence with $mM sat not phi$, but then by induction (we will show this a bit later) we know that $mN sat not phi$ which contradicts the construction of $phi$ from statements in $C(mN_(i-1))$. And model of $S(mM) union C(mN_(i-1))$ then satisfies what we want.
+by the exact same argument as above either $S(mM) union { phi }$ is consistent, which would contradict inconsistency above, or it is inconsistent so $S(mM) proves not phi$, then $not phi$ is an $exists forall$-sentence with $mM sat not phi$, but then by induction we know that $mN_(i-1) sat not phi$ which contradicts the construction of $phi$ from statements in $C(mN_(i-1))$. Any model of $S(mM) union C(mN_(i-1))$ then satisfies what we want.
 
 We then get the chain 
 $
-  mM_0 seq mN_0 seq mM_1 seq mN_0 seq ... 
+  mM_0 seq mN_0 seq mM_1 seq mN_1 seq ... 
 $
 so consider 
 $
@@ -167,7 +154,6 @@ Now $frak(X)$ is partially ordered by inclusion, now for every chain $mM_i$ in $
 == Statement
 Suppose $T$ has only infinite models. Show that if $T$ is $kappa$-categorical for some $kappa >= |L|$ and axiomatizable by $forall exists$-sentences, then all models of $T$ are existentially closed. Conclude that every algebraically closed field is existentially closed.
 == Solution
-// Let $mM$ be a model of $T$ with $||mM|| = kappa$, by @question-4 we have that there is an existentially closed model $mN$ of $T$ of size at most $kappa + |L| + aleph_0 = kappa$. Then since $T$ is complete (because it is $kappa$-ca
 Assume some model $mM sat T$ fails to be existentially closed for some existentially sentence $sigma$, then by @question-4 it is contained in an existentially closed superstructure $mN$ with $mN sat T$ and $mN sat sigma$. Now $sigma$ contains finitely many constants from $L(|mM|)$, name them $c_i$ for $i in [k]$, now replace every such constant with a corresponding variable $x_i$ consider the sentence $sigma'$ defined as 
 $
   sigma' = forall x_1 ... forall x_n thin sigma(x_1,...,x_n).
@@ -220,18 +206,18 @@ which is precisely the definition of an elementary embedding.
   $
 ]
 
-Next assume that $I = NN$, we want to show that if $mM$ is finite then $iota$ is surjective. 
+Next assume that $I = NN$, we want to show that if $mM$ is finite then $iota$ is surjective.
 Assume that $mM$ is finite and enumerate its elements ${x_1,...,x_n} = |mM|$. Let $(a_i)_(i in NN)$ be a fixed element of $mM^*$, then consider the set 
 $
   S_j = { i in NN : a_i = x_j }
 $
-that is, the set of indices where the element of the sequence with that index is equal to $x_j$. 
+that is, the set of indices where the element of the sequence with that index is equal to $x_j$.
 
 Now we have that $NN = union.sq.big_(j) S_j$ and so since $NN in cal(U)$ by repeatedly applying the lemma exactly one of the $S_j$ are in $cal(U)$ (we are allowed to do this since the union is finite). Let $j_0$ be that distinguished $j$. Then we have
 $
   { i in NN : a_i = iota(x_(j_0))} = S_(j_0) in cal(U)
 $
-and so $a_i tilde_(cal(U)) iota(x_(j_0))$ and so we found $a_i$ as the image of an element in $a_i$. 
+and so $a_i tilde_(cal(U)) iota(x_(j_0))$ and so we found $a_i$ as the image of an element in $a_i$.
 
 On the other hand assume that $mM$ is not finite, then let ${x_1,x_2,...}$ be an enumeration of some countably infinite subset of it. Consider the element $(x_i)_(i in NN) in mM^*$, we have that for any element $x in mM$ the set ${ i in NN : x_i = x}$
 is either a singleton or the empty set. But any nonprincipal filter contains no finite subsets thus $iota(x) tilde.not_(cal(U)) x_i$ for all $x in mM$ and so the map $iota$ is not surjective.
@@ -242,43 +228,40 @@ is either a singleton or the empty set. But any nonprincipal filter contains no 
 Let $mM$ and $mN$ be elementarily equivalent models, show that $mM$ embeds into some ultrapower of $mN$.
 
 == Solution
-Enumerate $|mM|$ by some ordinal as ${a_0,a_1,...}$. Let $F$ be the family of all finite subsets of $|mM|$, since $mM$ and $mN$ are equivalent, we know that for any $n$, Prover has a winning strategy in $G(mM,mN)_n$. Now for any $Delta in F$ we can take the role of the Spoiler and play the elements of $Delta$ in order so that Prover has to map them to some elements in $|mN|$, we will call this partial isomorphism $g_Delta : Delta -> mN$ for all $Delta in F$.
-
-Now we define for any $Delta in F$,
-$
-  X_Delta = { Delta' in F : Delta seq Delta'}, quad
-  D = { Y seq F : X_Delta seq Y "for some" Delta in F }
-$
+First we will need a lemma.
 #lemma[
-  $D$ is a filter on $F$.
+  Fix some finite $Delta seq Th_(L(mM))(mM)$, let $C = {c_1,...,c_n}$ be the set of additional constants that appear in $Delta$ but are not in $L$. There is an interpretation $mN_Delta$ of $mN$ as a model of $L(C)$ with $mN_Delta sat Delta$.
 ]
 #proof[
-  Upward closure is easy, then if $Y_1 in D,Y_2 in D$ then for some $Delta_1, Delta_2$ we have
+  Let $Delta = {phi_1 (ov(c)),...,phi_k (ov(c))}$, then $mM$ satisfies the $L$-sentence
   $
-    X_(Delta_1) seq Y_1, quad
-    X_(Delta_2) seq Y_2 quad
-    "so" quad
-    X_(Delta_1 union Delta_1) = X_(Delta_1) sect X_(Delta_2) seq Y_1 sect Y_2
+    psi = exists ov(x) (and.big_(i=1)^k phi_i (ov(x)))
   $
+  then by elementary equivalence $mN$ also satisfies $psi$, so by interpreting $ov(x) = (x_1,...,x_n)$ as the constants $c_1,...,c_n$ we get that $mN_Delta$ is a model of $L(C)$ with $mN_Delta sat Delta$.
 ]
 
-Since $D$ is a filter it is contained in some ultrafilter, lets called it $cal(U)$.
+Now set $I = { Delta seq Th_(L(mM))(mM) : Delta "is finite"}$, then define the basic sets $[Delta] = { Delta' in I : Delta seq Delta' }$ and then $D = { Y seq I : [Delta] seq Y "for some" Delta }$. $D$ is a filter since if $[Delta_1] seq Y_1, [Delta_2] seq Y_2$ then
+$
+  [Delta_1 union Delta_2] = [Delta_1] sect [Delta_2] seq Y_1 sect Y_2
+$
+Now let $cal(U)$ be any ultrafilter containing $D$, we prove that $mN^* = product_(Delta in I) mN_Delta slash cal(U)$ is a model of $L(mM)$ that satisfies $Th_(L(mM))(mM)$.
 
-We set $mN^* = product_Delta mN_Delta backslash cal(U)$ where $mN_Delta = mN$ for all $Delta in F$.
-Now fix some arbitrary element $n in mN$ and define the map $iota : mM -> mN^*$ by
+First for any element $c in mM$ consider the sentence $phi = exists x (x = c)$, then ${phi} in I$. Now $[{phi}] in cal(U)$ and for any $Delta in [{phi}]$ we have
 $
-  iota(a)_Delta = cases(
-    g_Delta (a) &"if" a in Delta\
-    n &"if" a in.not Delta
-  )
+  mM_Delta sat phi
 $
-to show that this is an embedding it is enough to show that if $phi(overline(x))$ is an atomic $L$-formula and $mM sat phi(overline(a))$ iff $mN^* sat phi(iota(overline(a)))$.
-To see this we use Łoś's Theorem to get
+so set $x_Delta$ to be a witness of $x$ in $phi$ in $mM_Delta$.
+Then all sequences $(a_Delta)_(Delta in I)$ in $mN^*$ with $a_Delta = x_Delta$ on $[{phi}]$ are equivalent and so we can define the interpretation
 $
-  mN^* sat phi(iota(overline(a))) <=> A_phi := { Delta in F : mN_Delta sat iota(overline(a))_Delta } in cal(U)
+  c^(mN^*) = (a_Delta)_(Delta in I)
 $
-Now set $Delta(overline(a))$ to be the collection of elements in the vector $overline(a)$, then for any element $Delta in X_(Delta(overline(a)))$ we have that $g_Delta$ is a partial isomorphism containing $Delta(overline(a))$. But then we must have for that $Delta$. Now assume that $mM sat phi(overline(a))$, since its a partial isomorphism
+
+Now for any $phi in Th_(L(mM))(mM)$ we can write $phi = psi(c_1,...,c_m)$ then for any $Delta in [{phi}]$ we have
 $
-  mN_Delta sat g_Delta(overline(a))(overline(a)) "which by construction implies that" mN_Delta sat iota(overline(a))_Delta
+  mN_Delta sat phi
 $
-and so $X_Delta seq A_phi$ and so $A_phi in cal(U)$ thus proving that $mN^* sat phi(iota(overline(a)))$. On the other hand assume that $mN^* sat phi(iota(overline(a)))$ then $mN_Delta sat g_Delta (overline(a))$ for all $Delta in Y$ for some $Y in cal(U)$. But since $Y in cal(U)$ it must intersect every $X_Delta$ and in particular $X_(Delta(overline(a)))$. Thus $mN_Delta sat g_Delta (overline(a))$ for some $Delta$ with $Delta(overline(a)) seq Delta$ so by the fact that $g_Delta$ is a partial isomorphism we get that $mM sat phi(overline(a))$.
+so
+$
+  { Delta in I : mN_Delta sat phi } supset.eq [{phi}] in cal(U)
+$
+and thus $mN^* sat Th_(L(mM))(mM)$ and so $mM lt.curly mN^*$.

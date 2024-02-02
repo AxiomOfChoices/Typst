@@ -1,30 +1,12 @@
-#import "../../Templates/generic.typ": latex
-#import "../../Templates/notes.typ": chapter_heading
+#import "/Templates/generic.typ": latex
+#import "/Templates/notes.typ": chapter_heading
 #import "@preview/ctheorems:1.1.0": *
-#import "../../Templates/math.typ": *
-#import "../../Templates/monograph.typ": frontpage
+#import "/Templates/math.typ": *
+#import "/Templates/monograph.typ": frontpage
 #show: latex
 #show: chapter_heading
 #show: thmrules
-#let ve = $epsilon$
-#let seq = $subset.eq$
-#let Mink = math.op("Mink")
-#let qd = math.op("qd")
-#let fu = $frak(U)$
-#let pb() = {pagebreak(weak: true)}
-#let sat = $tack.r.double$
-#let proves = $tack.r$
-#let subm = $lt.curly$
-#let Th = math.op("Th")
-#let mM = $cal(M)$
-#let mN = $cal(N)$
-#let bar(el) = $overline(#el)$
-#let subs(a, b) = { return $attach(slash, tl: #a, br: #b)$ }
-#let subs(a, b) = [#box(inset: ( bottom: 2pt, right: -4pt ))[#a] $lr(mid(slash) #box(inset: ( bottom: -2pt, left: -4pt ))[#b])$]
-#let quo = math.op("/")
-#let subs(a, b) = $#a quo #b$
-#let uproduct = $product mM_i slash.big cal(U)$
-#let Def = math.op("Def")
+#show: symbol_replacing
 
 
 #show: doc => frontpage(
@@ -106,7 +88,7 @@ We have defined the symbols of $L$, but how do we speak it? We will need the fol
 As with any language we will build up our language first with nouns and then with phrases.
 
 #remark[
-  We will often use $bar(a)$ to denote the ordered collection $(a_1,...,a_n)$ where $n$ will be clear from context.
+  We will often use $ov(a)$ to denote the ordered collection $(a_1,...,a_n)$ where $n$ will be clear from context.
 ]
 
 #definition[
@@ -232,27 +214,27 @@ We extend our definition of interpretation of terms to terms of $L(|mM|)$ by set
   g(underline(f_i)^mM (a_1,...,a_n)) = underline(f_i)^mN (g(a_1),...,g(a_n))
   $
 
-  We write $mM subm(lt.curly.eq) thin thin mN$ to mean $mM$ is an elementary substructure of $mN$ which is true if $mM seq mN$ and for every formula $phi(bar(x))$ and for every $bar(a) seq |mM|$ we have 
+  We write $mM subm(lt.curly.eq) thin thin mN$ to mean $mM$ is an elementary substructure of $mN$ which is true if $mM seq mN$ and for every formula $phi(ov(x))$ and for every $ov(a) seq |mM|$ we have 
   $ 
-  mM sat phi(bar(a)) <=> mN sat phi(bar(a))
+  mM sat phi(ov(a)) <=> mN sat phi(ov(a))
   $
 ]
 
 #theorem("Tarski-Vaught test")[
   Suppose $mM$ is an $L$-structure, $A seq |mM|$, then $A$ is the universe of an elementary substructure iff the following condition holds, called the Tarski-Vaught test
 
-  #block(inset: (x: 2em))[For every formula $phi(x, bar(y))$ in $L$ and every $bar(a) seq A$, if $mM sat exists x thin phi(x, bar(a))$ then there exists $b in A$ such that $mM sat phi(b, bar(a))$]
+  #block(inset: (x: 2em))[For every formula $phi(x, ov(y))$ in $L$ and every $ov(a) seq A$, if $mM sat exists x thin phi(x, ov(a))$ then there exists $b in A$ such that $mM sat phi(b, ov(a))$]
 ]
 #proof[
-  First the $arrow.l.double$ direction, assume that the T-V test holds, then we need to show that $A$ is a substructure. First we use $phi = (x=c)$ to show that $A$ contains all constants of $mM$, then $phi = (x = phi_i (bar(a)))$ for $bar(a) seq A$, and we define the interpretation of $underline(R_j)$ to be exactly $underline(R_j)^mM sect A^(a_j)$ to make it a substructure.
+  First the $arrow.l.double$ direction, assume that the T-V test holds, then we need to show that $A$ is a substructure. First we use $phi = (x=c)$ to show that $A$ contains all constants of $mM$, then $phi = (x = phi_i (ov(a)))$ for $ov(a) seq A$, and we define the interpretation of $underline(R_j)$ to be exactly $underline(R_j)^mM sect A^(a_j)$ to make it a substructure.
 
   Now $A$ being a substructure is equivalent to 
   $
-    A sat phi(bar(a)) <=> mM sat phi(bar(a))
+    A sat phi(ov(a)) <=> mM sat phi(ov(a))
   $
-  for all $bar(a) seq A$ and $phi$ being an _atomic_ formula. So now we only need to prove this is true for the other formula types.
+  for all $ov(a) seq A$ and $phi$ being an _atomic_ formula. So now we only need to prove this is true for the other formula types.
   - The connective types are immediate.
-  - Let us assume $phi(bar(x)) = exists y thin psi(y, bar(x))$. Then $mM sat phi(bar(a))$ iff $mM sat exists y thin psi(y, bar(a))$ iff there exists $b in A$ with $mM sat psi(b, bar(a))$. But by definition this last form is equivalent to $A sat exists y thin psi(y, bar(a))$
+  - Let us assume $phi(ov(x)) = exists y thin psi(y, ov(x))$. Then $mM sat phi(ov(a))$ iff $mM sat exists y thin psi(y, ov(a))$ iff there exists $b in A$ with $mM sat psi(b, ov(a))$. But by definition this last form is equivalent to $A sat exists y thin psi(y, ov(a))$
 
   Assume, on the other hand, that $A$ is the universe of an elementary substructure $cal(A)$, then we need to prove the T-V test holds, assume then that for some formula $phi(x,overline(y))$ in $L$ and some $overline(a) seq A$ we have $mM sat exists x thin phi(x, overline(a))$ and so since it is an elementary substructure we also have that $cal(A) sat exists x thin phi(x, overline(a))$ and so we must have some $x in A$ such that $phi(x,overline(a))$ holds.
 ]
@@ -720,7 +702,7 @@ $
 $
 as well as 
 $
-  S_n^T (A) = { "all complete types in " T "on" A}
+  S_n^T (A) = { "all complete n-types in " T "on" A}
 $
 
 
@@ -737,7 +719,7 @@ $
 Types have several basic properties that we will use quite often.
 #proposition[
   If $p(overline(x))$ is a type over $A seq |mM|$ then there exists $mM lt.curly mN$ such that $p(overline(x))$ is realized in $mN$.
-]
+]<prop-add_one_type>
 #proof[
   Let $overline(c)$ be new constants, define 
   $
@@ -783,7 +765,7 @@ We can also prove the above corollary in a different way, using Zorn's lemma, we
   + This will follow from 4.
   + For any ultrafilter $cal(U)$ that does not contain $a$ we must have $-a in cal(U)$ and so
     $
-      cal(U) in [a] <=> cal(U) not in [-a]
+      cal(U) in [a] <=> cal(U) in.not [-a]
     $
   + Since $a,b <= a + b$ then
     $
@@ -798,7 +780,8 @@ We can also prove the above corollary in a different way, using Zorn's lemma, we
       (a in cal(U)) and (b in cal(U)) <=> a dot b in cal(U)
     $
   + For any two distinct ultrafilters $cal(U), cal(U)'$, then for some $x$ we have $x in cal(U)$ and $x in.not cal(U)'$. Then $cal(U) in [x], cal(U)' in.not [x]$ as well as $cal(U) in.not [-x], cal(U)' in [-x]$ and so the topology is Hausdorff.
-  // TODO: PROVE COMPACTNESS
+    // To show compactness assume that $union.big_(i) [a_i] = S(BB)$ and that for any finite $Delta$ we have $union.big_(i in Delta) [a_i] eq.not S(BB)$, then there is an ultrafilter $cal(U)$ with $a_i in.not cal(U)$ for all $i in Delta$, then $-a_i in cal(U)$ for all $i in Delta$ so $product_(i in Delta) (-a_i) in cal(U)$ and so this meet is not $0$. But then any finite intersection of $(-a_i)$ is not empty, 
+    To show compactness let $union.big_(i) [a_i] = S(BB)$, then ${ - a_i }$ cannot be a subset of any ultrafilter $cal(U)$ since it would not be in the union, thus some finite subset of $-a_i$'s must have product zero. But then if ${-a_(i_1), ..., -a_(i_k)}$ has zero product then any ultrafilter cannot contain all of them, thus any ultrafilter $cal(U)$ has to contain some $a_(i_j)$ and so $union.big_k [a_(i_k)] = S(BB)$.
 ]
 
 #theorem("Stone's Theorem")[
@@ -838,9 +821,73 @@ We can also prove the above corollary in a different way, using Zorn's lemma, we
 #remark[
   $ker(iota) = { phi : phi(mM) = nothing }$ is the set of $T$-inconsistent formulas.
 ]
-We have then by Isomorphism theorem
+We have then by Isomorphism theorem for rings
 $
   F_L (overline(x)) slash ker (iota) = Def(mM)
 $
 
+We can also identify $S_n^T (nothing)$ with $S(F_L (overline(x)))$ which makes it a compact set with basic open sets $[phi(overline(x))] = {p in S_n^T (nothing) : phi(overline(x)) in p }$.
 
+#proposition[
+  If $L$ is countable then $S_n^T (nothing)$ is homeomorphic to a closed subset of the Cantor space.
+]<prop-types_cantor_space>
+#proof[
+  To see this we will turn $S_n^T (nothing)$ into an infinite binary tree, first enumerate $F_L (ov(x)) = { phi_1,... }$ then for every type $p in S_n^T (nothing)$ we have either $phi_1 in p$ or $not phi_1 in p$. This gives a splitting of $S_n^T (nothing)$ into two open subsets, we then split again on $phi_2$ and get 4 open subsets. Continuing this construction, we get that the complete types will be infinite branches in this tree, and it is well known that such an infinite binary tree is isomorphic to the Cantor space.
+]
+#remark[
+  This construction can also be done with $L$ uncountable, we then get a homomorphism to $2^(|L|)$ seen as a product space.
+]
+
+The closed sets of $S_n^T (nothing)$ are of the form $[p(overline(x))] = {q in S_n^T (nothing) : p seq q }$.
+
+All of these also hold if we change $S_n^T (nothing)$ to $S_n^T (A)$
+
+#definition[
+  If $mM$ is a model of $T$ and $kappa >= aleph_0$ is an infinite cardinal, we say that $mM$ is $kappa$-_saturated_ if for every subset $A seq |mM|$ of size less than $kappa$ every type in $S_n^T (A)$ is realized in $mM$.
+
+  $mM$ is _saturated_ if $mM$ is $|mM|$-saturated.
+]
+
+#remark[
+  ${x eq.not a : a in mM}$ is not realized in any model $mM$, so no model is $kappa$-saturated for any $kappa > |mM|$.
+]
+
+We will next show how to construct saturated models, to complete this we will need a lemma.
+
+#definition[
+  For a cardinal $gamma$, $cf(gamma)$ is called the co-finality of $gamma$ and is the cardinality of the shortest unbounded sequence in $gamma$.
+]
+
+#theorem("König's theorem")[
+  For a cardinal $gamma$, $cf(2^gamma) > gamma$.
+]<thrm-Konig>
+
+#lemma[
+  If $(mN_alpha)_(alpha < kappa)$ is an elementary chain, that is $mN_alpha lt.curly mN_beta$ for $alpha < beta$. Then if $mN = union.big_(alpha = 0)^kappa mN_alpha$ we have $mN_alpha lt.curly mN$ for all $alpha$.
+]
+#proof[
+  Let $phi(ov(a))$ be a formula, we show that $mN_alpha sat phi(ov(a)) <=> mN_alpha$ for all alpha by induction. Since every $mN_alpha$ is contained in $mN$ then this is true for all atomic formula $phi$. Now we induct on the structure of $phi$, for logical connectives this is trivial. Now assume that $phi = exists x thin psi(x,ov(a))$, then certainly $mN_i sat phi => mN sat phi$, now if $mN sat phi(ov(a))$ then there is some $j >= i$ such that $b in |mN_j|$ and so $mN_j sat psi(b,ov(a))$ so $mN_j sat phi(ov(a))$ and so $mN_i sat phi(ov(a))$.
+]
+
+#theorem[
+  For every $kappa$, for every $mM$, there exists a model $mN$ with $mN gt.curly mM$ and $mN$ is $kappa$-saturated.
+  
+  If $kappa$ is _weakly inaccessible_, that is $lambda < kappa => 2^lambda <= kappa$ (note that such cardinals cannot be proved to exist in ZFC) then for every $mM$ with $|mM| <= kappa$ there exists $mN$ with $mN gt.curly mM$ saturated with size $kappa$.
+]
+#proof[
+  Assume that $L$ is countable, then $S_n^T (A) <= 2^(|A| + aleph_0)$ by @prop-types_cantor_space. Let $mu = 2^kappa$, note that $cf(mu) > kappa$ by @thrm-Konig.
+
+  We will now construct a sequence of models $(mM_alpha)_(alpha < mu)$ with $mM_0 = mM$ and at limit $alpha$ we have $mM_alpha = union.big_(beta < alpha) mM_beta$, we will assume that $|mM_alpha| < mu$.
+  At successor steps $alpha = beta + 1$, we want to find $mM_alpha$ with $mM_beta lt.curly mM_alpha$ such that for all $A seq mM_beta$ with $|A| < kappa$, every type in $S_n^T (A)$ is realized in $mM_alpha$. 
+  Now we know that for every single type $p(overline(x))$ by @prop-add_one_type we can add a realization of that type, and then by @thrm-downwards we can get that realization with size at most $mu$, so we just need to do induction again to add every type.
+
+  Let us count how many types we need to add, we know that for any fixed $A$ we have $|S_n^T (A)| <= 2^(kappa + aleph_0) = mu$. Now for any cardinality $beta$ we have that the number of subsets $A$ with $|A| = beta$ is
+  $
+    mu^beta = (2^kappa)^beta = 2^(kappa times beta) = 2^kappa = mu
+  $
+  so in total we have $sum_(lambda < kappa) mu^lambda = kappa mu = mu$ steps and so our final model $mM_(alpha + 1)$ is also of size at most $mu$ which completes the induction.
+]
+
+#example[
+  There are strange consequences to this theorem, for example there are models of Piano Arithmetic that satisfy a statement encoding "PA is inconsistent".
+]

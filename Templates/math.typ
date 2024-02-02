@@ -1,7 +1,32 @@
 #import "@preview/ctheorems:1.1.0": *
 
 
+// Various symbols
+#let ve = $epsilon$
+#let seq = $subset.eq$
+#let Mink = math.op("Mink")
+#let qd = math.op("qd")
+#let fu = $frak(U)$
+#let pb() = {pagebreak(weak: true)}
+#let sat = $tack.r.double$
+#let proves = $tack.r$
+#let subm = $lt.curly$
+#let Th = math.op("Th")
+#let mM = $cal(M)$
+#let mN = $cal(N)$
+#let ov(el) = math.overline(el)
+#let quo = math.op("/")
+#let subs(a, b) = $#a quo #b$
+#let uproduct = $product mM_i slash.big cal(U)$
+#let Def = math.op("Def")
+#let cf = math.op("cf")
+#let Cn = math.op("Cn")
 
+
+#let symbol_replacing(doc) ={
+  show sym.emptyset: set text(font: "Fira Sans")
+  doc
+}
 #let theorem = thmbox(
   "theorem",
   "Theorem",
