@@ -4,9 +4,9 @@
 #show: style
 #show: equation_references
 #show: doc => frontpage(
-  toptitle: [Conformally Induced\ Mean Curvature Flow], 
-  name: [Jacob Reznikov 
-  #linebreak() 
+  toptitle: [Conformally Induced\ Mean Curvature Flow],
+  name: [Jacob Reznikov
+  #linebreak()
   Master of Science
   ],
   middletitle: [
@@ -14,8 +14,8 @@
       McGill University \
       Montreal, Quebec, Canada],
   bottomtitle: [
-    A thesis submitted to McGill University in partial\ 
-    fulfillment of the requirements of the degree of a\ 
+    A thesis submitted to McGill University in partial\
+    fulfillment of the requirements of the degree of a\
     Master of Science
   ],
   info: [#sym.copyright Jacob Reznikov, #datetime.today().display("[year]")],
@@ -41,9 +41,9 @@
 #pagebreak(weak:true)
 = Abstract
 This thesis aims to loosely cover the subject of geometric flows, and more specifically a variant of the mean curvature flow.
-The subject of geometric flows uses results in PDE theory theory, more specifically parabolic PDEs, to gain new insight about Riemannian geometry. 
+The subject of geometric flows uses results in PDE theory theory, more specifically parabolic PDEs, to gain new insight about Riemannian geometry.
 
-One of the biggest problems often tackled by mean curvature flows is the Isoperimetric problem. The Isoperimetric problem asks us to classify the spaces that minimize perimeter for a given volume (hence the name), the first use of mean curvature flows to attack this problem was due to Huisken in 1984 #cite(<huiskenFlowMeanCurvature1984>) who proved it in case of boundaries of convex domains in Euclidean, and since then there have been attempts to push his methods further. More recently, in 2013, Guan and Li #cite(<guanMeanCurvatureType2013a>) constructed a new normalized flow which allows them to prove the inequality in the case of boundaries of star-shaped domains in Space forms. Shortly after, in 2018, Guan, Li and Wang pushed this flow even further which allowed them to prove the result in a certain class of warped product spaces #cite(<guanVolumePreservingFlow2018>). 
+One of the biggest problems often tackled by mean curvature flows is the Isoperimetric problem. The Isoperimetric problem asks us to classify the spaces that minimize perimeter for a given volume (hence the name), the first use of mean curvature flows to attack this problem was due to Huisken in 1984 #cite(<huiskenFlowMeanCurvature1984>) who proved it in case of boundaries of convex domains in Euclidean, and since then there have been attempts to push his methods further. More recently, in 2013, Guan and Li #cite(<guanMeanCurvatureType2013a>) constructed a new normalized flow which allows them to prove the inequality in the case of boundaries of star-shaped domains in Space forms. Shortly after, in 2018, Guan, Li and Wang pushed this flow even further which allowed them to prove the result in a certain class of warped product spaces #cite(<guanVolumePreservingFlow2018>).
 
 This thesis continues the effort to use such flows, together with my collaborator Joshua Flynn we pushed the flow even further, allowing us to prove the result for far larger class of domains in an even wider class of spaces.
 
@@ -54,8 +54,8 @@ First I would like to thank my supervisor, Professor Pengfei Guan, for his regul
 Finally I would like to thank my family, and especially my mom, for always being there to help and support me whenever I would feel down and lost.
 
 #pagebreak(weak:true)
-= Contribution 
-This thesis and each chapter within was written solely by myself, with occasional assistance from colleagues regarding phrasing. 
+= Contribution
+This thesis and each chapter within was written solely by myself, with occasional assistance from colleagues regarding phrasing.
 The body of the thesis is largely taken from the paper co-authored by myself and Joshua Flynn.
 
 #show: chapter_headings
@@ -140,15 +140,15 @@ $
 $
 proving the claim.
 
-Now for #link(<prop-h_neg>)[(c)] we note first that $nabla_X Y = ( ov(nabla)_Y X)^top$ for $X,Y in T_p M$, see, for instance, @jostRiemannianGeometryGeometric2011[p.~223]. This will mean that since $e_i$ are orthonormal then 
+Now for #link(<prop-h_neg>)[(c)] we note first that $nabla_X Y = ( ov(nabla)_Y X)^top$ for $X,Y in T_p M$, see, for instance, @jostRiemannianGeometryGeometric2011[p.~223]. This will mean that since $e_i$ are orthonormal then
 $
   (ov(nabla)_i e_j)^top = nabla_i e_j = 0
 $
 for all $i,j$ and so $ov(nabla)_i e_j = b_(i j) nu$ for some matrix $b$ of coefficients. Now we have 
 $
   0 
-  = ov(nabla)_i ip(e_j, nu) 
-  = ip(ov(nabla)_i e_j, nu) + ip(e_j, ov(nabla)_i nu) 
+  = ov(nabla)_i ip(e_j, nu)
+  = ip(ov(nabla)_i e_j, nu) + ip(e_j, ov(nabla)_i nu)
   = b_(i j) + h_(i j)
 $
 which proves the claim.
@@ -194,13 +194,13 @@ A conformal vector field is a vector field $X$ with the property that $lie_X ov(
   where $eta$ is the dual one form to $X$ defined by $eta(Z) = ip(X,Z)$
 ]
 #proof[
-  We have by Koszul's formula (@leeIntroductionRiemannianManifolds2018a[p.~123]) 
+  We have by Koszul's formula (@leeIntroductionRiemannianManifolds2018a[p.~123])
   $
     2 ip(ov(nabla)_Y X, Z) =& Y(ip(X,Z)) + X(ip(Y,Z)) - Z(ip(X,Y))
     \ &- ip([X,Y],Z) - ip([Y,Z],X) - ip([X,Z],Y)
     \ =& lie_X (ip(Y,Z)) + lie_Y (eta(Z)) - lie_Z (eta(Y))
     \ &- ip(Z,lie_X Y) - eta(lie_Y Z) - ip(Y, lie_X Z)
-    \ =& (lie_X ov(g)) (Y,Z) + lie_Y (eta(Z)) - lie_Z (eta(Y)) - eta(lie_Y Z) 
+    \ =& (lie_X ov(g)) (Y,Z) + lie_Y (eta(Z)) - lie_Z (eta(Y)) - eta(lie_Y Z)
     \ =& (lie_X ov(g)) (Y,Z) + (lie_Y eta)(Z) - lie_Z (eta(Y))
   $
   Now we can use Cartan's magic formula (@leeIntroductionSmoothManifolds2012[p.~372]) applied to the second term to get
@@ -362,7 +362,7 @@ The most important tool in the analysis of parabolic PDEs is the maximum princip
 
 Now that we are familiar with geometry and PDEs we can start to use them together to attack the Isoperimetric problem.
 #definition[
-  Let $F : M -> N$ be an admissible hypersurface. Let $F_t$ be a function $F : I times M -> N$, where $I = [0,T)$ for some fixed $T$ and $F_0 = F$ on $M$. $F_t$ is called a _normal flow_ with _normal velocity_ $f$ if 
+  Let $F : M -> N$ be an admissible hypersurface. Let $F_t$ be a function $F : I times M -> N$, where $I = [0,T)$ for some fixed $T$ and $F_0 = F$ on $M$. $F_t$ is called a _normal flow_ with _normal velocity_ $f$ if
   $
     diff_t F_t (x) = f(t,x) nu(x)
   $
@@ -370,10 +370,28 @@ Now that we are familiar with geometry and PDEs we can start to use them togethe
 ]
 
 #remark[
-  We will often refer to $F_t (M)$ as $M_t$ for brevity.
+  We will often refer to $F_t (M)$ as $M_t$ for brevity. Additionally many constructions on $M_t$ will be denoted without explicit reference to $t$, i.e $g$ instead of $g(t)$, even though the metric of $M_t$ will depend on $t$. Keep in mind that any construction of the metric will also depend on $t$.
 ]
 
-As a manifold flows it's various properties, both local and global, will change, the equations governing these changes are called _evolution equations_. We will now derive some of these evolution equations. Let us first start with the global properties that are the most important for the Isoperimetric problem.
+
+As a manifold flows it's various properties, both local and global, will change, the equations governing these changes are called _evolution equations_. We will now derive some of these evolution equations, we will first start with the most important evolving tensor, the metric.
+
+#proposition[
+  The evolution equation for the metric is
+  $
+    diff_t g = 2 f h
+  $
+]<prop-metric_evoluion>
+#proof[
+  Recall that for some vectors $X,Y in T_p M_t$ we can define $g(X,Y)$ to be
+  $
+    g(X,Y) = ov(g) (D F_t (X), D F_t (Y))
+  $
+  and so we can differentiate
+  $
+    diff_t g(X,Y) = diff_t ov(g) (D F_(X))
+  $
+]
 
 #proposition[
   Let $F_t$ be a normal flow with velocity $f$, we have the following evolution equations for $V(M_t)$ and $A(M_t)$,
