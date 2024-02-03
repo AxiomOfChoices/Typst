@@ -9,8 +9,9 @@
 #let fu = $frak(U)$
 #let pb() = {pagebreak(weak: true)}
 #let sat = $tack.r.double$
+#let satn = $tack.r.double.not$
 #let proves = $tack.r$
-#let subm = $lt.curly$
+#let elm = $lt.curly$
 #let Th = math.op("Th")
 #let mM = $cal(M)$
 #let mN = $cal(N)$

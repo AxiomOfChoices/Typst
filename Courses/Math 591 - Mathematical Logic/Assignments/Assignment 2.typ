@@ -49,7 +49,7 @@ on the first turn we pick $m_0$ and let Prover map it to some element of $|mN|$.
 #pagebreak(weak: true)
 = Question
 == Statement
-We say that a theory is axiomatized by a set $A$ of sentences if $T = Cn(A)$ where $Cn$ denotes the conclusions of a set of sentences. A universal sentence $phi$ is a sentence of the form $phi = forall overline(x) thin psi(overline(x))$ where $psi$ is quantifier free.
+We say that a theory is axiomatized by a set $A$ of sentences if $T = Cn(A)$ where $Cn$ denotes the conclusions of a set of sentences. A universal sentence $phi$ is a sentence of the form $phi = forall overline(x) thin psi(overline(x))$ where $psi$ is atomic.
 
 Let $T$ be an $L$-theory and $T_forall$ be the set of all universal sentences $sigma$ such that $T proves sigma$. Show that $mM sat T_forall$ if and only if there is an $mN sat T$ such that $mM seq mN$. Conclude that $T$ is axiomatizable by a set of universal sentences if and only if the set of models of $T$ is closed under taking substructures.
 == Solution
@@ -62,63 +62,72 @@ Let $T$ be an $L$-theory and $T_forall$ be the set of all universal sentences $s
 #proof[
   One direction is easy, assume that $mM seq mN$ with $mN sat T$, let $phi = forall overline(x) thin psi(overline(x))$ with $phi in T$. Then by unwrapping the definition of satisfaction we know that
   $
-    mN sat phi => forall overline(a) in |mN| (mN sat psi(overline(a))) => forall overline(a) in |mM| (mM sat psi(overline(a))) => mM sat phi
+    mN sat phi => forall overline(a) in |mN| (mN sat psi(overline(a))) => forall overline(a) in |mM| (mM sat psi(overline(a))) => mM sat phi.
   $
-
-  Now assume that $mM sat T_forall$, then first note that $T$ must be consistent since otherwise all the atomic contradictions in $T$ would also be in $T_forall$. Let $S$ denote the set of all quantifier free sentences in $L(|mM|)$ that are true in $mM$. We now show that $T union S$ is consistent by contradiction. Assume it is not, then by compactness it would have an inconsistent finite subcollection, denote that subcollection $T' union S'$, where $S'$ is non empty by consistency of $T$. Then consider the sentence 
+  Now assume that $mM sat T_forall$, then first note that $T$ must be consistent since otherwise all the atomic contradictions in $T$ would also be in $T_forall$. Let $S$ denote the set of all atomic sentences in $L(|mM|)$ that are true in $mM$. We now show that $T union S$ is consistent by contradiction. Assume it is not, then by compactness it would have an inconsistent finite subcollection, denote that subcollection $T' union S'$, where $S'$ is non empty by consistency of $T$. Now for some $overline(c) in |mM|$ we have $phi_i = psi_i (overline(c))$ for all $phi in S'$. Then consider the sentence 
   $
-    Phi = exists overline(x)_1 ... exists overline(x)_k (and.big_(phi_i (overline(a)) in S') phi_i (overline(x)_i))
+    Phi = exists overline(x) (and.big_(phi in S') psi (overline(x)))
   $
   if this sentence is true in some model $mM'$ of $T'$ then $mM' sat T' union S'$ since we can just interpret the constants in $S'$ to be the witnesses of the above sentence.
 
   On the other hand if this sentence is false in all models of $T'$ then by completeness theorem $T' proves not Phi$, but notice that 
   $
-    not Phi = forall overline(x)_1 ... forall overline(x)_k (or.big_(phi(overline(a)) in S') not phi(overline(x)_k))
+    not Phi = forall overline(x) (or.big_(phi in S') not psi(overline(x)))
   $
-  and so $not Phi$ is a universal sentence and thus in $T_forall$. Thus $mN sat not Phi$ but since $S'$ is non empty then some $phi_i (overline(x)_i)$ would be false for all possible parameters $overline(x)_i$, contradicting its construction.
+  and so $not Phi$ is a universal sentence and thus in $T_forall$ and so $mM sat not Phi$. But now $Phi(overline(c))$ must be true in $mM$ by construction of $S$ and so we have a contradiction.
 
-  By completeness then, $T union S$ has a model $mN$, that model is then a superstructure of $mM$ since it satisfies all the sentence of $S$, this proves the lemma.
+  By completeness then, $T union S$ has a model $mN$, that model is then a superstructure of $mM$ since it satisfies all the atomic $L(mM)$-sentences of $mM$, this proves the lemma.
 ]
 
-Now using this lemma, assume $T_forall$ axiomatizes $T$, then if $mN$ is a model of $T$ then for any substructure $mM$ we have by the above lemma $mM sat T_forall$ and thus $mM sat T$. On the other hand if the models of $T$ are closed under taking substructures then if $mM sat T_forall$ we have that there exists $mN$ with $mM seq mN$ and $mN sat T$ so then $mM sat T$ also. Since this is true for every model by completeness $T_forall proves T$.
+Now using this lemma, assume $T_forall$ axiomatizes $T$, then if $mN$ is a model of $T$ then for any substructure $mM$ we have by the above lemma $mM sat T_forall$ and thus $mM sat T$. On the other hand if the models of $T$ are closed under taking substructures then if $mM sat T_forall$ we have that there exists $mN$ with $mM seq mN$ and $mN sat T$ so then $mM sat T$ also. Since this is true for every model, by completeness, $T_forall proves T$.
 #pagebreak(weak: true)
 = Question
 <question-3>
 == Statement
-An $forall exists$-sentence $phi$ is one of the form $phi = forall overline(x)thin exists overline(y) thin psi$ where $psi$ is quantifier free.
+An $forall exists$-sentence $phi$ is one of the form $phi = forall overline(x)thin exists overline(y) thin psi(overline(x),overline(y))$ where $psi$ is quantifier free.
 
 Show that $T$ is axiomatizable by $forall exists$-sentences if and only if the class of models of $T$ is closed under taking unions of increasing chains (linearly ordered by inclusion) of models.
 == Solution
 #remark[
   I unfortunately stumbled upon the solution of questions 2 and 3 in the textbook by David Marker while trying to look up what a universal statement means. Both solutions are largely inspired by whats in that book.
 ]
-We will try to emulate the solution for question 2, we set $T_(forall exists)$ to be the set of $forall exists$-sentences in $T$. Assume that $mM_i sat T$ for all $i in I$, set $mM = union.big_i mM_i$, then let $phi in T$ be of the form $phi = forall overline(x) thin exists overline(y) thin psi$, we have 
+We will try to emulate the solution for question 2, we set $T_(forall exists)$ to be the set of $forall exists$-sentences in $T$. Assume that $mM_i sat T$ for all $i in I$, set $mM = union.big_i mM_i$, then let $phi in T$ be of the form $phi = forall overline(x) thin exists overline(y) thin psi(overline(x),overline(y))$, we have 
 $
   mM sat phi <=> forall overline(a) in |mM|, exists overline(b) in |mM|, mM sat psi(overline(a),overline(b))
 $<eqn-union_satisfy>
 now fix some $overline(a)$, since it is a finite tuple of elements, there exists some $i$ with $overline(a) in |mM_i|$. Since $phi$ holds in $mM_i$ there is some vector of elements $overline(b) in |mM_i|$ with $mM_i sat psi(overline(a), overline(b))$. Since $psi$ is atomic then $mM sat psi(overline(a), overline(b))$ as well and so by @eqn-union_satisfy we have $mM sat phi$.
 
-For the other direction we have a lot more work to do. Assume that models of $T$ are closed under taking unions of chains and that $mM sat T_(forall exists)$. First let us construct a superstructure of $mM$ that satisfies $T$, to do this set $Gamma = T union C union S$ where $C$ is the set of atomic $L(|mM|)$-sentences true in $mM$ and $S$ is the set of $exists forall$-$L$-sentences (not $forall exists$) that are true in $mM$.
-
-Now assume that $Gamma$ is inconsistent, then by compactness let $T' union C' union S'$ be a finite subset that achieves a contradiction, then construct the sentence 
+For the other direction we have a lot more work to do. Assume that models of $T$ are closed under taking unions of chains and that $mM sat T_(forall exists)$. First let us construct a superstructure of $mM$ that satisfies $T$, to do this set $Gamma = T union C union S$ where 
+$
+  C = { phi "atomic" L(|mM|)"-sentence" | mM sat phi }
+  "and"
+  S = { phi med exists forall med L"-sentence" | mM sat phi }
+$
+Now assume that $Gamma$ is inconsistent, then by compactness let $T' union C' union S'$ be a finite subset that achieves a contradiction. As before we can show that $T$ is consistent, and $C union S$ is consistent since $mM sat C union S$. Then construct the sentences 
 $
   phi =
-  exists overline(x)_1 ... exists overline(x)_n
-  (and.big_(phi_i (overline(a)) in C') phi_i (overline(x)_i))
-$
-and the sentence
-$
+  exists overline(x)
+  (and.big_(phi in C') phi (overline(x)))
+  quad
+  "and"
+  quad
   phi' = and.big_(psi in S) psi
 $
-then if $T' union { phi, phi' }$ is consistent then by interpreting the $overline(x)_i$ given to us by $phi$ as the constants in $C'$ we get that $T' union C' union S'$ is consistent. On the other hand if $T union {phi, phi' }$ is inconsistent then $T' proves not (phi and phi')$, but one can easily check that $not (phi and phi')$ is an $forall exists$-sentence and thus is in $T_(forall exists)$. But then $mM sat not (phi and phi')$, which contradicts the construction of $C$ and $S$. It is clear that a model $mN$ of $Gamma$ is a superstructure of $mM$ which satisfies $T$ and also satisfies all $exists forall$-statements that are true in $mM$.
+then if $T' union { phi, phi' }$ is consistent then by interpreting the $overline(x)$ given to us by $phi$ as the constants in $C'$ we get that $T' union C' union S'$ is consistent. On the other hand if $T union {phi, phi' }$ is inconsistent then $T' proves not (phi and phi')$, but one can easily check that $not (phi and phi')$ is an $forall exists$-sentence and thus is in $T_(forall exists)$. But then $mM sat not (phi and phi')$, which contradicts the construction of $C$ and $S$. It is then clear that a model $mN$ of $Gamma$ is a superstructure of $mM$ which satisfies $T$ and also satisfies all $exists forall$-statements that are true in $mM$.
 
 Now set $mM_0 = mM$ and $mN_0 = mN$, we will construct the sequences $mM_i,mN_i$ inductively in two steps. On even steps we will construct $mN_i$ from $mM_i$ exactly as we did above, with $mN_i equiv mN_0$ and $mM_i seq mN_i$. 
-We construct $mM_i$ as a superstructure of $mN_(i-1)$ which is also an elementary superstructure of $mM$. To do construct such a superstructure we need to check that $S(mM) union C(mN_(i-1))$ where $S(mM)$ is the set of all $L(|mM|)$-sentences that are true in $mM$ and $C(mN_(i-1))$ is the set of all atomic $L(|mN_(i-1)|)$-sentences that are true in $mN_(i-1)$. Assume that this set is inconsistent, then by compactness let $S' union C'$ be an inconsistent finite subset. Now define the sentence
+We construct $mM_i$ such that $mN_(i-1) seq mM_i$ and $mM elm mM_i$. To construct such a superstructure we need to check that $S(mM) union C(mN_(i-1))$ is consistent, where
 $
-  phi = exists overline(x)_1 ... exists overline(x)_n 
-  (and.big_(phi_i (overline(a)) in C') phi_i (overline(x)_i))
+  S(mM) = { phi thin L(mM)"-sentence" | mM sat phi}
+  "and"
+  C(mN_(i-1)) = { phi "atomic" L(mN_(i-1))"-sentence" | mN_(i-1) sat phi }
 $
-by the exact same argument as above either $S(mM) union { phi }$ is consistent, which would contradict inconsistency above, or it is inconsistent so $S(mM) proves not phi$, then $not phi$ is an $exists forall$-sentence with $mM sat not phi$, but then by induction we know that $mN_(i-1) sat not phi$ which contradicts the construction of $phi$ from statements in $C(mN_(i-1))$. Any model of $S(mM) union C(mN_(i-1))$ then satisfies what we want.
+Assume that this set is inconsistent, then by compactness let $S' union C'$ be an inconsistent finite subset. Hence define the sentence
+$
+  phi = exists overline(x)
+  (and.big_(phi in C') phi (overline(x)))
+$
+by the exact same argument as above either $S(mM) union { phi }$ cannot be consistent and so $S(mM) proves not phi$. However, $not phi$ is an $exists forall$-sentence implying $mM sat not phi$, but then by inductive hypothesis we know that $mN_(i-1) sat not phi$ which contradicts the construction of $phi$ from statements in $C(mN_(i-1))$. Any model of $S(mM) union C(mN_(i-1))$ then are candidates for $mN_i$.
 
 We then get the chain 
 $
@@ -139,32 +148,47 @@ A model $mM$ of a theory $T$ is existentially closed if whenever $sigma$ is an e
 Show that if $T$ is axiomatizable by $forall exists$-sentences, then it has an existentially closed model.
 == Solution
 I'm gonna assume that $T$ is consistent as otherwise I think this is false.
-Let $mM$ be a model of $T$, set $kappa = ||mM|| + ||L|| + aleph_0$ define $frak(X)$ the collection of superstructures $mN sat T$ with $|mN| seq |mM| union.sq kappa$, note that this collection is a set. 
+Let $mM$ be a model of $T$, set $kappa = ||mM||+|L| + aleph_0$, define $frak(X)$ the collection of superstructures $mN sat T$ with $|mN| seq |mM| union.sq kappa$, note that this collection is a set. 
 #lemma[
   Let $mN in frak(X)$ be a model which fails to be existentially closed for some sentence $sigma$, then $mN$ has a superstructure $mN' in frak(X)$ with $mN' sat sigma$.
 ]
 #proof[
-  By definition $mN$ has some superstructure $mN^*$ with $mN^* sat T$ and $mN^* sat sigma$. By Lowenheim-Skolem downwards Theorem we have that there exists a model $mN'$ with $mN seq mN' lt.curly mN^*$ and $||mN'|| <= kappa$. By $mN' lt.curly mN^*$ we have that $mN' sat T$ and $mN' sat sigma$, also by enumerating $|mN'| backslash |mN|$ we can map all those elements to elements of $kappa$ to get that $mN'$ is isomorphic to some model in $frak(X)$.
+  By definition $mN$ has some superstructure $mN^*$ with $mN^* sat T$ and $mN^* sat sigma$. By Lowenheim-Skolem downwards Theorem we have that there exists a model $mN'$ with $mN seq mN' lt.curly mN^*$ and 
+  $
+  ||mN'|| <= ||mN|| + |L(mN)| + kappa = ||mN|| + |L| + ||mN| = ||mN|| + |L| <= ||mM|| + |L|.
+  $
+  By $mN' lt.curly mN^*$ we have that $mN' sat T$ and $mN' sat sigma$, also by enumerating $|mN'| backslash |mN|$ we can map all those elements to elements of $kappa$ to get that $mN'$ is isomorphic to some model in $frak(X)$.
 ]
 
-Now $frak(X)$ is partially ordered by inclusion, now for every chain $mM_i$ in $frak(X)$ we have that $|mM_i| seq |mM| union kappa$ and so $|union.big_i mM_i| seq |mM| union kappa$. But also since $T$ is axiomatizable by $forall exists$-sentences, then by @question-3 we have that $union.big_i mM_i sat T$. Now by Zorn's lemma we have that since chains contain upper bounds then there exists a maximal element of $frak(X)$. But by the lemma above a maximal element cannot fail to be existentially closed for any sentence $sigma$, so it must be existentially closed.
+Now $frak(X)$ is partially ordered by inclusion, and for every chain $mM_i$ in $frak(X)$ we have that $|mM_i| seq |mM| union kappa$ and so $|union.big_i mM_i| seq |mM| union kappa$. But also since $T$ is axiomatizable by $forall exists$-sentences, then by @question-3 we have that $union.big_i mM_i sat T$ and so $union.big_i mM_i in frak(X)$ and thus is an upper bound for the chain. Now by Zorn's lemma we have that since chains contain upper bounds then there exists a maximal element of $frak(X)$. But by the lemma above a maximal element cannot fail to be existentially closed for any sentence $sigma$, so it must be existentially closed.
 
 #pagebreak(weak: true)
 = Question
 == Statement
 Suppose $T$ has only infinite models. Show that if $T$ is $kappa$-categorical for some $kappa >= |L|$ and axiomatizable by $forall exists$-sentences, then all models of $T$ are existentially closed. Conclude that every algebraically closed field is existentially closed.
 == Solution
-Assume some model $mM sat T$ fails to be existentially closed for some existentially sentence $sigma$, then by @question-4 it is contained in an existentially closed superstructure $mN$ with $mN sat T$ and $mN sat sigma$. Now $sigma$ contains finitely many constants from $L(|mM|)$, name them $c_i$ for $i in [k]$, now replace every such constant with a corresponding variable $x_i$ consider the sentence $sigma'$ defined as 
-$
-  sigma' = forall x_1 ... forall x_n thin sigma(x_1,...,x_n).
-$
-This sentence is true in $mN$ since it is existentially closed, but then since its an $L$-sentence and $T$ is complete it must be in $T$. Thus $mM sat sigma'$ and so by definition of $sat$ we have that in particular
-$
-  mM sat sigma(c_1,...,c_n)
-$
-which is a contradiction.
+#lemma[
+  If there exists model $mM$ of cardinality $kappa$, then there exists a non-existentially closed model $mM$ of any cardinality $gamma >= |L|$.
+]
+#proof[
+  Assume that $mM$ fails to be existentially closed for some existential $L(mM)$-sentence $sigma$, then let $mN sat T$ be a super model with $mN sat sigma$.
 
-Now algebraically closed fields are defined over the language $(+,dot,0,1)$ and satisfy the following axioms
+  If $gamma > kappa$, then essentially by the same argument as upward Lowenheim-Skolem theorem we have that there exists models $mM',mN'$ with $mM' seq mN'$, $mM elm mM'$, $mN elm mN'$ and $||mM'|| = gamma$. Now by definition of an elementary sub-model we have that
+  $
+    mM sat sigma <=> mM' sat sigma
+    "and"
+    mN sat sigma <=> mN' sat sigma
+  $
+  and so $mM' satn sigma, mN' sat sigma$ so $mM'$ is not existentially closed.
+
+  On the other hand, if $|L| <= gamma < kappa$ then let $C = {c_1,...,c_n}$ be the set of $L(mM)$ elements that appear in sigma, by downward Lowenheim-Skolem theorem we have that there exists a model $mM'$ containing $C$ with $mM' elm mM seq mN$ and $||mM'|| = gamma$. Then again, by definition of elementary sub-model we have that since $overline(c) in |mM'|$,
+  $
+    mM' sat sigma <=> mM sat sigma
+  $
+  and so $mM' satn sigma$ and so $mM'$ is not elementary closed.
+]
+
+Next we recall that algebraically closed fields are defined over the language $(+,dot,0,1)$ and satisfy the following axioms
 - $forall x (x + 0 = 0)$
 - $forall x forall y forall z (x + (y + z)) = ((x + y) + z)$
 - $forall x forall y (x + y = y + x)$
@@ -175,25 +199,27 @@ Now algebraically closed fields are defined over the language $(+,dot,0,1)$ and 
 - $forall x (x dot y = y dot x)$
 - $forall x forall y forall z (x dot (y + z) = (x dot y) + (x dot z))$
 - $forall x exists y (x != 0 -> x dot y = 1)$
-And then we add axioms of the form $1 + 1 = 0, 1 + 1 + 1 = 0,...$ to fix a characteristic $p$.
-All of these axioms are $forall exists$-sentences, and we know that $|L| <= aleph_0$ and if we call these theories $A C F_p$ are $aleph_1$ categorical and so all algebraically closed fields are existentially closed.
+And then we add axioms of the form $1 + 1 = 0, 1 + 1 + 1 = 0,...$ to fix a characteristic $p$, as well as the axioms
+$forall a_0 ... forall a_(n-1) exists x (x^n + sum_(i=0)^(n-1) a_i x^i = 0)$ for all $i$.
+All of these axioms are $forall exists$-sentences, and we know that $|L| <= aleph_0$ and all the theories are $aleph_1$ categorical and so all algebraically closed fields are existentially closed.
 
 #pagebreak(weak: true)
-= Quesiton
+= Question
 == Statement
 Let $mM$ be a model. An _Ultrapower_ of $mM$ is a model of the form $product_i mM_i slash cal(U)$ where all $mM_i = mM$.
 
 Let $mM^*$ be an ultrapower of $mM$. Show that the diagonal map $iota$ mapping $a$ to the equivalence class of the constant sequence with value $a$ is an elementary embedding of $mM$ into $mM^*$. Show that if $mM^*$ is obtained from a nonprincipal ultrafilter on $NN$, then $iota$ surjective if and only if $mM$ is finite.
 == Solution
-Let $a$ be a vector of elements in $mM$ and $tilde(a)$ is the image of that vector of elements under $iota$, then let $phi(overline(x))$ be a formula, we have that ${ i in I : mM_i sat (tilde(a))_i }$
+Let $a$ be a vector of elements in $mM$ and $tilde(a)$ is the image of that vector of elements under $iota$, then let $phi(overline(x))$ be a formula, we have that ${ i in I : mM_i sat phi(tilde(a))_i }$
 is either equal to $I$ or the empty set.
-Then we have by Łoś's Theorem we have that
+Then by Łoś's Theorem we have that
 $
-  mM sat a <=> { i in I : mM_i sat (tilde(a))_i } = I <=> { i in I : mM_i sat (tilde(a))_i } in cal(U)
-  <=> mM^* sat tilde(a).
+  mM sat phi(a) <=> { i in I : mM_i sat phi(tilde(a)_i) } = I <=> { i in I : mM_i sat phi(tilde(a)_i) } in cal(U)
+  <=> mM^* sat phi(tilde(a)).
 $
 which is precisely the definition of an elementary embedding.
 
+Before we prove the next statement we need a small lemma.
 #lemma[
   If $cal(U)$ is an ultrafilter and $A union.sq B in cal(U)$ then exactly one of the following is true
   - $A in cal(U)$
@@ -206,18 +232,18 @@ which is precisely the definition of an elementary embedding.
   $
 ]
 
-Next assume that $I = NN$, we want to show that if $mM$ is finite then $iota$ is surjective.
+Now assume that $I = NN$, we want to show that if $mM$ is finite then $iota$ is surjective.
 Assume that $mM$ is finite and enumerate its elements ${x_1,...,x_n} = |mM|$. Let $(a_i)_(i in NN)$ be a fixed element of $mM^*$, then consider the set 
 $
   S_j = { i in NN : a_i = x_j }
 $
 that is, the set of indices where the element of the sequence with that index is equal to $x_j$.
 
-Now we have that $NN = union.sq.big_(j) S_j$ and so since $NN in cal(U)$ by repeatedly applying the lemma exactly one of the $S_j$ are in $cal(U)$ (we are allowed to do this since the union is finite). Let $j_0$ be that distinguished $j$. Then we have
+Now we have that $NN = union.sq.big_(j) S_j$ and so since $NN in cal(U)$, by repeatedly applying the lemma exactly one of the $S_j$ are in $cal(U)$ (we are allowed to do this since the union is finite). Let $S_k$ be that distinguished subset,
 $
-  { i in NN : a_i = iota(x_(j_0))} = S_(j_0) in cal(U)
+  { i in NN : a_i = iota(x_k)} = S_k in cal(U)
 $
-and so $a_i tilde_(cal(U)) iota(x_(j_0))$ and so we found $a_i$ as the image of an element in $a_i$.
+and so $a_i tilde_(cal(U)) iota(x_k)$ and so we found $a_i$ as the image of an element in $a_i$.
 
 On the other hand assume that $mM$ is not finite, then let ${x_1,x_2,...}$ be an enumeration of some countably infinite subset of it. Consider the element $(x_i)_(i in NN) in mM^*$, we have that for any element $x in mM$ the set ${ i in NN : x_i = x}$
 is either a singleton or the empty set. But any nonprincipal filter contains no finite subsets thus $iota(x) tilde.not_(cal(U)) x_i$ for all $x in mM$ and so the map $iota$ is not surjective.

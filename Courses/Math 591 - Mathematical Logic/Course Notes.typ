@@ -214,7 +214,7 @@ We extend our definition of interpretation of terms to terms of $L(|mM|)$ by set
   g(underline(f_i)^mM (a_1,...,a_n)) = underline(f_i)^mN (g(a_1),...,g(a_n))
   $
 
-  We write $mM subm(lt.curly.eq) thin thin mN$ to mean $mM$ is an elementary substructure of $mN$ which is true if $mM seq mN$ and for every formula $phi(ov(x))$ and for every $ov(a) seq |mM|$ we have 
+  We write $mM elm(lt.curly.eq) thin thin mN$ to mean $mM$ is an elementary substructure of $mN$ which is true if $mM seq mN$ and for every formula $phi(ov(x))$ and for every $ov(a) seq |mM|$ we have 
   $ 
   mM sat phi(ov(a)) <=> mN sat phi(ov(a))
   $
@@ -241,7 +241,7 @@ We extend our definition of interpretation of terms to terms of $L(|mM|)$ by set
 
 
 #theorem("Lowenheim-Skolem downwards Theorem")[
-  Let $L$ be countable, for any $L$-structure $mM$ and every $A seq |mM|$, there exists an elementary substructure $mN subm mM$ with $A seq |mN|$
+  Let $L$ be a language, for any $L$-structure $mM$ and every $A seq |mM|$, there exists an elementary substructure $mN elm mM$ with $A seq |mN|$
   $
     ||mN|| = |A| + |L| + aleph_0
   $
@@ -254,7 +254,7 @@ We extend our definition of interpretation of terms to terms of $L(|mM|)$ by set
 ]
 
 #remark("Skolem's Paradox")[
-  Let $Z F C^* seq Z F C$ be a finite substructure which proves cantor's theorem. Let $V sat Z F C^*$. By the previous theorem we can find a countable $mM subm V$ for which $mM sat Z F C^*$ and $mM sat "\"exists an uncountable set\""$.
+  Let $Z F C^* seq Z F C$ be a finite substructure which proves Cantor's theorem. Let $V sat Z F C^*$. By the previous theorem we can find a countable $mM elm V$ for which $mM sat Z F C^*$ and $mM sat$ "exists an uncountable set".
 ]
 
 #definition[
@@ -300,7 +300,7 @@ We will not prove this theorem in this class but we will use an important coroll
 As an example use we have the following theorem.
 
 #theorem("Lowenheim-Skolem upwards Theorem")[
-  If $mM$ is an infinite $L$-structure where $L$ is countably infinity then $forall k > ||mM||$ there exists a model $mN$ such that $mM subm mN$ and $||mN|| = k$
+  If $mM$ is an infinite $L$-structure where $L$ is countably infinity then $forall k > ||mM||$ there exists a model $mN$ such that $mM elm mN$ and $||mN|| = k$
 ]
 #proof[
   Let us consider the language $L' = L(mM) union {c_alpha : alpha < kappa}$ where $c_alpha$ are new constants.
@@ -313,7 +313,7 @@ As an example use we have the following theorem.
   $ Gamma_0 seq Th(mM) union { c_(alpha_i) eq.not c_(alpha_j) : i eq.not j } $
   choose then any $a_1, ..., a_n in |mM|$ which are distinct and interpret $c_alpha_i$ as $a_i$ to get a model of $Gamma_0$, hence $Gamma_0$ is consistent.
 
-  Now we have by Gödel's completeness theorem that there exists a model $mN$ such that $mN sat Gamma$ then by construction we have $mM subm mN$ and $||mN|| >= kappa$ and so by #link(<thrm-downwards>)[downwards theorem] we can now decrease the cardinality until we reach $kappa$.
+  Now we have by Gödel's completeness theorem that there exists a model $mN$ such that $mN sat Gamma$ then by construction we have $mM elm mN$ and $||mN|| >= kappa$ and so by #link(<thrm-downwards>)[downwards theorem] we can now decrease the cardinality until we reach $kappa$.
 ]
 
 
@@ -322,7 +322,7 @@ As an example use we have the following theorem.
   If $mM$ is infinite then there exists $mN$ such that $mM equiv mN$ but $mM tilde.eq.not mN$.
 ]
 #proof[
-  We simply pick some $kappa > ||mM||$ and then use the upwards theorem to get a model $mN$ with $mM subm mN$ with $||mN|| = kappa$, now there can't exist a bijection between the two since they have different cardinalities.
+  We simply pick some $kappa > ||mM||$ and then use the upwards theorem to get a model $mN$ with $mM elm mN$ with $||mN|| = kappa$, now there can't exist a bijection between the two since they have different cardinalities.
 ]
 #definition[
   A _theory_ is a set $Gamma$ of sentences such that if $Gamma proves phi$ then $phi in Gamma$.
@@ -539,7 +539,7 @@ This definition is not really satisfying from the point of view of model theory 
 #theorem("Łoś's theorem")[
   Let $product mM_i slash.big cal(U)$ be an ultraproduct, fix any formula $phi(x_1,...,x_n)$ and $(a^1_i),...,(a^n_i) in product mM_i$ we have 
   $
-    product mM_i slash.big cal(U) sat phi([(a^1_i)], ..., phi([(a^n_1)]))
+    product mM_i slash.big cal(U) sat phi([(a^1_i)], ..., [(a^n_1)])
     <=>
     { i in I : mM_i sat phi(a^1_i, ..., a^n_i) } in cal(U)
   $
@@ -678,7 +678,7 @@ $
   $t_p^mM (overline(x))$ is always a complete type
 ]
 #remark[
-  If $mM lt.curly mN$, and $overline(a) in mM$ then $t_p^mM (overline(a)) = t_p^mN (overline(a))$.
+  If $mM elm mN$, and $overline(a) in mM$ then $t_p^mM (overline(a)) = t_p^mN (overline(a))$.
 ]
 
 Slightly generalizing the concept of a type we have the following
@@ -718,7 +718,7 @@ $
 ]
 Types have several basic properties that we will use quite often.
 #proposition[
-  If $p(overline(x))$ is a type over $A seq |mM|$ then there exists $mM lt.curly mN$ such that $p(overline(x))$ is realized in $mN$.
+  If $p(overline(x))$ is a type over $A seq |mM|$ then there exists $mM elm mN$ such that $p(overline(x))$ is realized in $mN$.
 ]<prop-add_one_type>
 #proof[
   Let $overline(c)$ be new constants, define 
@@ -863,7 +863,7 @@ We will next show how to construct saturated models, to complete this we will ne
 ]<thrm-Konig>
 
 #lemma[
-  If $(mN_alpha)_(alpha < kappa)$ is an elementary chain, that is $mN_alpha lt.curly mN_beta$ for $alpha < beta$. Then if $mN = union.big_(alpha = 0)^kappa mN_alpha$ we have $mN_alpha lt.curly mN$ for all $alpha$.
+  If $(mN_alpha)_(alpha < kappa)$ is an elementary chain, that is $mN_alpha elm mN_beta$ for $alpha < beta$. Then if $mN = union.big_(alpha = 0)^kappa mN_alpha$ we have $mN_alpha elm mN$ for all $alpha$.
 ]
 #proof[
   Let $phi(ov(a))$ be a formula, we show that $mN_alpha sat phi(ov(a)) <=> mN_alpha$ for all alpha by induction. Since every $mN_alpha$ is contained in $mN$ then this is true for all atomic formula $phi$. Now we induct on the structure of $phi$, for logical connectives this is trivial. Now assume that $phi = exists x thin psi(x,ov(a))$, then certainly $mN_i sat phi => mN sat phi$, now if $mN sat phi(ov(a))$ then there is some $j >= i$ such that $b in |mN_j|$ and so $mN_j sat psi(b,ov(a))$ so $mN_j sat phi(ov(a))$ and so $mN_i sat phi(ov(a))$.
@@ -878,7 +878,7 @@ We will next show how to construct saturated models, to complete this we will ne
   Assume that $L$ is countable, then $S_n^T (A) <= 2^(|A| + aleph_0)$ by @prop-types_cantor_space. Let $mu = 2^kappa$, note that $cf(mu) > kappa$ by @thrm-Konig.
 
   We will now construct a sequence of models $(mM_alpha)_(alpha < mu)$ with $mM_0 = mM$ and at limit $alpha$ we have $mM_alpha = union.big_(beta < alpha) mM_beta$, we will assume that $|mM_alpha| < mu$.
-  At successor steps $alpha = beta + 1$, we want to find $mM_alpha$ with $mM_beta lt.curly mM_alpha$ such that for all $A seq mM_beta$ with $|A| < kappa$, every type in $S_n^T (A)$ is realized in $mM_alpha$. 
+  At successor steps $alpha = beta + 1$, we want to find $mM_alpha$ with $mM_beta elm mM_alpha$ such that for all $A seq mM_beta$ with $|A| < kappa$, every type in $S_n^T (A)$ is realized in $mM_alpha$. 
   Now we know that for every single type $p(overline(x))$ by @prop-add_one_type we can add a realization of that type, and then by @thrm-downwards we can get that realization with size at most $mu$, so we just need to do induction again to add every type.
 
   Let us count how many types we need to add, we know that for any fixed $A$ we have $|S_n^T (A)| <= 2^(kappa + aleph_0) = mu$. Now for any cardinality $beta$ we have that the number of subsets $A$ with $|A| = beta$ is
