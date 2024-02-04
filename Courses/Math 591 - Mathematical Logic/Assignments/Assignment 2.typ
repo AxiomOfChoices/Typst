@@ -276,18 +276,18 @@ First for any element $c in mM$ consider the sentence $phi = exists x (x = c)$, 
 $
   mM_Delta sat phi
 $
-so set $x_Delta$ to be a witness of $x$ in $phi$ in $mM_Delta$.
-Then all sequences $(a_Delta)_(Delta in I)$ in $mN^*$ with $a_Delta = x_Delta$ on $[{phi}]$ are equivalent and so we can define the interpretation
+so set $x_(Delta,c)$ to be a witness of $x$ in $phi$ in $mM_Delta$.
+Then all sequences $(a_Delta)_(Delta in I)$ in $mN^*$ with $a_Delta = x_(Delta,c)$ on $[{phi}]$ are equivalent and so we can define the interpretation
 $
   c^(mN^*) = (a_Delta)_(Delta in I)
 $
 
-Now for any $phi in Th_(L(mM))(mM)$ we can write $phi = psi(c_1,...,c_m)$ then for any $Delta in [{phi}]$ we have
+Now for any $phi in Th_(L(mM))(mM)$ we can write $phi = psi(c_1,...,c_m)$ then for any $Delta in [{phi, exists x (x = c_1), ..., exists x (x = c_n))}]$ we have
 $
-  mN_Delta sat phi
+  mN_Delta sat psi(x_(Delta,c_1),...,x_(Delta,c_m))
 $
 so
 $
-  { Delta in I : mN_Delta sat phi } supset.eq [{phi}] in cal(U)
+  { Delta in I : mN_Delta sat phi } supset.eq [{phi, exists x (x = c_1), ..., exists x (x = c_m)}] in cal(U)
 $
 and thus $mN^* sat Th_(L(mM))(mM)$ and so $mM lt.curly mN^*$.
