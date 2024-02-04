@@ -53,9 +53,9 @@ The body of the thesis is largely taken from the paper co-authored by myself and
 
 The Isoperimetric Problem asks a seemingly simple question:\ Among all regions occupying a given volume which has the least perimeter?
 
-In the simple case of 2 and 3 dimensions we all know that the answer is a circle and a sphere respectively, and when we extend it to $n$ dimensions in Euclidean space, the answer remains the $n-1$ dimensional hypersphere. However, if we try to generalize this question to a larger domain the answer very quickly becomes intractable. 
+In the simple case of 2 and 3 dimensions we all know that the answer is a circle and a sphere respectively, and when we extend it to $n$ dimensions in Euclidean space, the answer remains the $n-1$ dimensional hypersphere. However, if we try to generalize this question to a larger domain the answer very quickly becomes intractable.
 
-One of the ways to answer such a question is with the method of geometric flows, we will start with a shape which will likely not be optimal, and then we will morph it over time to make it optimal. 
+One of the ways to answer such a question is with the method of geometric flows, we will start with a shape which will likely not be optimal, and then we will morph it over time to make it optimal.
 
 
 == Concepts and Notation
@@ -110,7 +110,7 @@ Working with Riemannian geometry is almost always easier when done with coordina
   The proof for the first proposition is standard and can be found in any differential geometry textbook, for the second proposition see @leeIntroductionRiemannianManifolds2018a(p.~183).
 ]
 
-Then we define the second fundamental form $h$ to be the bilinear form given by 
+Then we define the second fundamental form $h$ to be the bilinear form given by
 $
    h(X,Y) = ip(X, ov(nabla)_Y nu).
 $
@@ -128,9 +128,9 @@ Let $e_i$ be an orthonormal frame at $p$, the following are true:
   ]
 ]
 #proof[
-#link(<prop-h_coords>)[(a)] is directly from definition, to see #link(<prop-h_applied>)[(b)] note that ${ e_1, ..., e_n } union { nu }$ form a basis for the tangent space $T_p M$ and thus we have 
+#link(<prop-h_coords>)[(a)] is directly from definition, to see #link(<prop-h_applied>)[(b)] note that ${ e_1, ..., e_n } union { nu }$ form a basis for the tangent space $T_p M$ and thus we have
 $
-  nabla_i nu = a^j e_j + b nu 
+  nabla_i nu = a^j e_j + b nu
 $
 for some coefficients $a^j,b in RR$. But now consider,
 $
@@ -146,9 +146,9 @@ Now for #link(<prop-h_neg>)[(c)] we note first that $nabla_X Y = ( ov(nabla)_Y X
 $
   (ov(nabla)_i e_j)^top = nabla_i e_j = 0
 $
-for all $i,j$ and so $ov(nabla)_i e_j = b_(i j) nu$ for some matrix $b$ of coefficients. Now we have 
+for all $i,j$ and so $ov(nabla)_i e_j = b_(i j) nu$ for some matrix $b$ of coefficients. Now we have
 $
-  0 
+  0
   = ov(nabla)_i ip(e_j, nu)
   = ip(ov(nabla)_i e_j, nu) + ip(e_j, ov(nabla)_i nu)
   = b_(i j) + h_(i j)
@@ -157,7 +157,7 @@ which proves the claim.
 
 Finally for #link(<prop-h_laplac>)[(d)], we have
 $
-    ov(Delta) f 
+    ov(Delta) f
   & = ip(ov(nabla)_i ov(nabla) f, e_i) + ip(ov(nabla)_nu ov(nabla), nu)
   = ov(nabla)_i ip(ov(nabla) f, e_i) - ip(ov(nabla) f, ov(nabla)_i e_i) + ip(ov(nabla)_nu ov(nabla), nu)
   \ & = nabla_i ip(nabla f, e_i) - ip(ov(nabla) f, -H nu) + ip(ov(nabla)_nu ov(nabla), nu)
@@ -177,7 +177,7 @@ We will also need another well known geometric identity,
   $
     ov(Rm)(X,Y,Z,nu) = - (nabla_X h)(Y,Z) + (nabla_Y h)(X,Z)
   $
-  in particular in coordinates we have 
+  in particular in coordinates we have
   $
     ov(Rm)_(i j k nu) = - nabla_i h_(j k) + nabla_j h_(i k)
   $
@@ -206,7 +206,7 @@ A conformal vector field is a vector field $X$ with the property that $lie_X ov(
     \ =& (lie_X ov(g)) (Y,Z) + (lie_Y eta)(Z) - lie_Z (eta(Y))
   $
   Now we can use Cartan's magic formula (@leeIntroductionSmoothManifolds2012[p.~372]) applied to the second term to get
-  $ 
+  $
     2 ip(ov(nabla)_Y X, Z) &= (lie_X ov(g)) (Y,Z) + dif eta(Y,Z) + dif (eta(Y))(Z) - lie_Z (eta(Y))
     \ & = (lie_X ov(g)) (Y,Z) + dif eta(Y,Z)
   $
@@ -292,7 +292,7 @@ To see why conformal vector fields are so useful in the study of the Isoperimetr
   now swapping the last two indices on the Riemann tensor flips its sign gives us the Ricci tensor, then applying divergence theorem once more gives us
   $
     & integral_M H ((n - 1)phi - H u) dif S = integral_M ov(Ric)(nu, Y) dif S - integral_M u|A|^2 dif S
-    \ &(n-1)/n integral_M H (n phi - n/(n-1) H u) dif S = integral_M ov(Ric)(nu, Y) dif S - integral_M u|A|^2 dif S 
+    \ &(n-1)/n integral_M H (n phi - n/(n-1) H u) dif S = integral_M ov(Ric)(nu, Y) dif S - integral_M u|A|^2 dif S
     \ &integral_M H (n phi - n/(n-1) H u) dif S = n/(n-1) integral_M ov(Ric)(nu, Y) dif S - integral_M n/(n-1) u|A|^2 dif S
     \ &integral_M H (n phi - H u) dif S = n/(n-1) integral_M ov(Ric)(nu, Y) dif S - integral_M u(n|A|^2 - H^2)/(n - 1) dif S
     \ &integral_M H (n phi - H u) dif S = 1/(n-1) (integral_M n ov(Ric)(nu, Y) dif S - integral_M u sum_(i < j) (kappa_i - kappa_j)^2 dif S)
@@ -304,7 +304,7 @@ The Partial Differential Equations (PDEs) we will be dealing with most in this d
 
 
 
-Let $T in (0,infinity]$ and $U seq M$ a smooth open domain, a function $u_t : [0,T] times U$ is said to solve a *quasi-linear parabolic PDE* if it satisfies a differential equation of the form 
+Let $T in (0,infinity]$ and $U seq M$ a smooth open domain, a function $u_t : [0,T] times U$ is said to solve a *quasi-linear parabolic PDE* if it satisfies a differential equation of the form
 #math.equation(block: true, numbering: "(1)",
   $ u_t (x,t) = a^(i j)(x,t,u,nabla u) nabla_i nabla_j u + G(x,t,u,nabla u) $
 )
@@ -349,7 +349,7 @@ The most important tool in the analysis of parabolic PDEs is the maximum princip
   $
     nabla v(z,t') = 0, nabla_i nabla_j v(z,t') <= 0 "as well as" diff_t v(z,t') >= 0
   $
-  we thus have 
+  we thus have
   $
     0 <= diff_t v(x,t) = a^(i j)(x,t,v,nabla v) nabla_i nabla_j v + G(x,t, v, nabla v) - f(t)
     < 0
@@ -427,7 +427,7 @@ Note that if we instead consider the function $(r, theta) -> (r cos(theta), r si
 $
   g_(RR^2) = g_RR + r^2 g_S^1
 $
-Note that this is not exactly the case because we first need to project a given vector down to its components in $RR$ and $S^1$ respectively and then apply the appropriate metrics. That is we actually have 
+Note that this is not exactly the case because we first need to project a given vector down to its components in $RR$ and $S^1$ respectively and then apply the appropriate metrics. That is we actually have
 $
   g_(RR^2) = g_RR compose pi_1 + g_S^1 compose pi_2
 $
@@ -438,7 +438,7 @@ A similar constructions works in higher dimensions, where we have $RR^n = RR_+ t
 It is this decomposition that we aim to generalize with the warped product space.
 
 #definition[
-  Let $(M,g_M)$ and $(N,g_n)$ be Riemannian manifolds, we can define a metric on $M times N$ by 
+  Let $(M,g_M)$ and $(N,g_n)$ be Riemannian manifolds, we can define a metric on $M times N$ by
   $
     g(x,y) = g_M (x) compose pi_1 + f^2(x) g_N (y) compose pi_2,
   $
@@ -447,7 +447,7 @@ It is this decomposition that we aim to generalize with the warped product space
 
 Note that in practice we will always suppress, the projections $pi_1$ and $pi_2$ for clarity.
 
-The most common warped product spaces we see in practice are those of the form $RR_+ times_f N$ for some $N$, for example the 3 space forms, $S^n, RR^n, HH^n$, are of the form 
+The most common warped product spaces we see in practice are those of the form $RR_+ times_f N$ for some $N$, for example the 3 space forms, $S^n, RR^n, HH^n$, are of the form
 $
   RR_+ times_(sin r) S^n, quad
   RR_+ times_(r) S^n, quad
@@ -461,7 +461,7 @@ These spaces carry a lot of nice properties, but the most important one for us i
   Let $RR_+ times_f N$ be a warped space and let $r$ be a coordinate on $RR_+$, then the vector field $X = f(r) diff_r$ is a conformal vector field with conformal factor $f'(r)$. Furthermore its associated tensor $psi$ vanishes.
 ]
 #proof[
-  Let us compute the Lie derivative $lie_X g$, 
+  Let us compute the Lie derivative $lie_X g$,
   $
     lie_X g 
     &= lie_X (d r^2 + f^2(r) g_N^2)
@@ -476,7 +476,7 @@ These spaces carry a lot of nice properties, but the most important one for us i
 
 Note that since its a gradient, $X$ in the above proposition is closed.
 
-Apart from being a closed conformal vector field, this vector field also has other properties that help us with the flow we want to create. Recall that in Euclidean space spheres are the optimal shapes for the Isoperimetric inequality, in polar coordinates spheres take the simple form of sets where $r = r_0$ for some fixed $r_0$. 
+Apart from being a closed conformal vector field, this vector field also has other properties that help us with the flow we want to create. Recall that in Euclidean space spheres are the optimal shapes for the Isoperimetric inequality, in polar coordinates spheres take the simple form of sets where $r = r_0$ for some fixed $r_0$.
 
 == Quasi-Closed Conformal Vector Fields
 Now it turns out that these closed conformal vector fields characterize warped products of the form above, namely, if a manifold admits a closed conformal then it can be written in the form $RR_+ times_f N$ for some manifolds $N$ and function $f$.
