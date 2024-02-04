@@ -21,18 +21,6 @@
   info: [#sym.copyright Jacob Reznikov, #datetime.today().display("[year]")],
   doc)
 #show: thmrules
-#let ve = $epsilon$
-#let ip(x,y) = $lr(angle.l #x, #y angle.r)$
-#let seq = $subset.eq$
-#let ov(el) = $overline(#el)$
-#let Area = math.op("Area")
-#let Volume = math.op("Volume")
-#let Hess = math.op("Hess")
-#let Rm = math.op("Rm")
-#let Ric = math.op("Ric")
-#let lie = $cal(L)$
-#let Sym = math.op("Sym")
-#let div = math.op("div")
 #show: outline_style
 
 
@@ -100,14 +88,28 @@ The Isoperimetric Problem now asks us to
 We will now start to build up the concepts that allow us to solve this problem.
 
 == Riemannian Geometry
-We will almost always be working in orthonormal coordinates on $M$, that is, at any point $p$ there are coordinates $x^1,...,x^n$ such that the vector fields 
-$
-  e_i = diff/(diff x^i)
-$
-form an orthonormal basis _at the point $p$_, we cannot, in general, assume that they form an orthonormal basis in any neighborhood of $p$. We will also call $e_i$ an orthonormal frame at $p$.
-
 Recall that since $M$ is the boundary of a manifold it must be orientable,
 it thus has a canonical 'outward' pointing unit normal vector field, which we will call $nu$.
+
+Working with Riemannian geometry is almost always easier when done with coordinates. In extrinsic geometry, there are two coordinate systems that we will be using repeatedly so we will list some of their properties.
+#proposition[
+  Let $M$ be a Riemannian manifold, at any point $p$ there exists a chart $(U,phi)$ with the property that that the frame
+  $
+    e_i = diff/(diff x^i)
+  $
+  forms an orthonormal basis _at the point $p$_. These are called _orthonormal coordinates_.
+]
+#proposition[
+  Let $M$ and admissible submanifold of $N$, at any point $p in M$ there exists a chart $(U,phi)$ of $N$ such that
+  $
+    e_i = diff/(diff x^i)
+  $
+  forms an orthonormal basis for $T_p M$ for $i <= n$ _at $p$_ and $e_(n+1) = nu$ _on $U$_. These are called _Fermi coordinates_.
+]
+#proof[
+  The proof for the first proposition is standard and can be found in any differential geometry textbook, for the second proposition see @leeIntroductionRiemannianManifolds2018a(p.~183).
+]
+
 Then we define the second fundamental form $h$ to be the bilinear form given by 
 $
    h(X,Y) = ip(X, ov(nabla)_Y nu).
@@ -383,13 +385,17 @@ As a manifold flows it's various properties, both local and global, will change,
   $
 ]<prop-metric_evoluion>
 #proof[
-  Recall that for some vectors $X,Y in T_p M_t$ we can define $g(X,Y)$ to be
+ We prove by using Fermi coordinates, recall that we define the metric as the restriction of the ambient metric like so
   $
-    g(X,Y) = ov(g) (D F_t (X), D F_t (Y))
+    g_(i j) = ov(g) (D_e_i F, D_e_j F),
   $
-  and so we can differentiate
+  and thus we can differentiate in the ambient space to get an expression for the new restriction
   $
-    diff_t g(X,Y) = diff_t ov(g) (D F_(X))
+    diff_t g_(i j) &= diff_t ov(g) (D_e_i F, D_e_j F) = ov(g) (diff_t D_e_i F, D_e_j F) + ov(g) (D_e_i F, diff_t D_e_j F)
+    \ &= ov(g) (D_e_i (f nu), D_e_j F) + ov(g) (D_e_i F, D_e_j (f nu))
+    \ &= ov(g) (f D_e_i nu + nu D_e_i f, D_e_j F) + ov(g) (D_e_i F, f D_e_j nu + nu D_e_j f)
+    \ &= f ov(g) (D_e_i nu, D_e_j F) + f ov(g) (D_e_i F, D_e_j nu) "by orthogonality"
+    \ &= f ov(g) (h_(k i) D_e_k, D_e_j F) + f ov(g) (D_e_i F, h_(k j) D_e_k) = f h_(j i) + f h_(i j) = 2 f h_(i j)
   $
 ]
 

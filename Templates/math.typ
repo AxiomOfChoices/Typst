@@ -22,6 +22,15 @@
 #let Def = math.op("Def")
 #let cf = math.op("cf")
 #let Cn = math.op("Cn")
+#let ip(x,y) = $lr(angle.l #x, #y angle.r)$
+#let Area = math.op("Area")
+#let Volume = math.op("Volume")
+#let Hess = math.op("Hess")
+#let Rm = math.op("Rm")
+#let Ric = math.op("Ric")
+#let lie = $cal(L)$
+#let Sym = math.op("Sym")
+#let div = math.op("div")
 
 
 #let symbol_replacing(doc) ={
