@@ -397,8 +397,8 @@ We now want to discuss how to check that two models are elementarily equivalent.
 #definition[
   Given a formula $phi$ its _quantifier depth_ $qd$ is defined by induction,
   - If $phi$ is atomic $qd(phi) = 0$.
-  - If $phi$ is a logical connective like $phi_1 or phi_2$ then $qd(phi) = max(qd(phi_1),qd(phi_2))$
-  - If $phi$ is a quantifier $exists x thin phi'$ then $qd(phi) = qd(phi') + 1$, similarly for $forall$.
+  - If $phi$ is a formula of the form $phi_1 or phi_2$ then $qd(phi) = max(qd(phi_1),qd(phi_2))$
+  - If $phi$ is a formula of the form $exists x thin phi'$ then $qd(phi) = qd(phi') + 1$, similarly for $forall$.
 
   We write $mM equiv_n mN$ to mean "$mM$ is equivalent to $mN$ up to order $n$" if for every sentence $sigma$ of quantifier depth less than $n$ we have $mM sat phi <=> mN sat phi$.
 ]
@@ -493,14 +493,30 @@ We will now use this lemma to prove a slightly weaker statement that will then u
 ]
 
 #proposition[
-  Let $cal(U)$ be a filter. TFAE
+  Let $cal(U)$ be a filter over $I$. TFAE
   - $cal(U)$ is an ultrafilter
-  - For any $A seq I$ we either have $A in cal(U)$ or $A in.not cal(U)$.
+  - For any $A seq I$ we have either $A in cal(U)$ or $I backslash A in cal(U)$, but not both.
 ]<prop-ultrafilter>
+#proof[
+  Assume that $cal(U)$ is an ultrafilter, then clearly for every $A$ we cannot have both $A$ and $I backslash A$ be in $cal(U)$. Now take some $A in.not cal(U)$, then
+  $
+    cal(U)' = { Y' seq I : Y backslash A seq Y' "for some" Y in cal(U) }
+  $
+  this is a filter since
+  $
+    Y_1 backslash A seq Y_1' "and"
+    Y_2 backslash A seq Y_2'
+    =>
+    (Y_1 sect Y_2) backslash A = (Y_1 backslash A) sect (Y_2 backslash A) seq Y_1' sect Y_2'
+  $
+  and is obviously upwards closed. Now $cal(U) seq cal(U)'$ since for every $Y in cal(U)$ we have $Y backslash X seq Y$ and so since $cal(U)$ is an ultrafilter then $cal(U) = cal(U)'$. But note that $I in cal(U)$ so $I backslash A in cal(U)'$ and so $I backslash A in cal(U)$.
+
+  On the other hand assume that the second condition holds, then let $F$ be a filter containing $cal(U)$, then if $F$ contains a subset $A in.not cal(U)$ then $I backslash A in cal(U)$ and so $I backslash A in F$. But then $A sect (I backslash A) = nothing in F$ which contradicts the definition of a filter.
+]
 
 #corollary[
   If $cal(U)$ is an ultrafilter
-  $ A union B in cal(U) <=> A in cal(U) or B in cal(U) $ 
+  $ A union B in cal(U) <=> A in cal(U) or B in cal(U) $
 ]
 
 #definition[
@@ -539,7 +555,7 @@ This definition is not really satisfying from the point of view of model theory 
 #theorem("Łoś's theorem")[
   Let $product mM_i slash.big cal(U)$ be an ultraproduct, fix any formula $phi(x_1,...,x_n)$ and $(a^1_i),...,(a^n_i) in product mM_i$ we have 
   $
-    product mM_i slash.big cal(U) sat phi([(a^1_i)], ..., [(a^n_1)])
+    product mM_i slash.big cal(U) sat phi([(a^1_i)], ..., [(a^n_i)])
     <=>
     { i in I : mM_i sat phi(a^1_i, ..., a^n_i) } in cal(U)
   $
@@ -574,7 +590,7 @@ This definition is not really satisfying from the point of view of model theory 
   $
   but since $cal(U)$ is an ultrafilter then by @prop-ultrafilter we have that 
   $
-    { i in I : mM_i sat phi } in cal(U) <=> { i in I : mM_i sat phi_1 } in.not cal(U)
+    { i in I : mM_i sat phi } in cal(U) <=> { i in I : mM_i sat phi }^c in.not cal(U) <=>  { i in I : mM_i sat phi_1 } in.not cal(U)
   $
   which is exactly what we want. This also gives us the disjunction case.
   - For $phi = exists psi$ we have 

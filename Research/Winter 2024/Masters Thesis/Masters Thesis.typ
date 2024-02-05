@@ -104,8 +104,8 @@ Working with Riemannian geometry is almost always easier when done with coordina
   $
     e_i = diff/(diff x^i)
   $
-  forms an orthonormal basis for $T_p M$ for $i <= n$ _at $p$_ and $e_(n+1) = nu$ _on $U$_. These are called _Fermi coordinates_.
-]
+  forms an orthonormal basis for $T_p M$ for $i <= n$ _at $p$_ and $e_(n+1) = nu$ _on $U$_. These are called _Fermi coordinates_. In general, when we are dealing with Fermi coordinates and write $e_i$ we are excluding $e_(n+1)$ and refer to it as $nu$ instead.
+]<prop-fermi_coords>
 #proof[
   The proof for the first proposition is standard and can be found in any differential geometry textbook, for the second proposition see @leeIntroductionRiemannianManifolds2018a(p.~183).
 ]
@@ -126,7 +126,7 @@ Let $e_i$ be an orthonormal frame at $p$, the following are true:
   + $ov(nabla)_i e_j = - h_(i j) nu$. <prop-h_neg>
   + If $f$ is a function $N -> RR$, then $ov(Delta) f = Delta f + Hess_f (nu,nu) + H nu(f)$ <prop-h_laplac>
   ]
-]
+]<prop-h_props>
 #proof[
 #link(<prop-h_coords>)[(a)] is directly from definition, to see #link(<prop-h_applied>)[(b)] note that ${ e_1, ..., e_n } union { nu }$ form a basis for the tangent space $T_p M$ and thus we have
 $
@@ -373,6 +373,8 @@ Now that we are familiar with geometry and PDEs we can start to use them togethe
 
 #remark[
   We will often refer to $F_t (M)$ as $M_t$ for brevity. Additionally many constructions on $M_t$ will be denoted without explicit reference to $t$, i.e $g$ instead of $g(t)$, even though the metric of $M_t$ will depend on $t$. Keep in mind that any construction of the metric will also depend on $t$.
+
+  Also keep in mind that when we work in #link(<prop-fermi_coords>)[Fermi coordinates] we have two options. We can choose Fermi coordinates that are valid at some fixed time $t_0$, pull them back to $M$, and then use the map $F_t compose F_(t_0)^(-1)$ to get coordinates at times around $t_0$, we will denote these coordinates as $D_(e_i) F$ or sometimes $hat(e)_i$. The advantage of this is that the coordinates on $M$ are fixed in time, however, this does not keep the coordinates as Fermi coordinates. The other option is to pick coordinates that are simultaneously Fermi for all time, these we will denote simply as $e_i$. The disadvantage of these is that these coordinates on $M$ change with time.
 ]
 
 
@@ -387,18 +389,61 @@ As a manifold flows it's various properties, both local and global, will change,
 #proof[
  We prove by using Fermi coordinates, recall that we define the metric as the restriction of the ambient metric like so
   $
-    g_(i j) = ov(g) (D_e_i F, D_e_j F),
+    g_(i j) = ip(D_e_i F, D_e_j F),
   $
-  and thus we can differentiate in the ambient space to get an expression for the new restriction
+  and thus we can differentiate in the ambient space to get an expression for the time derivative of the restriction
   $
-    diff_t g_(i j) &= diff_t ov(g) (D_e_i F, D_e_j F) = ov(g) (diff_t D_e_i F, D_e_j F) + ov(g) (D_e_i F, diff_t D_e_j F)
-    \ &= ov(g) (D_e_i (f nu), D_e_j F) + ov(g) (D_e_i F, D_e_j (f nu))
-    \ &= ov(g) (f D_e_i nu + nu D_e_i f, D_e_j F) + ov(g) (D_e_i F, f D_e_j nu + nu D_e_j f)
-    \ &= f ov(g) (D_e_i nu, D_e_j F) + f ov(g) (D_e_i F, D_e_j nu) "by orthogonality"
-    \ &= f ov(g) (h_(k i) D_e_k, D_e_j F) + f ov(g) (D_e_i F, h_(k j) D_e_k) = f h_(j i) + f h_(i j) = 2 f h_(i j)
+    diff_t g_(i j) &= diff_t ip(D_e_i F, D_e_j F) = ip(diff_t D_e_i F, D_e_j F) + ip(D_e_i F, diff_t D_e_j F)
+    \ &= ip(nabla_e_i (f nu), e_j) + ip(e_i, nabla_e_j (f nu)) wide "identifying" D_(e_i) F "and" e_i
+    \ &= ip(f nabla_e_i nu + nu nabla_e_i f, e_j) + ip(e_i, f nabla_e_j nu + nu nabla_e_j f)
+    \ &= f ip(nabla_e_i nu, e_j) + f ip(e_i, nabla_e_j nu) wide "by orthogonality"
+    \ &= f ip(h_(k i) e_k, e_j) + f ip(e_i, h_(k j) e_k) = f h_(j i) + f h_(i j) = 2 f h_(i j)
   $
+  where we used @prop-h_props in the final step.
 ]
 
+Now that we know how the metric evolves there are some immediate consequences that we can show.
+#proposition[
+  The evolution equations for $nu,dif S$ are
+  $
+    diff_t nu = - nabla f 
+    quad
+    "and"
+    quad
+    diff_t dif S = - H f dif S
+  $
+  respectively.
+]
+#proof[
+  First note that $diff_t ip(nu,nu) = 0$ and so we have that in Fermi coordinates
+  $
+    diff_t nu = ip(diff_t nu, e_j) e_j
+  $
+  then we also have that for any $j$
+  $
+    0 = diff_t ip(nu, e_j) = ip(diff_t nu, e_j) + ip(nu, diff_t e_j)
+  $
+  and so
+  $
+    diff_t nu &= - ip(nu, diff_t e_j) e_j
+    = - ip(nu, diff_t D_e_j F) e_j
+    = - ip(nu, D_e_j (f nu)) e_j
+    = - ip(nu, f nabla_e_j nu + nu nabla_e_j f) e_j
+    \ &= - ip(nu, f h_(i j) e_i + nu nabla_e_j f) e_j wide "apply orthogonality of" nu "and" e_i
+    \ &= - ip(nu, nu nabla_e_j f) e_j = - nabla_e_j f e_j = - nabla f.
+  $
+  For the volume form, we know that $dif S = sqrt(det(g)) dif hat(x)_1 ... dif hat(x)_n$ and so we can compute
+  $
+    diff_t (dif S) = diff_t (sqrt(det(g))) dif hat(x)_1 ... dif hat(x)_n.
+  $
+  Now recall that for a parametrized matrix $A(t)$ we have $ diff_t det(A(t)) = det(A(t)) tr(diff_t A(t)) $ we then have
+  $
+    diff_t (sqrt(det(g))) dif hat(x)_1 ... dif hat(x)_n 
+    &= 1/(2sqrt(det(g))) diff_t (det(g)) dif hat(x)_1 ... dif hat(x)_n 
+    \ &= sqrt(det(g)) tr(f h_(i j)) dif hat(x)_1 ... dif hat(x)_n
+    \ &= f H dif S
+  $
+]
 #proposition[
   Let $F_t$ be a normal flow with velocity $f$, we have the following evolution equations for $V(M_t)$ and $A(M_t)$,
   $
@@ -407,7 +452,7 @@ As a manifold flows it's various properties, both local and global, will change,
   $
 ]
 #proof[
-  
+    
 ]
 
 #pagebreak(weak: true)
