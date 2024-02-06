@@ -989,7 +989,7 @@ There are many proofs of this theorem but we will use one called *Henkin's const
 
   // TODO: ADD FULL PROOF
  
-  For the even steps assume that $T_(2n+1)$ is consistent but for every $psi(ov(x)) in p(ov(x))$ we have that $T_(2n+1) union { not psi (c_n) }$ is inconsistent. Then $T_(2n+1)$ is $T$ where we added some finitely many sentences, so we can write $T_(2n+1) = T union { psi_j(ov(c), c_n) : j < k }$ for some $k$ and $psi_j$.
+  For the even steps assume that $T_(2n+1)$ is consistent but for every $psi(ov(x)) in p(ov(x))$ we have that $T_(2n+1) union { not psi (c_n) }$ is inconsistent. Then $T_(2n+1)$ is $T$ where we added some finitely many sentences, so we can write $T_(2n+1) = T union { psi_j (ov(c), c_n) : j < k }$ for some $k$ and $psi_j$.
 
   Now set
   $
