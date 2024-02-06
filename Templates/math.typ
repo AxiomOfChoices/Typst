@@ -31,6 +31,7 @@
 #let lie = $cal(L)$
 #let Sym = math.op("Sym")
 #let div = math.op("div")
+#let tp = math.op("tp")
 
 
 #let symbol_replacing(doc) ={

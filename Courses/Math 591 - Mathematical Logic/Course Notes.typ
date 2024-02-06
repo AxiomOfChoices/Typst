@@ -224,7 +224,7 @@ We extend our definition of interpretation of terms to terms of $L(|mM|)$ by set
   Suppose $mM$ is an $L$-structure, $A seq |mM|$, then $A$ is the universe of an elementary substructure iff the following condition holds, called the Tarski-Vaught test
 
   #block(inset: (x: 2em))[For every formula $phi(x, ov(y))$ in $L$ and every $ov(a) seq A$, if $mM sat exists x thin phi(x, ov(a))$ then there exists $b in A$ such that $mM sat phi(b, ov(a))$]
-]
+]<thrm-tv_test>
 #proof[
   First the $arrow.l.double$ direction, assume that the T-V test holds, then we need to show that $A$ is a substructure. First we use $phi = (x=c)$ to show that $A$ contains all constants of $mM$, then $phi = (x = phi_i (ov(a)))$ for $ov(a) seq A$, and we define the interpretation of $underline(R_j)$ to be exactly $underline(R_j)^mM sect A^(a_j)$ to make it a substructure.
 
@@ -236,7 +236,7 @@ We extend our definition of interpretation of terms to terms of $L(|mM|)$ by set
   - The connective types are immediate.
   - Let us assume $phi(ov(x)) = exists y thin psi(y, ov(x))$. Then $mM sat phi(ov(a))$ iff $mM sat exists y thin psi(y, ov(a))$ iff there exists $b in A$ with $mM sat psi(b, ov(a))$. But by definition this last form is equivalent to $A sat exists y thin psi(y, ov(a))$
 
-  Assume, on the other hand, that $A$ is the universe of an elementary substructure $cal(A)$, then we need to prove the T-V test holds, assume then that for some formula $phi(x,overline(y))$ in $L$ and some $overline(a) seq A$ we have $mM sat exists x thin phi(x, overline(a))$ and so since it is an elementary substructure we also have that $cal(A) sat exists x thin phi(x, overline(a))$ and so we must have some $x in A$ such that $phi(x,overline(a))$ holds.
+  Assume, on the other hand, that $A$ is the universe of an elementary substructure $cal(A)$, then we need to prove the T-V test holds, assume then that for some formula $phi(x,ov(y))$ in $L$ and some $ov(a) seq A$ we have $mM sat exists x thin phi(x, ov(a))$ and so since it is an elementary substructure we also have that $cal(A) sat exists x thin phi(x, ov(a))$ and so we must have some $x in A$ such that $phi(x,ov(a))$ holds.
 ]
 
 
@@ -248,9 +248,11 @@ We extend our definition of interpretation of terms to terms of $L(|mM|)$ by set
 ]<thrm-downwards>
 
 #proof[
-  Using induction we will define a sequence $A_n$ of subsets of $mM$, where at each step $n$ we will try to satisfy all statements in $L(A_(n-1))$, we will then set $|mN| = union.big_(n) A_n$.
+  Set $kappa = |A| + |L| + aleph_0$, using induction we will define a sequence $A_n$ of subsets of $mM$, where at each step $n$ we will try to satisfy all existential statements in $Th_L(A_(n-1))(mM)$, we will then set $|mN| = union.big_(n) A_n$.
 
-  First we set $A_0 = A$, then at step $n > 0$, we will consider all formulas in $L(A_(n-1))$ (there are $|kappa times ZZ| = |kappa|$ many of them) and for each formula $phi(overline(x))$ we will pick some collection of elements $overline(a) seq |mM|$ such that $mM sat phi(overline(a))$, then we will add $overline(a)$ to $A_(n-1)$, adding these elements for each formula gives us $A_n$.
+  First we set $A_0 = A$, then at step $n > 0$, we will consider all formulas in $L(A_(n-1))$ (there are $|kappa times NN| = |kappa|$ many of them) and for each formula $phi(ov(x))$ we will pick some collection of elements $ov(a) seq |mM|$ such that $mM sat phi(ov(a))$, then we will add $ov(a)$ to $A_(n-1)$, adding these elements for each formula gives us $A_n$.
+
+  Now we can use @thrm-tv_test to check that $mN elm mM$. Let $phi(ov(a)) = exists x (psi(x),ov(a))$ be a formula in $Th_L(mN)(mM)$, then $ov(a) in |mN|$ and so $ov(a) in A_n$ for some $n$ and thus for some $b in A_(n+1)$ we have $mN sat psi(b, ov(a))$ and thus $mN sat phi(ov(a))$.
 ]
 
 #remark("Skolem's Paradox")[
@@ -422,7 +424,7 @@ We now define a tool for proving such partial equivalences.
 To prove this we will need a lemma first.
 
 #lemma[
-  We say that formulas $phi(overline(x)), psi(overline(x))$ are equivalent if $forall overline(x) thin phi(overline(x)) <=> psi(overline(x))$ is true in every model. Equivalently if $forall overline(x) thin phi <=> psi$ is provable from the empty set of axioms.
+  We say that formulas $phi(ov(x)), psi(ov(x))$ are equivalent if $forall ov(x) thin phi(ov(x)) <=> psi(ov(x))$ is true in every model. Equivalently if $forall ov(x) thin phi <=> psi$ is provable from the empty set of axioms.
 
   For each $n, ell$ there exists a finite list $Phi_1, ..., Phi_k$ of formulas with $qd(n)$ in $ell$ variables such that every formula $phi$ with $qd(phi) <= n$ in $ell$ variables is equivalent to $phi_i$ for some $i <= k$.
 ]
@@ -519,6 +521,12 @@ We will now use this lemma to prove a slightly weaker statement that will then u
   $ A union B in cal(U) <=> A in cal(U) or B in cal(U) $
 ]
 
+#remark[
+  An Ultrafilter has a very natural description as a finitely additive measure on $I$, who's only values are $0$ and $1$. The measure is defined by $mu(A) = 1 <=> A in I$.
+
+  In this context, if $p(x)$ holds on all $x in A$ for some $A in cal(U)$, then we can think of this as $p(x)$ holding almost everywhere. It is through this lens that we will often think of ultrafilters, so keep this in mind as you read the rest of this section.
+]
+
 #definition[
   If $(mM_i)_(i in I)$ are $L$-structures we can define $product_(i in I) mM_i$ to be an $L$-structure with the natural pointwise interpretation of all the constants, relations, and functions.
 ]
@@ -560,7 +568,6 @@ This definition is not really satisfying from the point of view of model theory 
     { i in I : mM_i sat phi(a^1_i, ..., a^n_i) } in cal(U)
   $
 ]
-#pagebreak(weak: true)
 #proof[
   The atomic case is covered by the definition of an ultraproduct.
 
@@ -654,47 +661,47 @@ We will now develop more tools to use with models, first of these is the *type*,
   Let $L$ be countable, and $T$ a complete $L$-theory.
   Let $mM sat T$ then for $a in |mM|$ we say that the _type_ of $a$ is
   $
-  t_p^mM (a) = { phi(x) : mM sat phi(a) }.
+  tp^mM (a) = { phi(x) : mM sat phi(a) }.
   $
   If two elements $a,b$ have the same type then we cannot distinguish $a,b$ with first order formulas.
 
-  More generally, if $overline(a)$ is a tuple of elements of $mM$ then the _type_ of $overline(a)$ is
+  More generally, if $ov(a)$ is a tuple of elements of $mM$ then the _type_ of $ov(a)$ is
   $
-    t_p^mM (overline(a)) = { phi(x) : mM sat phi(overline(a)) }.
+    tp^mM (ov(a)) = { phi(x) : mM sat phi(ov(a)) }.
   $
 ]
 
 We will also use the following notation
 $
-  F_L (overline(x)) = { "formulas with variables" overline(x) }
+  F_L (ov(x)) = { "formulas with variables" ov(x) }
 $
-if $phi(overline(a)) in F_L (overline(x))$ and $mM$ is a model 
+if $phi(ov(a)) in F_L (ov(x))$ and $mM$ is a model 
 $
-  phi(mM) = { overline(a) in mM : mM sat phi(overline(a)) }
+  phi(mM) = { ov(a) in mM : mM sat phi(ov(a)) }
 $
 
 #definition[
-  $phi(overline(x))$ is $T$-_consistent_ if $T proves exists overline(x) phi(overline(x))$ or equivalently $phi(mM) eq.not nothing$.
+  $phi(ov(x))$ is $T$-_consistent_ if $T proves exists ov(x) phi(ov(x))$ or equivalently $phi(mM) eq.not nothing$.
 ]
 #definition[
-  A set of formulas $p(overline(x)) seq F_L (overline(x))$ is $T$-_consistent_ if for every finite subset $p_0(overline(x)) seq p(overline(x))$ we have 
+  A set of formulas $p(ov(x)) seq F_L (ov(x))$ is $T$-_consistent_ if for every finite subset $p_0(ov(x)) seq p(ov(x))$ we have 
   $
-    T proves exists overline(x) (and.big_(phi in p_0) phi(overline(x)) )
+    T proves exists ov(x) (and.big_(phi in p_0) phi(ov(x)) )
   $
 ]
 #definition[
-  A _type in_ $T$ is a set of formulas $p(overline(x))$ which is $T$-consistent, we call it a 1-type if $overline(x) = x$ and an $n$-type if 
-  $overline(x) = (x_1,...,x_n)$
+  A _type in_ $T$ is a set of formulas $p(ov(x))$ which is $T$-consistent, we call it a 1-type if $ov(x) = x$ and an $n$-type if 
+  $ov(x) = (x_1,...,x_n)$
 ]
 #definition[
-  A type $p(overline(x))$ is _complete_ if for every formula $phi(overline(x)) in F_L (overline(x))$ either $phi(overline(x)) in p$ or $not phi(overline(x)) in p$
+  A type $p(ov(x))$ is _complete_ if for every formula $phi(ov(x)) in F_L (ov(x))$ either $phi(ov(x)) in p$ or $not phi(ov(x)) in p$
 ]
 
 #example[
-  $t_p^mM (overline(x))$ is always a complete type
+  $tp^mM (ov(x))$ is always a complete type
 ]
 #remark[
-  If $mM elm mN$, and $overline(a) in mM$ then $t_p^mM (overline(a)) = t_p^mN (overline(a))$.
+  If $mM elm mN$, and $ov(a) in mM$ then $tp^mM (ov(a)) = tp^mN (ov(a))$.
 ]
 
 Slightly generalizing the concept of a type we have the following
@@ -710,11 +717,11 @@ Slightly generalizing the concept of a type we have the following
 
 We then have the generalization of the notation,
 $
-  F_(L(A))(overline(x)) = {phi(overline(x), overline(a)) : overline(a) in A, phi(overline(x), overline(y)) in F_L (overline(x))}
+  F_(L(A))(ov(x)) = {phi(ov(x), ov(a)) : ov(a) in A, phi(ov(x), ov(y)) in F_L (ov(x), ov(y))}
 $
 and
 $
-  t_p^mM (subs(overline(b),A)) =  { phi(overline(x), overline(a)) : mM sat phi(overline(b), overline(a)) }
+  tp^mM (subs(ov(b),A)) =  { phi(ov(x), ov(a)) : mM sat phi(ov(b), ov(a)) }
 $
 as well as 
 $
@@ -723,7 +730,7 @@ $
 
 
 #definition[
-  A type $p(overline(x))$ is realized in a model $mM$ if there exists $overline(a) in mM$ with $p(overline(x)) seq t_p^mM (overline(a))$.
+  A type $p(ov(x))$ is realized in a model $mM$ if there exists $ov(a) in mM$ with $p(ov(x)) seq tp^mM (ov(a))$.
 ]
 #example[
   If $T = D L O_0$ and $mM = QQ$ then
@@ -734,21 +741,21 @@ $
 ]
 Types have several basic properties that we will use quite often.
 #proposition[
-  If $p(overline(x))$ is a type over $A seq |mM|$ then there exists $mM elm mN$ such that $p(overline(x))$ is realized in $mN$.
+  If $p(ov(x))$ is a type over $A seq |mM|$ then there exists $mM elm mN$ such that $p(ov(x))$ is realized in $mN$.
 ]<prop-add_one_type>
 #proof[
-  Let $overline(c)$ be new constants, define 
+  Let $ov(c)$ be new constants, define 
   $
-    T' = { phi(overline(c)) : phi(overline(x)) in p(overline(x)) } union Th_(L(M))(M)
+    T' = { phi(ov(c)) : phi(ov(x)) in p(ov(x)) } union Th_(L(M))(M)
   $
-  and model of $T'$ will realize $p$ because the interpretation of $overline(c)$ will realize $p$.
+  and model of $T'$ will realize $p$ because the interpretation of $ov(c)$ will realize $p$.
 
   Since $Th_(L(M))(M) seq T'$ any model of $T'$ will be an elementary extension of $mM$. It is thus enough to show that $T'$ is consistent.
 
-  By assumption every finite subset of $p(overline(x))$ will be consistent with $Th_(L(M))(M)$ and thus by compactness $T'$ is consistent.
+  By assumption every finite subset of $p(ov(x))$ will be consistent with $Th_(L(M))(M)$ and thus by compactness $T'$ is consistent.
 ]
 #corollary[
-  Every type is a subset of a complete type since if $p$ is realized by $overline(b) in mN$ then $p seq t_p^mN (subs(overline(b),A))$
+  Every type is a subset of a complete type since if $p$ is realized by $ov(b) in mN$ then $p seq tp^mN (subs(ov(b),A))$
 ]
 
 We can also prove the above corollary in a different way, using Zorn's lemma, we will need some more notation.
@@ -828,7 +835,7 @@ We can also prove the above corollary in a different way, using Zorn's lemma, we
   is a Boolean algebra of subsets of $mM$ called the algebra of _definable_ subsets of $mM$.
 ]
 #proposition[
-  The map $iota : F_L (overline(x)) -> Def(mM)$ given by 
+  The map $iota : F_L (ov(x)) -> Def(mM)$ given by 
   $
     iota : phi |-> phi(mM)
   $
@@ -839,10 +846,10 @@ We can also prove the above corollary in a different way, using Zorn's lemma, we
 ]
 We have then by Isomorphism theorem for rings
 $
-  F_L (overline(x)) slash ker (iota) = Def(mM)
+  F_L (ov(x)) slash ker (iota) = Def(mM)
 $
 
-We can also identify $S_n^T (nothing)$ with $S(F_L (overline(x)))$ which makes it a compact set with basic open sets $[phi(overline(x))] = {p in S_n^T (nothing) : phi(overline(x)) in p }$.
+We can also identify $S_n^T (nothing)$ with $S(F_L (ov(x)))$ which makes it a compact set with basic open sets $[phi(ov(x))] = {p in S_n^T (nothing) : phi(ov(x)) in p }$.
 
 #proposition[
   If $L$ is countable then $S_n^T (nothing)$ is homeomorphic to a closed subset of the Cantor space.
@@ -854,7 +861,7 @@ We can also identify $S_n^T (nothing)$ with $S(F_L (overline(x)))$ which makes i
   This construction can also be done with $L$ uncountable, we then get a homomorphism to $2^(|L|)$ seen as a product space.
 ]
 
-The closed sets of $S_n^T (nothing)$ are of the form $[p(overline(x))] = {q in S_n^T (nothing) : p seq q }$.
+The closed sets of $S_n^T (nothing)$ are of the form $[p(ov(x))] = {q in S_n^T (nothing) : p seq q }$.
 
 All of these also hold if we change $S_n^T (nothing)$ to $S_n^T (A)$
 
@@ -895,7 +902,7 @@ We will next show how to construct saturated models, to complete this we will ne
 
   We will now construct a sequence of models $(mM_alpha)_(alpha < mu)$ with $mM_0 = mM$ and at limit $alpha$ we have $mM_alpha = union.big_(beta < alpha) mM_beta$, we will assume that $|mM_alpha| < mu$.
   At successor steps $alpha = beta + 1$, we want to find $mM_alpha$ with $mM_beta elm mM_alpha$ such that for all $A seq mM_beta$ with $|A| < kappa$, every type in $S_n^T (A)$ is realized in $mM_alpha$. 
-  Now we know that for every single type $p(overline(x))$ by @prop-add_one_type we can add a realization of that type, and then by @thrm-downwards we can get that realization with size at most $mu$, so we just need to do induction again to add every type.
+  Now we know that for every single type $p(ov(x))$ by @prop-add_one_type we can add a realization of that type, and then by @thrm-downwards we can get that realization with size at most $mu$, so we just need to do induction again to add every type.
 
   Let us count how many types we need to add, we know that for any fixed $A$ we have $|S_n^T (A)| <= 2^(kappa + aleph_0) = mu$. Now for any cardinality $beta$ we have that the number of subsets $A$ with $|A| = beta$ is
   $

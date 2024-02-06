@@ -165,7 +165,7 @@ Let $mM$ be a model of $T$, set $kappa = ||mM||+|L| + aleph_0$, define $frak(X)$
 #proof[
   By definition $mN$ has some superstructure $mN^*$ with $mN^* sat T$ and $mN^* sat sigma$. By Lowenheim-Skolem downwards Theorem we have that there exists a model $mN'$ with $mN seq mN' lt.curly mN^*$ and 
   $
-  ||mN'|| <= ||mN|| + |L(mN)| + kappa = ||mN|| + |L| + ||mN| = ||mN|| + |L| <= ||mM|| + |L|.
+  ||mN'|| <= ||mN|| + |L(mN)| + aleph_0 = ||mN|| + |L| + ||mN|| = ||mN|| + |L| <= ||mM|| + |L|.
   $
   By $mN' lt.curly mN^*$ we have that $mN' sat T$ and $mN' sat sigma$, also by enumerating $|mN'| backslash |mN|$ we can map all those elements to elements of $kappa$ to get that $mN'$ is isomorphic to some model in $frak(X)$.
 ]
