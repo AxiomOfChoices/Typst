@@ -284,7 +284,7 @@ We will use the notation $Gamma proves phi$ to mean "$Gamma$ proves $phi$" and d
 By a famous theorem of Gödel that we will not prove in this class we can actually not care about any proof system details.
 #theorem("Gödel's completeness theorem")[
   Let $Gamma$ be a set of sentences in $L$ then $Gamma$ is consistent if and only if $Gamma$ has a model.
-]
+]<thrm-completeness>
 
 We will not prove this theorem in this class but we will use an important corollary of it.
 
@@ -906,4 +906,107 @@ We will next show how to construct saturated models, to complete this we will ne
 
 #example[
   There are strange consequences to this theorem, for example there are models of Piano Arithmetic that satisfy a statement encoding "PA is inconsistent".
+]
+
+We can see that the process of adding types is not very difficult, in model theory we have a saying about this:
+"Any fool can realize a type, but it takes a model theorist to omit one".
+We have not yet looked at omitting types, but the definition is exactly what you would expect.
+
+#definition[
+  For a complete theory $T$, a model $mM sat T$ and a type $p(ov(x))$. We say that $mM$ _omits_ $p(ov(x))$ if it does not realize it, i.e. $p(mM) = nothing$.
+]
+
+Now the difficulty in omitting types is that some types can *never* be omitted.
+#example[
+  If $c$ is a constant of a language $L$ then the type of the interpretation of $c$ can never be omitted.
+]
+But some types can be omitted
+#example[
+  The type of a transcendental number in $A C F_p$ is distinct from that of an algebraic number, and can be omitted, for example in $hat(Q)$.
+]
+
+The first example here is an important one to keep in mind since all the properties of that type can be proved from the single formula $x = c$.
+
+#definition[
+  A type $p(ov(x))$ is isolated if there exists a formula $phi(ov(x)) in p(ov(x))$ such that for every $psi(ov(x)) in p(ov(x))$ we have
+  $
+    T proves (phi(ov(x)) => psi(ov(x)))
+  $
+]
+
+#proposition[
+  $p(ov(x)) in S_n(A)$ is isolated iff ${p}$ is open in $S_n(A)$.
+]
+#proof[
+  Exercise
+  // TODO: FINISH EXERCISE
+]
+
+This characterization is important due to the following fact.
+#proposition[
+  If $p(ov(x))$ is isolated, then $p$ cannot be omitted.
+]
+#proof[
+  Let $phi(ov(x))$ be the generating formula for $p$, then 
+  $
+    exists x phi(ov(x))
+  $
+  is a true sentence in $T$ and thus any witness of this sentence is a realization of the type.
+]
+
+Now apriori we would not expect this converse to hold since it feels like being isolated is quite the strong condition, but in fact the converse does hold, which is shown in this theorem.
+
+#theorem[
+  If $p(ov(x))$ is not isolated, then there exists $mM sat T$ which omits $p(ov(x))$.
+]
+There are many proofs of this theorem but we will use one called *Henkin's construction*. This proof method is also the modern method for proving @thrm-completeness.
+#proof[
+  Let $L$ be a countable language and let ${c_n}_(n in NN)$ be a family of new constants not in $L$, enumerate all formulas in $L union {c_n}_(n in NN)$ as $phi_n$. Let $f: NN -> NN$ be increasing such that $c_f(n)$ does not appear in $phi_0,...,phi_n$. 
+
+  We define the *Henkin axioms*
+  $
+    H_i = (exists x phi_i (x)) -> phi_i (c_f(i)).
+  $
+  We now construct a sequence of sets of sentences $T_0 = T seq T_1 seq T_2 seq ...$ such that
+  $
+    T_(2n+1) = T_(2n) union {H_n} quad "and" quad T_(2n+2) = T_(2n+1) union { not phi_n(c_n) } "for some" phi_n(ov(x)) in p(ov(x))
+  $
+  Then taking the union of these sets we will get an axiomization of a consistent theory. We can then use Zorn's lemma to get a complete theory containing it and then if we set our universe to be the set of constants quotiented by the relation
+  $
+    c_i = c_j "as elements if" (c_i = c_j) "as a formula is in" T
+  $
+
+  Now a model satisfying this theory will not realize the type $p(ov(x))$ since if it did then some constant would realize it which would contradict the fact that our theory contains $not phi(c_n)$ for every $n$.
+
+  All that is left to do is to check that at every odd step these sentences are indeed consistent and that at even steps we can pick specific $phi_n$ to make the set of sentences consistent.
+
+  // TODO: ADD FULL PROOF
+ 
+  For the even steps assume that $T_(2n+1)$ is consistent but for every $psi(ov(x)) in p(ov(x))$ we have that $T_(2n+1) union { not psi (c_n) }$ is inconsistent. Then $T_(2n+1)$ is $T$ where we added some finitely many sentences, so we can write $T_(2n+1) = T union { psi_j(ov(c), c_n) : j < k }$ for some $k$ and $psi_j$.
+
+  Now set
+  $
+    phi(ov(y), x) = and.big_(j<k) psi_j (ov(y), x)
+  $
+  then for every $psi(ov(x)) in p(ov(x))$ we have $T union { phi(ov(c),c_n) } union { not psi(c_n) }$ is inconsistent so
+  $
+    T proves (phi(ov(c), c_n) -> psi(c_n))
+  $
+  But now since the $T$ does not contain $c_n$ as a constant we can replace all instances of $c_n$ with $x$ and all instances of $ov(c)$ with $ov(y)$ in the proof and get that
+  $
+    T proves (phi(ov(y),x)) -> psi(x))
+  $
+  but then this means that 
+  $
+    T proves forall ov(y) (phi(ov(y), x) -> psi(x))
+  $
+  but we have that
+  $
+    forall ov(y) (phi(ov(y), x) -> psi(x))
+    &= forall ov(y) (not phi(ov(y), x) or psi(x))
+    = not exists ov(y) (phi(ov(y), x) and not psi(x))
+    \ &= not (exists ov(y) phi(ov(y), x) and not psi(x))
+    = (exists ov(y) (phi(ov(y),x))) -> psi(x)
+  $
+  then $exists ov(y) (phi(ov(y),x))$ implies every $psi$ in the type $p(ov(x))$ which contradicts our assumption that $p(ov(x))$ is not isolated.
 ]
