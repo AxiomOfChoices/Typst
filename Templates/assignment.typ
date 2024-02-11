@@ -16,3 +16,12 @@
   }
   doc
 };
+
+#let MultiColumnBox(body, height: 26pt, column_number: 3) = {
+  box(height: height)[
+    #columns(column_number)[
+      #set par(justify: true)
+      #body
+    ]
+  ]
+}

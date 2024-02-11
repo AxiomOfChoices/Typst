@@ -794,7 +794,7 @@ We can also prove the above corollary in a different way, using Zorn's lemma, we
     $
       (cal(U) in [a]) or (cal(U) in [b]) => (a + b) in cal(U) => cal(U) in [a + b]
     $
-    on the other hand $a union b in cal(U) => (a in cal(U)) or (b in cal(U))$ and so
+    on the other hand $a + b in cal(U) => (a in cal(U)) or (b in cal(U))$ and so
     $
       cal(U) in [a + b] => (cal(U) in [a]) or (cal(U) in [b])
     $
@@ -803,8 +803,11 @@ We can also prove the above corollary in a different way, using Zorn's lemma, we
       (a in cal(U)) and (b in cal(U)) <=> a dot b in cal(U)
     $
   + For any two distinct ultrafilters $cal(U), cal(U)'$, then for some $x$ we have $x in cal(U)$ and $x in.not cal(U)'$. Then $cal(U) in [x], cal(U)' in.not [x]$ as well as $cal(U) in.not [-x], cal(U)' in [-x]$ and so the topology is Hausdorff.
-    // To show compactness assume that $union.big_(i) [a_i] = S(BB)$ and that for any finite $Delta$ we have $union.big_(i in Delta) [a_i] eq.not S(BB)$, then there is an ultrafilter $cal(U)$ with $a_i in.not cal(U)$ for all $i in Delta$, then $-a_i in cal(U)$ for all $i in Delta$ so $product_(i in Delta) (-a_i) in cal(U)$ and so this meet is not $0$. But then any finite intersection of $(-a_i)$ is not empty, 
-    To show compactness let $union.big_(i) [a_i] = S(BB)$, then ${ - a_i }$ cannot be a subset of any ultrafilter $cal(U)$ since it would not be in the union, thus some finite subset of $-a_i$'s must have product zero. But then if ${-a_(i_1), ..., -a_(i_k)}$ has zero product then any ultrafilter cannot contain all of them, thus any ultrafilter $cal(U)$ has to contain some $a_(i_j)$ and so $union.big_k [a_(i_k)] = S(BB)$.
+    To show compactness let $union.big_(i) [a_i] = S(BB)$, then ${ - a_i : i in I }$ cannot be a subset of any ultrafilter $cal(U)$, for then
+    $
+    -a_i in cal(U), forall i in I => a_i in.not cal(U), forall i in I => cal(U) in.not [a_i], forall i in I => cal(U) in.not union.big_(i) [a_i].
+    $
+    Thus, some finite subset of $-a_i$'s must have product zero since otherwise ${ - a_i : i in I }$ satisfies the finite intersection property and thus is contained in some ultrafilter. But then if ${-a_(i_1), ..., -a_(i_k)}$ has zero product then any ultrafilter cannot contain all of them, thus any ultrafilter $cal(U)$ has to contain some $a_(i_j)$ and so $union.big_k [a_(i_k)] = S(BB)$.
 ]
 
 #theorem("Stone's Theorem")[
@@ -846,7 +849,7 @@ We can also prove the above corollary in a different way, using Zorn's lemma, we
 ]
 We have then by Isomorphism theorem for rings
 $
-  F_L (ov(x)) slash ker (iota) = Def(mM)
+  F_L (ov(x)) slash ker (iota) tilde.equiv Def(mM)
 $
 
 We can also identify $S_n^T (nothing)$ with $S(F_L (ov(x)))$ which makes it a compact set with basic open sets $[phi(ov(x))] = {p in S_n^T (nothing) : phi(ov(x)) in p }$.
