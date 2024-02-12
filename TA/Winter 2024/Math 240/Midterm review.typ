@@ -87,6 +87,20 @@ For each of the following set equalities, prove it using set identities and then
     $
     For double inclusion assume that $x in (A backslash B) sect C$, then $x in A, x in.not B, x in C$. But then $x in A sect C$ and $x in.not B sect C$ and thus $x in (A sect C) backslash (B sect C)$.
     On the other hand assume that $x in (A sect C) backslash (B sect C)$, we have that $x in A sect C$ and $x in.not B sect C$. Then we have that $x in A$ and $x in C$ but then this combined with $x in.not B sect C$ means that $x in.not B$. Thus $x in (A backslash B) sect C$.
+
+  + Again with the set identities we have
+    $
+      A sect (A^c union B) = (A sect A^c) union (A sect B)
+      = nothing union (A sect B) = A sect B.
+    $
+    For double inclusion assume that $x in A sect (A^c union B)$, then $x in A$ and $x in A^c union B$. But because $x in A$ we have $x in.not A^c$ so $x in B$. Thus $x in A sect B$.
+    For the other direction assume that $x in A sect B$, then $x in A$ and $x in B$. Then $x in A^c union B$ since $x in B$, thus $x in A sect (A^c union B)$.
+  + Again with set identities we have
+    $
+      A backslash (B union C) = A sect (B union C)^c = A sect B^c sect C^c
+      = A sect B^c sect A sect C^c = (A backslash B) sect (A backslash C)
+    $
+    Now for double inclusion assume that $x in A backslash (B union C)$
 ]
 
 

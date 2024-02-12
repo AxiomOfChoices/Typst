@@ -465,9 +465,14 @@ We will now use this lemma to prove a slightly weaker statement that will then u
   $
 ]
 #proof[
-  Exercise, will add proof after deadline.
-  // TODO: ADD BACK PROOF
-  // We can take the role of the Spoiler and enumerate $|mM|$ and $|mN|$, we can then force the Prover to map every single element of both by simply picking elements of the enumeration. Since the Prover still wins $union.big f_i$ must be an isomorphism between $mM$ and $mN$.
+  Assume $mM tilde.eq mN$, then the Prover wins trivially by just following the isomorphism.
+
+  On the other hand assume Prover has a winning strategy, then we can play the role of the Spoiler to force Prover to construct an isomorphism. First enumerate the models 
+  $
+  |mM| = { m_0, m_1, ... }, quad
+  |mN| = { n_0, n_1, ... }
+  $
+  on the first turn we pick $m_0$ and let Prover map it to some element of $|mN|$. On the second turn we pick the smallest index element of $|mN|$ that has not been picked before and force Prover to map it. We continue this, on odd turns we pick the smallest index element of $|mM|$ that has not been picked before, and on even turns we pick the smallest index element of $|mN|$ that has not been picked before. This essentially forces Prover to use the back-and-forth method. Since every element of both models will eventually be mapped and since Prover has to win this game, the resulting map $union.big_i f_i$ will be an isomorphism between $mM$ and $mN$.
 ]
 
 == Ultrafilters and Ultraproducts
@@ -1020,3 +1025,88 @@ There are many proofs of this theorem but we will use one called *Henkin's const
   $
   then $exists ov(y) (phi(ov(y),x))$ implies every $psi$ in the type $p(ov(x))$ which contradicts our assumption that $p(ov(x))$ is not isolated.
 ]
+
+Now that we have the tools to omit types, we can use it to characterize the $aleph_0$-categorical theories.
+#theorem("Ryll-Nardzweski")[
+  Let $T$ be a complete theory, the following are equivalent.
+  - $T$ is $aleph_0$-categorical.
+  - $forall n, S_n^T (nothing)$ is finite.
+]
+#proof[
+  $(1 => 2)$. Suppose that $S_n^T (nothing)$ is infinite, we know that it is always a closed subset of the Cantor set. As an infinite compact space, $S_n^T (nothing)$ has a non isolated point, corresponding to a non isolated type $p$. By the omitting types theorem, there exists a model which omits $p$, since it is a type there is another model which realizes $p$, those two models then cannot be isomorphic. We can then make them both countable by @thrm-downwards which completes this side of the proof.
+
+  $(2 => 1)$. We assume that $S_n^T (nothing)$ is finite. This implies that if $A seq mM sat T$, with $A$ being finite, then $S_n^T (A)$ is also finite since we can inject it into $S_(n+1)^T (nothing)$. So every type in $S_n^T (A)$ is isolated.
+  Now let $mM,mN sat T$ be countable models, enumerate them as $mM = {a_0, a_1, ...}$ and $mN = {b_0, b_1, ...}$. We will now do a back and forth construction, at step $n$ we have a partial isomorphism $f_n : A_n -> B_n$. Define the tuples $ov(a) = (a_1,...,a_n), ov(b) = (b_1,...,b_n)$ containing all elements of $A_n$ and $B_n$ respectively.
+  From the fact that it is a partial isomorphism we will know that
+  $
+    tp_n^mM (ov(a)) = tp_n^mN (ov(b)).
+  $
+
+  Now let us create the construct the maps by induction, at step $0$ we pick some $a in mM$ then $tp_n^mM (a)$is isolated. Since it is isolated every model of $T$ realizes it and so in particular there is an element $b in mN$ that realizes the type and map $a$ to it.
+
+  At the inductive even steps we will pick some $a_(n+1) in mM$ and note that $tp_n^mM(A) (a_(n+1))$ is again isolated so again there is some element $b_(n+1) in mN$ such that $tp_n^mN(B)(b_(n+1)) = tp_n^mM(A) (a_(n+1))$ this type and so we can map $a_(n+1)$ to $b_(n+1)$.
+  At the odd steps we do the same thing as but pick $b in mN$ first.
+]
+
+#example[
+  In $A C F_p$ we have that the type of any irreducible polynomial is isolated while the type of the transcendental number is not isolated.
+]
+
+== Automorphism groups
+In algebra for some algebraic structure an important role is played by the automorphism groups of these structures. As model theory is a sort of algebra without algebra we will also use automorphism groups.
+#definition[
+  Let $mM$ be a countable structure of a countable language $L$. We define the automorphism group $Aut (mM)$ to be
+  $
+    Aut(mM) := { F : mM -> mM : F "is an automorphism" }
+  $
+]
+
+$Aut(mM)$ acts on $mM^n$ for all $n$, and is in fact a Polish topological group.
+#proposition[
+  $Aut(mM)$ is a Polish group, that is separable, infinite, and admits a complete metric.
+]
+#proof[
+  Given $f in Aut(mM)$, neighborhoods of $f$ are
+  $
+    U_(a_1,...,a_n)^f = { g in Aut(mM) : g(a_1) = f(a_1), ..., g(a_n) = f(a_n)}
+  $
+
+  Define the sets $[A,B]$ for finite tuples $A,B seq mM$ by
+  $
+    [A,B] = {f in Aut(mM) : f(A) = B}
+  $
+
+  A complete metric can be defined as
+  $
+    d(f,g) := exp_2 (- min {n : f(n) != g(n) "or" f^(-1)(n) != g^(-1)(n) })
+  $
+]
+
+#theorem[
+  $Th(mM)$ is $aleph_0$-categorical if and only if for all $n$, $Aut(mM)$ acts on $mM^n$ with finitely many orbits.
+]
+#proof[
+  Exercise.
+]
+
+== Infinite-Ary-Logic and Scott Analysis
+We now want to take a short look at different types of logic.
+
+$cal(L)_(omega_1,omega)$ is the extension of finite order logic over a countable language $L$, where in formulas we allow infinite countable $or.big, and.big$.
+
+More precisely,
++ The atomic formulas of $cal(L)_(omega_1,omega)$ are the same as in first order logic.
++ If $phi_k$ is a countable set of formulas then
+  $
+    and.big_(k in omega) phi_k "and" or.big_(k in omega) phi_k
+  $
+  are both in $cal(L)_(omega_1,omega)$
++ If $phi$ is in $cal(L)_(omega_1,omega)$ then $exists x (phi(x))$ and $forall y (phi(y))$ are both in $cal(L)_(omega_1,omega)$.
+
+Now recall that, in ordinary logic, for a finite model $mM$, there exists a sentence $sigma$ with $mM sat sigma$ and 
+$
+  (mN sat sigma) => mM tilde.equiv mN
+$
+Our goal now is to generalize this using our new type of logic to countable models.
+
+

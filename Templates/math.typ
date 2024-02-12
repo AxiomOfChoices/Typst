@@ -32,7 +32,7 @@
 #let Sym = math.op("Sym")
 #let div = math.op("div")
 #let tp = math.op("tp")
-
+#let Aut = math.op("Aut")
 
 #let symbol_replacing(doc) ={
   show sym.emptyset: set text(font: "Fira Sans")
