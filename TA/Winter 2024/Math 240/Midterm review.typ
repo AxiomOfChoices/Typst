@@ -85,12 +85,8 @@ For each of the following set equalities, prove it using set identities and then
       = ((A sect C) sect B^c) union ((A sect C) sect C^c)
       \ &= (A sect C) sect (B^c union C^c) = (A sect C) sect (B sect C)^c = (A sect C) backslash (B sect C)
     $
-    For double inclusion assume that $x in (A backslash B) sect C$, then $x in A, x in.not B, x in C$. But then $x in A sect C$
+    For double inclusion assume that $x in (A backslash B) sect C$, then $x in A, x in.not B, x in C$. But then $x in A sect C$ and $x in.not B sect C$ and thus $x in (A sect C) backslash (B sect C)$.
+    On the other hand assume that $x in (A sect C) backslash (B sect C)$, we have that $x in A sect C$ and $x in.not B sect C$. Then we have that $x in A$ and $x in C$ but then this combined with $x in.not B sect C$ means that $x in.not B$. Thus $x in (A backslash B) sect C$.
 ]
 
-
-
-// Let $f(x) = product_i g_i (x)$ where each $g_i (x)$ is a polynomial, then let $p$ be a singular point of $f(x)$ which is not a singular point of any $g_i (x)$, then $m u l t_p (x) = n$ where $n$ is the number of irreducible components that $p$ is contained in.
-//
-// To see this consider the partial derivatives of $f$ at $p$ of degree $k$, by product rule if $k < n$ then we will have at least one $g_i$ left over in the derivative which vanishes. Hence the multiplicity is at least $n$. Now since $p$ is not a singular point of any $g_i (x)$ then none of the derivatives of $g_i (x)$ vanish and so at the $n$-th derivative we get exactly one non-zero term hence $p$ has multiplicity $n$.
 
