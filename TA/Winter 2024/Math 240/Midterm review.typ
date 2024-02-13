@@ -465,7 +465,28 @@ The strategy here is quite simple, first we will rewrite the sentence as a logic
   $
     forall x in ZZ backslash {0}, y in ZZ, z in ZZ, (x "divides" y or x "divides" z => x "does divide" y z).
   $
-  This is again true since if $y = x(k)$ for some integer $k$ then $y z = x (z k)$ and since $z k$ is an integer then $y z$ is divisible by $x$. Similarly if $z = x(k)$ for some integer $k$ then $y z = x (y k)$ and since $y k$ is an integer then $y z$ is divisible by $x$. 
+  This is again true since if $y = x(k)$ for some integer $k$ then $y z = x (z k)$ and since $z k$ is an integer then $y z$ is divisible by $x$. Similarly if $z = x(k)$ for some integer $k$ then $y z = x (y k)$ and since $y k$ is an integer then $y z$ is divisible by $x$.
 ]
 
+== Question 12
+Prove the following statements using contradiction.
+
++ $root(3,2)$ is irrational.
++ If $a,b in ZZ$, then $a^2 - 4b - 2 != 0$.
++ Suppose $a,b in RR$. If $a$ is rational and $a b$ is irrational, then $b$ is irrational.
++ For every positive $x in QQ$, there is a positive $y in QQ$ for which $y < x$.
++ If $b in ZZ$ and $b$ does not divide $k$ for every $k in NN$, then $b = 0$.
++ Suppose $a,b in ZZ$. If $4$ does not divide $a^2 + b^2$, then $a$ and $b$ are not both odd.
+
+#answer[
+== Solution
++ Assume that $root(3,2)$ is rational, then we can write $root(3,2) = p/q$ with $p,q$ integers, $q != 0$ and $gcd(p,q) = 1$. Now since this is true we have that
+  $
+    2 = (p/q)^3 = p^3/q^3 "and so" 2 q^3 = p^3
+  $
+  Now this means that $p^3$ is even and so $p$ must be even, since if $p$ was odd then $p^3$ would also be odd. But then $p = 2k$ for some integer $k$ and so $q^3 = 4 k^3$, but then $q^3$ is also even and so $q = 2 ell$ for some integer $ell$. But then $gcd(p,q) >= 2$ which contradicts our assumption. Thus by contradiction $root(3,2)$ is irrational.
++ Assume that there exists $a,b in ZZ$ with $a^2 - 4 b - 2 = 0$. Then we have $a^2 = 4b + 2$ and so $a^2$ is even, but now again if $a^2$ is even then $a$ is even. But then for some $k$ we have $a = 2k$ and so $a^2 = 4k^2$. But now we have $4 k^2 = 4 b + 2$.
+
+  Now we can rearrange this to give us that $2 = 4(k^2 - b)$ and so $4$ divides $2$ since $k^2 - b$ is an integer. But this is a contradiction since $4$ does not divide $2$.
+]
 
