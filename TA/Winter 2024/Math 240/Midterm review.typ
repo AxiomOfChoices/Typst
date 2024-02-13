@@ -475,8 +475,8 @@ Prove the following statements using contradiction.
 + If $a,b in ZZ$, then $a^2 - 4b - 2 != 0$.
 + Suppose $a,b in RR$. If $a$ is rational and $a b$ is irrational, then $b$ is irrational.
 + For every positive $x in QQ$, there is a positive $y in QQ$ for which $y < x$.
-+ If $b in ZZ$ and $b$ does not divide $k$ for every $k in NN$, then $b = 0$.
-+ Suppose $a,b in ZZ$. If $4$ does not divide $a^2 + b^2$, then $a$ and $b$ are not both odd.
++ If $b in ZZ$ and $b$ does not divide $k$ for every $k in NN backslash {0}$, then $b = 0$.
++ Suppose $a,b in ZZ$. If $4$ does divide $a^2 + b^2$, then $a$ and $b$ are not both odd.
 
 #answer[
 == Solution
@@ -488,5 +488,28 @@ Prove the following statements using contradiction.
 + Assume that there exists $a,b in ZZ$ with $a^2 - 4 b - 2 = 0$. Then we have $a^2 = 4b + 2$ and so $a^2$ is even, but now again if $a^2$ is even then $a$ is even. But then for some $k$ we have $a = 2k$ and so $a^2 = 4k^2$. But now we have $4 k^2 = 4 b + 2$.
 
   Now we can rearrange this to give us that $2 = 4(k^2 - b)$ and so $4$ divides $2$ since $k^2 - b$ is an integer. But this is a contradiction since $4$ does not divide $2$.
++ Suppose for a contradiction that there exist $a,b in RR$ with $a$ rational, $a b$ irrational, and $b$ rational. Now $a b$ is then a product of two rational numbers, and is thus rational. But we assumed it is irrational, this is a contradiction, thus the statement holds.
++ Assume there exists a positive $x in QQ$ such that for every $y in QQ$ which is positive, $y >= x$. Then $x/2$ is a positive rational number but $x/2 < x$ since $x$ is positive, but also $x/2 >= x$ since it is a positive rational. This is a contradiction and so the statement holds.
++ Assume there exists a $b in ZZ$ which is not zero and does not divide any non-zero natural number $k in NN backslash {0}$. Then if $b$ is positive, then it is also a natural number and it divides itself, which is a contradiction. On the other hand if $b$ is negative, then $-b$ is positive and so $b$ divides $-b$ which is a natural number, this is also a contradiction. Thus the statement holds.
++ Assume that there exists $a,b in ZZ$ with $4$ dividing $a^2 + b^2$ and both $a$ and $b$ odd. Then since $a$ is odd it is equal to $2k + 1$ for some integer $k$, and $b = 2 ell + 1$ for some integer $ell$. Now from this we know that
+  $
+    a^2 + b^2 = (2k+1)^2 + (2ell+1)^2 = 4k^2 + 4k + 1 + 4ell^2 + 4ell +1
+    = 4(k^2 + k + ell^2 + ell) + 2.
+  $
+  But then if $a^2 + b^2$ divides 4 then since
+  $
+    2 = a^2 + b^2 - (4k^2 + k + ell^2 + ell)
+  $
+  then $2$ also divides $4$. This is a contradiction and thus the statement holds.
 ]
+
+= Topic 7 - Induction and Functions
+== Question 13
+Prove the following statements using induction.
+
++ If $n in NN$, then $2^1 + 2^2 + 2^3 + dots.c + 2^n = 2^(n+2) - 2$.
++ Prove that $24 | (5^(2n) - 1)$ for every integer $n >= 0$.
++ Prove that $2^n + 1 <= 3^n$ for every positive integer $n$.
++ Suppose that $A_1,A_2,...,A_n$ are sets in some universal set $U$, and $n >= 2$. Prove that $overline(A_1 union A_2 union ... union A_n) = overline(A_1) sect overline(A_2) sect ... sect overline(A_n)$.
++ If $n in NN$, then $1+1/4 +1/9 + ... + 1/n^2 <= 2 - 1/n$ for every $n in NN$.
 
