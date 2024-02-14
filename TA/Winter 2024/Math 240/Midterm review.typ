@@ -507,9 +507,46 @@ Prove the following statements using contradiction.
 == Question 13
 Prove the following statements using induction.
 
-+ If $n in NN$, then $2^1 + 2^2 + 2^3 + dots.c + 2^n = 2^(n+2) - 2$.
-+ Prove that $24 | (5^(2n) - 1)$ for every integer $n >= 0$.
++ If $n in NN backslash {0}$, then $2^1 + 2^2 + 2^3 + dots.c + 2^n = 2^(n+1) - 2$.
++ Prove that $24 | (5^(2n) - 1)$ for every $n in NN$.
 + Prove that $2^n + 1 <= 3^n$ for every positive integer $n$.
 + Suppose that $A_1,A_2,...,A_n$ are sets in some universal set $U$, and $n >= 2$. Prove that $overline(A_1 union A_2 union ... union A_n) = overline(A_1) sect overline(A_2) sect ... sect overline(A_n)$.
 + If $n in NN$, then $1+1/4 +1/9 + ... + 1/n^2 <= 2 - 1/n$ for every $n in NN$.
 
+#answer[
+== Solution
++ We start with the base case $n = 1$, in which we have
+  $
+    2^1 = 2^(1+1) - 2
+  $
+  and so in the base case it is true. Now assume that the statement holds for $n = k$, then for $n = k + 1$ we have
+  $
+    2^1 + dots.c + 2^k + 2^(k+1)
+    =
+    (2^1 + dots.c + 2^k) + 2^(k+1).
+  $
+  Now by inductive hypothesis, the contents of the brackets are equal to $2^(k+1) - 2$ and so we have
+  $
+    (2^1 + dots.c + 2^k) + 2^(k+1)
+    =
+    (2^(k+1) - 2) + 2^(k+1) 
+    = 2^(k+2) - 2
+    = 2^((k+1) + 1) - 1
+  $
+  and so the statement holds for $n = k + 1$. Thus by induction it holds for all natural numbers.
++ Again we start with the base case, if $n = 0$ then
+  $
+    5^(2n) - 1 = 5^0 - 1 = 0,
+  $
+  and indeed $24$ divides $0$ since all integers divide $0$. Now assume that the statement hods for $n = k$, then for $n = k + 1$ we have
+  $
+    5^(2n) - 1 = 5^(2(k+1)) - 1 = 25 dot 5^(2k) - 1
+    = 25 dot (5^(2k) - 1) + 25 - 1
+    = 25 dot (5^(2k) - 1) + 24.
+  $
+  Now by inductive hypothesis, we have that $24$ divides $5^(2k) - 1$ and we have $5^(2k) - 1 = 24 dot m$ for some integer $m$. But then
+  $
+    25 dot (5^(2k) - 1) + 24 = 25 dot 24 dot m + 24 = 24 dot (25 dot m + 1),
+  $
+  but now $25 dot m + 1$ is certainly an integer and thus $25 dot (5^(2k) - 1)$ is divisible by $24$.
+]
