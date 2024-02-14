@@ -639,6 +639,7 @@ For each of the following sets, state whether it is a function $f : {1,2,3} -> {
 
 = Function Properties and Cardinality
 == Question 15
+<question-15>
 For each of the following functions, state and prove whether it is injective and whether it is surjective.
 
 + $f : (0,infinity) -> RR$ defined by $f(x) = ln(x)$.
@@ -646,9 +647,60 @@ For each of the following functions, state and prove whether it is injective and
 + $f : ZZ times ZZ -> ZZ$ defined by $f(m,n) = 2n - 4m$.
 + $theta : {0,1} times NN -> ZZ$ defined by $theta(a,b) = (-1)^a b$.
 + $theta : cal(P)(ZZ) -> cal(P)(ZZ)$ defined by $theta(X) = X^c$.
-+ $f : (NN backslash {0}) times (NN backslash {0}) -> (NN backslash {0})$.
++ $f : (NN backslash {0}) times (NN backslash {0}) -> (NN backslash {0})$ defined by $f(m,n) = 2^(m-1) (2n-1)$.
 
 #answer[
-  This function is indeed injective, to see this let $x,y in (0,infinity)$ be such that $ln(x) = ln(y)$.
+== Solution
++ This function is indeed injective, to see this let $x,y in (0,infinity)$ be such that $ln(x) = ln(y)$.
+  Then $e^ln(x) = e^ln(y)$ and so $x = y$. It is also surjective, let $y in RR$ be arbitrary, then $e^y in (0, infinity)$ and $ln(e^y) = y$.
+
+  We can also prove both of these another way, since $x |-> e^x$ is an inverse of $ln$ and so the function must be bijective and thus is both injective and surjective.
++ This function is injective, if $n,m in ZZ$ and $f(n) = f(m)$ then $(2n, n+3) = (2m, m+3)$ and so in particular $2n = 2m$. But then by dividing by 2, this is only true if $n = m$.
+  This function is not surjective, to see this consider $(1,0)$, I claim that $(1,0)$ is never equal to $f(n)$ for any $n$. But for any $n$ we have $f(n) = (2n,n+3)$ and so if they were equal then we would have $1 = 2n$ for some integer $n$. But $2n$ is even for all integer $n$ and so we get a contradiction.
++ This function is not injective, consider $x = (0,0)$ and $y = (2,1)$. Clearly these are not equal but $f(x) =2 dot 0 - 4 dot 0 = 0$, but also $f(y) = 2 dot 2 - 4 dot 1 = 0$ and so $f(x) = f(y)$.
+  This function is also not surjective, we see this because 
+  $
+    f(n,m) = 2n - 4m = 2(n - 2m)
+  $
+  and so $f(n,m)$ is even for all $n,m$. But then we cannot have $f(n,m) = y$ for any odd $y$ and so this function is not surjective.
++ This function is not injective, this is because for $x = (0,0)$ and $y = (1,0)$ we have $theta(x) = 0 = theta(y)$.
+  This function is surjective, to see this let $y in ZZ$ be arbitrary. If $y >= 0$ then $y$ is also a natural number and so $theta(0,y) = y$. On the other hand if $y < 0$ then $-y$ is a natural number and so $theta(1,-y) = y$.
++ This function is invertible since it is its own inverse, thus it is bijective and thus is injective and surjective.
++ This map is injective, assume that $f(m_1,n_1) = f(m_2,n_2)$ for some inputs $n_1,m_1,n_2,m_2$. Now since $2n_1 - 1$ and $2n_2 - 1$ are both odd then in the prime decomposition of $f(m_1, n_1)$ the only powers of $2$ come from $2^(m_1 - 1)$ and in the prime decomposition of $f(m_2, n_2)$ the only powers of 2 come from $2^(m_2 - 1)$ respectively. But now since they are equal, their prime decomposition is also equal and so we have $m_1 = m_2$.
+  Next by dividing both function outputs by $2^(m_1- 1) = 2^(m_2 - 1)$ we get that $2 n_1 - 1 = 2n_2 - 1$ and so $n_1 = n_2$.
+  
+  This map is also surjective, to see this note that, by prime decomposition, we can write any non-zero integer as $2^k ell$ where $k$ is a natural number and $ell$ is an odd natural number. But every odd natural number can be written as $ell = 2n - 1$ for some non-zero natural number, and so
+  $
+    2^k ell = 2^(m-1) (2n - 1)
+  $
+  for some $m,n in NN backslash {0}$ and so we are done.
 ]
 
+== Question 16
+For every pair of sets below, show that they have equal cardinality by constructing explicit bijections between them.
+
+#MultiColumnBox(height: 39pt, column_number: 2)[
++ $RR$ and $(0,infinity)$.
++ The set of even integers and the set of odd integers.
++ $ZZ$ and $S = {..., 1/8,1/4,1/2,1,2,4,8,16,...}$.
++ $[0,1]$ and $(0,1)$ (this one is quite tricky).
+]
+
+#answer[
+== Solution
++ The map here is $ln(x)$, as we saw in #link(<question-15>)[Question 15] it is bijective and so we are done.
++ Here the map is also quite simple, let $E$ be the set of even integers and $O$ be the set of odd integers.
+  Consider the map $f(x) = x+1$, since for every even number $x$ we have $x + 1$ is odd and thus $f : E -> O$. Now this map is bijective since $g(x) : O -> E$ defined by $g(x) = x - 1$ is its inverse.
++ Consider the map $f : ZZ -> S$ defined by $(n) = 2^(n)$. This map is injective since, by taking logarithms base 2, if $2^n = 2^m$ then $n = m$. Now clearly it is also surjective since every element of $S$ can is some integer power of 2. Thus $f$ is bijective.
++ This is the trickiest of the bunch, to define this map we need to consider an infinite sequence of elements, $a_1,a_2,a_3,...$ such that all the elements are in $(0,1)$ and they are all distinct. We now define a map $f : (0,1) -> [0,1]$ by
+$
+  f(x) = cases(x &: x in (0,1) "and" x != a_n "for some" n \
+    0 &: x = a_1 \
+    1 &: x = a_2 \
+    a_(i-2) &: x = a_i "for some" i > 2
+  )
+$
+
+
+
+]
