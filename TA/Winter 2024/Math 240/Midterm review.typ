@@ -693,14 +693,14 @@ For every pair of sets below, show that they have equal cardinality by construct
   Consider the map $f(x) = x+1$, since for every even number $x$ we have $x + 1$ is odd and thus $f : E -> O$. Now this map is bijective since $g(x) : O -> E$ defined by $g(x) = x - 1$ is its inverse.
 + Consider the map $f : ZZ -> S$ defined by $(n) = 2^(n)$. This map is injective since, by taking logarithms base 2, if $2^n = 2^m$ then $n = m$. Now clearly it is also surjective since every element of $S$ can is some integer power of 2. Thus $f$ is bijective.
 + This is the trickiest of the bunch, to define this map we need to consider an infinite sequence of elements, $a_1,a_2,a_3,...$ such that all the elements are in $(0,1)$ and they are all distinct. We now define a map $f : (0,1) -> [0,1]$ by
-$
-  f(x) = cases(x &: x in (0,1) "and" x != a_n "for some" n \
-    0 &: x = a_1 \
-    1 &: x = a_2 \
-    a_(i-2) &: x = a_i "for some" i > 2
-  )
-$
+  $
+    f(x) = cases(x &"if" x in (0,1) "and" x != a_n "for some" n \
+      0 &"if" x = a_1 \
+      1 &"if" x = a_2 \
+      a_(i-2) &"if" x = a_i "for some" i > 2
+    )
+  $
+  We now claim that this map is bijective, first to see injective assume $x,y in (0,1)$ with $f(x) = f(y)$. Now if $f(x) in (0,1) backslash {a_i : i >= 1}$ then by the definition above we have that $f(x) = x$ and $f(y) = y$ and thus $x = y$. If $f(x) = 0$ or $f(x) = 1$ then by the definition above $x = a_1$ or $x = a_2$ respectively, and the same holds for $y$, thus we have $x = y$. Finally if $f(x) = a_i$ for some $i$, then $x = a_(i+2)$ and also $y = a_(i+2)$ and so again $x = y$. Thus we have showed injectivity.
 
-
-
+  To see that it is surjective let $y$ be arbitrary in $[0,1]$. If $y = 0$ or $y = 1$ then by the second and third case in the definition we have some $x$ such that $f(x) = y$. If $y = a_i$ for some $i$ then $f(a_(i+2)) = a_i = y$. Finally if neither of these are true then $y in (0,1) backslash {a_i : i >= 1}$ and so $f(y) = y$. Thus we have showed surjectivity.
 ]
