@@ -1028,7 +1028,7 @@ There are many proofs of this theorem but we will use one called *Henkin's const
 
 Now that we have the tools to omit types, we can use it to characterize the $aleph_0$-categorical theories.
 #theorem("Ryll-Nardzweski")[
-  Let $T$ be a complete theory, the following are equivalent.
+  Let $T$ be a complete theory over a countable language $L$, the following are equivalent.
   - $T$ is $aleph_0$-categorical.
   - $forall n, S_n^T (nothing)$ is finite.
 ]
@@ -1107,6 +1107,136 @@ Now recall that, in ordinary logic, for a finite model $mM$, there exists a sent
 $
   (mN sat sigma) => mM tilde.equiv mN
 $
-Our goal now is to generalize this using our new type of logic to countable models.
+Our goal now is to generalize this using our new type of logic to the case of countable models.
 
+#definition[
+  Let $mM$ be a countable structure.
+  Define $equiv_alpha$ on $mM^n$ for $alpha$ an ordinal, $n$ a natural number, by transfinite induction. 
+  For the base case
+  $
+    ov(a) equiv_0 ov(b) quad "if" quad tp^mM (ov(a)) = tp^mM (ov(b)),
+  $
+  in the limit case
+  $
+    ov(a) equiv_gamma ov(b) quad "if" ov(a) equiv_beta ov(b), forall beta < gamma,
+  $
+  and in the successor step
+  $
+    ov(a) equiv_(alpha + 1) ov(b) quad "if" quad & forall c in mM, exists d in mM med (ov(a),c) equiv_(alpha) (ov(b), d)\ "and" quad & forall d in mM, exists c in mM med (ov(a),c) equiv_(alpha) (ov(b), d)
+  $
+]<def-scott_equiv>
 
+We record some important properties of these relations
+#proposition[
+  - $equiv_alpha$ is an equivalence relation on $mM^n$ for all $n in NN$.
+  - If $alpha < beta$ and $ov(a) equiv_beta ov(b)$ then $ov(a) equiv_alpha ov(b)$.
+  - For every $ov(a)$, there is an ordinal $alpha < omega_1$ such that
+  $
+    [ov(a)]_alpha = [ov(b)]_beta quad "for all" beta >= alpha
+  $
+  where $[ov(a)]_alpha$ is the equivalence class of $ov(a)$ with respect to $equiv_alpha$.
+  - 
+]
+Essentially we are saying that the equivalence classes of these relations form a decreasing sequence in alpha which stabilizes at some countable ordinal.
+#proof[
+  Exercise.
+  // TODO: COMPLETE PROOF
+]
+
+In fact an even stronger property is true
+#proposition[
+  There exists $alpha < omega_1$, such that $equiv_alpha$ is the same equivalence relation as $equiv_beta$ for all $beta >= alpha$.
+]
+#proof[
+  For each $n$, $equiv_alpha$ forms a decreasing sequence of subsets of $mM^n times mM^n$, which is a countable set, so it must stabilize.
+]
+
+This proposition motivates the following definition.
+
+#definition[
+  The _Scott height_ (or _rank_) of a countable structure $mM$ is defined as
+  $
+    S H(mM) = min { alpha < omega_1 : med equiv_alpha "is the same as" equiv_(alpha+1)}
+  $
+]
+
+We now want to use these tools to work towards our characterizing sentence for countable structures.
+We now define an equivalence on models that mirrors @def-scott_equiv.
+#definition[
+  We define $equiv_alpha$ on countable $L$ structures through transfinite induction.
+  For the base case
+  $
+    mM equiv_0 mN "if" mM equiv mN,
+  $
+  for the limit case
+  $
+    mM equiv_gamma mN "if" mM equiv_beta mN "for all" beta < gamma,
+  $
+  and for the successor step
+  $
+    mM equiv_(alpha + 1) mN "if" quad & forall a in mM, exists b in mN, (mM, a) equiv_alpha (mN, b)
+    \ "and" quad & forall b in mN, exists a in mM, (mM, a) equiv_alpha (mN, b)
+  $
+]
+
+We can see that this definition in fact generalizes @def-scott_equiv.
+#proposition[
+  $ov(a) equiv_alpha ov(b)$ if and only if $(mM,ov(a)) equiv_alpha (mM,ov(b))$.
+]
+// TODO: COMPLETE PROOF
+
+Now with this definition we can start to construct some characterizing sentences.
+#lemma[
+  $forall alpha < omega_1$, $forall ov(alpha) in m, exists phi_alpha^(mM,ov(a)) (x) in cal(L)_(omega_1,omega)$, such that $forall mN, forall ov(b) in mN$,
+  $
+    (mM, ov(a)) equiv_alpha (mN, ov(b)) <=> mN sat phi_alpha^(mM,ov(alpha)) (ov(beta))
+  $
+]
+#proof[
+  We prove by induction on $alpha$, in the case of $alpha = 0$
+  $
+    phi_0(ov(x)) = and.big_(phi in tp^mM (ov(a))) phi(ov(x)).
+  $
+  If $alpha$ is a limit ordinal then
+  $
+    phi_alpha^(mM,ov(a)) (ov(x)) = and.big_(beta < alpha) phi_beta^(mM, ov(a)).
+  $
+  Finally for $alpha + 1$ we have
+  $
+    phi_(alpha + 1)^(mM, ov(a)) (ov(x)) = 
+    ( and.big_(b in mM)  exists y phi_alpha^(mM, (ov(a), b))(ov(x),y) )
+    and
+    ( forall y and.big_(b in mM)phi_alpha^(mM, (ov(a), b))(ov(x),y) )
+  $
+]
+
+Unfortunately, the sentences are not exactly what we want, they only guarantee isomorphic models under a fairly strong assumption.
+#theorem("Scott")[
+  Let $mM,mN$ be countable structures with $S H(mM) = S H(mN) = alpha$, 
+  if $mM equiv_(alpha+1) mN$, then $mM tilde.equiv mN$.
+]
+#proof[
+  Our proof will employ a back and fourth method, assume that at the step $n$ we have $(mM, a_1, ..., a_n) equiv_(alpha + 1) (mN, b_1,...,b_n)$.
+  Assume then that we are on an even step and want to add an element $a_(n+1)$ to this equivalence, we leave this induction step as an exercise.
+
+  // TODO: COMPLETE EXERCISE
+]
+
+We also have a partial converse to this result.
+#proposition[
+  Suppose that $S H(mM) = alpha$ and $mM equiv_(alpha + omega) mN$, then $S H(mN) = alpha$.
+]
+#proof[
+  First we want to show that $S H(mN) <= alpha$. Choose $ov(a), ov(b) in mN^n$ and suppose that $ov(a) equiv_(alpha) ov(b)$. We want to show that $ov(a) equiv_(alpha + 1) ov(b)$ using $mN equiv_(alpha + omega) mM$.
+  Find $ov(c),ov(d) in mM^n$ such that
+  $
+    (mM,ov(c)) equiv_(alpha + 1) (mN, ov(a)) "and" (mM, ov(d)) equiv_(alpha+1) (mN, ov(b))
+  $
+  then we also have
+  $
+    (mN,ov(b)) equiv_(alpha+1) (mM, ov(d)) equiv_(alpha + 1) (mM, ov(c)) equiv_(alpha + 1) (mN,ov(a))
+  $
+  and thus $S H(mN) <= alpha$.
+
+  For the other inequality we just swap $mM$ and $mN$.
+]

@@ -648,4 +648,7 @@ For each of the following functions, state and prove whether it is injective and
 + $theta : cal(P)(ZZ) -> cal(P)(ZZ)$ defined by $theta(X) = X^c$.
 + $f : (NN backslash {0}) times (NN backslash {0}) -> (NN backslash {0})$.
 
+#answer[
+  This function is indeed injective, to see this let $x,y in (0,infinity)$ be such that $ln(x) = ln(y)$.
+]
 
