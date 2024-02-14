@@ -510,8 +510,8 @@ Prove the following statements using induction.
 + If $n in NN backslash {0}$, then $2^1 + 2^2 + 2^3 + dots.c + 2^n = 2^(n+1) - 2$.
 + Prove that $24 | (5^(2n) - 1)$ for every $n in NN$.
 + Prove that $2^n + 1 <= 3^n$ for every positive integer $n$.
-+ Suppose that $A_1,A_2,...,A_n$ are sets in some universal set $U$, and $n >= 2$. Prove that $overline(A_1 union A_2 union ... union A_n) = overline(A_1) sect overline(A_2) sect ... sect overline(A_n)$.
-+ If $n in NN$, then $1+1/4 +1/9 + ... + 1/n^2 <= 2 - 1/n$ for every $n in NN$.
++ Suppose that $A_1,A_2,...,A_n$ are sets in some universal set $U$, and $n >= 2$. Prove that $(A_1 union A_2 union ... union A_n)^c = (A_1)^c sect (A_2)^c sect ... sect (A_n)^c$.
++ If $n in NN backslash {0}$, then $1+1/4 +1/9 + ... + 1/n^2 <= 2 - 1/n$.
 
 #answer[
 == Solution
@@ -549,4 +549,103 @@ Prove the following statements using induction.
     25 dot (5^(2k) - 1) + 24 = 25 dot 24 dot m + 24 = 24 dot (25 dot m + 1),
   $
   but now $25 dot m + 1$ is certainly an integer and thus $25 dot (5^(2k) - 1)$ is divisible by $24$.
++ Again we start with the base case, since $n$ needs to be positive, our base case is $n = 1$. If $n = 1$ then
+  $
+    2^n + 1 = 2^1 + 1 = 2 + 1 = 3 = 3^n.
+  $
+  Assume now, that this statement holds for $n = k$, then for $n = k + 1$ we have
+  $
+    2^(n) + 1 = 2^(k+1) + 1 = 2 dot 2^k + 1 = 2 dot (2^k - 1) + 2 + 1 
+    <= 2 dot 3^k + 3.
+  $
+  But now for $k >= 1$ we have $3 <= 3^k$ and so
+  $
+    2^n + 1 <= 2 dot 3^k + 3 <= 2 dot 3^k + 3^k = 3 dot 3^k = 3^(k + 1) = 3^n
+  $
++ Here the base case is $n = 2$ where we know by De Morgan's laws that
+  $
+    (A_1 union A_2)^c = A_1^c sect A_2^c.
+  $
+  Now assume that this holds for $n = k$, then for $n = k + 1$ we have
+  $
+    (A_1 union ... union A_n)^c
+    =
+    ((A_1 union ... union A_k) union A_(k + 1))^c,
+  $
+  but then by De Morgan's laws we have that
+  $
+    ((A_1 union ... union A_k) union A_(k+1))^c
+    =
+    (A_1 union ... union A_k)^c sect A_(k+1)^c.
+  $
+  But now by inductive hypothesis we have that
+  $
+    A_1^c sect ... sect A_k^c sect A_(k+1)^c,
+  $
+  which completes the proof.
++ Here again our base case is $n = 1$, for which we have
+  $
+    1 <= 2 - 1/1.
+  $
+  Now assume that the statement holds for $n = k$, then for $n = k + 1$ we have
+  $
+    1 + 1/4 + ... + 1/n^2 = (1 + 1/4 + ... + 1/k^2) + 1/(k+1)^2.
+  $
+  Now by inductive hypothesis we have that
+  $
+    (1 + 1/4 + ... + 1/k^2) + 1/(k+1)^2
+    <=
+    2 - 1/k + 1/(k+1)^2,
+  $
+  but also
+  $
+    -1/k + 1/(k+1)^2 =
+    (k-(k+1)^2)/k(k+1)^2
+    = (-1-k-k^2)/k(k+1)^2
+    <= (-k-k^2)/k(k+1)^2
+    = (-1)/(k+1)
+  $
+  and so
+  $
+    (1 + 1/4 + ... + 1/k^2) + 1/(k+1)^2
+    <=
+    2 - 1/k + 1/(k+1)^2
+    <=
+    2 - 1/(k+1).
+  $
 ]
+
+== Question 14
+For each of the following sets, state whether it is a function $f : {1,2,3} -> {1,2,3}$ or not.
+
+#MultiColumnBox[
++ {(1,1),(2,1),(3,1)}
++ {(1,2),(1,3),(2,2),(3,1)}
++ {(1,2),(2,3)}
++ {(1,1),(2,2),(3,3),(2,2)}
++ {(1,3),(2,2),(3,1)}
++ {(1,5),(2,3),(3,2)}
+]
+
+#answer[
+== Solution
++ This is indeed a function, for each element in ${1,2,3}$ there is exactly one tuple with that element on the left.
++ This this is not a function, since $1$ has two tuples with it on the left, $(1,2)$ and $(1,3)$.
++ This is also not a function, since $3$ has no tuples with it on the left.
++ This is a function, since these are sets we remove all duplicates which leaves us with ${(1,1),(2,2),(3,3)}$ which is a function as in part 1.
++ This is a function, which we can see as in part 1.
++ This is a function, but it is not a function to ${1,2,3}$ since $f(1) = 5$.
+]
+
+= Function Properties and Cardinality
+== Question 15
+For each of the following functions, state and prove whether it is injective and whether it is surjective.
+
++ $f : (0,infinity) -> RR$ defined by $f(x) = ln(x)$.
++ $f : ZZ -> ZZ times ZZ$ defined by $f(n) = (2n, n + 3)$.
++ $f : ZZ times ZZ -> ZZ$ defined by $f(m,n) = 2n - 4m$.
++ $theta : {0,1} times NN -> ZZ$ defined by $theta(a,b) = (-1)^a b$.
++ $theta : cal(P)(ZZ) -> cal(P)(ZZ)$ defined by $theta(X) = X^c$.
++ $f : (NN backslash {0}) times (NN backslash {0}) -> (NN backslash {0})$.
+
+

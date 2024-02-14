@@ -1023,7 +1023,7 @@ There are many proofs of this theorem but we will use one called *Henkin's const
     \ &= not (exists ov(y) phi(ov(y), x) and not psi(x))
     = (exists ov(y) (phi(ov(y),x))) -> psi(x)
   $
-  then $exists ov(y) (phi(ov(y),x))$ implies every $psi$ in the type $p(ov(x))$ which contradicts our assumption that $p(ov(x))$ is not isolated.
+  then $exists ov(y) (phi(ov(y),x))$ implies every $psi$ in the type $p(ov(x))$, but also $exists ov(y) (phi(ov(y),x))$ is true in $T_(2n+1)$ and thus is consistent with $T$ and thus is in the type $p$. This contradicts our assumption that $p(ov(x))$ is not isolated.
 ]
 
 Now that we have the tools to omit types, we can use it to characterize the $aleph_0$-categorical theories.
