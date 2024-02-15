@@ -706,3 +706,21 @@ For every pair of sets below, show that they have equal cardinality by construct
 ]
 
 = Topic 9 - Relations
+== Question 17
+For each of the following sets and relations on said sets, decide if they reflexive? Symmetric? Transitive?
+
++ On the set $A = {a,b,c,d}$, the relation $R = {(a,a),(b,b),(c,d),(d,d),(a,b),(b,a)}$.
++ On the set $A = {a,b,c}$, the relation $R = {(a,b),(a,c),(c,b),(b,c)}$.
++ On the set $RR$, the relation $R = {(0,0),(sqrt(2),0),(0,sqrt(2)),(sqrt(2),sqrt(2))}$.
++ On the set $ZZ$, the relation $R = {(x,y) in ZZ times ZZ : |x - y| < 1}$.
+
+#answer[
+== Solution
++ Since $(c,c)$ is not in the relation, this relation is not reflexive. This relation is also not symmetric, since $(c,d)$ is in the relation but $(d,c)$ is not. Finally this relation is transitive, we see this by checking each pair of tuples.
++ Since $(a,a)$ is not in the relation, this relation is not reflexive. This relation is not symmetric since $(a,c)$ is in the relation but $(c,a)$ is not. Finally, this relation is is also not transitive, for example the two pairs $(b,c)$ and $(c,b)$ are in the relation but $(b,b)$ is not.
++ This relation is not reflexive, for instance $1 in RR$ but $(1,1)$ is not in the relation. This relation is symmetric, we can see this by checking that the first and last pairs in the relation are their own reflections and the second and third pair are each others reflections. This relation is also transitive, to see this note that if $a R b$ under this relation then necessarily both $a$ and $b$ are in ${0,sqrt(2)}$. But all possible pairs of elements in this set are in the relation, so if $a R b$ and $b R c$ then both $a$ and $c$ are in ${0,sqrt(2)}$ and so $a R c$.
++ This relation is reflexive, for any $x in ZZ$ we have $|x - x| = 0 < 1$ and so $(x,x) in R$. Next this relation is also symmetric, if $(x,y) in R$ then $|x - y| < 1$ and so $|y - x| < 1$ and thus $(y,x) in R$. This relation is not transitive, for example $(0,1/2) in R$ since $|0-1/2| = 1/2 < 1$ and $(1/2,1) in R$ since $|1/2 - 1| = 1/2 < 1$, but $(0,1) in.not R$ since $|0 - 1| = 1 lt.not 1$.
+]
+
+
+
