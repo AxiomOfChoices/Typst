@@ -637,7 +637,7 @@ For each of the following sets, state whether it is a function $f : {1,2,3} -> {
 + This is a function, but it is not a function to ${1,2,3}$ since $f(1) = 5$.
 ]
 
-= Function Properties and Cardinality
+= Topic 8 - Function Properties and Cardinality
 == Question 15
 <question-15>
 For each of the following functions, state and prove whether it is injective and whether it is surjective.
@@ -704,3 +704,5 @@ For every pair of sets below, show that they have equal cardinality by construct
 
   To see that it is surjective let $y$ be arbitrary in $[0,1]$. If $y = 0$ or $y = 1$ then by the second and third case in the definition we have some $x$ such that $f(x) = y$. If $y = a_i$ for some $i$ then $f(a_(i+2)) = a_i = y$. Finally if neither of these are true then $y in (0,1) backslash {a_i : i >= 1}$ and so $f(y) = y$. Thus we have showed surjectivity.
 ]
+
+= Topic 9 - Relations
