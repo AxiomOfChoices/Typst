@@ -6,7 +6,7 @@
 #show: doc => header(doc, title: "Midterm Review")
 #show: symbol_replacing
 
-#let show_answers = false
+#let show_answers = true
 #let answer(answer) = {
   if show_answers {
     return answer
