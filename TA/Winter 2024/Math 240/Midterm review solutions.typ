@@ -3,7 +3,7 @@
 #import "/Templates/math.typ": *
 #import "/Templates/assignment.typ": MultiColumnBox
 #show: latex
-#show: doc => header(doc, title: "Midterm Review")
+#show: doc => header(doc, title: "Midterm Review Solutions")
 #show: symbol_replacing
 
 #let show_answers = true
