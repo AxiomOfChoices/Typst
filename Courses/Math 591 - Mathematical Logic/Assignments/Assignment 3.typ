@@ -39,7 +39,7 @@ A model $mM$ of a theory $T$ is called existentially closed if whenever $sigma$ 
 
 Show that the following are equivalent for a theory $T$:
   + all models of $T$ are existentially closed,
-  + for every formula $phi(x)$ there exists a universal formula $psi(x)$ such that $T proves forall x (phi(x) <-> psi(x))$
+  + for every formula $phi(ov(x))$ there exists a universal formula $psi(ov(x))$ such that $T proves forall ov(x) (phi(ov(x)) <-> psi(ov(x)))$
 == Solution
 The backwards direction is simple, let $sigma(ov(c)) = exists ov(y) (phi(ov(c), ov(y))) $ be an existential $L(|mM|)$-sentence for some model $mM sat T$, where $ov(c)$ are the constants coming from $mM$. Now if for some model $mN sat T$ that contains $mM$ we have $mN sat sigma$, then by assumption there exists a universal formula $psi(ov(c))$ such that $T proves forall ov(c) (exists ov(y)(phi(ov(c),ov(y))) <-> psi(ov(c)))$ and so $mN sat psi(ov(c))$. But now $phi(ov(c))$ is a universal statement so since $ov(c) in mM$ then since universal statements are closed downwards then $mM sat phi(ov(c))$ and thus by using the assumption again $mM sat exists ov(y) (phi(ov(c),ov(y))$ and thus $mM sat sigma(ov(c))$.
 
@@ -51,7 +51,7 @@ Now the forward direction is tricky, first we can assume that $phi(ov(c))$ being
   Universal sentences are always closed.
 ]
 #proof[
-  Add a constant $c$ to the language $L$ and set $T' = angle.l T, phi(ov(c)) angle.r$ to be the theory closure of $T$ and $phi(ov(c))$. Assume then that $mM sat T'_forall$, then by assignment 2 there is some model $mN sat T'$ that contains $mM$. Then $mN sat phi(ov(c))$, but now since it is a closed formula $mM sat phi(ov(c))$ and so $T'_forall proves phi(ov(c))$. Then by definition, there is a finite collection of universal sentences $psi_i (ov(c))$ with 
+  Add a constant $c$ to the language $L$ and set $T' = angle.l T, phi(ov(c)) angle.r$ to be the theory closure of $T$ and $phi(ov(c))$. Assume then that $mM sat T'_forall$, then by assignment 2 there is some model $mN sat T'$ that contains $mM$. Then $mN sat phi(ov(c))$, but now since it is a closed formula $mM sat phi(ov(c))$ and so $T'_forall proves phi(ov(c))$. Then by definition, there is a finite collection of universal sentences $psi_i (ov(c))$ with
   $
     T union {psi_i (ov(c)) : i <= n } proves phi(ov(c)).
   $
@@ -65,43 +65,42 @@ Now the forward direction is tricky, first we can assume that $phi(ov(c))$ being
   $
   Thus $T proves phi(ov(c)) <-> Phi(ov(c))$. But since $T$ doesn't know anything about $ov(c)$ we can use the Model Theory Eraser™️ to replace it with a variable $ov(x)$ and take a universal quantifier.
 ]
+// Now with this lemma our plan is clear, we are given by assumption that all existential formulas are closed, and we want to show that all formulas are closed. We will use induction on the number of quantifiers of the formula in normal form to prove this.
 
-Now with this lemma our plan is clear, we are given by assumption that all existential formulas are closed, and we want to show that all formulas are closed. We will use induction on the number of quantifiers of the formula in normal form to prove this.
-
+We now prove the statement with induction on the structure of the formula $phi(ov(x))$
+#pagebreak(weak: true)
 === Base case
-All quantifier free formulas are closed. This is trivial.
+If $phi(ov(x))$ is existential, since every model of $T$ is existential closed, all $phi(ov(x))$ is closed and thus by the lemma above we are done.
 
 === Universal Quantifier
-Assume that $phi(ov(x)) = forall ov(y) (phi'(ov(x), ov(y)))$, then let $mM sat T$, $ov(a) in mM$, $mN sat T$, $mM seq mN$, $mN sat phi(ov(a))$. Then by inductive hypothesis
+Assume that $phi(ov(x)) = forall ov(y) (phi'(ov(x),ov(y)))$, then by inductive hypothesis applied to $phi'$,
 $
   T proves forall ov(y) forall ov(x) (phi'(ov(x), ov(y)) <-> psi(ov(x),ov(y)))
 $
-for some universal formula $psi$. Now by assumption, for any $ov(b) in mM$ we have $mN sat phi'(ov(a),ov(b))$ so
+and so as a consequence of this
 $
-  mN sat psi(ov(a), ov(b))
+  T proves forall ov(x) (forall ov(y) (phi'(ov(x), ov(y))) <-> forall ov(y) (psi(ov(x),ov(y))))
 $
-but now $psi(ov(a),ov(b))$ is universal and universal statements are always closed so $mM sat psi(ov(a),ov(b))$ and so
-$
-  mM sat phi'(ov(a),ov(b)).
-$
-But now $ov(b) in mM$ was arbitrary so $mM sat forall ov(y) (phi'(ov(a), ov(y))$ and thus
-$
-  mM sat phi(ov(a)).
-$
+now $forall ov(y) (psi(ov(x),ov(y)))$ is still universal and so we are done.
 === Existential Quantifier
-Assume instead that $phi(ov(x)) = exists ov(y) (phi'(ov(x), ov(y)))$, then let $mM sat T$, $ov(a) in mM$, $mN sat T$, $mM seq mN$, $mN sat phi(ov(a))$. Again by inductive hypothesis,
+Assume instead that $phi(ov(x)) = exists ov(y) (phi'(ov(x), ov(y)))$, again by inductive hypothesis, now applied to $not phi'$,
 $
-  T proves forall ov(y) forall ov(x) (phi'(ov(x), ov(y)) <-> psi(ov(x),ov(y)))
+  T proves forall ov(y) forall ov(x) (not phi'(ov(x), ov(y)) <-> psi(ov(x),ov(y)))
 $
-for some universal formula $psi$. Now write $psi(ov(x),ov(y)) = forall ov(z) (psi'(ov(x),ov(y),ov(z)))$ where $psi'$ is quantifier free. Then by assumption, for any $ov(b) in mM$ we have
+for some universal formula $psi$.
+Now as a consequence of this
 $
-  mN sat exists ov(y) (psi'(ov(a),ov(y),ov(b)))
+  T proves forall ov(x) (forall ov(y) (not phi'(ov(x),ov(y))) <-> forall ov(y) (psi(ov(x),ov(y))))
 $
-which is an existential $L(|mM|)$ sentence. Thus since $mM$ is existentially closed
+and so since $p <-> q$ is equivalent to $not p <-> not q$ we get
 $
-  mM sat exists ov(y) (psi'(ov(a),ov(y),ov(b)))
+  T proves forall ov(x) (exists ov(y) (phi'(ov(x),ov(y))) <-> exists ov(y) (not psi(ov(x),ov(y)))).
 $
-but now since $ov(b) in mM$ was arbitrary
+But now $exists ov(y) (not psi(ov(x),ov(y)))$ is an existential formula and so by base case, we have for some universal formula $phi'$
 $
-  mM sat
+  T proves forall ov(x) (exists ov(y) (not psi(ov(x),ov(y))) <-> phi'(ov(x)))
+$
+and so we also have 
+$
+  T proves forall ov(x) (phi(ov(x)) <-> phi'(ov(x)))
 $
