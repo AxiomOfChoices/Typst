@@ -34,14 +34,15 @@
 #let lemma = lemma.with(numbering: none)
 #set enum(numbering: "(a)")
 = Question
+<question-1>
 == Statement
-A model $mM$ of a theory $T$ is called existentially closed if whenever $sigma$ is an existential $L(|mM|)$-sentence satisfied in a model $mN sat T$ containing $mM$, then $mM sat sigma$.
+A model $mM$ of a theory $T$ is called existentially closed if whenever $sigma$ is an existential $L(mM)$-sentence satisfied in a model $mN sat T$ containing $mM$, then $mM sat sigma$.
 
 Show that the following are equivalent for a theory $T$:
   + all models of $T$ are existentially closed,
   + for every formula $phi(ov(x))$ there exists a universal formula $psi(ov(x))$ such that $T proves forall ov(x) (phi(ov(x)) <-> psi(ov(x)))$
 == Solution
-The backwards direction is simple, let $sigma(ov(c)) = exists ov(y) (phi(ov(c), ov(y))) $ be an existential $L(|mM|)$-sentence for some model $mM sat T$, where $ov(c)$ are the constants coming from $mM$. Now if for some model $mN sat T$ that contains $mM$ we have $mN sat sigma$, then by assumption there exists a universal formula $psi(ov(c))$ such that $T proves forall ov(c) (exists ov(y)(phi(ov(c),ov(y))) <-> psi(ov(c)))$ and so $mN sat psi(ov(c))$. But now $phi(ov(c))$ is a universal statement so since $ov(c) in mM$ then since universal statements are closed downwards then $mM sat phi(ov(c))$ and thus by using the assumption again $mM sat exists ov(y) (phi(ov(c),ov(y))$ and thus $mM sat sigma(ov(c))$.
+The backwards direction is simple, let $sigma(ov(c)) = exists ov(y) (phi(ov(c), ov(y))) $ be an existential $(|mM)$-sentence for some model $mM sat T$, where $ov(c)$ are the constants coming from $mM$. Now if for some model $mN sat T$ that contains $mM$ we have $mN sat sigma$, then by assumption there exists a universal formula $psi(ov(c))$ such that $T proves forall ov(c) (exists ov(y)(phi(ov(c),ov(y))) <-> psi(ov(c)))$ and so $mN sat psi(ov(c))$. But now $phi(ov(c))$ is a universal statement so since $ov(c) in mM$ then since universal statements are closed downwards then $mM sat phi(ov(c))$ and thus by using the assumption again $mM sat exists ov(y) (phi(ov(c),ov(y))$ and thus $mM sat sigma(ov(c))$.
 
 Now the forward direction is tricky, first we can assume that $phi(ov(c))$ being true is consistent since otherwise it is equivalent to a false statement. Now let us first prove a lemma.
 #lemma[
@@ -65,12 +66,11 @@ Now the forward direction is tricky, first we can assume that $phi(ov(c))$ being
   $
   Thus $T proves phi(ov(c)) <-> Phi(ov(c))$. But since $T$ doesn't know anything about $ov(c)$ we can use the Model Theory Eraser™️ to replace it with a variable $ov(x)$ and take a universal quantifier.
 ]
-// Now with this lemma our plan is clear, we are given by assumption that all existential formulas are closed, and we want to show that all formulas are closed. We will use induction on the number of quantifiers of the formula in normal form to prove this.
 
-We now prove the statement with induction on the structure of the formula $phi(ov(x))$
+We now prove the statement with induction on the number of quantifiers in the normal form of the formula $phi(ov(x))$
 #pagebreak(weak: true)
 === Base case
-If $phi(ov(x))$ is existential, since every model of $T$ is existential closed, all $phi(ov(x))$ is closed and thus by the lemma above we are done.
+If $phi(ov(x))$ is existential, since every model of $T$ is existential closed, $phi(ov(x))$ is closed and thus by the lemma above we are done.
 
 === Universal Quantifier
 Assume that $phi(ov(x)) = forall ov(y) (phi'(ov(x),ov(y)))$, then by inductive hypothesis applied to $phi'$,
@@ -104,3 +104,36 @@ and so we also have
 $
   T proves forall ov(x) (phi(ov(x)) <-> phi'(ov(x)))
 $
+
+#pagebreak(weak: true)
+
+= Question
+== Statement
+A theory is called Model Complete if for any two models $mM, mN sat T$, if $mM$ is a substructure of $mN$, then $mM elm mN$.
+
+Show that a theory $T$ is model complete if and only if every model of $T$ is existentially closed.
+== Solution
+Assume that $T$ is model complete, let $mM sat T$ and $sigma(ov(a))$ is an existential $L(mM)$ sentence, then if for some $mN sat T$ containing $mM$ we have $mN sat sigma(ov(a))$ then by model completeness we have $mM elm mN$ and thus $mM sat sigma(ov(a))$. Thus $mM$ is existentially closed.
+
+On the other hand assume that all models of $T$ are existentially closed, assume that $mM,mN sat T$ with $mM seq mN$ then by @question-1 we have that for any $L(mM)$-sentence $sigma(ov(c))$
+$
+  T proves forall ov(x) (sigma(ov(x)) <-> psi(ov(x)))
+$
+for some universal formula $psi$. But then $mN sat sigma(ov(a))$ means that $mN sat psi(ov(a))$ and so since universal formulas are closed downwards $mM sat psi(ov(a))$ and so $mM sat sigma(ov(a))$. Thus we have 
+$
+  mN sat sigma(ov(a)) => mN sat sigma(ov(a)).
+$
+<eqn-1>
+For the other direction, again by @question-1, now applied to $not sigma(ov(a))$, we get
+$
+  T proves forall ov(x) (not sigma(ov(x)) <-> psi(ov(x)))
+$
+for some universal statement $psi$. But then by negating inside the brackets we get
+$
+  T proves forall ov(x) (sigma(ov(x)) <-> not psi(ov(x))).
+$
+Now $not psi$ is an existential formula which means it is closed upwards so $mM sat sigma(ov(a))$ means that $mM sat not psi(ov(x))$ and so $mN sat not psi(ov(x))$ and finally $mN sat sigma(ov(a))$. We have thus showed that 
+$
+  mM sat sigma(ov(a)) => mN sat sigma(ov(a))
+$
+and so together with @eqn-1 this proves that $mM elm mN$.

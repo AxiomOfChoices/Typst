@@ -64,7 +64,7 @@ Let $T$ be an $L$-theory and $T_forall$ be the set of all universal sentences $s
   $
     mN sat phi => forall overline(a) in |mN| (mN sat psi(overline(a))) => forall overline(a) in |mM| (mM sat psi(overline(a))) => mM sat phi.
   $
-  Now assume that $mM sat T_forall$, then first note that $T$ must be consistent since otherwise all the atomic contradictions in $T$ would also be in $T_forall$. Let $S$ denote the set of all atomic sentences in $L(|mM|)$ that are true in $mM$. We now show that $T union S$ is consistent by contradiction. Assume it is not, then by compactness it would have an inconsistent finite subcollection, denote that subcollection $T' union S'$, where $S'$ is non empty by consistency of $T$. Now for some $overline(c) in |mM|$ we have $phi_i = psi_i (overline(c))$ for all $phi_i in S'$. Then consider the sentence 
+  Now assume that $mM sat T_forall$, then first note that $T$ must be consistent since otherwise all the atomic contradictions in $T$ would also be in $T_forall$. Let $S$ denote the set of all atomic sentences in $L(mM)$ that are true in $mM$. We now show that $T union S$ is consistent by contradiction. Assume it is not, then by compactness it would have an inconsistent finite subcollection, denote that subcollection $T' union S'$, where $S'$ is non empty by consistency of $T$. Now for some $overline(c) in |mM|$ we have $phi_i = psi_i (overline(c))$ for all $phi_i in S'$. Then consider the sentence 
   $
     Phi = exists overline(x) (and.big_(phi in S') psi (overline(x))),
   $
@@ -108,7 +108,7 @@ For the other direction we have a lot more work to do. Assume that models of $T$
 #proof[
   To construct such a model we will use completeness, to do this set $Gamma = T union C union S$ where
 $
-  C = { phi "atomic" L(|mM'|)"-sentence" | mM' sat phi }.
+  C = { phi "atomic" L(mM')"-sentence" | mM' sat phi }.
 $
 Now assume that $Gamma$ is inconsistent, then by compactness let $T' union C' union S'$ be a finite subset that achieves a contradiction. As before we can show that $T$ is consistent, and $C union S$ is consistent since $mM' sat C union S$. Then construct the sentences 
 $
@@ -153,7 +153,7 @@ Since it is a union of $mM_i$ which are all elementary superstructures of $mM$ t
 = Question
 <question-4>
 == Statement
-A model $mM$ of a theory $T$ is existentially closed if whenever $sigma$ is an existential $L(|mM|)$-sentence satisfied in a model $mN sat T$ containing $mM$, then $mM sat sigma$.
+A model $mM$ of a theory $T$ is existentially closed if whenever $sigma$ is an existential $L(mM)$-sentence satisfied in a model $mN sat T$ containing $mM$, then $mM sat sigma$.
 
 Show that if $T$ is axiomatizable by $forall exists$-sentences, then it has an existentially closed model.
 == Solution

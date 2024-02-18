@@ -1,5 +1,5 @@
-#import "../../../../Templates/generic.typ": generic
-#import "../../../../Templates/question.typ": question_heading
+#import "/Templates/generic.typ": generic
+#import "/Templates/question.typ": question_heading
 #import "@preview/cetz:0.1.2"
 #show: doc => generic(title: "Tutorial 8 Solutions", name: "Jacob Reznikov", doc)
 #show: doc => question_heading(doc)

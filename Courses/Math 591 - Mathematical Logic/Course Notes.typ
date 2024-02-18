@@ -181,11 +181,11 @@ Consider the case $phi = forall y (y=x)$, the substitution $phi(subs(y,x))$ is c
   $ L union {a : a in A} $
 ]
 
-We extend our definition of interpretation of terms to terms of $L(|mM|)$ by setting $underline(a)^mM = a$
+We extend our definition of interpretation of terms to terms of $L(mM)$ by setting $underline(a)^mM = a$
 
 
 #definition[
-  Let $mM$ be an $L$-structure and $sigma$ an $L(|mM|)$-sentence. We say that $sigma$ is true in $mM$, and write $mM sat sigma$ if 
+  Let $mM$ be an $L$-structure and $sigma$ an $L(mM)$-sentence. We say that $sigma$ is true in $mM$, and write $mM sat sigma$ if 
   - If $sigma$ is of the form $tau_1 = tau_2$ then $M sat sigma$ if and only if $tau_1^mM = tau_2^mM$ (note that while this may look circular, the first equality is in the space of _terms_ while the second is in the universe $|mM|$)
   - If $sigma$ is of the form $underline(R)_j (tau_1, ..., tau_n)$, then $mM sat sigma$ if and only if $(tau_1^mM, ..., tau_n^mM) in R_j$
   - If $sigma$ is of the form $sigma_1 and sigma_2$ then $mM sat sigma_1 and sigma_2$ if $mM sat sigma_1$ and $mM sat sigma_2$. A similar definition follows for the other logical connectives.
