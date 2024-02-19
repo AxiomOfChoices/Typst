@@ -263,5 +263,5 @@ $
 $
 for if $mM sat phi(ov(a))$ for some isolating formula then it would have an isolated type.
 
-Now if $p_n$ is not a type, that is not finitely consistent, then all the types of $mM$ are isolated so no issues there, so we can assume that $p_n$ is a type. But clearly $p_n$ is not an isolated type since then $T proves psi(ov(a)) -> not psi(ov(a))$ for some isolating formula $psi$. We thus can omit $p_n$. In fact, we can simultaneously omit $p_n$ for all $n$ since we saw in class (but did not prove) that we can omit any countable collection of non-isolated types. Thus we have a model of $T$ which does not realize any $p_n$ and thus only realizes isolated types.
+Now if $p_n$ is not a type, that is not finitely consistent, then all the types of $mM$ are isolated so no issues there, so we can assume that $p_n$ is a type. But clearly $p_n$ is not an isolated type since then $T proves psi(ov(a)) -> not psi(ov(a))$ for some isolating formula $psi$. We thus can omit $p_n$. In fact, we can simultaneously omit $p_n$ for all $n$ since we saw in class (but did not prove) that we can omit any countable collection of non-isolated types. Thus we have a model of $T$ which does not realize any $p_n$ and thus only realizes isolated types, then by @question-5 it is prime.
 

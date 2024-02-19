@@ -33,6 +33,8 @@
 #let div = math.op("div")
 #let tp = math.op("tp")
 #let Aut = math.op("Aut")
+#let SH = math.op("SH")
+#let Sc = math.op("Sc")
 
 #let symbol_replacing(doc) ={
   show sym.emptyset: set text(font: "Fira Sans")

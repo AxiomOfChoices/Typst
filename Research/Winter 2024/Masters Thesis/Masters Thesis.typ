@@ -410,7 +410,7 @@ Now that we know how the metric evolves there are some immediate consequences th
     quad
     "and"
     quad
-    diff_t dif S = - H f dif S
+    diff_t dif S = f H dif S
   $
   respectively.
 ]
@@ -438,22 +438,43 @@ Now that we know how the metric evolves there are some immediate consequences th
   $
   Now recall that for a parametrized matrix $A(t)$ we have $ diff_t det(A(t)) = det(A(t)) tr(diff_t A(t)) $ we then have
   $
-    diff_t (sqrt(det(g))) dif hat(x)_1 ... dif hat(x)_n 
+    diff_t (sqrt(det(g))) dif hat(x)_1 ... dif hat(x)_n
     &= 1/(2sqrt(det(g))) diff_t (det(g)) dif hat(x)_1 ... dif hat(x)_n 
+    \ &= sqrt(det(g)) tr(diff_t (g_(i j))) dif hat(x)_1 ... dif hat(x)_n
     \ &= sqrt(det(g)) tr(f h_(i j)) dif hat(x)_1 ... dif hat(x)_n
     \ &= f H dif S
   $
 ]
 #proposition[
-  Let $F_t$ be a normal flow with velocity $f$, we have the following evolution equations for $V(M_t)$ and $A(M_t)$,
+  We have the following evolution equations for $V(M_t)$ and $A(M_t)$,
   $
-    diff_t V(M_t) = integral_M f dif S, quad 
-    diff_t A(M_t) = integral_M H f dif S
+    diff_t V(M_t) = integral_(M_t) f dif S, quad
+    diff_t A(M_t) = integral_(M_t) H f dif S
   $
 ]
 #proof[
-    
+  First for the volume, extend the vector field $f nu$ to a global vector $Y$ field on $N$. Now by classic geometry theorems @leeIntroductionSmoothManifolds2012[p.~425] we get that the change in volume for a domain evolving under a global vector field is
+  $
+    diff_t V(M_t) = integral_Omega div Y dif V.
+  $
+  Now by divergence theorem we get that
+  $
+    integral_Omega div Y dif V = integral_(M_t) ip(Y, nu) dif S,
+  $
+  but we know that $Y = f nu$ along $M_t$ so
+  $
+    diff_t V(M_t) = integral_(M_t) f dif S.
+  $
+
+  For the area, we get
+  $
+    diff_t A(M_t) = diff_t integral_(M_t) dif S
+    = integral_(M_t) diff_t dif S
+    = integral_(M_t) f H dif S.
+  $
 ]
+
+
 
 #pagebreak(weak: true)
 = Warped Product-Like Spaces

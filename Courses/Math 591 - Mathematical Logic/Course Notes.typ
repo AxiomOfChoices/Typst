@@ -1132,7 +1132,7 @@ We record some important properties of these relations
   - If $alpha < beta$ and $ov(a) equiv_beta ov(b)$ then $ov(a) equiv_alpha ov(b)$.
   - For every $ov(a)$, there is an ordinal $alpha < omega_1$ such that
   $
-    [ov(a)]_alpha = [ov(b)]_beta quad "for all" beta >= alpha
+    [ov(a)]_alpha = [ov(a)]_beta quad "for all" beta >= alpha
   $
   where $[ov(a)]_alpha$ is the equivalence class of $ov(a)$ with respect to $equiv_alpha$.
   - 
@@ -1156,7 +1156,7 @@ This proposition motivates the following definition.
 #definition[
   The _Scott height_ (or _rank_) of a countable structure $mM$ is defined as
   $
-    S H(mM) = min { alpha < omega_1 : med equiv_alpha "is the same as" equiv_(alpha+1)}
+    SH(mM) = min { alpha < omega_1 : med equiv_alpha "is the same as" equiv_(alpha+1)}
   $
 ]
 
@@ -1212,8 +1212,11 @@ Now with this definition we can start to construct some characterizing sentences
 
 Unfortunately, the sentences are not exactly what we want, they only guarantee isomorphic models under a fairly strong assumption.
 #theorem("Scott")[
-  Let $mM,mN$ be countable structures with $S H(mM) = S H(mN) = alpha$, 
-  if $mM equiv_(alpha+1) mN$, then $mM tilde.equiv mN$.
+  Let $mM,mN$ be countable structures with 
+  $
+    SH(mM) = SH(mN) = alpha,
+  $ 
+  if $mM equiv_(alpha+omega) mN$, then $mM tilde.equiv mN$.
 ]
 #proof[
   Our proof will employ a back and fourth method, assume that at the step $n$ we have $(mM, a_1, ..., a_n) equiv_(alpha + 1) (mN, b_1,...,b_n)$.
@@ -1222,12 +1225,13 @@ Unfortunately, the sentences are not exactly what we want, they only guarantee i
   // TODO: COMPLETE EXERCISE
 ]
 
+
 We also have a partial converse to this result.
 #proposition[
-  Suppose that $S H(mM) = alpha$ and $mM equiv_(alpha + omega) mN$, then $S H(mN) = alpha$.
+  Suppose that $SH(mM) = alpha$ and $mM equiv_(alpha + omega) mN$, then $SH(mN) = alpha$.
 ]
 #proof[
-  First we want to show that $S H(mN) <= alpha$. Choose $ov(a), ov(b) in mN^n$ and suppose that $ov(a) equiv_(alpha) ov(b)$. We want to show that $ov(a) equiv_(alpha + 1) ov(b)$ using $mN equiv_(alpha + omega) mM$.
+  First we want to show that $SH(mN) <= alpha$. Choose $ov(a), ov(b) in mN^n$ and suppose that $ov(a) equiv_(alpha) ov(b)$. We want to show that $ov(a) equiv_(alpha + 1) ov(b)$ using $mN equiv_(alpha + omega) mM$.
   Find $ov(c),ov(d) in mM^n$ such that
   $
     (mM,ov(c)) equiv_(alpha + 1) (mN, ov(a)) "and" (mM, ov(d)) equiv_(alpha+1) (mN, ov(b))
@@ -1236,7 +1240,117 @@ We also have a partial converse to this result.
   $
     (mN,ov(b)) equiv_(alpha+1) (mM, ov(d)) equiv_(alpha + 1) (mM, ov(c)) equiv_(alpha + 1) (mN,ov(a))
   $
-  and thus $S H(mN) <= alpha$.
+  and thus $SH(mN) <= alpha$.
 
   For the other inequality we just swap $mM$ and $mN$.
+]
+#corollary[
+  Let $mM$ be a countable structure, there exists $alpha < omega_1$ such that for every countable structure $mN$
+  $
+    mN tilde.eq mM <=> mN equiv_alpha mM
+  $
+]
+
+However, with a bit of trickery, we can define a sentence which does uniquely classify our countable model.
+#definition[
+  Let $mM$ be an $L$ structure, $alpha = SH(mM)$.
+  We define the _Scott Sentence_ of $mM$ as
+  $
+    phi.alt = phi^(mM, nothing)_alpha and and.big_(n=0)^infinity and.big_(ov(a) in mM) [ forall ov(x) (phi^(mM, nothing)_alpha (ov(x)) -> phi_(alpha+1)^(mM,ov(a)) (ov(x)))]
+  $
+]
+
+#theorem("Scott Isomorphism Theorem")[
+  Let $mM$ be a countable structure for every countable structure $mN$,
+  $
+    mN tilde.equiv mM <=> mN sat phi.alt^mM
+  $
+]
+#proof[
+  The forward direction is simple, if the two models are isomorphic $mN$ satisfies the sentence of $mM$ since they have the same sentences.
+
+  For the backwards direction we want to use back and forth, we will use induction and assume we have some tuple $ov(a)$ and a partial isomorphism $f_n : mM -> mN$, in the sense that $(mM,ov(a)) equiv_alpha (mN, f_n(ov(a)))$.
+
+  For $n = 0$ we have $mM equiv_alpha mN$ since $mN sat phi_alpha^(mM,nothing)$. Now assume that we have constructed the map for $n$, then we have $(mM,ov(a)) equiv_alpha (mN, f_n(ov(a)))$, then since $mN sat phi^mM$ then we get
+  $
+    mN sat phi_alpha^(mM, ov(a)) (f_n(ov(a))) => mN sat phi_(alpha+1)^(mM, ov(a)) (f_n(ov(a)))
+  $
+  but we know that
+  $
+    mN sat phi_alpha^(mM,ov(a)) (f_n(ov(a)))
+  $
+  so we must have
+  $
+    mN sat phi_(alpha+1)^(mM,ov(a)) (f_n(ov(a)))
+  $
+  and so
+  $
+    (mM, ov(a)) equiv_(alpha + 1) (mN, f_n(ov(a))).
+  $
+  Now by @def-scott_equiv we get that for any element in $a in mM$ we can pick an element $b in mN$ such that $(mM, ov(a),a) equiv_alpha (mN, f_n(ov(a)), b)$ and so we set $f_(n+1)$ to be the extension of $f_n$ with $f_(n+1)(a) = b$.
+
+  This describes how we do the odd steps, on even steps we just swap $mN$ and $mM$.
+]
+
+== Quantifier Elimination
+#definition[
+  A theory $T$ has _quantifier elimination_, if for every formula $phi(ov(x))$ there exists a quantifier free formula $psi(ov(x))$ such that
+  $
+    T proves forall (ov(x)) (phi(ov(x)) <-> psi(ov(x)))
+  $
+]
+At face value this seems like a hopelessly strong property, but in fact we can make any theory have quantifier elimination if we expand our language. This is called _Skolemization_.
+
+#definition[
+  A theory $T$ has _Skolem functions_, if for every formula $phi(ov(x), y)$ there exists a term $t_phi (ov(x))$ such that
+  $
+    T proves [ (exists y (phi(ov(x),y))) -> phi(ov(x), t_phi (ov(x)))]
+  $
+]
+
+#proposition[
+  If $T$ has Skolem functions then it has quantifier elimination.
+]
+#proof[
+  We prove by induction on the complexity of a formula $phi(ov(x))$, for atomic formulas this is trivial. For conjunctions, disjunctions and negations this is also trivial. Now if $phi(ov(x)) = exists y (psi(ov(x), y))$ then through Skolem functions we get
+  // TODO: FINISH PROOF
+]
+
+If $T$ has Skolem functions and $mM sat T$ with $A seq mM$, we can define $Sc(A)$ to be the closure of $A$ under all Skolem functions, sometimes called the Skolem hull of $A$.
+
+#proposition[
+  $Sc(A) elm mM$
+]
+#proof[
+  Proof is trivial by @thrm-tv_test.
+]
+
+Let $T$ be a theory in $L$, we can add enough Skolem functions as follows.
+
+- We replace $L$ with $L'$ with new added function symbols.
+- We replace $T$ with $T' = T union { exists y (phi(ov(x), y)) -> phi(ov(x), f_phi(ov(x))) : phi }$
+- We replace $mM$ with $mM'$ where we interpret the functions using the witnesses we know exist.
+
+We now use induction, we set
+- $L^(n+1) = (L^n)'$
+- $T^(n+1) = (T^n)'$
+- $mM^(n+1) = (mM^n)'$
+then in the limit we have
+- $L^s = union_(n < omega) L^n$
+- $T^s = union_(n < omega) T^n$
+- $M^s = union_(n < omega) M^n$
+
+#proposition[
+  - $mM^s sat T^s$, and $T^s$ has Skolem function.
+  - $T^s$ is a conservative extension, in the sense that
+  $
+    T proves sigma <=> T^s proves sigma
+  $
+]
+#proof[
+  Exercise.
+]
+
+#proposition[
+  $D L O_0$ has quantifier elimination.
 ]
