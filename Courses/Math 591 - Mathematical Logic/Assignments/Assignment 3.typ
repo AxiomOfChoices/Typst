@@ -236,6 +236,7 @@ Thus as in @question-3 we showed the correspondence.
 
 #pagebreak(weak: true)
 = Question
+<question-5>
 == Statement
 A model $mM$ of a complete theory $T$ is a _prime model_ if for every model $mN sat T$ there exists an elementary embedding of $mM$ into $mN$.
 
@@ -249,4 +250,18 @@ On the other hand let $mM$ be a model model which is countable and in which ever
 
 At the base case we map constants to constants $f_0$ maps constants to constants, now enumerate the rest of $mM$ as $a_0,a_1,...$ and assume we have constructed $f_n$. Now let $a_j$ be the element of smallest index not in $A_n$, consider the type $tp^mM (ov(A_n), a_j)$ where $ov(A_n)$ represents the ordered tuple of elements in $A_n$. This type must be isolated so there is some formula $phi(ov(A_n),a_j)$ which implies the whole type. Since $f_n$ is a partial embedding we have $mN sat exists x (phi(ov(B_n), x))$ and so pick a witness $y$ to this sentence and extend $f_n$ by setting $f_(n+1) (a_j) = y$. This continues to be a partial embedding. Then by induction we construct an embedding $f : mM -> mN$.
 
+#pagebreak(weak: true)
+= Question
+== Statement
+Prove that $T$ has a prime model if and only if for every $n$, the isolated types are dense in $S_n (T)$.
+== Solution
+Assume that $T$ has a prime model, then let $p$ be a type in $S_n (T)$ with some model $mN sat T$ that realizes it and let $mM$ be the prime model of $T$, giving us $mM elm mN$. Now let $[phi(ov(a))]$ be some open neighborhood containing $p$, then $phi in p$. But then $mN sat exists ov(x) (phi(ov(x)))$ and so $mM sat exists ov(x) (phi(ov(x)))$. Now by @question-5 we get that the witness $ov(a)$ of this sentence in $mM$ has an isolated type $tp_n^mM (ov(a))$ and thus by construction $phi in tp_n^mM (ov(a))$ and so $tp_n^mM (ov(a)) in [phi(ov(a))]$ and so we have found an isolated type in $[phi(ov(a))]$ and so the set of isolated types is dense in $S_n (T)$.
+
+On the other hand assume that the set of isolated types is dense, we want to show the existence of a countable model $mM$ in which every type is isolated. Notice first that we don't need to worry about countability since we can just use Lowenheim-Skolem to bring the cardinality down. Next notice that $mM$ realizing a non-isolated type for an $n$-tuple $ov(a)$ is equivalent to
+$
+  mM sat { not phi(ov(a)) | phi(ov(x)) "isolates a type" } =: p_n
+$
+for if $mM sat phi(ov(a))$ for some isolating formula then it would have an isolated type.
+
+Now if $p_n$ is not a type, that is not finitely consistent, then all the types of $mM$ are isolated so no issues there, so we can assume that $p_n$ is a type. But clearly $p_n$ is not an isolated type since then $T proves psi(ov(a)) -> not psi(ov(a))$ for some isolating formula $psi$. We thus can omit $p_n$. In fact, we can simultaneously omit $p_n$ for all $n$ since we saw in class (but did not prove) that we can omit any countable collection of non-isolated types. Thus we have a model of $T$ which does not realize any $p_n$ and thus only realizes isolated types.
 
