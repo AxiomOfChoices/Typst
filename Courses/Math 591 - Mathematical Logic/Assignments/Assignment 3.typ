@@ -2,6 +2,7 @@
 #import "@preview/ctheorems:1.1.0": *
 #import "/Templates/math.typ": *
 #import "/Templates/assignment.typ": *
+#import "@preview/cetz:0.2.0"
 #let head(doc) = header(doc, title: "Assignment 3")
 #show: head
 #show: latex
@@ -9,7 +10,7 @@
 #show: thmrules
 #show: symbol_replacing
 
-#set page(margin: (x: 1.6cm, top: 2.5cm, bottom: 2cm))
+#set page(margin: (x: 1.6cm, top: 2.5cm, bottom: 1.9cm))
 #show math.equation: it => {
   if it.has("label"){
     return math.equation(block: true, numbering: "(1)", it)
@@ -100,7 +101,7 @@ But now $exists ov(y) (not psi(ov(x),ov(y)))$ is an existential formula and so b
 $
   T proves forall ov(x) (exists ov(y) (not psi(ov(x),ov(y))) <-> phi'(ov(x)))
 $
-and so we also have 
+and so we also have
 $
   T proves forall ov(x) (phi(ov(x)) <-> phi'(ov(x)))
 $
@@ -137,3 +138,115 @@ $
   mM sat sigma(ov(a)) => mN sat sigma(ov(a))
 $
 and so together with @eqn-1 this proves that $mM elm mN$.
+
+#pagebreak(weak: true)
+
+= Question
+<question-3>
+== Statement
+Describe the complete $n$-types over the empty set for the theory of dense linear orders without endpoints.
+== Solution
+I will claim that this set of complete $n$-types is in correspondence with the set of finite linear orders on at most $n$ elements.
+To see this we will need the following simple lemma to reframe our question.
+#lemma[
+  For two complete $n$ types $p_1(x_1,...x_n)$ and $p_2(x_1,...x_n)$ over the empty set in a theory $T$, $p_1 = p_2$ if and only if for every two models $mM sat p_1$, $mN sat p_2$, $mM$ and $mN$ are elementarily equivalent as models over the language $L(a_1,...a_n)$.
+]
+<lemma-elem_equiv>
+#proof[
+  Since the types are complete we know that
+  $
+  Th_(L(a_1,...,a_n)) (mM) = p_1
+  "and" 
+  Th_(L(a_1,...,a_n))(mN) = p_2.
+  $
+  The statement then follow trivially.
+]
+Our plan is now to get the correspondence as in the following diagram
+#block(width: 100%)[
+  #set align(center)
+  #cetz.canvas({
+  import cetz.draw: *
+  set-style(mark: (end: ">"))
+  content((0,0), box(inset: 3pt)[Start with type $p$ on $a_1,...,a_n$], name: "top left")
+  content((0,-1.5), box(inset: 3pt)[Check for each $i,j$ if $a_i < a_j$ or $a_j < a_i$ or neither], name: "middle left")
+  content((0,-3), box(inset: 3pt)[Get ordering on some set of size at most $n$], name: "bottom left")
+
+  content((7,0), box(inset: 3pt)[Start with order on $A$], name: "top right")
+  content((7,-1.5), box(inset: 3pt)[Realize $A$ as $A seq QQ$], name: "middle right")
+  content((7,-3), box(inset: 3pt)[Get type $tp_n^QQ (A)$], name: "bottom right")
+
+  line((name: "top left", anchor: "south"), (name: "middle left", anchor: "north"))
+  line((name: "middle left", anchor: "south"), (name: "bottom left", anchor: "north"))
+  line((name: "top right", anchor: "south"), (name: "middle right", anchor: "north"))
+  line((name: "middle right", anchor: "south"), (name: "bottom right", anchor: "north"))
+})]
+Now clearly for any finite linear order on some set $A$ with $|A| <= n$, the order is realized on some finite subset of $QQ$. Now set $a_1,...,a_n$ to be the $QQ$ elements realizing it, then $tp_n^QQ (a_1,...a_n)$ is a complete type.
+
+Now let $p$ be some arbitrary complete $n$-type on $T$, let $a_1,...,a_n$ be the variables of the type, then since the type is complete we have for each $i,j$ either $a_i < a_j$, $a_j < a_i$ or neither. This then gives us a finite total ordering on the $a_i$'s with 'neither' corresponding to $a_i = a_j$.
+
+Now we want to check that the two operations are inverses of each other. Clearly if we start with an ordering, get a type, then the type gives us back the ordering we started with since the type will contain sentences of the form $a_i < a_j$ characterizing the ordering.
+
+Now assume then that we start with a type $p$, get an ordering, then realize the ordering in $QQ$, and get the type $tp_n^QQ (A)$. We want to argue that $tp_n^QQ (A) = p$, to see this we will use #link(<lemma-elem_equiv>)[the lemma above]. We will show that in fact any countable model of $p$ is isomorphic to $tp_n^QQ (A)$ and so $p$ is $omega$-categorical and thus complete, making all its models elementarily equivalent. Recall that we showed dense linear orders are $omega$-categorical by using the back and forth construction, and recall that our inductive step did not care what partial isomorphism we had in the previous step. Now since the partial map $f : mM -> QQ$ given by $f(a_i) = a_i$ is a partial isomorphism we can treat it as a step in the back and forth method thus completing $f$ to an isomorphism. Thus $p$ is $omega$-categorical and thus complete.
+
+#pagebreak(weak: true)
+= Question
+== Statement
+Describe the complete $n$-types over the empty set for the theory of atomless Boolean algebras.
+== Solution
+First I will define a 'generating' set for a Boolean algebra $A$ to be a set of elements $a_i$ such that each element of $A$ can be written of the form
+$
+  or.big_(i in S) and.big_(j in K_i) s_(i,j) 
+$
+where $s_(i,j)$ is of the form $a_ell$ or $not a_ell$.
+
+Similarly to the above question I claim that the complete $n$-types are in correspondence with generating sets of size at most $n$ for finite Boolean algebras.
+We will use #link(<lemma-elem_equiv>)[the lemma in question 3] as well.
+In order to recreate the argument from question 3 we want a standard model of this theory to work with. We will define one implicitly, by taking an infinite sequence of elements $x_1,x_2,...$ and declaring that any finite intersection of $x_i$ or $not x_i$ using each element at most once is non zero, we will then consider the 'free' Boolean algebra generated by these elements and call it $BB$.
+
+Now our plan will be very similar to the previous question
+#block(width: 100%)[
+  #set align(center)
+  #cetz.canvas({
+  import cetz.draw: *
+  set-style(mark: (end: ">"))
+  content((0,0), box(inset: 3pt)[Start with type $p$ on $a_1,...,a_n$], name: "top left")
+  content((0,-1.5), box(inset: 3pt)[Consider all relations satisfied by these elements], name: "middle left")
+  content((0,-3), box(inset: 3pt)[Get some finite Boolean algebra $A$], name: "bottom left")
+
+  content((7,0), box(inset: 3pt)[Start some finite Boolean algebra $A$], name: "top right")
+  content((7,-1.5), box(inset: 3pt)[Realize $A$ as $A seq BB$], name: "middle right")
+  content((7,-3), box(inset: 3pt)[Get type $tp_n^BB (A)$], name: "bottom right")
+
+  line((name: "top left", anchor: "south"), (name: "middle left", anchor: "north"))
+  line((name: "middle left", anchor: "south"), (name: "bottom left", anchor: "north"))
+  line((name: "top right", anchor: "south"), (name: "middle right", anchor: "north"))
+  line((name: "middle right", anchor: "south"), (name: "bottom right", anchor: "north"))
+})]
+First let us construct a finite subalgebra for each type, we do this by considering elements of the form
+$
+  and.big_(i=1)^n s_i
+$
+where each $s_i$ is either $a_i$ or not $a_i$. Then the type $p$ will tell us for each such element whether it is equal to $0$ or not. Then we collect all the ones that are not equal to zero and consider them as atoms and use that to generate a finite Boolean algebra. One can easily check that for this Boolean algebra the original elements $a_i$ form a generating set for this algebra.
+
+The second thing we need to prove is that every finite Boolean algebra is realized in $BB$.
+We can do this by the back and forth method we used in Assignment 1, we can construct, step by step, an isomorphism between any finite Boolean algebra $A$ to some finite subalgebra of $BB$
+
+We now need to check that any two models of some type $p$ are elementarily equivalent. We show this also using back and forth, let $p$ be a type and $A$ the associated finite subalgebra, we need to show that for any countable model $mM sat p$ we have $(mM,a_1,...,a_n) equiv (BB,a_1,...,a_n)$, but this is simple by starting with the partial isomorphism mapping $a_i in mM$ to $a_i in BB$ and then extending it to all of $mM$ and $BB$ using back and forth.
+Thus as in @question-3 we showed the correspondence.
+
+#pagebreak(weak: true)
+= Question
+== Statement
+A model $mM$ of a complete theory $T$ is a _prime model_ if for every model $mN sat T$ there exists an elementary embedding of $mM$ into $mN$.
+
+Show that $mM$ is a prime model if and only if $mM$ is countable and every type $tp^mM (ov(a))$ for a tuple $ov(a)$ in $mM$ is isolated.
+== Solution
+I am going to assume the language is countable since otherwise this can't be true.
+
+Assume that a model is prime, then by Lowenheim-Skolem downwards Theorem we get that there are countable models $mN$ of $T$ with $mN elm mM$. Now by assumption $mM elm mN$ and so they must be isomorphic and thus $mM$ must be countable. Now assume that a type $tp^mM (ov(a))$ is not isolated for some tuple $ov(a)$. This means that there is a model of $T$ that omits $tp^mM (ov(a))$ and so there is no way to elementarily embed $mM$ into $mN$ since the image of $ov(a)$ would have the same type.
+
+On the other hand let $mM$ be a model model which is countable and in which every tuple has an isolated type. Then let $mN sat T$ be any other model, then we construct an elementary embedding by induction (or as I like to call it, the forth method), where at each step we will form a partial embedding $f_n : A_n -> B_n$ where $A_n seq mM$ and $B_n seq mN$.
+
+At the base case we map constants to constants $f_0$ maps constants to constants, now enumerate the rest of $mM$ as $a_0,a_1,...$ and assume we have constructed $f_n$. Now let $a_j$ be the element of smallest index not in $A_n$, consider the type $tp^mM (ov(A_n), a_j)$ where $ov(A_n)$ represents the ordered tuple of elements in $A_n$. This type must be isolated so there is some formula $phi(ov(A_n),a_j)$ which implies the whole type. Since $f_n$ is a partial embedding we have $mN sat exists x (phi(ov(B_n), x))$ and so pick a witness $y$ to this sentence and extend $f_n$ by setting $f_(n+1) (a_j) = y$. This continues to be a partial embedding. Then by induction we construct an embedding $f : mM -> mN$.
+
+
