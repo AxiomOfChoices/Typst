@@ -474,6 +474,17 @@ Now that we know how the metric evolves there are some immediate consequences th
   $
 ]
 
+We have one final evolution equation to find, and that is the one for the second fundamental form $h_(i j)$.
+#proposition[
+  We have the following evolution equations for $h_(i j)$
+  $
+    diff_t h_(i j) = - nabla_i nabla_j f + f (h_(i ell) g^(ell k) h_(k j) - ov(R)_(nu i nu j))
+  $
+]
+#proof[
+  Let $$
+]
+
 
 
 #pagebreak(weak: true)

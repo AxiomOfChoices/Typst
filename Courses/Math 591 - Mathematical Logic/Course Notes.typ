@@ -1135,7 +1135,6 @@ We record some important properties of these relations
     [ov(a)]_alpha = [ov(a)]_beta quad "for all" beta >= alpha
   $
   where $[ov(a)]_alpha$ is the equivalence class of $ov(a)$ with respect to $equiv_alpha$.
-  - 
 ]
 Essentially we are saying that the equivalence classes of these relations form a decreasing sequence in alpha which stabilizes at some countable ordinal.
 #proof[
