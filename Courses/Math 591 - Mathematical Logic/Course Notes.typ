@@ -1277,17 +1277,17 @@ However, with a bit of trickery, we can define a sentence which does uniquely cl
   $
   but we know that
   $
-    mN sat phi_alpha^(mM,ov(a)) (f_n(ov(a)))
+    mN sat phi_alpha^(mM,ov(a)) (f_n (ov(a)))
   $
   so we must have
   $
-    mN sat phi_(alpha+1)^(mM,ov(a)) (f_n(ov(a)))
+    mN sat phi_(alpha+1)^(mM,ov(a)) (f_n (ov(a)))
   $
   and so
   $
-    (mM, ov(a)) equiv_(alpha + 1) (mN, f_n(ov(a))).
+    (mM, ov(a)) equiv_(alpha + 1) (mN, f_n (ov(a))).
   $
-  Now by @def-scott_equiv we get that for any element in $a in mM$ we can pick an element $b in mN$ such that $(mM, ov(a),a) equiv_alpha (mN, f_n(ov(a)), b)$ and so we set $f_(n+1)$ to be the extension of $f_n$ with $f_(n+1)(a) = b$.
+  Now by @def-scott_equiv we get that for any element in $a in mM$ we can pick an element $b in mN$ such that $(mM, ov(a),a) equiv_alpha (mN, f_n (ov(a)), b)$ and so we set $f_(n+1)$ to be the extension of $f_n$ with $f_(n+1)(a) = b$.
 
   This describes how we do the odd steps, on even steps we just swap $mN$ and $mM$.
 ]
@@ -1328,7 +1328,7 @@ If $T$ has Skolem functions and $mM sat T$ with $A seq mM$, we can define $Sc(A)
 Let $T$ be a theory in $L$, we can add enough Skolem functions as follows.
 
 - We replace $L$ with $L'$ with new added function symbols.
-- We replace $T$ with $T' = T union { exists y (phi(ov(x), y)) -> phi(ov(x), f_phi(ov(x))) : phi }$
+- We replace $T$ with $T' = T union { exists y (phi(ov(x), y)) -> phi(ov(x), f_phi (ov(x))) : phi }$
 - We replace $mM$ with $mM'$ where we interpret the functions using the witnesses we know exist.
 
 We now use induction, we set
@@ -1367,7 +1367,7 @@ then in the limit we have
   $
   then WLOG $phi' = alpha_1 and ... and alpha_n$ with $alpha_i$ atomic or a negation of an atomic formula.
 
-  Now write $c_1(ov(y)), ..., c_m(ov(y))$ to be the quantifier free formulas which describe a total order on $y_1,...,y_n$ which possibly identifies some of them.
+  Now write $c_1(ov(y)), ..., c_m (ov(y))$ to be the quantifier free formulas which describe a total order on $y_1,...,y_n$ which possibly identifies some of them.
   Now for each $i <= m$ if
   $
     QQ sat c_i (ov(b)) and c_i (ov(b)'),
@@ -1378,7 +1378,7 @@ then in the limit we have
   $
   then we have
   $
-    QQ sat (exists x phi(x,ov(y)) <-> forall_(j in I) c_j(ov(y))
+    QQ sat (exists x phi(x,ov(y)) <-> forall_(j in I) c_j (ov(y)))
   $
   because if $ov(y)$ satisfies the left formula then it has some ordering and so we can use the automorphisms to map $ov(y)$ to some $ov(b)_i$ and then $i in I$ and thus the right side also holds. Similarly we can go the other way.
 
@@ -1388,7 +1388,7 @@ then in the limit we have
 What we see in this proof is that quantifier elimination is intimately related to the type structure for finite tuples. We can make this relation more precise.
 
 #proposition[
-  Let $p in S_n(nothing)$, write $p_0$ for ${ phi in p : phi "is quantifier free" }$.
+  Let $p in S_n (nothing)$, write $p_0$ for ${ phi in p : phi "is quantifier free" }$.
   
   A complete theory has quantifier elimination if and only if 
   $
@@ -1404,7 +1404,7 @@ What we see in this proof is that quantifier elimination is intimately related t
   $
     psi^p = and.big_i psi_i^p
   $
-  and note that $[psi^p] seq [phi]$. Now since open sets of the form $[psi^p]$ cover $[phi]$ which is compact, we can take a finite subcollection $p_j$ such that $[psi^(p_j)]$ cover $[phi]$ and then
+  and note that $[psi^p] seq [phi]$. Now since open sets of the form $[psi^p]$ cover $[phi]$ which is compact, we can take a finite subcollection $p_j$ such that $[psi^(p_j)]$ cover $[phi]$, then $[phi] = union.big_j^k [psi^(p_j)]$ and then
   $
     T proves phi <-> or.big_(j=1)^k psi^(p_j)
   $
