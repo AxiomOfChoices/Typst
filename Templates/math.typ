@@ -35,6 +35,7 @@
 #let Aut = math.op("Aut")
 #let SH = math.op("SH")
 #let Sc = math.op("Sc")
+#let gen(x) = $lr(angle.l #x angle.r)$
 
 #let symbol_replacing(doc) ={
   show sym.emptyset: set text(font: "Fira Sans")

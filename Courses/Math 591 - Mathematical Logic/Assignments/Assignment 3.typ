@@ -259,9 +259,11 @@ Assume that $T$ has a prime model, then let $p$ be a type in $S_n (T)$ with some
 
 On the other hand assume that the set of isolated types is dense, we want to show the existence of a countable model $mM$ in which every type is isolated. Notice first that we don't need to worry about countability since we can just use Lowenheim-Skolem to bring the cardinality down. Next notice that $mM$ realizing a non-isolated type for an $n$-tuple $ov(a)$ is equivalent to
 $
-  mM sat { not phi(ov(a)) | phi(ov(x)) "isolates a type" } =: p_n
+  mM sat { not phi(ov(a)) | phi(ov(x)) "isolates a complete type" } =: p_n
 $
 for if $mM sat phi(ov(a))$ for some isolating formula then it would have an isolated type.
 
-Now if $p_n$ is not a type, that is not finitely consistent, then all the types of $mM$ are isolated so no issues there, so we can assume that $p_n$ is a type. But clearly $p_n$ is not an isolated type since then $T proves psi(ov(a)) -> not psi(ov(a))$ for some isolating formula $psi$. We thus can omit $p_n$. In fact, we can simultaneously omit $p_n$ for all $n$ since we saw in class (but did not prove) that we can omit any countable collection of non-isolated types. Thus we have a model of $T$ which does not realize any $p_n$ and thus only realizes isolated types, then by @question-5 it is prime.
+Now if $p_n$ is not a type, that is not finitely consistent, then all the types of $mM$ are isolated so no issues there, so we can assume that $p_n$ is a type. Now we simply need to omit this type, in order to do that we need to show that $p_n$ is not isolated, that is, for every satisfiable formula $psi(ov(x))$ there is a formula $phi(ov(x))$ which isolates a complete type such that $T tack.not forall ov(x) (psi(ov(x)) -> not phi(ov(x)))$.
+
+But this is true, since for every formula $psi$ we have that there exists some complete isolated type $p in [psi]$, let $phi$ be its isolated formula, then $T proves forall ov(x) (phi(ov(x)) -> psi(ov(x))$ so $T tack.not forall ov(x) (psi(ov(x)) -> not phi(ov(x)))$, and so $p_n$ are all not isolated and thus all $p_n$ can be omitted.
 
