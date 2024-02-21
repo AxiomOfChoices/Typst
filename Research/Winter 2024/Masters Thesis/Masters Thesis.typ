@@ -374,7 +374,7 @@ Now that we are familiar with geometry and PDEs we can start to use them togethe
 #remark[
   We will often refer to $F_t (M)$ as $M_t$ for brevity. Additionally many constructions on $M_t$ will be denoted without explicit reference to $t$, i.e $g$ instead of $g(t)$, even though the metric of $M_t$ will depend on $t$. Keep in mind that any construction of the metric will also depend on $t$.
 
-  Also keep in mind that when we work in #link(<prop-fermi_coords>)[Fermi coordinates] we have two options. We can choose Fermi coordinates that are valid at some fixed time $t_0$, pull them back to $M$, and then use the map $F_t compose F_(t_0)^(-1)$ to get coordinates at times around $t_0$, we will denote these coordinates as $D_(e_i) F$ or sometimes $hat(e)_i$. The advantage of this is that the coordinates on $M$ are fixed in time, however, this does not keep the coordinates as Fermi coordinates. The other option is to pick coordinates that are simultaneously Fermi for all time, these we will denote simply as $e_i$. The disadvantage of these is that these coordinates on $M$ change with time.
+  Also keep in mind that when we work in #link(<prop-fermi_coords>)[Fermi coordinates] we have two options. We can choose Fermi coordinates that are valid at some fixed time $t_0$, pull them back to $M$, and then use the map $F_t compose F_(t_0)^(-1)$ to get coordinates at times around $t_0$, we will denote these coordinates as $D_(e_i) F$ or sometimes $hat(e)_i$. The advantage of this is that the coordinates on $M$ are fixed in time, however, the coordinates are only Fermi coordinates at the fixed time $t_0$. The other option is to pick coordinates that are simultaneously Fermi for some open interval in time, these we will denote simply as $e_i$. The disadvantage of these is that these coordinates on $M$ change with time.
 ]
 
 
@@ -482,7 +482,47 @@ We have one final evolution equation to find, and that is the one for the second
   $
 ]
 #proof[
-  Let $$
+  Recall that $h_(i j) = ip(e_i, nabla_j nu) = ip(D_(e_i) F, nabla_j nu)$.
+  Then since $nu$ is orthogonal to all $D_(e_i) F$'s we get
+  $
+    0 = nabla_j ip(D_(e_i) F, nu) = ip(D_(e_i) F, nabla_j nu) + ip(nabla_j D_e_i F, nu)
+  $
+  and thus
+  $
+    ip(D_(e_j) D_(e_i) F, nu) = ip(nabla_j D_(e_i) F, nu) = - h_(i j).
+  $
+  With this in mind we can compute
+  $
+    - diff_t h_(i j) &= diff_t ip(D_(e_j) D_(e_i) F, nu)
+    =
+    ip(diff_t D_(e_j) D_(e_i) F, nu)
+    + ip(D_(e_j) D_(e_i) F, diff_t nu)
+    \ &=
+    ip(D_(e_j) D_(e_i) (f nu), nu)
+    - ip(D_(e_j) D_(e_i) F, nabla f)
+    \ &=
+    ip(D_(e_j) (nu nabla_i f + f nabla_i nu), nu)
+    - ip(D_(e_j) (e_i), nabla f)
+    \ &=
+    ip((D_(e_j) nu) nabla_i f + (D_(e_j) f) nabla_i nu + nu (D_e_j nabla_i f) + f D_e_j (nabla_i nu), nu)
+    - ip(- h_(i j) nu, nabla f)
+  $
+  Now using the fact that $nu$ is orthogonal to any tangent vector and also $nabla_i nu$, the expression above simplifies to
+  $
+    - diff_t h_(i j)
+    &=
+    D_e_j nabla_i f
+    +
+    ip(f D_e_j (nabla_i nu), nu)
+    \ &=
+    nabla_j nabla_i f
+    +
+    ip(f D_e_j (h_(i k) e_k), nu)
+    \ &=
+    nabla_j nabla_i f
+    +
+    ip(f (e_k nabla_j h_(i k)), nu)
+  $
 ]
 
 
