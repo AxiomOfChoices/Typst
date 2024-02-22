@@ -1445,7 +1445,7 @@ What we see in this proof is that quantifier elimination is intimately related t
   $
     A C F_p = A C F union {"characteristic" = p},
   $
-  and 
+  and
   $
     A C F_0 = A C F union { "characteristic" != p : p "prime"}
   $

@@ -482,47 +482,76 @@ We have one final evolution equation to find, and that is the one for the second
   $
 ]
 #proof[
-  Recall that $h_(i j) = ip(e_i, nabla_j nu) = ip(D_(e_i) F, nabla_j nu)$.
+  Recall that $h_(i j) = ip(e_i, ov(nabla)_j nu) = ip(diff_i F, ov(nabla)_j nu)$.
   Then since $nu$ is orthogonal to all $D_(e_i) F$'s we get
   $
-    0 = nabla_j ip(D_(e_i) F, nu) = ip(D_(e_i) F, nabla_j nu) + ip(nabla_j D_e_i F, nu)
+    0 = ov(nabla)_j ip(diff_i F, nu) = ip(diff_i F, ov(nabla)_j nu) + ip(ov(nabla)_j diff_i F, nu)
   $
   and thus
   $
-    ip(D_(e_j) D_(e_i) F, nu) = ip(nabla_j D_(e_i) F, nu) = - h_(i j).
+    ip(ov(nabla)_j diff_i F, nu) = - h_(i j).
   $
   With this in mind we can compute
   $
-    - diff_t h_(i j) &= diff_t ip(D_(e_j) D_(e_i) F, nu)
+    - diff_t h_(i j) &= diff_t ip(nabla_j diff_i F, nu)
     =
-    ip(diff_t D_(e_j) D_(e_i) F, nu)
-    + ip(D_(e_j) D_(e_i) F, diff_t nu)
+    ip(diff_t nabla_j diff_i F, nu)
+    + ip(diff_j diff_i F, diff_t nu)
     \ &=
-    ip(D_(e_j) D_(e_i) (f nu), nu)
-    - ip(D_(e_j) D_(e_i) F, nabla f)
+    ip(diff_t (diff_j diff_i F + ov(Gamma)_(rho sigma)^k diff_i F^rho diff_j F^sigma diff_(y_k)), nu)
+    + ip(diff_j diff_i F, diff_t nu)
     \ &=
-    ip(D_(e_j) (nu nabla_i f + f nabla_i nu), nu)
-    - ip(D_(e_j) (e_i), nabla f)
+    ip(diff_j diff_i (f nu) + (diff_t ov(Gamma)_(rho sigma)^k) (diff_i F^rho diff_j F^sigma) diff_(y_k) + ov(Gamma)_(rho sigma)^k diff_t (diff_i F^rho diff_j F^sigma diff_(y_k)), nu)
+    \ &- med ip(diff_j diff_i F, nabla f)
+  $
+  now the Christoffel symbols vanish at our point of choice in normal coordinates (their derivatives might not), so we get
+  $
+    -diff_t h_(i j) &= ip(diff_j (nu diff_i f + f diff_i nu) + (f diff_nu ov(Gamma)_(rho sigma)^k) (diff_i F^rho diff_j F^sigma) diff_(y_k), nu)
+    - ip(diff_j diff_i F, nabla f)
     \ &=
-    ip((D_(e_j) nu) nabla_i f + (D_(e_j) f) nabla_i nu + nu (D_e_j nabla_i f) + f D_e_j (nabla_i nu), nu)
-    - ip(- h_(i j) nu, nabla f)
+    ip((diff_j nu) diff_i f + (diff_j f) diff_i nu + nu (diff_j diff_i f) + f diff_j (diff_i nu) + (f diff_nu ov(Gamma)_(rho sigma)^k) (diff_i F^rho diff_j F^sigma) diff_(y_k), nu)
+    \ &- ip(- h_(i j) nu, nabla f)
   $
   Now using the fact that $nu$ is orthogonal to any tangent vector and also $nabla_i nu$, the expression above simplifies to
   $
     - diff_t h_(i j)
     &=
-    D_e_j nabla_i f
+    diff_i diff_j f
     +
-    ip(f D_e_j (nabla_i nu), nu)
+    f ip(diff_j (nabla_i nu - ov(Gamma)_(rho sigma)^k diff_i F^rho nu^sigma diff_y_k), nu)
+    + f (diff_nu ov(Gamma)^nu_(rho sigma)) diff_i F^rho diff_j F^sigma
     \ &=
-    nabla_j nabla_i f
+    diff_i diff_j f
     +
-    ip(f D_e_j (h_(i k) e_k), nu)
+    f ip(diff_j (h_(i k) diff_k F - ov(Gamma)_(rho sigma)^k diff_i F^rho nu^sigma diff_y_k), nu)
+    + f (diff_nu ov(Gamma)^nu_(rho sigma)) diff_i F^rho diff_j F^sigma
     \ &=
-    nabla_j nabla_i f
-    +
-    ip(f (e_k nabla_j h_(i k)), nu)
+    diff_i diff_j f
+    \ &+
+    f ip(h_(i k) diff_j diff_k F + (diff_j h_(i k)) (diff_k F) - (diff_j ov(Gamma)_(rho sigma)^k) diff_i F^rho nu^sigma diff_y_k - ov(Gamma)_(rho sigma)^k diff_j (diff_i F^rho v^sigma), nu)
+    \ &+ f (diff_nu ov(Gamma)^nu_(rho sigma)) diff_i F^rho diff_j F^sigma
   $
+  but now again the Christoffel symbols vanish and orthogonality
+  $
+    - diff_t h_(i j)
+    &=
+    diff_i diff_j f +
+    f ip(h_(i k) diff_j diff_k F - (diff_j ov(Gamma)_(rho sigma)^k) diff_i F^rho nu^sigma diff_y_k, nu)
+    + f (diff_nu ov(Gamma)^nu_(rho sigma)) diff_i F^rho diff_j F^sigma
+    \ &=
+    diff_i diff_j f -
+    f h_(i k) h_(j k) - f (diff_j ov(Gamma)_(rho sigma)^nu) diff_i F^rho nu^sigma
+    + f (diff_nu ov(Gamma)^nu_(rho sigma)) diff_i F^rho diff_j F^sigma.
+  $
+  Now recall that in orthonormal coordinates the Riemann tensor is given by
+  $
+    ov(R)_(i j k)^l = diff_i Gamma_(j k)^l - diff_j Gamma_(i k)^ell
+  $
+  and so we get
+  $
+    - diff_t h_(i j) = diff_i diff_j f - f h_(i k) h_(j k) + f ov(R)^nu_(nu i j)
+  $
+  which then since we are in orthonormal coordinates we get the desired result.
 ]
 
 
