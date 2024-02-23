@@ -33,7 +33,9 @@ The subject of geometric flows uses results in PDE theory theory, more specifica
 
 One of the biggest problems often tackled by mean curvature flows is the Isoperimetric problem. The Isoperimetric problem asks us to classify the spaces that minimize perimeter for a given volume (hence the name), the first use of mean curvature flows to attack this problem was due to Huisken in 1984 #cite(<huiskenFlowMeanCurvature1984>) who proved it in case of boundaries of convex domains in Euclidean, and since then there have been attempts to push his methods further. More recently, in 2013, Guan and Li #cite(<guanMeanCurvatureType2013a>) constructed a new normalized flow which allows them to prove the inequality in the case of boundaries of star-shaped domains in Space forms. Shortly after, in 2018, Guan, Li and Wang pushed this flow even further which allowed them to prove the result in a certain class of warped product spaces #cite(<guanVolumePreservingFlow2018>).
 
-This thesis continues the effort to use such flows, together with my collaborator Joshua Flynn we pushed the flow even further, allowing us to prove the result for far larger class of domains in an even wider class of spaces.
+Then, concurrently with the writing of this thesis, Li and Pan reframed the technique in terms of conformal vector fields, allowing them to weaken the assumptions on the ambient space @jiayuIsoperimetricProblemRiemannian2023a.
+
+This thesis continues the effort to use such flows, together with my collaborator Joshua Flynn we pushed the flow even further, allowing us to weaken the assumptions on the ambient space even further and even weaken the star-shapedness assumption, which was key to all previous results.
 
 
 #pagebreak(weak:true)
@@ -374,11 +376,19 @@ Now that we are familiar with geometry and PDEs we can start to use them togethe
 #remark[
   We will often refer to $F_t (M)$ as $M_t$ for brevity. Additionally many constructions on $M_t$ will be denoted without explicit reference to $t$, i.e $g$ instead of $g(t)$, even though the metric of $M_t$ will depend on $t$. Keep in mind that any construction of the metric will also depend on $t$.
 
-  Also keep in mind that when we work in #link(<prop-fermi_coords>)[Fermi coordinates] we have two options. We can choose Fermi coordinates that are valid at some fixed time $t_0$, pull them back to $M$, and then use the map $F_t compose F_(t_0)^(-1)$ to get coordinates at times around $t_0$, we will denote these coordinates as $D_(e_i) F$ or sometimes $hat(e)_i$. The advantage of this is that the coordinates on $M$ are fixed in time, however, the coordinates are only Fermi coordinates at the fixed time $t_0$. The other option is to pick coordinates that are simultaneously Fermi for some open interval in time, these we will denote simply as $e_i$. The disadvantage of these is that these coordinates on $M$ change with time.
 ]
 
 
 As a manifold flows it's various properties, both local and global, will change, the equations governing these changes are called _evolution equations_. We will now derive some of these evolution equations, we will first start with the most important evolving tensor, the metric.
+
+#remark[
+    We will also adapt two important coordinate systems, we will be working in normal coordinates around a point $p in M$ which will call these coordinates $x^i$, we will denote their partial derivatives $diff_i$ and the covariant derivatives with respect to the induced metric $nabla_i$. Secondly we will also have normal coordinates at $F(p) in N$, we will call these coordinates $y^i$, their partials $diff_y_i$ and the covariant derivatives $ov(nabla)_i$. Note that we can rotate the normal coordinates $y^i$ so that they align with $x^i$, in the sense that _at the point $p$_
+  $
+    diff_i F = diff_y_i, forall i <= n quad "and" quad nu = diff_y_(n+1)
+  $
+
+  Since we are working in normal coordinates, note that the Christoffel symbols $Gamma$ and $ov(Gamma)$ both vanish at $p$, but their derivatives might not, so we have to be very careful when working with these expressions.
+]
 
 #proposition[
   The evolution equation for the metric is
@@ -389,14 +399,15 @@ As a manifold flows it's various properties, both local and global, will change,
 #proof[
  We prove by using Fermi coordinates, recall that we define the metric as the restriction of the ambient metric like so
   $
-    g_(i j) = ip(D_e_i F, D_e_j F),
+    g_(i j) = ip(diff_i F, diff_j F),
   $
   and thus we can differentiate in the ambient space to get an expression for the time derivative of the restriction
   $
-    diff_t g_(i j) &= diff_t ip(D_e_i F, D_e_j F) = ip(diff_t D_e_i F, D_e_j F) + ip(D_e_i F, diff_t D_e_j F)
-    \ &= ip(nabla_e_i (f nu), e_j) + ip(e_i, nabla_e_j (f nu)) wide "identifying" D_(e_i) F "and" e_i
-    \ &= ip(f nabla_e_i nu + nu nabla_e_i f, e_j) + ip(e_i, f nabla_e_j nu + nu nabla_e_j f)
-    \ &= f ip(nabla_e_i nu, e_j) + f ip(e_i, nabla_e_j nu) wide "by orthogonality"
+    diff_t g_(i j) &= diff_t ip(diff_i F, diff_j F) = ip(diff_t diff_i F, diff_j F) + ip(diff_i F, diff_t diff_j F)
+    \ &= ip(diff_i (f nu), e_j) + ip(e_i, diff_j (f nu))
+    \ &= ip(nabla_i (f nu), e_j) + ip(e_i, nabla_j (f nu)) quad "because Christoffel symbols vanish"
+    \ &= ip(f nabla_i nu + nu nabla_i f, e_j) + ip(e_i, f nabla_j nu + nu nabla_j f)
+    \ &= f ip(nabla_i nu, e_j) + f ip(e_i, nabla_j nu) wide "by orthogonality"
     \ &= f ip(h_(k i) e_k, e_j) + f ip(e_i, h_(k j) e_k) = f h_(j i) + f h_(i j) = 2 f h_(i j)
   $
   where we used @prop-h_props in the final step.
@@ -426,32 +437,36 @@ Now that we know how the metric evolves there are some immediate consequences th
   and so
   $
     diff_t nu &= - ip(nu, diff_t e_j) e_j
-    = - ip(nu, diff_t D_e_j F) e_j
-    = - ip(nu, D_e_j (f nu)) e_j
-    = - ip(nu, f nabla_e_j nu + nu nabla_e_j f) e_j
+    = - ip(nu, diff_t diff_j F) e_j
+    = - ip(nu, diff_j (f nu)) e_j
+    = - ip(nu, f diff_j nu + nu diff_j f) e_j
     \ &= - ip(nu, f h_(i j) e_i + nu nabla_e_j f) e_j wide "apply orthogonality of" nu "and" e_i
     \ &= - ip(nu, nu nabla_e_j f) e_j = - nabla_e_j f e_j = - nabla f.
   $
-  For the volume form, we know that $dif S = sqrt(det(g)) dif hat(x)_1 ... dif hat(x)_n$ and so we can compute
+  Note that on line 2 we also implicitly used the fact that the Christoffel symbols vanish in Fermi coordinates around the point $p$.
+
+  For the volume form, we know that $dif S = sqrt(det(g)) dif x_1 ... dif x_n$ and so we can compute
   $
-    diff_t (dif S) = diff_t (sqrt(det(g))) dif hat(x)_1 ... dif hat(x)_n.
+    diff_t (dif S) = diff_t (sqrt(det(g))) dif x_1 ... dif x_n.
   $
   Now recall that for a parametrized matrix $A(t)$ we have $ diff_t det(A(t)) = det(A(t)) tr(diff_t A(t)) $ we then have
   $
-    diff_t (sqrt(det(g))) dif hat(x)_1 ... dif hat(x)_n
-    &= 1/(2sqrt(det(g))) diff_t (det(g)) dif hat(x)_1 ... dif hat(x)_n 
-    \ &= sqrt(det(g)) tr(diff_t (g_(i j))) dif hat(x)_1 ... dif hat(x)_n
-    \ &= sqrt(det(g)) tr(f h_(i j)) dif hat(x)_1 ... dif hat(x)_n
+    diff_t (sqrt(det(g))) dif x ... dif x
+    &= 1/(2sqrt(det(g))) diff_t (det(g)) dif x_1 ... dif x_n 
+    \ &= sqrt(det(g)) tr(diff_t (g_(i j))) dif x_1 ... dif x_n
+    \ &= sqrt(det(g)) tr(f h_(i j)) dif x_1 ... dif x_n
     \ &= f H dif S
   $
 ]
+
+Now that we have evolution equation for some local properties, we can extend those to evolution equation of global quantities.
 #proposition[
   We have the following evolution equations for $V(M_t)$ and $A(M_t)$,
   $
     diff_t V(M_t) = integral_(M_t) f dif S, quad
     diff_t A(M_t) = integral_(M_t) H f dif S
   $
-]
+]<prop-vol_area_variation>
 #proof[
   First for the volume, extend the vector field $f nu$ to a global vector $Y$ field on $N$. Now by classic geometry theorems @leeIntroductionSmoothManifolds2012[p.~425] we get that the change in volume for a domain evolving under a global vector field is
   $
@@ -478,12 +493,12 @@ We have one final evolution equation to find, and that is the one for the second
 #proposition[
   We have the following evolution equations for $h_(i j)$
   $
-    diff_t h_(i j) = - nabla_i nabla_j f + f (h_(i ell) g^(ell k) h_(k j) - ov(R)_(nu i nu j))
+    diff_t h_(i j) = - nabla_i nabla_j f + f (h_(i ell) g^(ell k) h_(k j) - ov(R)^(nu)_(nu i j))
   $
-]
+]<prop-h_evolution>
 #proof[
   Recall that $h_(i j) = ip(e_i, ov(nabla)_j nu) = ip(diff_i F, ov(nabla)_j nu)$.
-  Then since $nu$ is orthogonal to all $D_(e_i) F$'s we get
+  Then since $nu$ is orthogonal to all $diff_i F$'s we get
   $
     0 = ov(nabla)_j ip(diff_i F, nu) = ip(diff_i F, ov(nabla)_j nu) + ip(ov(nabla)_j diff_i F, nu)
   $
@@ -504,18 +519,23 @@ We have one final evolution equation to find, and that is the one for the second
     ip(diff_j diff_i (f nu) + (diff_t ov(Gamma)_(rho sigma)^k) (diff_i F^rho diff_j F^sigma) diff_(y_k) + ov(Gamma)_(rho sigma)^k diff_t (diff_i F^rho diff_j F^sigma diff_(y_k)), nu)
     \ &- med ip(diff_j diff_i F, nabla f)
   $
-  now the Christoffel symbols vanish at our point of choice in normal coordinates (their derivatives might not), so we get
+  now the Christoffel symbols vanish at $p$, so we get
   $
     -diff_t h_(i j) &= ip(diff_j (nu diff_i f + f diff_i nu) + (f diff_nu ov(Gamma)_(rho sigma)^k) (diff_i F^rho diff_j F^sigma) diff_(y_k), nu)
     - ip(diff_j diff_i F, nabla f)
     \ &=
-    ip((diff_j nu) diff_i f + (diff_j f) diff_i nu + nu (diff_j diff_i f) + f diff_j (diff_i nu) + (f diff_nu ov(Gamma)_(rho sigma)^k) (diff_i F^rho diff_j F^sigma) diff_(y_k), nu)
+    ip((diff_j nu) diff_i f + (diff_j f) diff_i nu + nu (diff_j diff_i f) + f diff_j (diff_i nu) + (f diff_nu ov(Gamma)_(rho sigma)^nu) (diff_i F^rho diff_j F^sigma) nu, nu)
     \ &- ip(- h_(i j) nu, nabla f)
   $
-  Now using the fact that $nu$ is orthogonal to any tangent vector and also $nabla_i nu$, the expression above simplifies to
+  Now using the fact that $nu$ is orthogonal to any derivation of $nu$ (since it is a unit vector), the expression above simplifies to
   $
     - diff_t h_(i j)
     &=
+    diff_i diff_j f
+    +
+    f ip(diff_j diff_i nu, nu)
+    + f (diff_nu ov(Gamma)^nu_(rho sigma)) diff_i F^rho diff_j F^sigma
+    \ &=
     diff_i diff_j f
     +
     f ip(diff_j (nabla_i nu - ov(Gamma)_(rho sigma)^k diff_i F^rho nu^sigma diff_y_k), nu)
@@ -526,22 +546,15 @@ We have one final evolution equation to find, and that is the one for the second
     f ip(diff_j (h_(i k) diff_k F - ov(Gamma)_(rho sigma)^k diff_i F^rho nu^sigma diff_y_k), nu)
     + f (diff_nu ov(Gamma)^nu_(rho sigma)) diff_i F^rho diff_j F^sigma
     \ &=
-    diff_i diff_j f
-    \ &+
+    diff_i diff_j f + f (diff_nu ov(Gamma)^nu_(rho sigma)) diff_i F^rho diff_j F^sigma
+    \ &+ med
     f ip(h_(i k) diff_j diff_k F + (diff_j h_(i k)) (diff_k F) - (diff_j ov(Gamma)_(rho sigma)^k) diff_i F^rho nu^sigma diff_y_k - ov(Gamma)_(rho sigma)^k diff_j (diff_i F^rho v^sigma), nu)
-    \ &+ f (diff_nu ov(Gamma)^nu_(rho sigma)) diff_i F^rho diff_j F^sigma
   $
-  but now again the Christoffel symbols vanish and orthogonality
+  but now again the Christoffel symbols vanish and since $nu$ is orthogonal to all tangent vectors, we can simplify the second term to get
   $
-    - diff_t h_(i j)
-    &=
-    diff_i diff_j f +
     f ip(h_(i k) diff_j diff_k F - (diff_j ov(Gamma)_(rho sigma)^k) diff_i F^rho nu^sigma diff_y_k, nu)
-    + f (diff_nu ov(Gamma)^nu_(rho sigma)) diff_i F^rho diff_j F^sigma
-    \ &=
-    diff_i diff_j f -
-    f h_(i k) h_(j k) - f (diff_j ov(Gamma)_(rho sigma)^nu) diff_i F^rho nu^sigma
-    + f (diff_nu ov(Gamma)^nu_(rho sigma)) diff_i F^rho diff_j F^sigma.
+    =
+    - f h_(i k) h_(j k) - f (diff_j ov(Gamma)_(rho sigma)^nu) diff_i F^rho nu^sigma
   $
   Now recall that in orthonormal coordinates the Riemann tensor is given by
   $
@@ -549,12 +562,29 @@ We have one final evolution equation to find, and that is the one for the second
   $
   and so we get
   $
-    - diff_t h_(i j) = diff_i diff_j f - f h_(i k) h_(j k) + f ov(R)^nu_(nu i j)
+    - diff_t h_(i j) &=
+    diff_i diff_j f + f (diff_nu ov(Gamma)^nu_(rho sigma)) diff_i F^rho diff_j F^sigma - f (diff_j ov(Gamma)_(rho sigma)^nu) diff_i F^rho nu^sigma + f h_(i k) h_(j k)
+    \ &= diff_i diff_j f - f h_(i k) h_(j k) + f ov(R)^nu_(nu i j)
   $
-  which then since we are in orthonormal coordinates we get the desired result.
+  which then since we are in orthonormal coordinates we know that $diff_i diff_j f = nabla_i nabla_j f$, and since the middle term is not tensorial we make it tensorial by contracting with the metric and so we get the desired result.
 ]
 
-
+#corollary[
+  Immediately from @prop-h_evolution we get the following evolution equation for $H$
+  $
+    diff_t H = - Delta f - f(|A|^2 + ov(Ric)(nu,nu))
+  $
+]<prop-H_evolution>
+#proof[
+  We have $H = g^(i j) h_(i j)$ in coordinates so
+  $
+    diff_t H &= diff_t (g^(i j) h_(i j))
+    = h_(i j) diff_t (g^(i j)) + g^(i j) diff_t (h_(i j))
+    \ &= h_(i j) (- 2 f h^(i j)) + g^(i j) (- nabla_i nabla_j f + f (h_(i k) h_(k j) - ov(R)^(nu)_(nu i j)))
+    \ &= - 2 f|A|^2 - Delta f + f (h_(i k)  h_(i k) - ov(R)^(nu)_(nu i i))
+    \ &= - Delta f - f |A|^2 - f ov(Ric)(nu,nu)
+  $
+]
 
 #pagebreak(weak: true)
 = Warped Product-Like Spaces
@@ -625,7 +655,92 @@ Note that since its a gradient, $X$ in the above proposition is closed.
 Apart from being a closed conformal vector field, this vector field also has other properties that help us with the flow we want to create. Recall that in Euclidean space spheres are the optimal shapes for the Isoperimetric inequality, in polar coordinates spheres take the simple form of sets where $r = r_0$ for some fixed $r_0$.
 
 == Quasi-Closed Conformal Vector Fields
-Now it turns out that these closed conformal vector fields characterize warped products of the form above, namely, if a manifold admits a closed conformal then it can be written in the form $RR_+ times_f N$ for some manifolds $N$ and function $f$.
+Now it turns out that these closed conformal vector fields characterize warped products of the form above, namely, if a manifold admits a closed conformal then it can locally be written in the form $RR_+ times_f N$ for some manifolds $N$ and function $f$, see @tashiroCompleteRiemannianManifolds1965[Lemma 1.2]. We thus know that having a closed conformal vector field is too strong of a condition, we want to try and weaken it.
+
+This idea was first explored by Li and Pan @jiayuIsoperimetricProblemRiemannian2023a, where they formalized the necessary conditions on the ambient manifold in terms of conformal vector fields. They also derive a number of key properties for a conformal vector fields satisfying their conditions. In this section we will rewrite some of their conditions and conclusions in a form that is easier to use.
+
+First let us declare some useful conditions that we will need, let $N$ be the complete ambient manifold which admits a conformal vector field $X$ on some open subset $U$ with conformal factor $phi$ which does not vanish on $U$. Consider the two conditions
++ The distribution $cal(D)(X) seq T U$ defined by $cal(D)(X)|_p = { v in T_p N | ip(v,X) = 0 }$ is integrable on the set $U$.
++ The integral surfaces of $cal(D)(X)$ are level sets of $(||X||)/phi$.
+
+These conditions are key to this method, they are vital to many of the identities that Li and Pan derived and used to get a handle on the normal flow they construct.
+
+We will now start analysing the consequences of these conditions.
+#proposition[
+  Let $X$ be a conformal vector field $X$ such that condition 1 holds, then the associated tensor field $psi$ satisfies
+  $
+    ip(psi (v), w) = 0 "for" v,w in cal(D)(X) "eveywhere on" U
+  $
+]<prop-psi_vanish>
+#proof[
+  By definition the one form defined by $omega(v) = ip(X,v)$ annihilates $cal(D)(X)$, then by the one form condition for integrability @leeIntroductionSmoothManifolds2012[p.~495] we get that $dif omega$ also annihilates $cal(D)(X)$, that is $dif omega$ restricts to zero on $cal(D)(X)$, hence by definition of the associated tensor field, we get the result above.
+]
+We see then that such a conformal vector field is 'almost' closed since its associated tensor field 'almost' vanishes.
+#definition[
+  We will call a conformal vector field $X$ satisfying condition $1$, a _quasi-closed_ conformal vector field.
+]
+The rest of this section will be devoted to properties of quasi-closed conformal vector fields, for the rest of this section we will fix a quasi-closed conformal vector field $X$ with conformal factor $phi$ and associated tensor field $psi$. We will also refer to $cal(D)(X),U(X)$ as $cal(D),U$ for brevity. We will start with a key property regarding the integral surfaces of $cal(D)$.
+#proposition[
+  Let $S$ be an integral surface of $cal(D)$, then $S$ is totally umbilical, that is at every point $p in S$ we have
+  $
+    h_(i j) = f(p) g_(i j),
+  $
+  for some function $f$ on $S$. Furthermore we have $f$ is equal to $phi/(||X||)$.
+]
+#proof[
+  We have in coordinates
+  $
+    h_(i j) = ip(ov(nabla)_i nu, e_j) = ip(ov(nabla)_i X/(||X||), e_j)
+    = ip((ov(nabla)_i X)/(||X||) - X/(||X||^2) (ov(nabla)_i ||X||), e_j)
+  $
+  then since $X$ is orthogonal to the tangent vector $e_j$ we get
+  $
+    h_(i j) = ip((ov(nabla)_i X)/(||X||), e_j)
+    = 1/(||X||) ip(ov(nabla)_i X, e_j)
+    = 1/(||X||) (phi g_(i j) + ip(psi (e_i), e_j))
+  $
+  then by @prop-psi_vanish we get
+  $
+    h_(i j) = phi/(||X||) g_(i j)
+  $
+]
+Now we want the integral surfaces $S$ of $cal(D)$ to be our Isoperimetric profile, hence they should be critical points of the surface area functional with respect to fixed volume. Hence by @prop-vol_area_variation we need to have $H = n phi/ (||X||)$ be constant, which motivates condition 2.
+#corollary[
+ If $X$ satisfies condition $2$, then the integral surfaces of $cal(D)$ are totally umbilical with constant mean curvature $H = n phi/(||X||)$.
+]
+
+Now consider, for a moment, the spheres in $RR^n$ of radius $r$. They are the integral surfaces for the orthogonal distribution to $X = x^i diff_i$ which is a closed conformal vector field with factor $phi = 2$. We see that their mean curvature is $H = (2n) / r$, we thus see that the mean curvature is inversely proportional to a certain 'scale' function, in this case $r$.
+
+#definition[
+  We will call the following function the _scale_ function for $X$
+  $
+    lambda = (||X||^2)/phi^2
+  $
+]
+Since we know $lambda$ is constant on integral surfaces, its gradient must be colinear with $X$, and using this we can get a nice form for this gradient.
+#proposition[
+  $
+    nabla lambda = 2 (phi^2 - X(phi))/phi^3 X
+  $
+]
+#proof[
+  We see that
+  $
+    nabla lambda &= ip(nabla lambda, X/(||X||)) X/(||X||)
+    = X(lambda) X/(||X||^2)
+    = X((||X||^2)/phi^2) X/(||X||^2)
+    \ &= (2 ip(nabla_X X, X))/phi^2 X/(||X||^2) + (-2/phi^3) X(phi) X
+    = 2 (phi ip(X,X))/phi^2 X/(||X||^2) - 2(X(phi)/phi^3) X
+    \ &= 2 (phi^2 - X(phi))/phi^3 X
+  $
+]
+This coefficient function will also appear many times so we will call it $Lambda$.
+
+Now as we saw, for a quasi-closed conformal vector field we have that $ip(psi(v), w)$ vanishes on $cal(D)$, but with condition 2 we can actually be more precise than this.
+#proposition[
+  
+]
+
 
 
 
