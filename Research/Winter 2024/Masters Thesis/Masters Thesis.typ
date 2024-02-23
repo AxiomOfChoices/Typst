@@ -661,7 +661,7 @@ This idea was first explored by Li and Pan @jiayuIsoperimetricProblemRiemannian2
 
 First let us declare some useful conditions that we will need, let $N$ be the complete ambient manifold which admits a conformal vector field $X$ on some open subset $U$ with conformal factor $phi$ which does not vanish on $U$. Consider the two conditions
 + The distribution $cal(D)(X) seq T U$ defined by $cal(D)(X)|_p = { v in T_p N | ip(v,X) = 0 }$ is integrable on the set $U$.
-+ The integral surfaces of $cal(D)(X)$ are level sets of $(||X||)/phi$.
++ The integral surfaces of $cal(D)(X)$ are level sets of $(||X||)/phi$ wherever it is defined.
 
 These conditions are key to this method, they are vital to many of the identities that Li and Pan derived and used to get a handle on the normal flow they construct.
 
@@ -712,24 +712,25 @@ Now we want the integral surfaces $S$ of $cal(D)$ to be our Isoperimetric profil
 Now consider, for a moment, the spheres in $RR^n$ of radius $r$. They are the integral surfaces for the orthogonal distribution to $X = x^i diff_i$ which is a closed conformal vector field with factor $phi = 2$. We see that their mean curvature is $H = (2n) / r$, we thus see that the mean curvature is inversely proportional to a certain 'scale' function, in this case $r$.
 
 #definition[
-  We will call the following function the _scale_ function for $X$
+  Wherever $phi != 0$ on $U$, we will call the following function the _scale_ function for $X$
   $
     lambda = (||X||^2)/phi^2
   $
 ]
-Since we know $lambda$ is constant on integral surfaces, its gradient must be colinear with $X$, and using this we can get a nice form for this gradient.
+Since we know $lambda$ is constant on integral surfaces, its gradient must be colinear with $X$, that is $ov(nabla) lambda = 2 Lambda X$ for some function $Lambda$. We note a convenient expression for $Lambda$.
 #proposition[
+  Where $lambda$ is defined, we have
   $
-    nabla lambda = 2 (phi^2 - X(phi))/phi^3 X
+    ov(nabla) lambda = 2 (phi^2 - X(phi))/phi^3 X
   $
 ]
 #proof[
   We see that
   $
-    nabla lambda &= ip(nabla lambda, X/(||X||)) X/(||X||)
+    ov(nabla) lambda &= ip(ov(nabla) lambda, X/(||X||)) X/(||X||)
     = X(lambda) X/(||X||^2)
     = X((||X||^2)/phi^2) X/(||X||^2)
-    \ &= (2 ip(nabla_X X, X))/phi^2 X/(||X||^2) + (-2/phi^3) X(phi) X
+    \ &= (2 ip(ov(nabla)_X X, X))/phi^2 X/(||X||^2) + (-2/phi^3) X(phi) X
     = 2 (phi ip(X,X))/phi^2 X/(||X||^2) - 2(X(phi)/phi^3) X
     \ &= 2 (phi^2 - X(phi))/phi^3 X
   $
@@ -738,7 +739,50 @@ This coefficient function will also appear many times so we will call it $Lambda
 
 Now as we saw, for a quasi-closed conformal vector field we have that $ip(psi(v), w)$ vanishes on $cal(D)$, but with condition 2 we can actually be more precise than this.
 #proposition[
-  
+  We have for any $p in U$ and any $Y in T_p M$
+  $
+    psi(Y) = (ip(Y, ov(nabla)||X||) X - ip(Y, X) ov(nabla)||X||)/(||X||).
+  $
+  Furthermore if $X$ satisfies condition 2, wherever $phi != 0$ we have
+  $
+    psi(Y) = (ip(Y, ov(nabla)phi) X - ip(Y, X) ov(nabla)phi)/(phi).
+  $
+]
+#proof[
+  Recall that $ip(psi(Y),Z)$ is anti-symmetric in $Y,Z$ so we may assume WLOG one of the two is in $cal(D)$ and hence also WLOG assume that it is $Y$. Then by @prop-psi_vanish we may assume that $Z$ is colinear with $Y$. We thus have $ip(Y,Z) = 0$ so
+  $
+    ip(psi(Y), Z) &= ip(Z,X)/(||X||) ip(ov(nabla)_Y X, X) = 1/2 ip(Z,X)/(||X||) ov(nabla)_Y ip(X,X)\ &= 1/2 ip(Z,X)/(||X||) ip(Y, ov(nabla)||X||^2)
+    = ip(Z,X)/(||X||) ip(Y, ov(nabla)||X||)
+  $
+  We can then anti-symmetrize this to get that for arbitrary $Y,Z$
+  $
+    ip(psi(Y),Z) = (ip(Z,X)ip(Y, ov(nabla)||X||) - ip(Y,X) ip(Z, ov(nabla)||X||))/(||X||)
+  $
+  which gives us the first result.
+
+  For the second result, we compute
+  $
+    psi(Y)
+    &=
+    (ip(Y, ov(nabla)(phi dot (||X||)/phi)) X - ip(Y, X) ov(nabla)(phi dot (||X||)/phi))/(||X||)
+    \ &=
+    (ip(Y, (||X||)/phi ov(nabla)phi + phi ov(nabla)((||X||)/phi)) X - ip(Y, X) ((||X||)/phi ov(nabla)phi + phi ov(nabla)((||X||)/phi)))/(||X||)
+    \ &=
+    (ip(Y, ov(nabla)phi) X - ip(Y, X) ov(nabla)phi)/(phi)
+    +
+    phi (ip(Y,ov(nabla)((||X||)/phi)) X - ip(Y, X) ov(nabla)((||X||)/phi))/(||X||).
+  $
+  Now we recall that $(||X||)/phi$ is constant along integral surfaces and thus its gradient is colinear with $X$. At the point $p$ we then write $ov(nabla) ((||X||)/phi) = a X$ and get
+  $
+    psi(Y)
+    &=
+    (ip(Y, ov(nabla)phi) X - ip(Y, X) ov(nabla)phi)/(phi)
+    +
+    phi (ip(Y,a X) X - ip(Y, X) a X)/(||X||)
+    \ &= (ip(Y, ov(nabla)phi) X - ip(Y, X) ov(nabla)phi)/(phi)
+    + 0
+  $
+  which gets us the second result.
 ]
 
 
