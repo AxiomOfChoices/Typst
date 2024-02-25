@@ -382,9 +382,9 @@ Now that we are familiar with geometry and PDEs we can start to use them togethe
 As a manifold flows it's various properties, both local and global, will change, the equations governing these changes are called _evolution equations_. We will now derive some of these evolution equations, we will first start with the most important evolving tensor, the metric.
 
 #remark[
-    We will also adapt two important coordinate systems, we will be working in normal coordinates around a point $p in M$ which will call these coordinates $x^i$, we will denote their partial derivatives $diff_i$ and the covariant derivatives with respect to the induced metric $nabla_i$. Secondly we will also have normal coordinates at $F(p) in N$, we will call these coordinates $y^i$, their partials $diff_y_i$ and the covariant derivatives $ov(nabla)_i$. Note that we can rotate the normal coordinates $y^i$ so that they align with $x^i$, in the sense that _at the point $p$_
+    We will also adapt two important coordinate systems, we will be working in normal coordinates around a point $p in M$ which will call these coordinates $x^i$, we will denote their partial derivatives $diff_i$ or $e_i$ and the covariant derivatives with respect to the induced metric $nabla_i$. Secondly we will also have normal coordinates at $F(p) in N$, we will call these coordinates $y^i$, their partials $diff_y_i$ or $ov(e)_i$ and the covariant derivatives $ov(nabla)_i$. Note that we can rotate the normal coordinates $y^i$ so that they align with $x^i$, in the sense that _at the point $p$_
   $
-    diff_i F = diff_y_i, forall i <= n quad "and" quad nu = diff_y_(n+1)
+    diff_i F = ov(e)_i, forall i <= n quad "and" quad nu = ov(e)_(n+1)
   $
 
   Since we are working in normal coordinates, note that the Christoffel symbols $Gamma$ and $ov(Gamma)$ both vanish at $p$, but their derivatives might not, so we have to be very careful when working with these expressions.
@@ -513,15 +513,15 @@ We have one final evolution equation to find, and that is the one for the second
     ip(diff_t nabla_j diff_i F, nu)
     + ip(diff_j diff_i F, diff_t nu)
     \ &=
-    ip(diff_t (diff_j diff_i F + ov(Gamma)_(rho sigma)^k diff_i F^rho diff_j F^sigma diff_(y_k)), nu)
+    ip(diff_t (diff_j diff_i F + ov(Gamma)_(rho sigma)^k diff_i F^rho diff_j F^sigma ov(e)_k), nu)
     + ip(diff_j diff_i F, diff_t nu)
     \ &=
-    ip(diff_j diff_i (f nu) + (diff_t ov(Gamma)_(rho sigma)^k) (diff_i F^rho diff_j F^sigma) diff_(y_k) + ov(Gamma)_(rho sigma)^k diff_t (diff_i F^rho diff_j F^sigma diff_(y_k)), nu)
+    ip(diff_j diff_i (f nu) + (diff_t ov(Gamma)_(rho sigma)^k) (diff_i F^rho diff_j F^sigma) ov(e)_k + ov(Gamma)_(rho sigma)^k diff_t (diff_i F^rho diff_j F^sigma ov(e)_k), nu)
     \ &- med ip(diff_j diff_i F, nabla f)
   $
   now the Christoffel symbols vanish at $p$, so we get
   $
-    -diff_t h_(i j) &= ip(diff_j (nu diff_i f + f diff_i nu) + (f diff_nu ov(Gamma)_(rho sigma)^k) (diff_i F^rho diff_j F^sigma) diff_(y_k), nu)
+    -diff_t h_(i j) &= ip(diff_j (nu diff_i f + f diff_i nu) + (f diff_nu ov(Gamma)_(rho sigma)^k) (diff_i F^rho diff_j F^sigma) ov(e)_k, nu)
     - ip(diff_j diff_i F, nabla f)
     \ &=
     ip((diff_j nu) diff_i f + (diff_j f) diff_i nu + nu (diff_j diff_i f) + f diff_j (diff_i nu) + (f diff_nu ov(Gamma)_(rho sigma)^nu) (diff_i F^rho diff_j F^sigma) nu, nu)
@@ -538,21 +538,21 @@ We have one final evolution equation to find, and that is the one for the second
     \ &=
     diff_i diff_j f
     +
-    f ip(diff_j (nabla_i nu - ov(Gamma)_(rho sigma)^k diff_i F^rho nu^sigma diff_y_k), nu)
+    f ip(diff_j (nabla_i nu - ov(Gamma)_(rho sigma)^k diff_i F^rho nu^sigma ov(e)_k), nu)
     + f (diff_nu ov(Gamma)^nu_(rho sigma)) diff_i F^rho diff_j F^sigma
     \ &=
     diff_i diff_j f
     +
-    f ip(diff_j (h_(i k) diff_k F - ov(Gamma)_(rho sigma)^k diff_i F^rho nu^sigma diff_y_k), nu)
+    f ip(diff_j (h_(i k) diff_k F - ov(Gamma)_(rho sigma)^k diff_i F^rho nu^sigma ov(e)_k), nu)
     + f (diff_nu ov(Gamma)^nu_(rho sigma)) diff_i F^rho diff_j F^sigma
     \ &=
     diff_i diff_j f + f (diff_nu ov(Gamma)^nu_(rho sigma)) diff_i F^rho diff_j F^sigma
     \ &+ med
-    f ip(h_(i k) diff_j diff_k F + (diff_j h_(i k)) (diff_k F) - (diff_j ov(Gamma)_(rho sigma)^k) diff_i F^rho nu^sigma diff_y_k - ov(Gamma)_(rho sigma)^k diff_j (diff_i F^rho v^sigma), nu)
+    f ip(h_(i k) diff_j diff_k F + (diff_j h_(i k)) (diff_k F) - (diff_j ov(Gamma)_(rho sigma)^k) diff_i F^rho nu^sigma ov(e)_k - ov(Gamma)_(rho sigma)^k diff_j (diff_i F^rho v^sigma), nu)
   $
   but now again the Christoffel symbols vanish and since $nu$ is orthogonal to all tangent vectors, we can simplify the second term to get
   $
-    f ip(h_(i k) diff_j diff_k F - (diff_j ov(Gamma)_(rho sigma)^k) diff_i F^rho nu^sigma diff_y_k, nu)
+    f ip(h_(i k) diff_j diff_k F - (diff_j ov(Gamma)_(rho sigma)^k) diff_i F^rho nu^sigma ov(e)_k, nu)
     =
     - f h_(i k) h_(j k) - f (diff_j ov(Gamma)_(rho sigma)^nu) diff_i F^rho nu^sigma
   $
@@ -659,11 +659,11 @@ Now it turns out that these closed conformal vector fields characterize warped p
 
 This idea was first explored by Li and Pan @jiayuIsoperimetricProblemRiemannian2023a, where they formalized the necessary conditions on the ambient manifold in terms of conformal vector fields. They also derive a number of key properties for a conformal vector fields satisfying their conditions. In this section we will rewrite some of their conditions and conclusions in a form that is easier to use.
 
-First let us declare some useful conditions that we will need, let $N$ be the complete ambient manifold which admits a conformal vector field $X$ on some open subset $U$ with conformal factor $phi$ which does not vanish on $U$. Consider the two conditions
+First let us declare some useful conditions that we will need, let $N$ be the complete ambient manifold which admits a conformal vector field $X$ on some open subset $U$ which does not vanish on that subset, with conformal factor $phi$. We will consider the following two conditions
 + The distribution $cal(D)(X) seq T U$ defined by $cal(D)(X)|_p = { v in T_p N | ip(v,X) = 0 }$ is integrable on the set $U$.
 + The integral surfaces of $cal(D)(X)$ are level sets of $(||X||)/phi$ wherever it is defined.
 
-These conditions are key to this method, they are vital to many of the identities that Li and Pan derived and used to get a handle on the normal flow they construct.
+These conditions are key to the success of this method, they are vital to many of the identities that Li and Pan derived and used to get a handle on the normal flow they construct.
 
 We will now start analysing the consequences of these conditions.
 #proposition[
@@ -679,7 +679,7 @@ We see then that such a conformal vector field is 'almost' closed since its asso
 #definition[
   We will call a conformal vector field $X$ satisfying condition $1$, a _quasi-closed_ conformal vector field.
 ]
-The rest of this section will be devoted to properties of quasi-closed conformal vector fields, for the rest of this section we will fix a quasi-closed conformal vector field $X$ with conformal factor $phi$ and associated tensor field $psi$. We will also refer to $cal(D)(X),U(X)$ as $cal(D),U$ for brevity. We will start with a key property regarding the integral surfaces of $cal(D)$.
+The rest of this section will be devoted to properties of quasi-closed conformal vector fields, for the rest of this section we will fix a quasi-closed conformal vector field $X$ with conformal factor $phi$ and associated tensor field $psi$. We will fix a point $p in U$ and an arbitrary vector $Y in T_p U$. We will denote $cal(N) = X/(||X||)$ the normal vector to the integral surfaces of $cal(D)(X)$. We will also refer to $cal(D)(X),U(X)$ as $cal(D),U$ for brevity. We will start with a key property regarding the integral surfaces of $cal(D)$.
 #proposition[
   Let $S$ be an integral surface of $cal(D)$, then $S$ is totally umbilical, that is at every point $p in S$ we have
   $
@@ -690,7 +690,7 @@ The rest of this section will be devoted to properties of quasi-closed conformal
 #proof[
   We have in coordinates
   $
-    h_(i j) = ip(ov(nabla)_i nu, e_j) = ip(ov(nabla)_i X/(||X||), e_j)
+    h_(i j) = ip(ov(nabla)_i cal(N), e_j) = ip(ov(nabla)_i X/(||X||), e_j)
     = ip((ov(nabla)_i X)/(||X||) - X/(||X||^2) (ov(nabla)_i ||X||), e_j)
   $
   then since $X$ is orthogonal to the tangent vector $e_j$ we get
@@ -727,7 +727,7 @@ Since we know $lambda$ is constant on integral surfaces, its gradient must be co
 #proof[
   We see that
   $
-    ov(nabla) lambda &= ip(ov(nabla) lambda, X/(||X||)) X/(||X||)
+    ov(nabla) lambda &= ip(ov(nabla) lambda, cal(N)) cal(N)
     = X(lambda) X/(||X||^2)
     = X((||X||^2)/phi^2) X/(||X||^2)
     \ &= (2 ip(ov(nabla)_X X, X))/phi^2 X/(||X||^2) + (-2/phi^3) X(phi) X
@@ -739,7 +739,6 @@ This coefficient function will also appear many times so we will call it $Lambda
 
 Now as we saw, for a quasi-closed conformal vector field we have that $ip(psi(v), w)$ vanishes on $cal(D)$, but with condition 2 we can actually be more precise than this.
 #proposition[
-  We have for any $p in U$ and any $Y in T_p M$
   $
     psi(Y) = (ip(Y, ov(nabla)||X||) X - ip(Y, X) ov(nabla)||X||)/(||X||).
   $
@@ -747,7 +746,7 @@ Now as we saw, for a quasi-closed conformal vector field we have that $ip(psi(v)
   $
     psi(Y) = (ip(Y, ov(nabla)phi) X - ip(Y, X) ov(nabla)phi)/(phi).
   $
-]
+]<prop-psi_exact>
 #proof[
   Recall that $ip(psi(Y),Z)$ is anti-symmetric in $Y,Z$ so we may assume WLOG one of the two is in $cal(D)$ and hence also WLOG assume that it is $Y$. Then by @prop-psi_vanish we may assume that $Z$ is colinear with $Y$. We thus have $ip(Y,Z) = 0$ so
   $
@@ -785,6 +784,143 @@ Now as we saw, for a quasi-closed conformal vector field we have that $ip(psi(v)
   which gets us the second result.
 ]
 
+We note here another useful way to write the covariant derivative of $X$
+#corollary[
+  Where $phi = 0$ we have
+  $
+    ov(nabla)_Y X/(||X||) = - ip(X,Y)/(||X||) ov(nabla)||X||
+  $
+  if $X$ satisfies condition 2 then where $phi != 0$ we have
+  $
+    ov(nabla)_Y X/(phi) = X - ip(X,Y)/phi^2 ov(nabla) phi
+  $
+]<cor-simple_grad>
+#proof[
+  We prove directly, for the first case
+  $
+    ov(nabla)_Y X/(||X||)
+    &= 1/(||X||) ov(nabla)_Y X  - X/(||X||^2) ov(nabla)_Y||X||
+    \ &= 1/(||X||) ((ip(Y, ov(nabla)||X||) X - ip(Y, X) ov(nabla)||X||)/(||X||)) - X/(||X||^2) ov(nabla)_Y||X||
+    \ &= -(ip(Y, X) ov(nabla)||X||)/(||X||^2).
+  $
+  And in the second case
+  $
+    ov(nabla)_Y X/(phi)
+    &= 1/(phi) ov(nabla)_Y X  - X/(phi^2) ov(nabla)_Y phi
+    \ &= 1/(phi) (phi X + (ip(Y, ov(nabla)phi) X - ip(Y, X) ov(nabla)phi)/(phi)) - X/(phi^2) ov(nabla)_Y phi
+    \ &= X-(ip(Y, X) ov(nabla)phi)/(phi^2).
+  $
+]
+
+#pagebreak(weak: true)
+We can also rewrite some of the Riemann and Ricci curvatures of the ambient manifold in terms of $X$.
+#proposition[
+  Wherever $phi = 0$ we have
+  $
+    ov(R)(Y,X,Y,X) &= -||X||ip(ov(nabla)_Y ov(nabla)||X||, Y) + ip(X,Y)^2/(||X||) ip(ov(nabla)_cal(N) ov(nabla)||X||, cal(N))
+    \ ov(Ric)(X,Y) &= -(ip(X,Y))/(||X||) (ov(Delta)||X|| - ip(ov(nabla)_cal(N) ov(nabla) phi, cal(N)))
+  $
+  and in addition, if $Y in cal(D)$
+  #math.equation(block: true, numbering: "(1)", $
+    ||X||ov(Ric)(X,Y) = ip(ov(nabla)_Y ov(nabla)||X||, X) = ip(ov(nabla)_X ov(nabla)||X||, Y) = 0
+  $)<eqn-ric_orthogonal>
+  If $X$ satisfies condition 2, then wherever $phi != 0$ we have
+  $
+    ov(R)(Y,X,Y,X) &= -phi ip(ov(nabla)_Y ov(nabla)phi, Y) + ip(X,Y)^2/(phi) ip(ov(nabla)_cal(N) ov(nabla)phi, cal(N))
+    \ ov(Ric)(X,Y) &= -(ip(X,Y))/(phi) (ov(Delta)phi - ip(ov(nabla)_cal(N) ov(nabla) phi, cal(N)))
+  $
+  and in addition, if $Y in cal(D)$
+  $
+    phi ov(Ric)(X,Y) = ip(ov(nabla)_Y ov(nabla)phi, X) = ip(ov(nabla)_X ov(nabla)phi, Y) = 0
+  $
+]
+#proof[
+  For the first case, we will consider $ov(R)(ov(e)_i, ov(e)_j, X/(||X||), ov(e)_k)$, then we will use linearity of the Ricci tensor to remove the denominator, we start with a use of @cor-simple_grad
+  $
+    ov(R)(ov(e)_i, ov(e)_j, X/(||X||), ov(e)_k)
+    &=
+    ip(ov(nabla)_i ov(nabla)_j X/(||X||) - ov(nabla)_j ov(nabla)_i X/(||X||), ov(e)_k)
+    \ &=
+    ip(ov(nabla)_i (-(ip(ov(e)_j, X) ov(nabla)||X||)/(||X||^2)) - ov(nabla)_j (-(ip(ov(e)_i, X) ov(nabla)||X||)/(||X||^2)), ov(e)_k)
+    \ &=
+    - ov(nabla)_i ((ip(ov(e)_j, X))/(||X||^2)) ov(e)_k (||X||) + ov(nabla)_j ((ip(ov(e)_i, X))/(||X||^2)) ov(e)_k (||X||)
+    \ &-(ip(ov(e)_j, X))/(||X||^2) ip(ov(nabla)_i ov(nabla) ||X||, ov(e)_k) + (ip(ov(e)_i, X))/(||X||^2) ip(ov(nabla)_j ov(nabla) ||X||, ov(e)_k)
+  $
+  Now let us deal with the first two terms, expanding gives us
+  $
+    ov(e)_k (||X||) ((ip(ov(nabla)_j X, ov(e)_i)
+    -
+    ip(ov(nabla)_i X, ov(e)_j))/(||X||^2)
+    +
+    2 (ip(X, ov(e)_j) ov(e)_i (||X||)
+    -
+    ip(X, ov(e)_i) ov(e)_j (||X||))/(||X||^3))
+  $
+  then by definition the left denominator here is $ip(psi(ov(e)_j), ov(e)_i)$ which we can expand by @prop-psi_exact we will see that these terms exactly cancel the other terms in the brackets.
+
+  Now we are left with
+  #math.equation(block: true, numbering: "(1)", $
+    ov(R)(ov(e)_i, ov(e)_j, X/(||X||), ov(e)_k)
+    = (ip(ov(e)_i, X))/(||X||^2) ip(ov(nabla)_j ov(nabla)||X||, ov(e)_k) - (ip(ov(e)_j, X))/(||X||^2) ip(ov(nabla)_i ov(nabla)||X||, ov(e)_k)
+  $)<eqn-riemann_exact>
+  Now by linearity we can substitute $ov(e)_i = ov(e)_k = Y$ and $ov(e)_j = X$, this gives us
+  $
+    ov(R)(Y, X, X/(||X||), Y)
+    = (ip(Y, X))/(||X||^2) ip(ov(nabla)_X ov(nabla)||X||, Y) - (ip(X, X))/(||X||^2) ip(ov(nabla)_Y ov(nabla)||X||, Y)
+  $
+  we now multiply by $||X||$ to get
+  #math.equation(block: true, numbering: "(1)", $
+    ov(R)(Y, X, X, Y)
+    = -||X||ip(ov(nabla)_Y ov(nabla)||X||, Y) + (ip(Y, X))/(||X||) ip(ov(nabla)_X ov(nabla)||X||, Y)
+  $)<eqn-riemann_simplified>
+
+  Next consider the integral hypersurface $S$ of $cal(D)$ that passes through $p$, we know that $h_(i j)$ is identically zero everywhere on this hypersurface. Hence, by @lemma-codazzi, we have for any $e_i,e_j,e_k in T_p S$
+  $
+    ov(R)(e_i, e_j, e_k, cal(N)) = - nabla_i h_(j k) + nabla_j h_(i k) = 0
+  $
+  and so in particular, by linearity
+  $
+    ov(Ric)(Y, X) = 0
+  $
+  for any $Y in cal(D)$.
+
+  Now by using @eqn-riemann_exact but tracing over $e_i$ and $e_k$ and plugging in $ov(e)_j = Y$ gives us
+  #math.equation(block: true, numbering: "(1)", $
+    ov(Ric)(Y, X) = - ip(Y, X)/(||X||) ov(Delta)||X|| + 1/(||X||) ip(ov(nabla)_Y ov(nabla)||X||, X)
+  $)<eqn-ricci_simplified>
+  then for any $Y in cal(D)$ we get
+  $
+    0 = - ip(Y, X)/(||X||) ov(Delta)||X|| + 1/(||X||) ip(ov(nabla)_Y ov(nabla)||X||, X)
+    = 1/(||X||) ip(ov(nabla)_Y ov(nabla)||X||, X)
+  $
+  which gives us @eqn-ric_orthogonal.
+
+  Now plugging @eqn-ric_orthogonal into @eqn-riemann_simplified gives us
+  $
+    ov(R)(Y, X, X, Y)
+    &= -||X||ip(ov(nabla)_Y ov(nabla)||X||, Y) + (ip(Y, X))/(||X||)ip(ov(nabla)_(||X||cal(N)) ov(nabla)||X||, (cal(N)||X||ip(X,Y))/(||X||^2))
+    \ &= -||X||ip(ov(nabla)_Y ov(nabla)||X||, Y) + (ip(Y, X)^2)/(||X||)ip(ov(nabla)_(cal(N)) ov(nabla)||X||, cal(N))
+  $
+  which is the first result.
+
+  For the second result we do the same thing with @eqn-ricci_simplified, we get
+  $
+    ov(Ric)(Y, X) 
+    &= - ip(Y, X)/(||X||) ov(Delta)||X|| + 1/(||X||) (||X||^2ip(X,Y))/ip(X,X) ip(ov(nabla)_(cal(N) ) ov(nabla)||X||, cal(N))
+    \ &= - ip(Y, X)/(||X||) (ov(Delta)||X|| - ip(ov(nabla)_(cal(N)) ov(nabla)||X||, cal(N)))
+  $
+  which is our second result.
+
+  Finally for the case where $phi != 0$, we start off similarly
+  $
+    ov(R)(ov(e)_i, ov(e)_j, X/(||X||), ov(e)_k)
+    &=
+    ip(ov(nabla)_i ov(nabla)_j X/phi - ov(nabla)_j ov(nabla)_i X/phi, ov(e)_k)
+    \ &=
+    ip(ov(nabla)_i (ov(e)_j -(ip(ov(e)_j, X) ov(nabla) phi)/(phi^2)) - ov(nabla)_j (ov(e)_i - (ip(ov(e)_i, X) ov(nabla) phi)/(phi^2)), ov(e)_k)
+  $
+  We now note that $ov(nabla)_i ov(e)_j$ is zero because we are working in orthonormal coordinates. After that the calculation is identical to the first case.
+]
 
 
 
