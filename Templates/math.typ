@@ -102,7 +102,14 @@
   inset: 0em,
 ).with(numbering: none)
 
-
+#let assumptions = thmplain(
+  "assumptions",
+  "Assumptions",
+)
+#let conditions = thmplain(
+  "conditions",
+  "Conditions",
+)
 
 #let equation_references(doc) = {
   // set math.equation(numbering: "(1)")

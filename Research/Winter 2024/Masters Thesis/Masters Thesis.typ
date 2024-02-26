@@ -235,7 +235,7 @@ In the special case that $phi = 0$ we call $X$ a Killing vector field.
     u_X := ip(X,nu)
   $
   where $nu$ is the normal vector to $M$.
-]
+]<def-support>
 
 To see why conformal vector fields are so useful in the study of the Isoperimetric inequality, we will now derive a key result that was the basis of the results by Guan, Li and Wang and will also be the basis of the results in this thesis.
 
@@ -660,8 +660,10 @@ Now it turns out that these closed conformal vector fields characterize warped p
 This idea was first explored by Li and Pan @jiayuIsoperimetricProblemRiemannian2023a, where they formalized the necessary conditions on the ambient manifold in terms of conformal vector fields. They also derive a number of key properties for a conformal vector fields satisfying their conditions. In this section we will rewrite some of their conditions and conclusions in a form that is easier to use.
 
 First let us declare some useful conditions that we will need, let $N$ be the complete ambient manifold which admits a conformal vector field $X$ on some open subset $U$ which does not vanish on that subset, with conformal factor $phi$. We will consider the following two conditions
+#conditions[
 + The distribution $cal(D)(X) seq T U$ defined by $cal(D)(X)|_p = { v in T_p N | ip(v,X) = 0 }$ is integrable on the set $U$.
 + The integral surfaces of $cal(D)(X)$ are level sets of $(||X||)/phi$ wherever it is defined.
+]<conditions-quasi_closed>
 
 These conditions are key to the success of this method, they are vital to many of the identities that Li and Pan derived and used to get a handle on the normal flow they construct.
 
@@ -833,7 +835,7 @@ We can also rewrite some of the Riemann and Ricci curvatures of the ambient mani
   $
     phi ov(Ric)(X,Y) = ip(ov(nabla)_Y ov(nabla)phi, X) = ip(ov(nabla)_X ov(nabla)phi, Y) = 0
   $
-]
+]<prop-riemann_ricci_x_identity>
 #proof[
   For the first case, we will consider $ov(R)(ov(e)_i, ov(e)_j, X/(||X||), ov(e)_k)$, then we will use linearity of the Ricci tensor to remove the denominator, we start with a use of @cor-simple_grad
   $
@@ -919,8 +921,128 @@ We can also rewrite some of the Riemann and Ricci curvatures of the ambient mani
     \ &=
     ip(ov(nabla)_i (ov(e)_j -(ip(ov(e)_j, X) ov(nabla) phi)/(phi^2)) - ov(nabla)_j (ov(e)_i - (ip(ov(e)_i, X) ov(nabla) phi)/(phi^2)), ov(e)_k)
   $
-  We now note that $ov(nabla)_i ov(e)_j$ is zero because we are working in orthonormal coordinates. After that the calculation is identical to the first case.
+  We now note that $ov(nabla)_i ov(e)_j$ and $ov(nabla)_j ov(e)_i$ are both zero because we are working in orthonormal coordinates. After that the calculation is identical to the first case.
 ]
+
+We will now give an outline of the method used by Li and Pan, which we will then expand on in the next chapter.
+
+Li and Pan assume that they have a quasi-closed conformal vector field $X$ which satisfies condition 2. \
+Their basic plan then has 4 steps
++ They consider, for every admissable hypersurface $M$ in some class $cal(Z)$, the normal flow with velocity $f = n phi - H u$, where $u$ is the #link(<def-support>)[support function] for $X$.
++ They demonstrate the class $cal(Z)$ is preserved under this flow.
++ They demonstrate that under this flow, $V(M)$ is fixed and $A(M)$ is non-increasing.
++ They demonstrate that this flow always converges and it always converges to the integral hypersurface of $X$.
+
+#proposition[
+  Assume that the steps above all hold, then for every admissable hypersurface $M in cal(Z)$ there exists an integral hypersurface $S$ of $X$ with
+  $
+    V(M) = V(S) "and" A(M) >= A(S).
+  $
+  Hence the integral hypersurfaces of $S$ attain the Isoperimetric profile for $cal(Z)$.
+]
+#proof[
+  Let $M_t$ be the flow of $M$ as in the steps above. Then $M_t -> S$ for some admissable hypersurface $S$ and so
+  $
+    V(M) = V(M_t) = lim_(t -> infinity) V(M_t) = V(S)
+  $
+  and
+  $
+    A(M) >= lim_(t -> infinity) A(M_t) = A(S)
+  $
+]
+
+Now the class considered by Li and Pan is the class of star-shaped hypersurfaces, that is hypersurfaces with $u > 0$ everywhere.
+In order to show all the steps of the plan work they had to make some additional assumptions on the ambient manifold.
+#assumptions[
+  + $U$ is a dense open set in $N$.
+  + $phi > 0$ everywhere on $U$.
+  + $Lambda > 0$ everywhere on $U$.
+  + $cal(N)$ is the only direction of minimal Ricci curvature, that is for every unit vector $v$ which is not colinear with $cal(N)$ we have
+    $
+      ov(Ric)(cal(N),cal(N)) < ov(Ric)(v,v).
+    $
+]<assum-pan_li_general>
+
+We will quickly show how under these assumptions the third step holds.
+#proposition[
+  Under @assum-pan_li_general, we have that for a star-shaped hypersurface
+  $
+    diff_t V(M_t) = 0 "and" diff_t A(M_t) <= 0.
+  $
+]
+#proof[
+  Immediately from @prop-vol_area_variation and @lemma-integral_identities, we have
+  $
+    diff_t V(M_t) = integral_M (n phi - H u) dif S = 0.
+  $
+
+  For area we have
+  $
+    diff_t A(M_t) &= integral_M H (n phi - H u) dif S 
+    \ &= n/(n-1) integral_M ov(Ric)(nu, X - u nu) dif S - 1/n integral_M u sum_(i < j) (kappa_i - kappa_j)^2 dif S
+  $
+  now since $u$ is everywhere positive the second integral here is always positive and thus
+  $
+    diff_t A(M_t) <= n/(n-1) integral_M ov(Ric)(nu, X - u nu) dif S
+  $
+  now from @prop-riemann_ricci_x_identity we get that
+  $
+    ov(Ric)(nu, X - u nu)
+    &=
+    ov(Ric)(nu, X) - u ov(Ric)(nu, nu)
+    =
+    ip(nu, cal(N)) ov(Ric)(cal(N), X) - u ov(Ric)(nu, nu)
+    \ &=
+    u ov(Ric)(cal(N), cal(N)) - u ov(Ric)(nu, nu)
+    = u (ov(Ric)(cal(N), cal(N)) - ov(Ric)(nu,nu))
+  $
+  and so by the last assumption we get that this is a non-positive term and so
+  $
+    diff_t A(M_t) <= n/(n-1) integral_M u (ov(Ric)(cal(N), cal(N)) - ov(Ric)(nu,nu)) dif S <= 0.
+  $
+]
+
+We conclude this chapter with the main theorem proved by Li and Pan
+#theorem("Li and Pan")[
+  Let $N$ be an ambient manifold admitting a conformal vector field $X$ satisfying @conditions-quasi_closed and @assum-pan_li_general, then for any star-shaped hypersurface $M$ there exists an integral surface $S$ of $X$ with
+  $
+    V(S) = V(M) "and" A(M) >= A(S)
+  $
+]
+
+// #pagebreak(weak: true)
+// == Doubly Twisted Product Spaces
+// Before we reach the main results of this thesis we want to mention the connection between quasi-closed conformal vector fields and twisted product manifolds.
+//
+// #definition[
+//   Let $(M,g_M)$ and $(N,g_n)$ be Riemannian manifolds, we can define a metric on $M times N$ by
+//   $
+//     g(x,y) = f^2(x,y) g_M (x) compose pi_1 + g^2(x,y) g_N (y) compose pi_2,
+//   $
+//   where $x,y$ are points of $M$ and $N$ respectively. This is called the _twisted product space_ with the _twisting factors_ $f$ and $g$ being functions $f : M times N -> RR_(> 0)$ and $g : M times N -> RR_(> 0)$, it is often denoted $attach(M, bl: f) times attach(N, bl: g)$
+// ]
+//
+// Now in the same way that closed conformal vector field is locally equivalent to a warped product space, a quasi-closed conformal vector field is locally equivalent to a twisted product space.
+// #proposition[
+//   Let $N$ be a Riemannian manifold admitting a quasi-closed conformal vector field $X$. Then around any point $p$ where $X$ does not vanish, there is a coordinate neighborhood $U$ of $p$ such that
+//   $
+//     U = attach(RR, bl: f) times attach(B, bl: g)
+//   $
+// ]
+// #proof[
+//   Let $Phi_t$ be the flow induced by $X$, then consider the integral surface $S$ passing through $p$. Using @leeIntroductionSmoothManifolds2012[Theorem 9.22] we get local coordinates $(s^1,...,s^(n+1))$ in which
+//   $
+//     X = diff_(s_1)
+//   $
+//   and in which $S$ is the set where $s_1 = 0$. 
+//   Then clearly in these coordinates the image of $S$ under the flows $Phi_t$ are the level surfaces $s_1 = c$ for some constant $c$. Now the flow $Phi_t$ is a conformal map, 
+// ]
+
+#pagebreak(weak: true)
+= Main Results
+== Motivation
+As we saw in the previous section, already with quasi-closed conformal vector fields we can prove a strong result regarding Isoperimetric inequalities. However, the approach of Li and Pan requires us to assume the surface is star-shaped, which is
+
 
 
 
