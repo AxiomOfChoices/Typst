@@ -1413,7 +1413,7 @@ What we see in this proof is that quantifier elimination is intimately related t
 
 #proposition[
   $A C F_p$ has quantifier elimination.
-]
+]<prop_acf_qe>
 #proof[
   Let $p in S_n (nothing)$, we need $T union p_0 proves p$. Choose a large algebraically closed field $K$ and let $ov(a),ov(b) in K$ such that both realize $p_0$.
   We will show that there exists $phi in Aut(K)$ such that $phi(ov(a)) = ov(b)$, this will then imply that $tp(ov(a)) = tp(ov(b))$ which proves what we want. 
@@ -1439,7 +1439,7 @@ What we see in this proof is that quantifier elimination is intimately related t
   + $sigma$ is true in every algebraically closed field of characteristic $0$.
   + $sigma$ is true in every algebraically closed field of characteristic $p$ for all but finitely many $p$. 
   + $sigma$ is true in every algebraically closed field of characteristic $p$ for infinitely many $p$
-]
+]<thrm-lef_principle>
 #proof[
   Recall that for finite $p$, 
   $
@@ -1460,3 +1460,138 @@ What we see in this proof is that quantifier elimination is intimately related t
 
   For $(3) => (1)$, suppose that $A C F_0 tack.not sigma$ and $A C F_p proves sigma$ for infinitely many $p$. Then by completeness $A C F_0 tack.not not sigma$ so by $(1) => (2)$ there exists a prime $p_0$ such that for all prime numbers $p >= p_0$ we have $A C F_p proves not sigma$ and so we get a contradiction.
 ]
+There are some fun consequences of this theorem.
+#theorem("Ax")[
+  If $f : CC^N -> CC^N$ is a map where every coordinate is a polynomial, then if it is injective, then it is surjective.
+]
+#proof[
+  Let $hat(FF)_p$ be the algebraic closure of $FF_p$. We claim that every injective polynomial map $f : hat(FF)_p^N -> hat(FF)_p^N$ is surjective. If we have this then by @thrm-lef_principle we can transfer this result to $CC$.
+
+  Now to prove the claim first note that every polynomial has finitely many coefficients and that
+  $
+    hat(FF)_p = union.big_(n = 1)^infinity FF_(p^n)
+  $
+  has the property that every finite subset generates a finite field. Then WLOG we may assume that all the coefficients of $f$ are in $FF_(p^m)$ for some fixed $m$. Then we get that $f$ induced a map $f_((n)) : FF_(p^n)^N -> FF_(p^n)^N$ for $n >= m$. By assumption all $f_((n))$ are injective and since these are finite fields they must also be surjective. Hence since $f = union.big_(n=m)^infinity f_((n))$ we get that $f$ is also surjective.
+
+  Now to transfer this result to $CC$, fix $d in NN$ the degree of the polynomial and $N in NN$ the number of variables. We write $g(ov(x), ov(a))$ the degree $d$ polynomial in $ov(x)$ with coefficients $ov(a)$. Then consider the sentence
+  $
+    forall ov(a) ((forall ov(x) forall ov(y) (g(ov(x), ov(a)) = g(ov(y),ov(a)) => ov(x) = ov(y)) => forall ov(y) exists ov(x) (f(ov(x),ov(c)) = ov(y)))
+  $
+  this sentence encodes exactly the statement of the theorem for polynomials of degree $<= d$. Hence by @thrm-lef_principle since these sentences are true in $hat(FF)_p$ then they are also true in $CC$.
+]
+#counter(heading).update((1,8,6))
+
+Coming back to quantifier elimination, we have an assortment of corollaries stemming from @prop_acf_qe 
+#corollary(base: "heading")[
+  Let $K < L$ both be algebraically closed fields, if $F(ov(x))$ is a system of polynomial equations and inequalities with coefficients from $K$ with a solution in $L$, then the system also has a solution in $K$.
+]<cor-pol_equal>
+#proof[
+  Let $phi(ov(y)) = exists ov(x) F(ov(x), ov(y))$ where $ov(y)$ are the coefficients of the polynomials.
+
+  By quantifier elimination we have that $phi(ov(y))$ is equivalent to a quantifier free formula $psi(ov(y))$. Then if for some choice of coefficients $L sat psi(ov(c))$ then $K sat psi(ov(c))$ and so we are done.
+]
+
+#corollary("Weak Hilbert Nullstellensatz", base: "heading")[
+  Let $K$ be an algebraically closed field, $f_1,...,f_n in K[ov(x)]$. $f_i$ have a common zero in $K^n$ if and only if $1 in.not (f_1,...,f_n)$.
+]<cor-weak_null>
+#proof[
+  The forward direction is very easy, if they have a common zero then everything in the ideal has that same common zero.
+
+  On the other hand if $1$ is not in the ideal, let $I$ be a maximal ideal containing $(f_1,...,f_n)$ then set
+  $
+    L = hat(K[ov(x)] quo I)
+  $
+  which is clearly an algebraically closed field containing $K$. Now in $L$ there are common roots, they are the variables $x_1,...,x_n$. Hence by the 
+  // @cor-pol_equal 
+  we get the desired result.
+]
+#counter(heading).update((1,8))
+
+We can now apply this to some basic algebraic geometry.
+#definition[
+  + If $S seq K[ov(x)]$ we set #h(1fr)
+    $
+      V(S) = {ov(a) in K^n : f(ov(a)) = 0, forall f in S}
+    $
+  + If $Y seq K^n$ we set
+    $
+      I(Y) = { f in K[ov(x)] : f(ov(a)), forall ov(a) in Y}
+    $
+
+    We call a subset $V$ of $K^n$ _Zariski-closed_ if $V = V(S)$ for some $S in K[ov(x)]$.
+    
+    An ideal is _radical_ if it is closed under taking roots.
+]
+#proposition[
+  For all $X,Y seq K^n$
+  + $I(Y)$ is a radical ideal
+  + If $X$ is Zariski-closed, then $X = V(I(X))$.
+  + If $X subset.neq Y$ and $X,Y$ are Zariski-closed, then $I(Y) subset.neq I(X)$.
+  + The Zariski-closed sets form a topology, that is they are closed under finite unions and arbitrary intersections. In particular if $X,Y$ are Zariski-closed then 
+    $
+      X union Y = V(I(X) sect I(Y))
+    $ 
+    and 
+    $
+      X sect Y = V(I(X) + I(Y)).
+    $
+]
+#proof[
+  Exercise.
+]
+
+#theorem("Hilbert basis theorem")[
+  If $K$ is a field, then $K[ov(x)]$ is a Noetherian ring. That is, there is no infinite increasing chain of ideals. In particular, every ideal is finitely generated.
+]
+
+#corollary[
+  If $K$ is a field, then there is no infinite decreasing sequence of Zariski-closed sets.
+]
+#proof[
+  We apply Hilbert's Basis theorem along with the third proposition.
+]
+
+#definition[
+  An ideal $I$ in a ring is _prime_ if
+  $
+    a dot b in I => a in I "or" b in I
+  $
+]
+Clearly every prime ideal is radical.
+
+#theorem("Primary decomposition")[
+  If $I seq K[ov(x)]$ is a radical ideal, then there are prime ideals $J_1,...,J_n$ such that
+  $
+    I = J_1 sect ... sect J_n
+  $
+]
+
+We can now prove the strong form of @cor-weak_null
+#theorem("Hilbert Nullstellensatz strong form")[
+  Let $K$ be algebraically closed, if $I subset.neq J$ and both are radical in $K[ov(x)]$, then
+  $
+    V(J) subset.neq V(I)
+  $
+]<thrm-strong_null>
+#proof[
+  Note that the non-strict inclusion is trivial, the hard part is to prove the non-strict inclusion. That is, we want to find a common root of $I$ which is not a common root of $J$. Let $p in J backslash I$, we want want to find a point $ov(b)$ which is a common root of $I$ but $p(ov(b)) != 0$.
+
+  We decompose $I = I_1 sect ... I_n$ into prime ideals and let $i$ be such that $p in.not I_i$.
+
+  By Hilbert basis theorem we have $I_i = (f_1,...,f_n)$ so we want to find a root of $f_1,...,f_n$ which is not a root of $p$. Let $R = K[ov(x)]/I_i$ then $R$ is an integral domain since $I_i$ is prime, let $R_0$ be the field of fractions of $R$ and $L = hat(R_0)$.
+
+  In $L$ consider the system
+  $
+    cases( f_i = 0 : 1 <= i <= m, p eq.not 0)
+  $
+  it has a solution in $L$ and thus by 
+  // @cor-pol_equal 
+  it also has a solution in $K$ and so we are done.
+]
+#corollary[
+  If $I$ is a radical ideal then $I = I(V(I))$
+]
+#proof[
+  Apply @thrm-strong_null to $J = I(V(I))$.
+]
+
