@@ -1,6 +1,7 @@
 #import "/Templates/monograph.typ": style, frontpage, outline_style, chapter_headings, start_outline
 #import "@preview/ctheorems:1.1.0": *
 #import "/Templates/math.typ": *
+#import "@preview/cetz:0.2.1"
 #show: style
 #show: equation_references
 #show: doc => frontpage(
@@ -1041,7 +1042,42 @@ We conclude this chapter with the main theorem proved by Li and Pan
 #pagebreak(weak: true)
 = Main Results
 == Motivation
-As we saw in the previous section, already with quasi-closed conformal vector fields we can prove a strong result regarding Isoperimetric inequalities. However, the approach of Li and Pan requires us to assume the surface is star-shaped, which is
+As we saw in the previous section, already with quasi-closed conformal vector fields we can prove a strong result regarding Isoperimetric inequalities. However, there are still cases which we would expect these techniques to be applicable to which cannot be reached with their approach.
+
+#example[
+  Consider $N = RR^(n+1)$ with the following conformal vector field
+  $
+    X(x^1,...,x^n) = x^i diff_i - x^2 diff_1 + x^1 diff_2
+  $
+  this is indeed a quasi-closed conformal vector field with conformal factor $phi$, but its integral surfaces are not compact, and thus we have no hope of attaining a useful Isoperimetric inequality for star-shaped surfaces with respect to this flow.
+
+  We could instead work with $Y = x^i diff_i$ but then there are surfaces that will never be star-shaped with respect to $Y$ but are star-shaped with respect to $X$, we really need star-shapedness since it is needed to guarantee convergence and the fact that area decreases.
+  #block[
+  #h(1fr)
+  #set align(center);
+  #cetz.canvas({
+    import cetz.plot: *
+    plot(size: (8,8), axis-style: "school-book", x-tick-step: none, y-tick-step: none, {
+      add(domain: (0, 1), samples: 200, t => {
+        let r = 1 + calc.pow(calc.sin(calc.pi*(2*t+1/4)),2);
+        let theta = t + calc.sin(4*calc.pi*t)/8;
+        return (r*calc.cos(2*calc.pi*theta), r*calc.sin(2*calc.pi*theta))
+      })
+      for s in (0,0.02452,0.04848,0.07392,0.10471,0.16832,0.26394,0.3846,0.4391,0.4728,
+              0.5,0.52452,0.54848,0.57392,0.60481,0.66832,0.76394,0.8846,0.9391,0.9728) {
+        let t = s;
+        let r = 1 + calc.pow(calc.sin(calc.pi*(2*t+1/4)),2);
+        let theta = t + calc.sin(4*calc.pi*t)/8;
+        let p = (r*calc.cos(2*calc.pi*theta), r*calc.sin(2*calc.pi*theta))
+        let v = (p.at(0) - p.at(1), p.at(1) + p.at(0))
+        let factor = 0.3;
+        let p_2 = (p.at(0) + factor*v.at(0), p.at(1) + factor*v.at(1))
+        add((p,p_2), style: (stroke: (paint: red), mark: (end: ">", scale: 0.5)))
+      }
+    })
+  })
+  ]
+]
 
 
 
