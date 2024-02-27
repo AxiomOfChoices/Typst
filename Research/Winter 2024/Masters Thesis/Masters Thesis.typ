@@ -307,12 +307,18 @@ The Partial Differential Equations (PDEs) we will be dealing with most in this d
 
 
 
-Let $T in (0,infinity]$ and $U seq M$ a smooth open domain, a function $u_t : [0,T] times U$ is said to solve a *quasi-linear parabolic PDE* if it satisfies a differential equation of the form
+Let $T in (0,infinity]$ and $U seq M$ a smooth open domain, a function $u : [0,T] times U$ is said to solve a *quasi-linear parabolic PDE* if it satisfies a differential equation of the form
 #math.equation(block: true, numbering: "(1)",
-  $ u_t (x,t) = a^(i j)(x,t,u,nabla u) nabla_i nabla_j u + G(x,t,u,nabla u) $
+  $ diff_t u (x,t) = a^(i j)(x,t,u,nabla u) nabla_i nabla_j u + G(x,t,u,nabla u) $
 )
 <eqn-parabolic_pde>
-where $a$ is symmetric positive definite matrix.
+where $a$ is symmetric positive definite matrix depending smoothly on its inputs and $G$ is a function depending smoothly on its inputs.
+
+The equation is said to be in _divergence form_ if it can be written instead as
+#math.equation(block: true, numbering: "(1)",
+  $ diff_t u (x,t) = nabla_i (b^(i j)(x,t,u,nabla u) nabla_j u) + G(x,t,u,nabla u) $
+)
+<eqn-div_parabolic_pde>
 
 We say that the PDE in @eqn-parabolic_pde is _uniformly parabolic_ if there exist constants $A,B$ such that
 $
@@ -363,9 +369,50 @@ The most important tool in the analysis of parabolic PDEs is the maximum princip
   $ v(x,t) = e^(-B t) u(x,t) - sup_(x in U) u(x,0) $
 ]
 
+The second most important tool is short time-existence, which will be extremely important as we want to use the derivatives of geometric quantities to characterize them, so we need the flow to exists for some non-zero amount of time.
+
+#theorem[
+  If $u(0,dot)$ is a smooth initial condition then @eqn-parabolic_pde has a solution $u$ for some time $T > 0$ which is smooth on $[0,T)$. Furthermore, if there is a uniform bound 
+  $
+    ||u(t,dot)||_(C^(1+r)) <= K "with" t "fixed in" [0,s)
+  $
+  for some constants $r > 0$, $K > 0$ then $T > s$.
+]
+#proof[
+  Proposition 8.2 in @taylorPartialDifferentialEquations2023[p.~411].
+]
+
+The last PDE results which we will need are the famous Nash-Moser estimates, for a detailed dive see @taylorPartialDifferentialEquations2023 @ladyzenskajaLinearQuasilinearEquations1968a.
+#theorem("Nash-Moser estimates")[
+  Let $u$ be a solution to @eqn-parabolic_pde on $[0,T)$ with smooth initial condition, if we know that
+  $
+    |u(t,dot)| < c_1 "and" ||nabla u(t, dot)|| <= c_2 "on" [0,T)
+  $
+  then on any subdomain $U'$ with $ov(U') seq U$ we have for some $r > 0$ depending only $c_1,c_2,A,B$ that
+  $
+    ||u(t,dot)||_(C^(1+r)) <= C(c_1,c_2,A,B,d)
+  $
+  where $d$ is the distance between $diff (U')$ and $diff U$.
+]
+#proof[
+  We will use Theorem 1.1 in @ladyzenskajaLinearQuasilinearEquations1968a[p.~517], it is enough to show that the functions
+  $
+    diff_(x^k) a^(i j)(x,t,v,p),
+    diff_v a^(i j)(x,t,v,p),
+    diff_(p^k) a^(i j)(x,t,v,p),
+    G(x,t,v,p)
+  $
+  are uniformly bounded on the set
+  $
+    { (x,t,v,p) : x in ov(U), |v| <= c_1 "and" ||p|| <= c_2}.
+  $
+  But this is immediate since these functions depend smoothly on their inputs and thus are continuous and so since the set above is compact they must attain their maximum inside that set and thus they are bounded by that maximum.
+]
+
+
 == Evolving Hypersurfaces
 
-Now that we are familiar with geometry and PDEs we can start to use them together to attack the Isoperimetric problem.
+Now that we are familiar with geometry and parabolic PDEs we can start to use them together. This is done by use of *geometric flows*.
 #definition[
   Let $F : M -> N$ be an admissible hypersurface. Let $F_t$ be a function $F : I times M -> N$, where $I = [0,T)$ for some fixed $T$ and $F_0 = F$ on $M$. $F_t$ is called a _normal flow_ with _normal velocity_ $f$ if
   $
@@ -1115,9 +1162,21 @@ The first condition informally means that $X^perp$ is a dilation-like vector fie
 The second condition informally means that our scale function $lambda$ is increasing in the direction of $X^perp$, so just like in Euclidean space as balls increase in radius their mean curvature decreases. \
 The third condition is necessary for area to decrease along the normal flow we will construct.
 
+For now we will assume that the flow exists on some interval $[0,T)$, we will show this must be the case later, in @prop-flow_short_time.
+
+#pagebreak(weak: true)
+== Evolution equation for $lambda$
+
+#pagebreak(weak: true)
+== Existence and smoothness
+#proposition("Short Time Existence")[
+  The normal flow with velocity $n phi - H u$ exists f
+]<prop-flow_short_time>
+
+
 #pagebreak(weak: true)
 
-#bibliography("Thesis.bib")
+#bibliography("Thesis.bib", style: "springer-mathphys")
 
 
 
