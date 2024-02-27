@@ -640,7 +640,7 @@ These spaces carry a lot of nice properties, but the most important one for us i
 #proof[
   Let us compute the Lie derivative $lie_X g$,
   $
-    lie_X g 
+    lie_X g
     &= lie_X (d r^2 + f^2(r) g_N^2)
     = 2 d r lie_X (d r) + g_N^2 lie_X (f^2(r))
     \ &= 2 d r (d (lie_X r)) + 2 g_N^2 f^2(r) f'(r)
@@ -719,7 +719,7 @@ Now consider, for a moment, the spheres in $RR^n$ of radius $r$. They are the in
   $
     lambda = (||X||^2)/phi^2
   $
-]
+]<def-scale>
 Since we know $lambda$ is constant on integral surfaces, its gradient must be colinear with $X$, that is $ov(nabla) lambda = 2 Lambda X$ for some function $Lambda$. We note a convenient expression for $Lambda$.
 #proposition[
   Where $lambda$ is defined, we have
@@ -1092,15 +1092,28 @@ We can then try to consider foliations which are in some sense 'compatible' with
 ]
 
 == Setting
-We will consider a complete $n+1$ dimensional Riemannian manifold $N$, with $n >= 2$. On this manifold we consider a conformal vector field $X$ along with a foliation $cal(F)$ which are compatible in the sense that the foliation $cal(F)$ induces a decomposition $X = X^perp + X^top$ where $X^perp$ is a quasi-closed conformal vector field with integral surfaces $S_alpha in cal(F)$ and $X^top$ is a quasi-closed Killing vector field.
+We will consider a complete $n+1$ dimensional Riemannian manifold $N$, with $n >= 2$. On this manifold we consider a conformal vector field $X$ along with a foliation $cal(F)$ which are compatible in the sense that the foliation $cal(F)$ induces a decomposition $X = X^perp + X^top$ where $X^perp$ is a quasi-closed conformal vector field with integral surfaces $S_alpha in cal(F)$ and $X^top$ is a quasi-closed Killing vector field, that is its conformal factor is zero.
+
+We will associate with $X^perp$ its conformal factor $phi$ which is the same as that of $X$, we will also associate the scale function (@def-scale) $lambda$ and its derivative $Lambda$ (@prop-lambda_def).
 
 We will also make the following assumptions
 #assumptions[
-+ The conformal factor $phi$ is everywhere positive.
++ The conformal factor $phi$ of $X^perp$ is everywhere positive.
 + The function $Lambda$ (@prop-lambda_def) is everywhere positive.
-+ The function
++ The directions $X^perp$ and $X^top$ are both of least Ricci curvature, that is for any tangent vector $Y in T_p N$ we have
+  $
+    1/(||Y||^2) ov(Ric)(Y,Y)
+    >=
+    1/(||X^perp||^2) ov(Ric)(X^perp,X^perp)
+    =
+    1/(||X^top||^2) ov(Ric)(X^top,X^top)
+  $
 ]
 
+
+The first condition informally means that $X^perp$ is a dilation-like vector field, because under its first order vector field flow volumes increase. \
+The second condition informally means that our scale function $lambda$ is increasing in the direction of $X^perp$, so just like in Euclidean space as balls increase in radius their mean curvature decreases. \
+The third condition is necessary for area to decrease along the normal flow we will construct.
 
 #pagebreak(weak: true)
 

@@ -262,5 +262,5 @@ for if $mM sat phi(ov(a))$ for some isolating formula then it would have an isol
 
 Now if $p_n$ is not a type, that is not finitely consistent, then all the types of $mM$ are isolated so no issues there, so we can assume that $p_n$ is a type. Now we simply need to omit this type, in order to do that we need to show that $p_n$ is not isolated, that is, for every satisfiable formula $psi(ov(x))$ there is a formula $phi(ov(x))$ which isolates a complete type such that $T tack.not forall ov(x) (psi(ov(x)) -> not phi(ov(x)))$.
 
-But this is true, since for every formula $psi$ we have that there exists some complete isolated type $p in [psi]$, let $phi$ be its isolated formula, then $T proves forall ov(x) (phi(ov(x)) -> psi(ov(x))$ so $T tack.not forall ov(x) (psi(ov(x)) -> not phi(ov(x)))$, and so $p_n$ are all not isolated and thus all $p_n$ can be omitted.
+But this is true, since for every formula $psi$ we have that there exists some complete isolated type $p in [psi]$, let $phi$ be its isolated formula, then $T proves forall ov(x) (phi(ov(x)) -> psi(ov(x))$ so $T tack.not forall ov(x) (psi(ov(x)) -> not phi(ov(x)))$, and so $p_n$ are all not isolated and thus all $p_n$ can be simultaneously omitted.
 
