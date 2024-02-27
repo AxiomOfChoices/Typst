@@ -49,9 +49,6 @@ Now the forward direction is tricky, first we can assume that $phi(ov(c))$ being
 #lemma[
   Let $phi(ov(x))$ be a closed formula, meaning that if $mN sat T$ is a model containing $mM sat T$ then $mN sat phi(ov(a)) => mM sat phi(ov(a))$ for all $a in mM$. Then $T proves forall ov(x) (phi(ov(x)) <-> psi(ov(x)))$ for some universal formula $psi(ov(x))$.
 ]
-#remark[
-  Universal sentences are always closed.
-]
 #proof[
   Add a constant $c$ to the language $L$ and set $T' = angle.l T, phi(ov(c)) angle.r$ to be the theory closure of $T$ and $phi(ov(c))$. Assume then that $mM sat T'_forall$, then by assignment 2 there is some model $mN sat T'$ that contains $mM$. Then $mN sat phi(ov(c))$, but now since it is a closed formula $mM sat phi(ov(c))$ and so $T'_forall proves phi(ov(c))$. Then by definition, there is a finite collection of universal sentences $psi_i (ov(c))$ with
   $

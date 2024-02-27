@@ -724,9 +724,9 @@ Since we know $lambda$ is constant on integral surfaces, its gradient must be co
 #proposition[
   Where $lambda$ is defined, we have
   $
-    ov(nabla) lambda = 2 (phi^2 - X(phi))/phi^3 X
+    ov(nabla) lambda = 2 Lambda X = 2 (phi^2 - X(phi))/phi^3 X
   $
-]
+]<prop-lambda_def>
 #proof[
   We see that
   $
@@ -1049,11 +1049,11 @@ As we saw in the previous section, already with quasi-closed conformal vector fi
   $
     X(x^1,...,x^n) = x^i diff_i - x^2 diff_1 + x^1 diff_2
   $
-  this is indeed a quasi-closed conformal vector field with conformal factor $phi$, but its integral surfaces are not compact, and thus we have no hope of attaining a useful Isoperimetric inequality for star-shaped surfaces with respect to this flow.
+  this is indeed a quasi-closed conformal vector field with conformal factor $phi$, but its integral surfaces are not compact and they do not have fixed mean curvature. Thus we have no hope of attaining a useful Isoperimetric inequality for star-shaped surfaces with respect to this flow.
 
-  We could instead work with $Y = x^i diff_i$ but then there are surfaces that will never be star-shaped with respect to $Y$ but are star-shaped with respect to $X$, we really need star-shapedness since it is needed to guarantee convergence and the fact that area decreases.
-  #block[
-  #h(1fr)
+  We could instead work with $Y = x^i diff_i$ but then there are hypersurfaces that will never be star-shaped with respect to $Y$ but are star-shaped with respect to $X$, we really need star-shapedness since it is needed to guarantee convergence and to guarantee that area decreases. An example of such a surface can be seen in @fig-star_shaped.
+  #figure(
+  [
   #set align(center);
   #cetz.canvas({
     import cetz.plot: *
@@ -1076,10 +1076,30 @@ As we saw in the previous section, already with quasi-closed conformal vector fi
       }
     })
   })
-  ]
+  ],
+  caption: [Hypersurface in $RR^2$ which is star shaped with respect to $X$ but not $Y$]
+  )<fig-star_shaped>
 ]
 
+We will shortly introduce the tools we will need to deal with this issue, but before we do that we want to motivate these tools a little. We can think of the quasi-closedness condition on $X$ as a compatibility condition between $X$ and a foliation $S_alpha$, namely that $X$ is everywhere orthogonal to $S_alpha$.
 
+We can then try to consider foliations which are in some sense 'compatible' with $X$ given in the example above.
+
+#example[
+  Consider the foliation $cal(F)$ of $RR^(n+1) backslash 0$ given by spheres $S_alpha$ centered at the origin, this foliation is not everywhere orthogonal to $X$, however, the foliation is fixed under the normal flow $n phi - H u$ and the foliation induces a decomposition $X = X^perp + X^top$ where $X^perp$ is orthogonal to $S_r$ and $X^top$ is tangent to $S_r$.
+
+  Now importantly $X^perp$ is just $Y$ and thus is also a conformal vector field, and thus since $X^top = X - X^perp$ then $X^top$ is also conformal. Now $X^perp$ is a quasi-closed conformal vector field which we can manage with the preexisting techniques, so our goal is to find a way to use this decomposition to reduce to the case of just $X^perp$.
+]
+
+== Setting
+We will consider a complete $n+1$ dimensional Riemannian manifold $N$, with $n >= 2$. On this manifold we consider a conformal vector field $X$ along with a foliation $cal(F)$ which are compatible in the sense that the foliation $cal(F)$ induces a decomposition $X = X^perp + X^top$ where $X^perp$ is a quasi-closed conformal vector field with integral surfaces $S_alpha in cal(F)$ and $X^top$ is a quasi-closed Killing vector field.
+
+We will also make the following assumptions
+#assumptions[
++ The conformal factor $phi$ is everywhere positive.
++ The function $Lambda$ (@prop-lambda_def) is everywhere positive.
++ The function
+]
 
 
 #pagebreak(weak: true)
