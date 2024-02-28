@@ -1434,6 +1434,9 @@ What we see in this proof is that quantifier elimination is intimately related t
   Finally we have a map of countable algebraically closed subfields $L -> L$, we can extend this map to all of $K$ since $K$ has a transcendental basis of $L$ and so we can permute this transcendental basis whichever way we like to extend this map.
 ]
 
+#pagebreak(weak: true)
+== Algebraic Geometry
+Now that we have quantifier elimination of $A C F_p$ we can use that to very quickly prove the foundations of algebraic geometry
 #theorem("Lefchetz's principle")[
   Let $sigma$ be a sentence in the language of fields. TFAE
   + $sigma$ is true in every algebraically closed field of characteristic $0$.
@@ -1479,7 +1482,6 @@ There are some fun consequences of this theorem.
   $
   this sentence encodes exactly the statement of the theorem for polynomials of degree $<= d$. Hence by @thrm-lef_principle since these sentences are true in $hat(FF)_p$ then they are also true in $CC$.
 ]
-#counter(heading).update((1,8,6))
 
 Coming back to quantifier elimination, we have an assortment of corollaries stemming from @prop_acf_qe 
 #corollary(base: "heading")[
@@ -1505,7 +1507,6 @@ Coming back to quantifier elimination, we have an assortment of corollaries stem
   // @cor-pol_equal 
   we get the desired result.
 ]
-#counter(heading).update((1,8))
 
 We can now apply this to some basic algebraic geometry.
 #definition[
@@ -1595,3 +1596,113 @@ We can now prove the strong form of @cor-weak_null
   Apply @thrm-strong_null to $J = I(V(I))$.
 ]
 
+#lemma[
+  Let $K$ be a field,
+  + A subset of $K^n$ is definable over $K$ by an atomic formula if and only if it is of the form $V(p)$ for some $p in K[x_1,...,x_n]$.
+  + A subset of $K^n$ is definable over $K$ by a quantifier free formula if and only if it is a Boolean combinations of Zariski closed sets.
+]<lem-constr>
+#proof[
+  (1) is straight forward, as is the forward direction for (2).
+
+  For the backward direction of (2), assume that $X$ is a Boolean combination of $Z_i$ for some Zariski-closed family $Z_i$, then by definition we have 
+  $
+    Z_i = V(p^i_1) sect ... sect V(p^i_(n_i)
+  $ 
+  then immediately we have that $X$ is a boolean combination of
+  $
+    V(p^i_j)
+  $
+]
+
+#definition[
+  A set in $K^n$ is constructible if it satisfies (2) in @lem-constr.
+]
+
+#theorem("Chevalley")[
+  Let $K$ be algebraically closed, the images of constructible sets by polynomial maps are constructible.
+]
+#proof[
+  Let $X seq K^n$ be constructible, $p : K^n -> K^m$ be a polynomial map
+  $
+    p(X) = {ov(y) in K^n : exists ov(x) (ov(x) in X and ov(y) = p(ov(x)))}
+  $
+  then since $p(ov(x))$ is definable over $K$ subset of $K^m$. Since the theory of $K$ has quantifier elimination, $p(ov(x))$ is definable by a quantifier free formula and thus is constructible.
+]
+
+== Homogeneous Structures
+#definition[
+  $mM$ is $kappa$-_homogeneous_ if for every subset $A seq mM$ with $|A| < kappa$, every elementary embedding $f : A -> mM$ and every element $a in mM$ there is an extension $g : A union {a} -> mM$ which is also an elementary embedding.
+
+  $mM$ is called _homogeneous_ if it is $|mM|$-homogeneous. $mM$ is _strongly_ $kappa$-_homogeneous_ if we have an extension $g : mM -> mM$ of $f$ instead.
+]
+#remark[
+  Sometimes strong homogeneity is called ultra homogeneity.
+]
+
+One might wonder why we do not similarly define $mM$ to be strongly homogeneous if it is strongly $|mM|$-homogeneous. This is explained by the following proposition.
+#proposition[
+  $mM$ is homogeneous if and only if it is strongly $|mM|$-homogeneous.
+]
+#proof[
+  Exercise, quite simple using back and forth.
+]
+
+#proposition[
+  If $mM equiv mN$ are saturated and are of the same cardinality then $mM tilde.equiv mN$.
+]
+#proof[
+  We prove, as expected, by back and forth. Set $kappa = ||mM|| = ||mN|$ and numerate both models as 
+  $
+    mM = {a_alpha : alpha < kappa } "and"
+    mN = {b_alpha : alpha < kappa }.
+  $
+
+  We will construct a partial map $f_alpha : A_alpha -> B_alpha$ with $|f| <= 2 |alpha|$ such that $f_alpha seq f_(alpha + 1)$ and $a_alpha in A_alpha, b_alpha in B_alpha$.
+
+  We start with the base case of $alpha = 0$ where $f_alpha = nothing$.
+  For the limit case suppose that $f_beta$ is constructed for $beta < alpha$, we write
+  $
+    f'_alpha = union.big_(beta < alpha) f_beta
+  $
+  and we look at the type $p = tp^mM (a_alpha quo A_alpha)$. Notice that for any formula $phi in p$ we can replace all the parameters in $A_alpha$ with their image under $f_alpha$, so we can define $f'_alpha (p)$ which is then a complete type over $B_alpha$ and thus $f'_alpha (p) in S_n (B_alpha)$. Then set $b$ to be the realization of this type, then we define the extension $f''_alpha (a_alpha) = b$.
+  We similarly do the same for the backwards direction, we take a type in $mN$ and map it back to $mM$. Then we set $f_(alpha) = f''_alpha$.
+]
+
+#theorem[
+  Suppose $mM equiv mN$ are homogeneous of the same cardinality, then if $mM,mN$ realize the same complete $n$-types over the empty set for each $n$, then $mM tilde.equiv mN$.
+]
+Before we prove this we need a small lemma
+#lemma[
+  For any $A seq mM$ there is some embedding $A -> mN$.
+]
+#proof[
+  Induction on $|A|$.
+  + If $A$ is finite then since $mM$ and $mN$ realize the same types this is immediate.
+  + If $|A| = mu >= aleph_0$ then we can enumerate $A = {a_alpha : alpha < mu}$ and so by a sub induction on $alpha$ we construct $f(a_alpha)$. 
+    Suppose that for some fixed $alpha$ we have constructed $f(a_beta)$ for $beta < alpha$. Then let $A_alpha = {a_beta : beta <= alpha }$ then by our outer induction hypothesis there exists an embedding $g : A_alpha -> mN$. Note that we are not done since the $g$ could be incompatible with $f$, but notice that that $f compose g^(-1)$ is a map $g(A_alpha backslash {a_alpha}) -> mN$ then by homogeneity we can extend this to an elementary embedding $h : g(A_alpha) -> mN$ and then we set $f(a_alpha) = h(g(a_alpha))$.
+]
+
+The intuitive explanation for this proof is that by induction we get a sequence of maps $f_alpha$ and then by homogeneity we can arrange the images of the maps so that they sit on top of each other for increasing $alpha$ which is enough to construct a limit map.
+
+Now to prove the theorem.
+#proof[
+  We now use a back and forth argument to prove the theorem. We will not delve into the full details here but simply mention that when we want to add an element to the partial isomorphism $f_alpha$, we use the above lemma to get a new map $g$ with an extended domain. But then to make that map compatible with the previous maps we can use homogeneity again to align the images so that the image of $g$ sits on top of the images of $f_alpha$, then we use that as our extension.
+]
+
+#definition[
+  A model $mM$ is called $kappa$-_universal_ if for every $mN equiv mM$ with $||mN|| <= kappa$ there exists an elementary embedding $f : mN -> mM$.
+
+  $mM$ is called _universal_ if it is $|mM|$-universal.
+
+  $mM$ is $< alpha_0$-universal if for every $n$, $mM$ realizes all types in $S_n^(Th(mM)) (nothing)$.
+]
+
+#theorem[
+  If $mM$ is $kappa$-saturated then $mM$ is $kappa$-homogeneous and $kappa$-universal.
+]
+#proof[
+  For $kappa$-homogeneity if we have $|A| < kappa$ and an embedding $f : A -> mM$, then pick any $a in mM$. We can take the type $p = tp(a quo A)$ and map it to $q = f(p)$ and define $f(a)$ to be the element that realizes this type.
+
+  For $kappa$-universality we let $mN equiv mM$, and $||mN|| <= kappa$. \ Then we enumerate $mN = {a_alpha : alpha < kappa}$, and we construct $f(a_alpha)$ by induction. We set $p = tp(a_alpha quo { a_beta : beta < alpha })$ and then $q = f(p)$ and so we just set $f(a_alpha)$ to be any element which realizes $q$.
+]
+// TODO: MAKE ALL THESE PROOFS CLEARER

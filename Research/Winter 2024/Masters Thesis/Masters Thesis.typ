@@ -423,11 +423,16 @@ Now that we are familiar with geometry and parabolic PDEs we can start to use th
 
 #remark[
   We will often refer to $F_t (M)$ as $M_t$ for brevity. Additionally many constructions on $M_t$ will be denoted without explicit reference to $t$, i.e $g$ instead of $g(t)$, even though the metric of $M_t$ will depend on $t$. Keep in mind that any construction of the metric will also depend on $t$.
-
 ]
 
-
-As a manifold flows it's various properties, both local and global, will change, the equations governing these changes are called _evolution equations_. We will now derive some of these evolution equations, we will first start with the most important evolving tensor, the metric.
+As a manifold flows it's various properties, both local and global, will change, the equations governing these changes are called _evolution equations_. For ambient quantities, i.e. those quantities that are simply restricted to the hypersurface this evolution is simple.
+#proposition[
+  Let $T$ be any tensor on $N$, then we call $T|_(M_t)$ the orthogonal projection of $T$ onto $T_p M_t$. We then have
+  $
+    diff_t (T|_(M_t)) = (f ov(nabla)_nu T)|_(M_t)
+  $
+]
+We will now derive some of these evolution equations, we will first start with the most important evolving tensor, the metric.
 
 #remark[
     We will also adapt two important coordinate systems, we will be working in normal coordinates around a point $p in M$ which will call these coordinates $x^i$, we will denote their partial derivatives $diff_i$ or $e_i$ and the covariant derivatives with respect to the induced metric $nabla_i$. Secondly we will also have normal coordinates at $F(p) in N$, we will call these coordinates $y^i$, their partials $diff_y_i$ or $ov(e)_i$ and the covariant derivatives $ov(nabla)_i$. Note that we can rotate the normal coordinates $y^i$ so that they align with $x^i$, in the sense that _at the point $p$_
@@ -1005,6 +1010,7 @@ In order to show all the steps of the plan work they had to make some additional
   + $U$ is a dense open set in $N$.
   + $phi > 0$ everywhere on $U$.
   + $Lambda > 0$ everywhere on $U$.
+  + The integral hypersurfaces of $X$ are compact.
   + $cal(N)$ is the only direction of minimal Ricci curvature, that is for every unit vector $v$ which is not colinear with $cal(N)$ we have
     $
       ov(Ric)(cal(N),cal(N)) < ov(Ric)(v,v).
@@ -1056,7 +1062,7 @@ We conclude this chapter with the main theorem proved by Li and Pan
   $
     V(S) = V(M) "and" A(M) >= A(S)
   $
-]
+]<thrm-li_pan>
 
 // #pagebreak(weak: true)
 // == Doubly Twisted Product Spaces
@@ -1147,6 +1153,7 @@ We will also make the following assumptions
 #assumptions[
 + The conformal factor $phi$ of $X^perp$ is everywhere positive.
 + The function $Lambda$ (@prop-lambda_def) is everywhere positive.
++ The integral hypersurfaces of $X^perp$ are compact.
 + The directions $X^perp$ and $X^top$ are both of least Ricci curvature, that is for any tangent vector $Y in T_p N$ we have
   $
     1/(||Y||^2) ov(Ric)(Y,Y)
@@ -1162,15 +1169,49 @@ The first condition informally means that $X^perp$ is a dilation-like vector fie
 The second condition informally means that our scale function $lambda$ is increasing in the direction of $X^perp$, so just like in Euclidean space as balls increase in radius their mean curvature decreases. \
 The third condition is necessary for area to decrease along the normal flow we will construct.
 
-For now we will assume that the flow exists on some interval $[0,T)$, we will show this must be the case later, in @prop-flow_short_time.
+Our flow will consist of two steps,
++ First we will use a time dependent conformal vector field $X(t) = X^perp + X^top (1-t/T_0)$ for some constant $T_0$, we will consider the flow with velocity
+  $
+    f = n phi - H ip(X(t), nu),
+  $
+  we will run this flow until $t = T_0$.
++ If the flow survives after $t = T_0$ we will stop the flow, and then set $X(t) = X^perp$, we then continue with the flow
+  $
+    f = n phi - H ip(X, nu)
+  $
+  for however long the flow lasts.
 
-#pagebreak(weak: true)
+Note that in this setting, $u$'s definition depends on time but we will drop this dependence in our notation and only explicitly mention it when it comes up.
+Note that, if $u > 0$ when $t = T_0$, then at that point in time the surface is star-shaped with respect to just $X^perp$ so we can apply the methods of Li and Pan.
+
+For now we will assume that the flow exists on some interval $[0,T)$, we will show this must be the case later, in @prop-flow_short_time.
+We will now start computing the evolution of various geometric quantities along our flow. For convenience we will use the parabolic operator
+$
+  L = diff_t - u Delta
+$
+as well as the functions
+$
+  u^perp = ip(X^perp, nu), quad u^top = (1-t/T_0) ip(X^top, nu)
+$
+as well as $u = u^perp + u^top$.
 == Evolution equation for $lambda$
+The first result we will prove is arguably the most important result, as it will guarantee our hypersurface remains within a compact subset.
+#proposition[
+  The evolution equation for $lambda$ under the flow is
+  $
+    L lambda = - 2 Lambda n phi u^top
+    - u 2/(phi^2||X^perp||^2) X^perp (Lambda phi^2) (||X^perp||^2 - (u^perp)^2) + 4 u Lambda/phi e_i (phi) ip(e_i, X^perp)
+  $
+]
+#proof[
+  First we compute the time derivative of $lambda$, since it is an ambient quantity this is easy
+]
+
 
 #pagebreak(weak: true)
 == Existence and smoothness
 #proposition("Short Time Existence")[
-  The normal flow with velocity $n phi - H u$ exists f
+  The normal flow with velocity $n phi - H u$ exists for some interval $[0,T)$.
 ]<prop-flow_short_time>
 
 
