@@ -1154,6 +1154,7 @@ We will also make the following assumptions
 #assumptions[
 + The conformal factor $phi$ of $X^perp$ is everywhere positive.
 + The function $Lambda$ (@prop-lambda_def) is everywhere positive.
++ The function $Lambda phi^3 - X^top (phi)$ is everywhere positive.
 + The integral hypersurfaces of $X^perp$ are compact.
 + The directions $X^perp$ and $X^top$ are both of least Ricci curvature, that is for any tangent vector $Y in T_p N$ we have
   $
@@ -1168,7 +1169,8 @@ We will also make the following assumptions
 
 The first condition informally means that $X^perp$ is a dilation-like vector field, because under its first order vector field flow volumes increase. \
 The second condition informally means that our scale function $lambda$ is increasing in the direction of $X^perp$, so just like in Euclidean space as balls increase in radius their mean curvature decreases. \
-The third condition is necessary for area to decrease along the normal flow we will construct.
+The third and fourth conditions are technical conditions needed for convergence.
+The last condition is necessary for area to decrease along the normal flow we will construct.
 
 Our flow will consist of two steps,
 + First we will use a time dependent conformal vector field $X(t) = X^perp + X^top (1-t/T_0)$ for some constant $T_0$, we will consider the flow with velocity
@@ -1185,14 +1187,18 @@ Our flow will consist of two steps,
 Note that in this setting, $u$'s definition depends on time but we will drop this dependence in our notation and only explicitly mention it when it comes up.
 Note that, if $u > 0$ when $t = T_0$, then at that point in time the surface is star-shaped with respect to just $X^perp$ so we can apply the methods of Li and Pan.
 
-For now we will assume that the flow exists on some interval $[0,T)$, we will show this must be the case later, in @prop-flow_short_time.
-We will now start computing the evolution of various geometric quantities along our flow. For convenience we will use the parabolic operator
+For now we will assume that the flow exists on some interval $[0,T)$, we will show this must be the case later, in @prop-flow_short_time. We will also assume that $u$ remains positive on $[0,T)$, this will be proven in @head-evolution_equation_u.
+We will now start computing the evolution of various geometric quantities along our flow. For convenience we will define the factor 
+$
+  Xi(t) =(1 - t/T_0).
+$
+We will also define the parabolic operator
 $
   L = diff_t - u Delta
 $
 as well as the functions
 $
-  u^perp = ip(X^perp, nu), quad u^top = (1-t/T_0) ip(X^top, nu).
+  u^perp = ip(X^perp, nu), quad u^top = Xi(t) ip(X^top, nu).
 $
 Notice $u = u^perp + u^top$.
 
@@ -1206,7 +1212,7 @@ $
   \
   pi(X^top) = X^top - u^top nu = ip(X^top, e_i) e_i.
 $
-== Evolution equation for $lambda$
+== Evolution Equation for $lambda$
 The first result we will prove is arguably the most important result, as it will guarantee our hypersurface remains within a compact subset.
 #proposition[
   The evolution equation for $lambda$ under the flow is
@@ -1269,6 +1275,18 @@ The first result we will prove is arguably the most important result, as it will
 ]
 #proof[
   We use @cor-lambda_estimate to along with @prop-compact_region.
+]
+
+== Evolution Equation for $u$
+<head-evolution_equation_u>
+This next evolution is nearly as important, our parabolic operator has a $u$ factor and so it ceases to be uniformly parabolic if we do not have a uniform lower bound on $u$.
+
+#proposition[
+  The evolution equation for $u$ under the flow is
+  $
+    L u = n (Lambda phi^3 - Xi(t) X^top (phi))
+    - 2 phi H u + |A|^2 u^2 + 2 n u nu(phi) + u^2 ov(Ric)(nu,nu) + H ip(X,nabla u)
+  $
 ]
 
 
