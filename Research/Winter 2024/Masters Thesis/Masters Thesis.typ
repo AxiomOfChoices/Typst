@@ -127,7 +127,7 @@ Let $e_i$ be an orthonormal frame at $p$, the following are true:
   + $h$ can be written in coordinates as $h_(i j) = ip(e_i, ov(nabla)_(e_j) nu)$. <prop-h_coords>
   + $ov(nabla)_i nu = h_(i j) e_j$. <prop-h_applied>
   + $ov(nabla)_i e_j = - h_(i j) nu$. <prop-h_neg>
-  + If $f$ is a function $N -> RR$, then $ov(Delta) f = Delta f + Hess_f (nu,nu) + H nu(f)$ <prop-h_laplac>
+  + If $f$ is a function $N -> RR$, then $ov(Delta) f = Delta f + ov(Hess)_f (nu,nu) + H nu(f)$ <prop-h_laplac>
   ]
 ]<prop-h_props>
 #proof[
@@ -329,7 +329,7 @@ for all $v in T_p M$ everywhere.
 The most important tool in the analysis of parabolic PDEs is the maximum principle, a form of which we will now prove.
 
 #proposition[
-  Assume $u$ solves @eqn-parabolic_pde and that at a maximum of $u$ we the inequality $G(x,t,u,nabla u) < f(t)$ holds, then we have for all $t in [0,T]$
+  Assume $u$ solves @eqn-parabolic_pde and that at a maximum of $u$ the inequality $G(x,t,u,nabla u) < f(t)$ holds, then we have for all $t in [0,T]$
   #math.equation(block: true, numbering: "(1)",
     $ sup_(x in U) u(x,t) <= sup_(x in U) u(x,0) + integral_0^t f(s) dif s $
   )<eqn-max_priniciple_linear>
@@ -337,7 +337,7 @@ The most important tool in the analysis of parabolic PDEs is the maximum princip
   #math.equation(block: true, numbering: "(1)", 
     $ sup_(x in U) u(x,t) <= (sup_(x in U) u(x,0)) e^(B t) $
   )<eqn-max_priniciple_exp>
-]
+]<prop-max_principle>
 #proof[
   First for @eqn-max_priniciple_linear consider the auxiliary function
   $ v(x,t) = u(x,t) - integral_0^t f(s) dif s - sup_(x in U) u(x,0) $
@@ -372,7 +372,7 @@ The most important tool in the analysis of parabolic PDEs is the maximum princip
 The second most important tool is short time-existence, which will be extremely important as we want to use the derivatives of geometric quantities to characterize them, so we need the flow to exists for some non-zero amount of time.
 
 #theorem[
-  If $u(0,dot)$ is a smooth initial condition then @eqn-parabolic_pde has a solution $u$ for some time $T > 0$ which is smooth on $[0,T)$. Furthermore, if there is a uniform bound 
+  If $u(0,dot)$ is a smooth initial condition and @eqn-parabolic_pde is uniformly parabolic then @eqn-parabolic_pde has a solution $u$ for some time $T > 0$ which is smooth on $[0,T)$. Furthermore, if there is a uniform bound 
   $
     ||u(t,dot)||_(C^(1+r)) <= K "with" t "fixed in" [0,s)
   $
@@ -384,7 +384,7 @@ The second most important tool is short time-existence, which will be extremely 
 
 The last PDE results which we will need are the famous Nash-Moser estimates, for a detailed dive see @taylorPartialDifferentialEquations2023 @ladyzenskajaLinearQuasilinearEquations1968a.
 #theorem("Nash-Moser estimates")[
-  Let $u$ be a solution to @eqn-parabolic_pde on $[0,T)$ with smooth initial condition, if we know that
+  Let $u$ be a solution to uniformly parabolic @eqn-parabolic_pde on $[0,T)$ with smooth initial condition, if we know that
   $
     |u(t,dot)| < c_1 "and" ||nabla u(t, dot)|| <= c_2 "on" [0,T)
   $
@@ -425,14 +425,15 @@ Now that we are familiar with geometry and parabolic PDEs we can start to use th
   We will often refer to $F_t (M)$ as $M_t$ for brevity. Additionally many constructions on $M_t$ will be denoted without explicit reference to $t$, i.e $g$ instead of $g(t)$, even though the metric of $M_t$ will depend on $t$. Keep in mind that any construction of the metric will also depend on $t$.
 ]
 
-As a manifold flows it's various properties, both local and global, will change, the equations governing these changes are called _evolution equations_. For ambient quantities, i.e. those quantities that are simply restricted to the hypersurface this evolution is simple.
+As a manifold flows it's various properties, both local and global, will change, the equations governing these changes are called _evolution equations_. For ambient objects, i.e. those objects that are simply restricted to the hypersurface, this evolution is simple.
 #proposition[
   Let $T$ be any tensor on $N$, then we call $T|_(M_t)$ the orthogonal projection of $T$ onto $T_p M_t$. We then have
   $
     diff_t (T|_(M_t)) = (f ov(nabla)_nu T)|_(M_t)
   $
-]
-We will now derive some of these evolution equations, we will first start with the most important evolving tensor, the metric.
+]<prop-ambient_evolution>
+For objects that depend on the induced metric on $M_t$, these objects depend on the embedding of a whole neighborhood of a point, so their evolution equations are more complicated, but we can still compute them.
+We will first start with the most important evolving tensor, the metric.
 
 #remark[
     We will also adapt two important coordinate systems, we will be working in normal coordinates around a point $p in M$ which will call these coordinates $x^i$, we will denote their partial derivatives $diff_i$ or $e_i$ and the covariant derivatives with respect to the induced metric $nabla_i$. Secondly we will also have normal coordinates at $F(p) in N$, we will call these coordinates $y^i$, their partials $diff_y_i$ or $ov(e)_i$ and the covariant derivatives $ov(nabla)_i$. Note that we can rotate the normal coordinates $y^i$ so that they align with $x^i$, in the sense that _at the point $p$_
@@ -1191,25 +1192,97 @@ $
 $
 as well as the functions
 $
-  u^perp = ip(X^perp, nu), quad u^top = (1-t/T_0) ip(X^top, nu)
+  u^perp = ip(X^perp, nu), quad u^top = (1-t/T_0) ip(X^top, nu).
 $
-as well as $u = u^perp + u^top$.
+Notice $u = u^perp + u^top$.
+
+Finally we will also use the notation
+$
+  pi(X^perp), pi(X^top)
+$
+to denote the orthogonal projection of these vector fields onto $T_p M_t$, notice that
+$
+  pi(X^perp) = X^perp - u^perp nu = ip(X^perp, e_i) e_i quad "and"
+  \
+  pi(X^top) = X^top - u^top nu = ip(X^top, e_i) e_i.
+$
 == Evolution equation for $lambda$
 The first result we will prove is arguably the most important result, as it will guarantee our hypersurface remains within a compact subset.
 #proposition[
   The evolution equation for $lambda$ under the flow is
   $
-    L lambda = - 2 Lambda n phi u^top
-    - u 2/(phi^2||X^perp||^2) X^perp (Lambda phi^2) (||X^perp||^2 - (u^perp)^2) + 4 u Lambda/phi e_i (phi) ip(e_i, X^perp)
+    L lambda = - 2 Lambda n phi u^top - 2 u ip(ov(nabla) Lambda, pi(X^perp)).
   $
 ]
 #proof[
-  First we compute the time derivative of $lambda$, since it is an ambient quantity this is easy
+  First we compute the time derivative of $lambda$, since it is an ambient quantity this is easy by @prop-ambient_evolution.
+  We get
+  $
+    diff_t lambda &= (n phi - H u) ov(nabla)_nu lambda 
+    = (n phi - H u) ip(nu, ov(nabla) lambda)
+    = (n phi - H u) 2 Lambda (nu, X^perp)
+    \ &= 2 (n phi - H u) Lambda u^perp.
+  $
+  For the induced Laplacian we get
+  $
+    Delta lambda
+    &= nabla_i nabla_i lambda = nabla_i (2 Lambda ip(X^perp, e_i))
+    = 2 Lambda (nabla_i ip(X^perp, e_i)) + 2 ip(X^perp, e_i) nabla_i Lambda
+    \ &= 2 Lambda (ip(ov(nabla)_i X^perp, e_i) + ip(X^perp, ov(nabla)_i e_i)) + 2 ip(nabla Lambda, pi(X^perp)).
+  $
+  Now since the trace of a tensor is the same as the trace of its symmetrization so
+  $
+    ip(ov(nabla)_i X^perp, e_i) = tr(ov(nabla) X^perp) = tr(Sym(ov(nabla) X^perp))
+    = tr(phi g_(i j)) = n phi.
+  $
+  Next by @prop-h_props we know that $ov(nabla)_i e_i = - h_(i i) nu = - H nu$. Combining these we get that
+  $
+    Delta lambda
+    &= 2 Lambda (n phi - H ip(X^perp, nu)) + 2 ip(ov(nabla) Lambda, pi(X^perp))
+    = 2 Lambda (n phi - H u^perp) + 2 ip(ov(nabla) Lambda, pi(X^perp)).
+  $
+
+  Finally we compute
+  $
+    (diff_t - u Delta) lambda
+    &= 2 Lambda ( (n phi - H u) u^perp - (n phi - H u^perp) u) - 2 ip(ov(nabla)Lambda, pi(X^perp))
+    \ &= 2 Lambda (- n phi u^top) - 2 ip(ov(nabla) Lambda, pi(X^perp))
+    = - 2 Lambda n phi u^top - 2 ip(ov(nabla) Lambda, pi(X^perp))
+  $
+]
+
+#corollary[
+  For all $t in [0,T)$ and all $x in M_t$ we have
+  $
+    min_(x in M_0) lambda(x,0) <= lambda(x,t) <= max_(x in M_0) lambda(x,0)
+  $
+]<cor-lambda_estimate>
+#proof[
+  At a maximal or minimal point of $lambda$ we have by Lagrange multipliers that $ov(nabla)$ is colinear with $nu$, so we must have that $X^perp$ is colinear with $nu$ and thus $pi(X^perp) = 0$. Also since $X^top$ is orthogonal to $X^perp$ we have that at a maximal or minimal point $X^top$ is orthogonal to $nu$ and thus $u^top = 0$. Thus we get that at a maximal or minimal point $L lambda = 0$ and so by @prop-max_principle applied to $lambda$ and $-lambda$ we get
+  $
+    min_(x in M_0) lambda(x,0) <= lambda(x,t) <= max_(x in M_0) lambda(x,0)
+  $
+]
+
+#corollary[
+  Given a hypersurface $M$, there is a compact region $Gamma$ such that $M_t$ is contained in $Gamma$ for as long as it exists.
+]
+#proof[
+  We use @cor-lambda_estimate to along with @prop-compact_region.
 ]
 
 
 #pagebreak(weak: true)
-== Existence and smoothness
+== Existence and Convergence
+#proposition[
+  For any $lambda_1 > lambda_0 > 0$ in the image of $lambda$, the subset
+  $
+    { p in N : lambda_0 < lambda(p) < lambda_1 },
+  $
+  is compact.
+]<prop-compact_region>
+
+
 #proposition("Short Time Existence")[
   The normal flow with velocity $n phi - H u$ exists for some interval $[0,T)$.
 ]<prop-flow_short_time>
