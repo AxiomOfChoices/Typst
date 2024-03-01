@@ -30,11 +30,13 @@
 #let Ric = math.op("Ric")
 #let lie = $cal(L)$
 #let Sym = math.op("Sym")
+#let AntiSym = math.op("ASym")
 #let div = math.op("div")
 #let tp = math.op("tp")
 #let Aut = math.op("Aut")
 #let SH = math.op("SH")
 #let Sc = math.op("Sc")
+#let flat = $♭$
 #let gen(x) = $lr(angle.l #x angle.r)$
 
 #let symbol_replacing(doc) ={
@@ -51,6 +53,12 @@
   "theorem",            // Lemmas use the same counter as Theorems
   "Lemma",
   fill: rgb("#efe6ff")
+)
+#let claim = thmbox(
+  "claim",            // Lemmas use the same counter as Theorems
+  "Claim",
+  base: "theorem",
+  fill: rgb("#ffefe6")
 )
 #let proposition = thmbox(
   "theorem",            // Lemmas use the same counter as Theorems
@@ -111,18 +119,56 @@
   "Conditions",
 )
 
+// #let equation_references(doc) = {
+//   // set math.equation(numbering: "(1)")
+//   show ref: it => {
+//     let eq = math.equation
+//     let el = it.element
+//     if el != none and el.func() == eq{
+//       // el.fields()
+//       numbering("(1)",
+//         ..counter(eq)
+//         .at(el.location()))
+//     }
+//     else {
+//       it
+//     }
+//   }
+//   doc
+// }
+//
 #let equation_references(doc) = {
-  // set math.equation(numbering: "(1)")
   show ref: it => {
-    let eq = math.equation
     let el = it.element
-    if el != none and el.func() == eq{
-      // el.fields()
-      numbering(el.numbering,
-        ..counter(eq)
-        .at(el.location()))
+    if el != none and el.func() == math.equation {
+      link(el.location(), numbering(
+        section_based_equation_numbering,
+        counter(math.equation).at(el.location()).at(0) + 1
+      ))
+    } else {
+      it
     }
-    else {
+  }
+  doc
+}
+
+#let section_based_equation_numbering(number, el) = {
+  locate(loc => {
+    let count = counter(heading.where(level:1)).at(loc).last()
+    numbering("(1.1)", count, number)
+    }
+  )
+}
+
+#let equation_numbering(doc) = {
+  show heading.where(level:1): it => {
+    counter(math.equation).update(0)
+    it
+  }
+  show math.equation: it => {
+    if it.has("label"){
+      math.equation(block: true, numbering: section_based_equation_numbering, it)
+    } else {
       it
     }
   }

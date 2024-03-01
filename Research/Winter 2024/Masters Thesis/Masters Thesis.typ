@@ -2,8 +2,17 @@
 #import "@preview/ctheorems:1.1.0": *
 #import "/Templates/math.typ": *
 #import "@preview/cetz:0.2.1"
+#import "/Templates/i-figure.typ"
 #show: style
-#show: equation_references
+#show math.equation: i-figure.show-equation.with(
+  level: 1,
+  only-labeled: true,
+)
+#show ref: i-figure.show-equation-refrences.with(
+  level: 1,
+)
+// #show: equation_numbering
+// #show: equation_references
 #show: doc => frontpage(
   toptitle: [Conformally Induced\ Mean Curvature Flow],
   name: [Jacob Reznikov
@@ -76,7 +85,7 @@ The Riemannian metric $ov(g)$ defines with it a Riemannian volume form which we 
 $
   Volume(Omega) = integral_Omega dif V,
 $
-we will often write $Volume(M)$ as our $Omega$ can be determined uniquely an orientation on $M$ (more on that later). Similarly the metric $g$ defines a volume form on $M$ which we will call $dif S$, using which we define 
+we will often write $Volume(M)$ as our $Omega$ can be determined uniquely an orientation on $M$ (more on that later). Similarly the metric $g$ defines a volume form on $M$ which we will call $dif S$, using which we define
 $
   Area(M) = integral_M dif S.
 $
@@ -127,7 +136,7 @@ Let $e_i$ be an orthonormal frame at $p$, the following are true:
   + $h$ can be written in coordinates as $h_(i j) = ip(e_i, ov(nabla)_(e_j) nu)$. <prop-h_coords>
   + $ov(nabla)_i nu = h_(i j) e_j$. <prop-h_applied>
   + $ov(nabla)_i e_j = - h_(i j) nu$. <prop-h_neg>
-  + If $f$ is a function $N -> RR$, then $ov(Delta) f = Delta f + ov(Hess)_f (nu,nu) + H nu(f)$ <prop-h_laplac>
+  + If $f$ is a function $N -> RR$, then $ov(Delta) f = Delta f + ov(Hess)_f (nu,nu) + H nu(f)$. <prop-h_laplac>
   ]
 ]<prop-h_props>
 #proof[
@@ -220,7 +229,7 @@ We now define the skew-symmetric endomorphism $psi$ by
 $
 dif eta(Y,Z) = 2 ip(psi Y,Z)
 $
-This endomorphism is then called the _associate tensor field_ of $X$, and with it we can rewrite the above equation as
+This endomorphism is then called the _associated tensor field_ of $X$, and with it we can rewrite the above equation as
 $
   ip(nabla_Y X, Z) = phi ip(Y,Z) + ip(psi Y, Z).
 $
@@ -308,17 +317,11 @@ The Partial Differential Equations (PDEs) we will be dealing with most in this d
 
 
 Let $T in (0,infinity]$ and $U seq M$ a smooth open domain, a function $u : [0,T] times U$ is said to solve a *quasi-linear parabolic PDE* if it satisfies a differential equation of the form
-#math.equation(block: true, numbering: "(1)",
-  $ diff_t u (x,t) = a^(i j)(x,t,u,nabla u) nabla_i nabla_j u + G(x,t,u,nabla u) $
-)
-<eqn-parabolic_pde>
+$ diff_t u (x,t) = a^(i j)(x,t,u,nabla u) nabla_i nabla_j u + G(x,t,u,nabla u) $<parabolic_pde>
 where $a$ is symmetric positive definite matrix depending smoothly on its inputs and $G$ is a function depending smoothly on its inputs.
 
 The equation is said to be in _divergence form_ if it can be written instead as
-#math.equation(block: true, numbering: "(1)",
-  $ diff_t u (x,t) = nabla_i (b^(i j)(x,t,u,nabla u) nabla_j u) + G(x,t,u,nabla u) $
-)
-<eqn-div_parabolic_pde>
+$ diff_t u (x,t) = nabla_i (b^(i j)(x,t,u,nabla u) nabla_j u) + G(x,t,u,nabla u) $<div_parabolic_pde>
 
 We say that the PDE in @eqn-parabolic_pde is _uniformly parabolic_ if there exist constants $A,B$ such that
 $
@@ -330,13 +333,9 @@ The most important tool in the analysis of parabolic PDEs is the maximum princip
 
 #proposition[
   Assume $u$ solves @eqn-parabolic_pde and that at a maximum of $u$ the inequality $G(x,t,u,nabla u) < f(t)$ holds, then we have for all $t in [0,T]$
-  #math.equation(block: true, numbering: "(1)",
-    $ sup_(x in U) u(x,t) <= sup_(x in U) u(x,0) + integral_0^t f(s) dif s $
-  )<eqn-max_priniciple_linear>
+  $ sup_(x in U) u(x,t) <= sup_(x in U) u(x,0) + integral_0^t f(s) dif s $<max_priniciple_linear>
   if instead we have $G(x,t,u,nabla u) < B u(x,t)$ for some constant $B in RR$ then we have
-  #math.equation(block: true, numbering: "(1)", 
-    $ sup_(x in U) u(x,t) <= (sup_(x in U) u(x,0)) e^(B t) $
-  )<eqn-max_priniciple_exp>
+  $ sup_(x in U) u(x,t) <= (sup_(x in U) u(x,0)) e^(B t) $<max_priniciple_exp>
 ]<prop-max_principle>
 #proof[
   First for @eqn-max_priniciple_linear consider the auxiliary function
@@ -840,7 +839,7 @@ Now as we saw, for a quasi-closed conformal vector field we have that $ip(psi(v)
   which gets us the second result.
 ]
 
-We note here another useful way to write the covariant derivative of $X$
+We note here two other useful ways to write the covariant derivative of $X$
 #corollary[
   Where $phi = 0$ we have
   $
@@ -867,6 +866,19 @@ We note here another useful way to write the covariant derivative of $X$
     \ &= X-(ip(Y, X) ov(nabla)phi)/(phi^2).
   $
 ]
+#corollary[
+  $
+    (psi(Y),Z) = 2(AntiSym(ov(nabla)||X||^flat times.circle X^flat)(Y,Z))/(||X||).
+  $
+  Furthermore if $X$ satisfies condition 2, wherever $phi != 0$ we have
+  $
+    (psi(Y),Z) = 2(AntiSym(ov(nabla)phi^flat times.circle X^flat)(Y,Z))/(phi).
+  $
+  Here $♭$ represents raising an index and $AntiSym$ represents the anti-symmetrization.
+]<cor-psi_antisym>
+#proof[
+  Immediate from @prop-psi_exact.
+]
 
 #pagebreak(weak: true)
 We can also rewrite some of the Riemann and Ricci curvatures of the ambient manifold in terms of $X$.
@@ -877,18 +889,18 @@ We can also rewrite some of the Riemann and Ricci curvatures of the ambient mani
     \ ov(Ric)(X,Y) &= -(ip(X,Y))/(||X||) (ov(Delta)||X|| - ip(ov(nabla)_cal(N) ov(nabla) phi, cal(N)))
   $
   and in addition, if $Y in cal(D)$
-  #math.equation(block: true, numbering: "(1)", $
+  $
     ||X||ov(Ric)(X,Y) = ip(ov(nabla)_Y ov(nabla)||X||, X) = ip(ov(nabla)_X ov(nabla)||X||, Y) = 0
-  $)<eqn-ric_orthogonal>
+  $<ric_orthogonal>
   If $X$ satisfies condition 2, then wherever $phi != 0$ we have
   $
     ov(R)(Y,X,Y,X) &= -phi ip(ov(nabla)_Y ov(nabla)phi, Y) + ip(X,Y)^2/(phi) ip(ov(nabla)_cal(N) ov(nabla)phi, cal(N))
     \ ov(Ric)(X,Y) &= -(ip(X,Y))/(phi) (ov(Delta)phi - ip(ov(nabla)_cal(N) ov(nabla) phi, cal(N)))
-  $
+  $<ric_x>
   and in addition, if $Y in cal(D)$
   $
     phi ov(Ric)(X,Y) = ip(ov(nabla)_Y ov(nabla)phi, X) = ip(ov(nabla)_X ov(nabla)phi, Y) = 0
-  $
+  $<ric_orthogonal-phi>
 ]<prop-riemann_ricci_x_identity>
 #proof[
   For the first case, we will consider $ov(R)(ov(e)_i, ov(e)_j, X/(||X||), ov(e)_k)$, then we will use linearity of the Ricci tensor to remove the denominator, we start with a use of @cor-simple_grad
@@ -915,20 +927,20 @@ We can also rewrite some of the Riemann and Ricci curvatures of the ambient mani
   then by definition the left denominator here is $ip(psi(ov(e)_j), ov(e)_i)$ which we can expand by @prop-psi_exact we will see that these terms exactly cancel the other terms in the brackets.
 
   Now we are left with
-  #math.equation(block: true, numbering: "(1)", $
+  $
     ov(R)(ov(e)_i, ov(e)_j, X/(||X||), ov(e)_k)
     = (ip(ov(e)_i, X))/(||X||^2) ip(ov(nabla)_j ov(nabla)||X||, ov(e)_k) - (ip(ov(e)_j, X))/(||X||^2) ip(ov(nabla)_i ov(nabla)||X||, ov(e)_k)
-  $)<eqn-riemann_exact>
+  $<riemann_exact>
   Now by linearity we can substitute $ov(e)_i = ov(e)_k = Y$ and $ov(e)_j = X$, this gives us
   $
     ov(R)(Y, X, X/(||X||), Y)
     = (ip(Y, X))/(||X||^2) ip(ov(nabla)_X ov(nabla)||X||, Y) - (ip(X, X))/(||X||^2) ip(ov(nabla)_Y ov(nabla)||X||, Y)
   $
   we now multiply by $||X||$ to get
-  #math.equation(block: true, numbering: "(1)", $
+  $
     ov(R)(Y, X, X, Y)
     = -||X||ip(ov(nabla)_Y ov(nabla)||X||, Y) + (ip(Y, X))/(||X||) ip(ov(nabla)_X ov(nabla)||X||, Y)
-  $)<eqn-riemann_simplified>
+  $<riemann_simplified>
 
   Next consider the integral hypersurface $S$ of $cal(D)$ that passes through $p$, we know that $h_(i j)$ is identically zero everywhere on this hypersurface. Hence, by @lemma-codazzi, we have for any $e_i,e_j,e_k in T_p S$
   $
@@ -940,10 +952,10 @@ We can also rewrite some of the Riemann and Ricci curvatures of the ambient mani
   $
   for any $Y in cal(D)$.
 
-  Now by using @eqn-riemann_exact but tracing over $e_i$ and $e_k$ and plugging in $ov(e)_j = Y$ gives us
-  #math.equation(block: true, numbering: "(1)", $
+  Now by using @riemann_exact but tracing over $e_i$ and $e_k$ and plugging in $ov(e)_j = Y$ gives us
+  $
     ov(Ric)(Y, X) = - ip(Y, X)/(||X||) ov(Delta)||X|| + 1/(||X||) ip(ov(nabla)_Y ov(nabla)||X||, X)
-  $)<eqn-ricci_simplified>
+  $<ricci_simplified>
   then for any $Y in cal(D)$ we get
   $
     0 = - ip(Y, X)/(||X||) ov(Delta)||X|| + 1/(||X||) ip(ov(nabla)_Y ov(nabla)||X||, X)
@@ -1148,13 +1160,13 @@ We can then try to consider foliations which are in some sense 'compatible' with
 == Setting
 We will consider a complete $n+1$ dimensional Riemannian manifold $N$, with $n >= 2$. On this manifold we consider a conformal vector field $X$ along with a foliation $cal(F)$ which are compatible in the sense that the foliation $cal(F)$ induces a decomposition $X = X^perp + X^top$ where $X^perp$ is a quasi-closed conformal vector field with integral surfaces $S_alpha in cal(F)$ and $X^top$ is a quasi-closed Killing vector field, that is its conformal factor is zero.
 
-We will associate with $X^perp$ its conformal factor $phi$ which is the same as that of $X$, we will also associate the scale function (@def-scale) $lambda$ and its derivative $Lambda$ (@prop-lambda_def).
+We will associate with $X^perp$ its conformal factor $phi$ which is the same as that of $X$, we will also associate the scale function (@def-scale) $lambda$ and its derivative $Lambda$ (@prop-lambda_def). We will also denote by $psi^perp$ and $psi^top$ the associated tensor fields (@prop-psi_exact) of $X^perp$ and $X^top$ respectively.
 
 We will also make the following assumptions
 #assumptions[
 + The conformal factor $phi$ of $X^perp$ is everywhere positive.
 + The function $Lambda$ (@prop-lambda_def) is everywhere positive.
-+ The function $Lambda phi^3 - X^top (phi)$ is everywhere positive.
++ The function $Lambda phi^3 + X^top (phi)$ is everywhere positive.
 + The integral hypersurfaces of $X^perp$ are compact.
 + The directions $X^perp$ and $X^top$ are both of least Ricci curvature, that is for any tangent vector $Y in T_p N$ we have
   $
@@ -1274,7 +1286,7 @@ The first result we will prove is arguably the most important result, as it will
   Given a hypersurface $M$, there is a compact region $Gamma$ such that $M_t$ is contained in $Gamma$ for as long as it exists.
 ]
 #proof[
-  We use @cor-lambda_estimate to along with @prop-compact_region.
+  We use @cor-lambda_estimate along with @prop-compact_region.
 ]
 
 == Evolution Equation for $u$
@@ -1284,11 +1296,327 @@ This next evolution is nearly as important, our parabolic operator has a $u$ fac
 #proposition[
   The evolution equation for $u$ under the flow is
   $
-    L u = n (Lambda phi^3 - Xi(t) X^top (phi))
-    - 2 phi H u + |A|^2 u^2 + 2 n u nu(phi) + u^2 ov(Ric)(nu,nu) + H ip(X,nabla u)
+    L u &= n (Lambda phi^3 - Xi(t) X^top (phi)) + Xi'(t) u^top
+    - 2 phi H u + |A|^2 u^2 + 2 n u nu(phi) \ &+ med u^2 ov(Ric)(nu,nu) + H ip(X,nabla u)
   $
 ]
+#proof[
+  This is quite the long calculation so we will split it into multiple steps, first for the time derivative
+  $
+    diff_t u
+    &= diff_t ip(X^perp + Xi(t) X^top, nu)
+    = ip(diff_t (X^perp + Xi(t) X^top), nu)
+    +
+    ip(X^perp + Xi(t) X^top,diff_t  nu)
+    \ &= (n phi - H u)ip(ov(nabla)_nu (X^perp + Xi(t) X^top), nu) + Xi'(t) ip(X^top, nu)
+    \ &+ med
+    ip(X^perp + Xi(t) X^top, - nabla (n phi - H u)).
+  $
+  Using the fact that $X^perp + Xi(t) X^top$ is conformal with factor $phi$ we can simplify the first term and continue calculating
+  $
+    diff_t u
+    &= phi(n phi - H u) + Xi'(t) u^perp
+    +
+    ip(X^perp + Xi(t) X^top, - nabla (n phi - H u))
+    \ &= phi(n phi - H u) + Xi'(t) u^perp
+    -
+    n ip(X,nabla phi) + H ip(X,nabla u) + u ip(X, nabla H)
+    \ &= phi(n phi - H u) + Xi'(t) u^perp
+    -
+    n ip(X,ov(nabla)phi) + n u nu (phi) + H ip(X,nabla u) + u ip(X, nabla H).
+  $<u_diff_t>
+  Now we switch to the Laplacian, it will be helpful to decompose $u = u^perp + u^top$.
+  First we deal with $u^perp$.
+  #claim[
+    We have
+    $
+      Delta u^perp = - n nu(phi) - u^perp ov(Ric)(nu,nu) + ip(nabla H, X^perp) + phi H - |A|^2 u^perp
+    $
+  ]
+  We start with computing from definitions
+  $
+    Delta u^perp
+    &= nabla_i nabla_i ip(X^perp, nu)
+    = nabla_i (ip(ov(nabla)_i X^perp, nu) + ip(X^perp, ov(nabla)_i nu)).
+  $
+  Now for the first term $e_i$ is orthogonal to $nu$ and thus it simplifies to $ip(psi^perp (e_i), nu)$, we continue computing,
+  $
+    Delta u^perp
+    = nabla_i (ip(psi^perp (e_i), nu) + ip(X^perp, h_(i j) e_j)).
+  $<u_perp_step_1>
+  Let us now deal with the first term, we use @cor-psi_antisym
+  $
+    nabla_i (ip(psi^perp (e_i), nu))
+    &=
+    nabla_i ((2 AntiSym(ov(nabla)phi^flat times.circle X^(perp flat))(e_i,nu))/(phi))
+    \ &=
+    ((ov(nabla)_i 2 AntiSym(ov(nabla)phi^flat times.circle X^(perp flat))(e_i,nu))/(phi)
+    +
+    (2 AntiSym(ov(nabla)phi^flat times.circle X^(perp flat))(ov(nabla)_i e_i,nu))/(phi)
+    \ &+ med
+    (2 AntiSym(ov(nabla)phi^flat times.circle X^(perp flat))(e_i,ov(nabla)_i nu))/(phi)
+    -
+    (2 AntiSym(ov(nabla)phi^flat times.circle X^(perp flat))(e_i,nu))/(phi^2)ov(nabla)_i phi.
+  $
+  We notice that since $ov(nabla)_i e_i = - H nu$ the second term will have two $nu$ inputs into an anti-symmetrization, making it vanish. Similarly, since $ov(nabla)_i nu = h_(i j) e_j$ the third term will have the inputs $(e_i,e_j)$ symmetrized by $h_(i j)$ and thus will also vanish. We are thus left with
+  $
+    nabla_i (ip(psi^perp (e_i), nu))
+    &=
+    ((ov(nabla)_i 2 AntiSym(ov(nabla)phi^flat times.circle X^(perp flat)))(e_i,nu))/(phi) -
+    ip(psi^perp (e_i), nu) (ov(nabla)_i phi)/phi.
+  $ <u_perp_step_2>
+  Now we can compute the covariant derivative of the anti-symmetrization
+  $
+    2 AntiSym(
+      ov(nabla) phi^flat
+      times.circle
+      (phi e_i + psi^perp (e_i))^flat
+    )
+    +
+    2 AntiSym(
+      ov(nabla)_i ov(nabla) phi^flat
+      times.circle
+      X^(perp flat)
+    ),
+  $
+  now when we plug this back into @eqn-u_perp_step_2 we get
+  $
+    ((ov(nabla)_i phi) ip(psi^perp (e_i), nu))/phi - ip(e_i, e_i) nu(phi)
+    + ov(Hess)_phi (e_i, e_i) u^perp/phi - ov(Hess)_phi (e_i, nu) ip(X^perp,e_i)/phi
+    \ - ip(psi^perp (e_i), nu) (ov(nabla)_i phi)/phi,
+  $
+  which simplifies into
+  $
+    - n nu(phi)
+    + ov(Hess)_phi (e_i, e_i) u^perp/phi - (ov(Hess)_phi (pi(X^perp), nu))/phi.
+  $
+  Now this Hessian term is almost the ambient Laplacian of $phi$, so we can rewrite this as 
+  $
+    - n nu(phi) + ov(Delta) phi u^perp/phi - u^perp (ov(Hess)_phi (nu,nu))/phi - (ov(Hess)_phi (pi(X^perp), nu))/phi,
+  $
+  but now since $X^perp = pi(X^perp) + u^perp nu$ we further simplify this into
+  $
+    - n nu(phi) + ov(Delta) phi u^perp/phi - (ov(Hess)_phi (X^perp, nu))/phi.
+  $
+  and then we use @eqn-ric_orthogonal-phi to get
+  $
+    - n nu(phi) + ov(Delta) phi u^perp/phi - ip(X^perp, nu)(ov(Hess)_phi (N^perp, cal(N)^perp))/phi
+    \ =
+    - n nu(phi) + u^perp/phi (ov(Delta) phi - (ov(Hess)_phi (N^perp, cal(N)^perp))).
+  $
+  Now we use @eqn-ric_x to get
+  $
+    - n nu(phi) - ov(Ric)(X^perp, nu).
+  $<u_perp_step_3>
+  Next for the second term of @eqn-u_perp_step_1 we get
+  $
+    ov(nabla)_i (h_(i j) ip(X^perp, e_j))
+    &=
+    (ov(nabla)_i h_(i j)) ip(X^perp, e_j)
+    +
+    h_(i j) ip(ov(nabla)_i X^perp, e_j)
+    +
+    h_(i j) ip(X^perp, ov(nabla)_i e_j)
+    \ & =
+    (ov(nabla)_i h_(i j)) ip(X^perp, e_j)
+    +
+    h_(i j) (phi ip(e_i, e_j) + ip(psi^perp (e_i), e_j))
+    -
+    h_(i j) h_(i j) ip(X^perp, nu).
+  $
+  Since $h_(i j)$ is symmetric the third term here vanishes and so we are left with
+  $
+    ov(nabla)_i (h_(i j) ip(X^perp, e_j))
+    &=
+    (ov(nabla)_i h_(i j)) ip(X^perp, e_j)
+    +
+    phi H
+    -
+    |A|^2 u^perp.
+  $<u_perp_step_4>
+  Now plugging @eqn-u_perp_step_3 and @eqn-u_perp_step_4 into @eqn-u_perp_step_1 gives us
+  $
+    Delta u^perp =
+    - n nu(phi) - ov(Ric) (X^perp, nu)
+    +
+    (ov(nabla)_i h_(i j)) ip(X^perp, e_j)
+    +
+    phi H
+    -
+    |A|^2 u^perp
+  $<u_perp_step_5>
+  now we can use @lemma-codazzi to get
+  $
+    (ov(nabla)_i h_(i j)) ip(X^perp, e_j)
+    &=
+    (ov(Rm)_(j i i nu) + nabla_j h_(i i))ip(X^perp, e_j)
+    =
+    (ov(Ric)(e_j, nu) + nabla_j H)ip(X^perp, e_j)
+    \ &=
+    ov(Ric)(pi(X^perp), nu) + ip(nabla H, X^perp)
+    \ &=
+    ov(Ric)(X^perp, nu) - u^perp ov(Ric)(nu,nu) + ip(nabla H, X^perp)
+  $
+  which we can plug back into @eqn-u_perp_step_5 to get
+  $
+    Delta u^perp =
+    - n nu(phi)
+    - u^perp ov(Ric)(nu,nu) + ip(nabla H, X^perp)
+    +
+    phi H
+    -
+    |A|^2 u^perp
+  $
 
+  Now we deal with $u^top$
+  #claim[
+    We have
+    $
+      Delta u^top = - u^top ov(Ric)(nu,nu) + ip(nabla H, X^top) - |A|^2 u^top
+    $
+  ]
+  Again we compute from definitions, we will use $X^top$ instead of $Xi(t) X^top$ since that does not change any of the calculations and both are Killing vector fields.
+  $
+    Delta u^top
+    &= nabla_i nabla_i ip(X^top, nu)
+    = nabla_i (ip(ov(nabla)_i X^top, nu) + ip(X^top, ov(nabla)_i nu)).
+  $
+  Now for the first term $e_i$ is orthogonal to $nu$ and thus it simplifies to $ip(psi^top (e_i), nu)$, we continue computing,
+  $
+    Delta u^top
+    = nabla_i (ip(psi^top (e_i), nu) + ip(X^top, h_(i j) e_j)).
+  $<u_top_step_1>
+  Let us now deal with the first term, we use @cor-psi_antisym
+  $
+    nabla_i (ip(psi^top (e_i), nu))
+    &=
+    nabla_i ((2 AntiSym(ov(nabla)||X^top||^flat times.circle X^(top flat))(e_i,nu))/(||X^top||))
+    \ &=
+    (ov(nabla)_i 2 AntiSym(ov(nabla)||X^top||^flat times.circle X^(top flat))(e_i,nu))/(||X^top||)
+    \ &+ med
+    (2 AntiSym(ov(nabla)||X^top||^flat times.circle X^(top flat))(ov(nabla)_i e_i,nu))/(||X^top||)
+    \ &+ med
+    (2 AntiSym(ov(nabla)||X^top||^flat times.circle X^(top flat))(e_i,ov(nabla)_i nu))/(||X^top||)
+    \ &- med
+    (2 AntiSym(ov(nabla)||X^top||^flat times.circle X^(top flat))(e_i,nu))/(||X^top||^2)ov(nabla)_i||X^top||.
+  $
+  We notice that since $ov(nabla)_i e_i = - H nu$ the second term will have two $nu$ inputs into an anti-symmetrization, making it vanish. Similarly, since $ov(nabla)_i nu = h_(i j) e_j$ the third term will have the inputs $(e_i,e_j)$ symmetrized by $h_(i j)$ and thus will also vanish. We are thus left with
+  $
+    nabla_i (ip(psi^top (e_i), nu))
+    &=
+    2 ((ov(nabla)_i AntiSym(ov(nabla)||X^top||^flat times.circle X^(top flat)))(e_i,nu))/(||X^top||) -
+    ip(psi^top (e_i), nu) (ov(nabla)_i||X^top||)/(||X^top||). #h(2em)
+  $ <u_top_step_2>
+  Now we can compute the covariant derivative of the anti-symmetrization
+  $
+    2 AntiSym(
+      ov(nabla)||X^top||^flat
+      times.circle
+      (psi^top (e_i))^flat
+    )
+    +
+    2 AntiSym(
+      ov(nabla)_i ov(nabla)||X^top||^flat
+      times.circle
+      X^(top flat)
+    ),
+  $
+  now when we plug this back into @eqn-u_top_step_2 we get
+  $
+    ((ov(nabla)_i||X^top||) ip(psi^top (e_i), nu))/(||X^top||)
+    + ov(Hess)_(||X^top||) (e_i, e_i) u^top/(||X^top||) - ov(Hess)_(||X^top||) (e_i, nu) ip(X^top,e_i)/(||X^top||)
+    \ - ip(psi^top (e_i), nu) (ov(nabla)_i (||X^top||))/(||X^top||),
+  $
+  which simplifies into
+  $
+    ov(Hess)_(||X^top||) (e_i, e_i) u^top/(||X^top||) - (ov(Hess)_(||X^top||) (pi(X^top), nu))/(||X^top||).
+  $
+  Now this Hessian term is almost the ambient Laplacian of $||X^top||$, so we can rewrite this as 
+  $
+    ov(Delta)||X^top||u^top/(||X^top||) - u^top (ov(Hess)_(||X^top||) (nu,nu))/(||X^top||) - (ov(Hess)_(||X^top||) (pi(X^top), nu))/(||X^top||),
+  $
+  but now since $X^top = pi(X^top) + u^top nu$ we further simplify this into
+  $
+    ov(Delta)||X^top||u^top/(||X^top||) - (ov(Hess)_(||X^top||) (X^top, nu))/(||X^top||).
+  $
+  and then we use @eqn-ric_orthogonal-phi to get
+  $
+    ov(Delta)||X^top||u^top/(||X^top||) - ip(X^top, nu)(ov(Hess)_(||X^top||) (N^top, cal(N)^top))/(||X^top||)
+    =
+    - u^top/(||X^top||) (ov(Delta)||X^top|| - ov(Hess)_(||X^top||) (N^top, cal(N)^top)).
+  $
+  Now we use @eqn-ric_x to get
+  $
+    - ov(Ric)(X^top, nu).
+  $<u_top_step_3>
+  Next for the second term of @eqn-u_top_step_1 we get
+  $
+    ov(nabla)_i (h_(i j) ip(X^top, e_j))
+    & =
+    (ov(nabla)_i h_(i j)) ip(X^top, e_j)
+    +
+    h_(i j) ip(ov(nabla)_i X^top, e_j)
+    +
+    h_(i j) ip(X^top, ov(nabla)_i e_j)
+    \ & =
+    (ov(nabla)_i h_(i j)) ip(X^top, e_j)
+    +
+    h_(i j) (ip(psi^top (e_i), e_j))
+    -
+    h_(i j) h_(i j) ip(X^top, nu).
+  $
+  Since $h_(i j)$ is symmetric the third term here vanishes and so we are left with
+  $
+    ov(nabla)_i (h_(i j) ip(X^top, e_j))
+    &=
+    (ov(nabla)_i h_(i j)) ip(X^top, e_j)
+    -
+    |A|^2 u^top.
+  $<u_top_step_4>
+  Now plugging @eqn-u_top_step_3 and @eqn-u_top_step_4 into @eqn-u_top_step_1 gives us
+  $
+    Delta u^top =
+    - ov(Ric) (X^top, nu)
+    +
+    (ov(nabla)_i h_(i j)) ip(X^top, e_j)
+    -
+    |A|^2 u^top
+  $<u_top_step_5>
+  now we can use @lemma-codazzi to get
+  $
+    (ov(nabla)_i h_(i j)) ip(X^top, e_j)
+    &=
+    (ov(Rm)_(j i i nu) + nabla_j h_(i i))ip(X^top, e_j)
+    =
+    (ov(Ric)(e_j, nu) + nabla_j H)ip(X^top, e_j)
+    \ &=
+    ov(Ric)(pi(X^top), nu) + ip(nabla H, X^top)
+    \ &=
+    ov(Ric)(X^top, nu) - u^top ov(Ric)(nu,nu) + ip(nabla H, X^top)
+  $
+  which we can plug back into @eqn-u_top_step_5 to get
+  $
+    Delta u^top =
+    - u^top ov(Ric)(nu,nu) + ip(nabla H, X^top)
+    -
+    |A|^2 u^top
+  $
+
+  Combined with the previous claim we get that
+  $
+    Delta u = - n nu(phi) - u ov(Ric)(nu,nu) + ip(nabla H, X) + phi H - |A|^2 u
+  $
+  and then combining with @eqn-u_diff_t we get
+  $
+    L u 
+    &= n phi^2 + Xi'(t) u^perp - n X(phi) + 2 n u nu (phi) + H ip(X,nabla u) + u^2 ov(Ric) (nu,nu)
+    \ &- 2 phi u H + |A|^2 u^2
+    \ &= n (phi^2 - X^perp (phi) - Xi(t) X^top (phi)) + Xi'(t) u^perp  + 2 n u nu (phi) + H ip(X,nabla u) + u^2 ov(Ric) (nu,nu)
+    \ &- 2 phi u H + |A|^2 u^2
+    \ &= n Lambda phi^3 - n Xi(t) X^top (phi) + Xi'(t) u^perp  + 2 n u nu (phi) + H ip(X,nabla u) + u^2 ov(Ric) (nu,nu)
+    \ &- 2 phi u H + |A|^2 u^2
+  $
+]
 
 #pagebreak(weak: true)
 == Existence and Convergence
