@@ -938,7 +938,7 @@ Now the difficulty in omitting types is that some types can *never* be omitted.
 ]
 But some types can be omitted
 #example[
-  The type of a transcendental number in $A C F_p$ is distinct from that of an algebraic number, and can be omitted, for example in $hat(Q)$.
+  The type of a transcendental number in $A C F_p$ is distinct from that of an algebraic number, and can be omitted, for example in $hat(QQ)$.
 ]
 
 The first example here is an important one to keep in mind since all the properties of that type can be proved from the single formula $x = c$.
@@ -1025,6 +1025,14 @@ There are many proofs of this theorem but we will use one called *Henkin's const
     = (exists ov(y) (phi(ov(y),x))) -> psi(x)
   $
   then $exists ov(y) (phi(ov(y),x))$ implies every $psi$ in the type $p(ov(x))$, but also $exists ov(y) (phi(ov(y),x))$ is true in $T_(2n+1)$ and thus is consistent with $T$ and thus is in the type $p$. This contradicts our assumption that $p(ov(x))$ is not isolated.
+]
+
+We now have a powerful way to think about and use types in proofs.
+#corollary[
+  In a complete theory $T$,
+  $
+    p "is isolated" <=> "every model of" T "realizes" p
+  $
 ]
 
 Now that we have the tools to omit types, we can use it to characterize the $aleph_0$-categorical theories.

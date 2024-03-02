@@ -1199,7 +1199,7 @@ Our flow will consist of two steps,
 Note that in this setting, $u$'s definition depends on time but we will drop this dependence in our notation and only explicitly mention it when it comes up.
 Note that, if $u > 0$ when $t = T_0$, then at that point in time the surface is star-shaped with respect to just $X^perp$ so we can apply the methods of Li and Pan.
 
-For now we will assume that the flow exists on some interval $[0,T)$, we will show this must be the case later, in @prop-flow_short_time. We will also assume that $u$ remains positive on $[0,T)$, this will be proven in @head-evolution_equation_u.
+For now we will assume that the flow exists on some interval $[0,T)$ with $T <= T_0$, we will show this must be the case later, in @prop-flow_short_time. We will also assume that $u$ remains positive on $[0,T)$, this will be proven in @head-evolution_equation_u.
 We will now start computing the evolution of various geometric quantities along our flow. For convenience we will define the factor 
 $
   Xi(t) =(1 - t/T_0).
@@ -1609,14 +1609,43 @@ This next evolution is nearly as important, our parabolic operator has a $u$ fac
   and then combining with @eqn-u_diff_t we get
   $
     L u 
-    &= n phi^2 + Xi'(t) u^perp - n X(phi) + 2 n u nu (phi) + H ip(X,nabla u) + u^2 ov(Ric) (nu,nu)
+    &= n phi^2 + Xi'(t) u^top - n X(phi) + 2 n u nu (phi) + H ip(X,nabla u) + u^2 ov(Ric) (nu,nu)
     \ &- 2 phi u H + |A|^2 u^2
-    \ &= n (phi^2 - X^perp (phi) - Xi(t) X^top (phi)) + Xi'(t) u^perp  + 2 n u nu (phi) + H ip(X,nabla u) + u^2 ov(Ric) (nu,nu)
+    \ &= n (phi^2 - X^perp (phi) - Xi(t) X^top (phi)) + Xi'(t) u^top  + 2 n u nu (phi) + H ip(X,nabla u) + u^2 ov(Ric) (nu,nu)
     \ &- 2 phi u H + |A|^2 u^2
-    \ &= n Lambda phi^3 - n Xi(t) X^top (phi) + Xi'(t) u^perp  + 2 n u nu (phi) + H ip(X,nabla u) + u^2 ov(Ric) (nu,nu)
-    \ &- 2 phi u H + |A|^2 u^2
+    \ &= n Lambda phi^3 - n Xi(t) X^top (phi) + Xi'(t) u^top  + 2 n u nu (phi) + H ip(X,nabla u) + u^2 ov(Ric) (nu,nu)
+    \ &- 2 phi u H + |A|^2 u^2.
   $
+  This finishes the proof.
 ]
+
+Now we can start to analyse this evolution equation to get results about $u$.
+#corollary[
+  
+]
+#proof[
+  At a minimum point of $u$ we have that $nabla u$ vanishes and so we get
+  $
+    L u = n (Lambda phi^3 - Xi(t) X^top (phi)) + Xi'(t) u^top + 2 n u nu(phi) + u^2(ov(Ric)(nu,nu)) - 2 phi u H + |A|^2 u^2,
+  $
+  now recall that all ambient objects are uniformly bounded for all time, so there exists a constant $C$ such that
+  $
+    L u >= n (Lambda phi^3 - Xi(t) X^top (phi)) + Xi'(t) u^top - u C - 2 phi u H + |A|^2 u^2.
+  $
+  By our assumptions both $Lambda phi^3$ and $Lambda phi^3 - Xi(t) X^top (phi)$ are positive, we thus have that any convex combinations of them is positive so since these are ambient quantities they must be uniformly bounded and so
+  $
+    n (Lambda phi^3 - Xi(t) X^top (phi)) >= epsilon_1 > 0
+  $
+  for some $epsilon_1$. We thus have
+  $
+    L u >= epsilon_1 + Xi'(t) u^top - u C - 2 phi u H + |A|^2 u^2.
+  $
+  Now we are free to pick $T_0$ such that $(||X^top||)/ T_0 <= epsilon_1/2$. Then we can use the Newton-Maclaurin
+]
+
+
+== Evolution Equation for $H$
+
 
 #pagebreak(weak: true)
 == Existence and Convergence
