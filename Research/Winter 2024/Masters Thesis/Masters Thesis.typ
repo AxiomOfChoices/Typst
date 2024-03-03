@@ -75,7 +75,7 @@ This document assumes general knowledge of differential and Riemannian geometry,
 
 For the rest of this document we will use the following notation, $N$ is an $n+1$ dimensional Riemannian manifold with metric $ov(g)$ within which we have a compact domain $Omega$ with boundary $diff Omega = M$ such that $F : M -> N$ is an embedding making $M$ a Riemannian hypersurface. We then set $g := F^* ov(g)$ to be the induced metric on $M$. We will in general identify $M$ with its image $F(M)$ and use the two interchangeably. We will write $frak(X)(N)$ to the set of surfaces that can be defined as above and call any such surface any such surface an _admissable_ hypersurface.
 
-In general, tensorial constructions defined on $N$ will be written with an overline and their versions on $M$ will be written normally. We will write the covariant derivatives on $M$ and $N$ as $nabla$ and $ov(nabla)$ respectively. We will write the laplacian on $N$ and $M$ as $Delta$ and $ov(Delta)$ respectively. We will use Einstein summation notation for all tensor equations.
+In general, tensorial constructions defined on $N$ will be written with an overline and their versions on $M$ will be written normally. We will write the covariant derivatives on $M$ and $N$ as $nabla$ and $ov(nabla)$ respectively. We will write the Laplacian on $N$ and $M$ as $Delta$ and $ov(Delta)$ respectively. We will use Einstein summation notation for all tensor equations.
 
 Often for a matrix $M_(i j)$ we will use the notation $M_(i j) >= #h(0em) (>) med med 0$ to denote the fact that $M_(i j)$ is positive semi-definite (definite), and similarly for $M_(i j) <= #h(0em) (<) med med 0$.
 
@@ -93,7 +93,7 @@ We can now define the Isoperimetric profile of $N$ to be the function
 $
   I(v) := inf { Area(M) : M in frak(X)(N) "and" Volume(M) = v},
 $
-The Isoperimetric Problem now asks us to 
+The Isoperimetric Problem now asks us to
 + Show there exist elements $M in frak(X)(N)$ that attain the infimum above.
 + Characterize these elements.
 
@@ -136,7 +136,7 @@ Let $e_i$ be an orthonormal frame at $p$, the following are true:
   + $h$ can be written in coordinates as $h_(i j) = ip(e_i, ov(nabla)_(e_j) nu)$. <prop-h_coords>
   + $ov(nabla)_i nu = h_(i j) e_j$. <prop-h_applied>
   + $ov(nabla)_i e_j = - h_(i j) nu$. <prop-h_neg>
-  + If $f$ is a function $N -> RR$, then $ov(Delta) f = Delta f + ov(Hess)_f (nu,nu) + H nu(f)$. <prop-h_laplac>
+  + If $f$ is a function $N -> RR$, then $ov(Delta) f = Delta f + ov(Hess)_f (nu,nu) + H nu(f)$. <prop-h_laplace>
   ]
 ]<prop-h_props>
 #proof[
@@ -167,7 +167,7 @@ $
 $
 which proves the claim.
 
-Finally for #link(<prop-h_laplac>)[(d)], we have
+Finally for #link(<prop-h_laplace>)[(d)], we have
 $
     ov(Delta) f
   & = ip(ov(nabla)_i ov(nabla) f, e_i) + ip(ov(nabla)_nu ov(nabla), nu)
@@ -627,7 +627,7 @@ We have one final evolution equation to find, and that is the one for the second
   $
     diff_t H = - Delta f - f(|A|^2 + ov(Ric)(nu,nu))
   $
-]<prop-H_evolution>
+]<cor-H_evolution>
 #proof[
   We have $H = g^(i j) h_(i j)$ in coordinates so
   $
@@ -1270,9 +1270,9 @@ The first result we will prove is arguably the most important result, as it will
 ]
 
 #corollary[
-  For all $t in [0,T)$ and all $x in M_t$ we have
+  For all $t in [0,T)$ and all $p in M_t$ we have
   $
-    min_(x in M_0) lambda(x,0) <= lambda(x,t) <= max_(x in M_0) lambda(x,0)
+    min_(p in M_0) lambda(p,0) <= lambda(p,t) <= max_(p in M_0) lambda(p,0)
   $
 ]<cor-lambda_estimate>
 #proof[
@@ -1299,7 +1299,7 @@ This next evolution is nearly as important, our parabolic operator has a $u$ fac
     L u &= n (Lambda phi^3 - Xi(t) X^top (phi)) + Xi'(t) u^top
     - 2 phi H u + |A|^2 u^2 + 2 n u nu(phi) \ &+ med u^2 ov(Ric)(nu,nu) + H ip(X,nabla u)
   $
-]
+]<prop-u_evolution>
 #proof[
   This is quite the long calculation so we will split it into multiple steps, first for the time derivative
   $
@@ -1608,7 +1608,7 @@ This next evolution is nearly as important, our parabolic operator has a $u$ fac
   $
   and then combining with @eqn-u_diff_t we get
   $
-    L u 
+    L u
     &= n phi^2 + Xi'(t) u^top - n X(phi) + 2 n u nu (phi) + H ip(X,nabla u) + u^2 ov(Ric) (nu,nu)
     \ &- 2 phi u H + |A|^2 u^2
     \ &= n (phi^2 - X^perp (phi) - Xi(t) X^top (phi)) + Xi'(t) u^top  + 2 n u nu (phi) + H ip(X,nabla u) + u^2 ov(Ric) (nu,nu)
@@ -1621,16 +1621,19 @@ This next evolution is nearly as important, our parabolic operator has a $u$ fac
 
 Now we can start to analyse this evolution equation to get results about $u$.
 #corollary[
-  
+  There is a constant $epsilon > 0$ such that for any $t in [0,T)$
+  $
+    min_(p in M_t) u(p,t) >= epsilon/(1 + max_(p in M_t) |H(p,t)|)
+  $
 ]
 #proof[
   At a minimum point of $u$ we have that $nabla u$ vanishes and so we get
   $
     L u = n (Lambda phi^3 - Xi(t) X^top (phi)) + Xi'(t) u^top + 2 n u nu(phi) + u^2(ov(Ric)(nu,nu)) - 2 phi u H + |A|^2 u^2,
   $
-  now recall that all ambient objects are uniformly bounded for all time, so there exists a constant $C$ such that
+  now recall that all ambient objects are uniformly bounded for all time, so there exists a constant $M$ such that
   $
-    L u >= n (Lambda phi^3 - Xi(t) X^top (phi)) + Xi'(t) u^top - u C - 2 phi u H + |A|^2 u^2.
+    L u >= n (Lambda phi^3 - Xi(t) X^top (phi)) + Xi'(t) u^top - u M - 2 phi u H + |A|^2 u^2.
   $
   By our assumptions both $Lambda phi^3$ and $Lambda phi^3 - Xi(t) X^top (phi)$ are positive, we thus have that any convex combinations of them is positive so since these are ambient quantities they must be uniformly bounded and so
   $
@@ -1638,14 +1641,103 @@ Now we can start to analyse this evolution equation to get results about $u$.
   $
   for some $epsilon_1$. We thus have
   $
-    L u >= epsilon_1 + Xi'(t) u^top - u C - 2 phi u H + |A|^2 u^2.
+    L u >= epsilon_1 + Xi'(t) u^top - u M - 2 phi u H + |A|^2 u^2.
   $
-  Now we are free to pick $T_0$ such that $(||X^top||)/ T_0 <= epsilon_1/2$. Then we can use the Newton-Maclaurin
+  Now we are free to pick $T_0$ such that $(||X^top||)/ T_0 <= epsilon_1/2$. Then we can use the Newton-Maclaurin inequality to get
+  $
+    L u >= epsilon_2 + Xi'(t) u^top - u M - 2 phi u H + H^2 u^2 / n.
+  $
+  Now assume that $u < epsilon/(1 + max |H(p, t)|)$, then
+  $
+    L u >= epsilon_2 + Xi'(t) u^top - epsilon M - 2 phi epsilon
+  $
+  so by setting $epsilon < epsilon_2/(2(M + 2 phi))$ then
+  $
+    L u >= epsilon_3 + Xi'(t) u^top
+  $
+  now we can pick $T_0$ so that $|Xi'(t)| < 1/(||X^top||)$ and we get
+  $
+    L u >= epsilon_4.
+  $
+  Thus by using @prop-max_principle we get that
+  $
+  u <= epsilon/(1 + max_(p in M_t) H(p,t)) quad "implies" quad min_(p in M_t) u(p,t) >= min_(p in M_0) u(p,0)
+  $
+  and so by choosing $epsilon$ appropriately we get the desired result.
 ]
 
-
+Now that we can bound $u$ using $H$, we just need to show that $H$ grows sufficiently slowly, to guarantee the flow exists until $t = T_0$.
 == Evolution Equation for $H$
+#proposition[
+  The evolution equation for $H$ is
+  $
+    L H &= 2 ip(nabla H, nabla u) + H ip(X, nabla H) - phi (H^2 - n |A|^2)
+    + n(ov(Hess)_phi (nu,nu) - ov(Hess)_phi (N^perp,N^perp))
+    \ &+ med n phi (ov(Ric)(N^perp,N^perp) - ov(Ric)(nu,nu))
+  $
+]
+#proof[
+  We use @cor-H_evolution to get
+  $
+    diff_t H = - Delta (n phi - H u) - (n phi - H u)(|A|^2 + ov(Ric)(nu,nu))
+  $
+  then simplifying this we get
+  $
+    L H = - n Delta phi + 2 ip(nabla H, nabla u) + H Delta u - (n phi - H u)(|A|^2 + ov(Ric)(nu,nu))
+  $
+  then using the results of @prop-u_evolution we get
+  $
+    L H
+    &= - n Delta phi + 2 ip(nabla H, nabla u) - H n nu(phi) - H u ov(Ric)(nu,nu) + H ip(nabla H, X) + phi H^2
+    \ & - med H|A|^2 u - (n phi - H u)(|A|^2 + ov(Ric)(nu,nu))
+    \ &= - n Delta phi + 2 ip(nabla H, nabla u) - H n nu(phi) + H ip(nabla H, X) + phi H^2 - n phi(|A|^2 + ov(Ric)(nu,nu))
+    \ &= - n Delta phi + 2 ip(nabla H, nabla u) - H n nu(phi) + H ip(nabla H, X) + phi (H^2 - n|A|^2) - n phi ov(Ric)(nu,nu).
+  $
+  Now we use @prop-h_props to get
+  $
+    L H
+    &= - n ov(Delta) phi + n ov(Hess)_phi (nu,nu) + 2 ip(nabla H, nabla u) + H ip(nabla H, X) + phi (H^2 - n|A|^2)
+    \ &- med n phi ov(Ric)(nu,nu)
+  $
+  but now we use @ric_x to get
+  $
+    L H
+    &= n (phi ov(Ric)(N^perp,N^perp) - ov(Hess)_phi (N^perp, N^perp)) + n ov(Hess)_phi (nu,nu) + 2 ip(nabla H, nabla u)\ &+ H ip(nabla H, X) + phi (H^2 - n|A|^2) - med n phi ov(Ric)(nu,nu)
+    \ &= 2 ip(nabla H, nabla u) + H ip(nabla H, X) + phi (H^2 - n|A|^2) + n phi (ov(Ric)(cal(N)^perp,cal(N)^perp) - ov(Ric)(nu,nu)) \ &+med n (ov(Hess)_phi (nu,nu) - ov(Hess)_phi (cal(N)^perp, cal(N)^perp))
+  $
+]
+#corollary[
+  There are constants $a,b > 0$ such that for any $t in [0,T)$
+  $
+    max_(p in M_t) H(p,t) <= a + b t
+  $
+]
+#proof[
+  At a maximum point of $H$ we have $nabla H = 0$, hence the evolution equation simplifies to
+  $
+      L H
+    &= phi (H^2 - n|A|^2) + n phi (ov(Ric)(cal(N)^perp,cal(N)^perp) - ov(Ric)(nu,nu)) \ &+med n (ov(Hess)_phi (nu,nu) - ov(Hess)_phi (cal(N)^perp, cal(N)^perp)),
+  $
+  but then again using the Newton-Maclaurin inequality we get
+  $
+    L H
+    <= n phi (ov(Ric)(cal(N)^perp,cal(N)^perp) - ov(Ric)(nu,nu)) + n (ov(Hess)_phi (nu,nu) - ov(Hess)_phi (cal(N)^perp, cal(N)^perp)).
+  $
+  Now on the right hand side these are all ambient objects and thus are uniformly bounded by some constant $M$, hence we have
+  $
+    L H <= M.
+  $
+  Hence by @prop-max_principle we get that $H <= max_(p in M_0) H(p,0) + M t$, proving the desired result.
+]
 
+With this linear bound we get an inverse linear lower bound on $u$.
+#corollary[
+  There exists $epsilon > 0$ such that
+  $
+    u(p,t) >= epsilon/(1 + T_0)
+  $
+  for all $t in [0,T)$ and $p in M_t$.
+]
 
 #pagebreak(weak: true)
 == Existence and Convergence
