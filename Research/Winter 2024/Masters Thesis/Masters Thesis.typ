@@ -311,7 +311,7 @@ To see why conformal vector fields are so useful in the study of the Isoperimetr
   $
 ]
 
-== Partial Differential Equations
+== Partial Differential Equations <sect-PDE>
 The Partial Differential Equations (PDEs) we will be dealing with most in this document are parabolic PDEs, so we will go over their properties first.
 
 
@@ -1625,7 +1625,7 @@ Now we can start to analyse this evolution equation to get results about $u$.
   $
     min_(p in M_t) u(p,t) >= epsilon/(1 + max_(p in M_t) |H(p,t)|)
   $
-]
+]<cor-u_inverse_bound>
 #proof[
   At a minimum point of $u$ we have that $nabla u$ vanishes and so we get
   $
@@ -1711,7 +1711,7 @@ Now that we can bound $u$ using $H$, we just need to show that $H$ grows suffici
   $
     max_(p in M_t) H(p,t) <= a + b t
   $
-]
+]<cor-H_linear_bound>
 #proof[
   At a maximum point of $H$ we have $nabla H = 0$, hence the evolution equation simplifies to
   $
@@ -1738,16 +1738,66 @@ With this linear bound we get an inverse linear lower bound on $u$.
   $
   for all $t in [0,T)$ and $p in M_t$.
 ]
+#proof[
+  Combining @cor-H_linear_bound with @cor-u_inverse_bound we immediately get the desired result.
+]
 
-#pagebreak(weak: true)
 == Existence and Convergence
+We now have everything we need to prove the flow exists until $t = T_0$.
+#proposition[
+  A surface $M$ which is star-shaped with respect to $X^perp + X^top$ remains star-shaped with respect to $X(t)$ for all $t in [0,T_0)$, furthermore the flow exists at $t = T_0$ and there the surface is star-shaped with respect to $X^perp$.
+]
+#proof[
+  We have showed that $u$ is uniformly bounded for $t in [0,T_0)$, hence it is also uniformly bounded in the limit $t = T_0$.
+]
+
+We now shift out focus to rewriting this flow as a flow of functions instead of hypersurfaces, which will allow us to apply the results of @sect-PDE to it.
+We want to write our hypersurface as a graph over an integral hypersurface of $X^perp$, since this is not a warped product space we need to be careful with this construction. We will fix a starting hypersurface $M$, and set
+$
+  lambda_0 = min_(p in M) lambda(p),
+  quad
+  lambda_1 = max_(p in M) lambda(p).
+$
+
+// First we show that all integral surfaces are diffeomorphic to each other.
+// #proposition[
+//   Let $lambda in [lambda_0, lambda_1]$. The hypersurface $S_lambda = { p in N : lambda(p) = lambda }$ is diffeomorphic to $S_(lambda_0)$.
+// ]
+// #proof[
+//   First we will need a small claim.
+//   #claim[
+//     Continuous functions achieve their maxima and minima on $union.big_(lambda in [lambda_0,lambda_1]) S_lambda$
+//   ]
+//   #proof[
+//     Consider, for any continuous function $f$, the auxiliary function
+//     $
+//       g : lambda |-> max_(p in S_lambda) f.
+//     $
+//     One can quite quickly check this function must be continuous, and we can restrict it to a map $g : [lambda_0, lambda_1] -> RR$, it then achieves its maximum at some $lambda$, which is then achieved at some point $p in S_lambda$.
+//   ]
+//
+//   Because this is true we have a uniform lower bounded on $||nabla lambda||$ on the set ${ p in N : lambda_0 < $
+// ]
+
+// TODO: FIX NORMAL VECTORS TO INTEGRAL HYPERSURFACES TO USE CORRECT LETTER
+We will start with compactness, allowing us to lower bound important quantities uniformly.
 #proposition[
   For any $lambda_1 > lambda_0 > 0$ in the image of $lambda$, the subset
   $
-    { p in N : lambda_0 < lambda(p) < lambda_1 },
+    D := { p in N : lambda_0 <= lambda(p) <= lambda_1 }
   $
   is compact.
 ]<prop-compact_region>
+#proof[
+  First we will show that $D$ is a fiber bundle over $[lambda_0, lambda_1]$, to see this fix $lambda in [lambda_0, lambda_1]$, then set $S_lambda = { p in N : lambda(p) = lambda }$, it is an integrable hypersurface of $X^perp$ and is compact. Then consider the flow of $X^perp$, since $S_lambda$ is compact we can pick $epsilon > 0$ such that the flow of $X^perp$ exists for $t in [-epsilon, epsilon]$ for all points $p in S_lambda$.
+  Now the image of $S_lambda$ under this flow is another integrable hypersurface, this is because $X^perp$ is a conformal vector field and so under its flow, itself and orthogonality are preserved. Hence the flow of $X^perp$ fixes its orthogonal distribution $cal(D)(X^perp)$, and thus also its foliation. Hence for some $lambda' < lambda < lambda''$ we have that the flow of $X^perp$ is homeomorphism 
+  $
+    cal(F) : S_lambda times [lambda', lambda ''] -> lambda^(-1)([lambda', lambda''])
+  $
+  and thus $D$ is a fiber bundle.
+
+  Now it is well known that a fiber bundle is compact if and only if the base space and the fiber are both compact.
+]
 
 
 #proposition("Short Time Existence")[
