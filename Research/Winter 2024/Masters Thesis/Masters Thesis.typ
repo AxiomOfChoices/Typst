@@ -1754,49 +1754,81 @@ We now have everything we need to prove the flow exists until $t = T_0$.
 We now shift out focus to rewriting this flow as a flow of functions instead of hypersurfaces, which will allow us to apply the results of @sect-PDE to it.
 We want to write our hypersurface as a graph over an integral hypersurface of $X^perp$, since this is not a warped product space we need to be careful with this construction. We will fix a starting hypersurface $M$, and set
 $
-  lambda_0 = min_(p in M) lambda(p),
+  lambda_0 = min_(p in M) lambda(p)
   quad
-  lambda_1 = max_(p in M) lambda(p).
+  "and"
+  quad
+  lambda_1 = max_(p in M) lambda(p),
 $
-
-// First we show that all integral surfaces are diffeomorphic to each other.
-// #proposition[
-//   Let $lambda in [lambda_0, lambda_1]$. The hypersurface $S_lambda = { p in N : lambda(p) = lambda }$ is diffeomorphic to $S_(lambda_0)$.
-// ]
-// #proof[
-//   First we will need a small claim.
-//   #claim[
-//     Continuous functions achieve their maxima and minima on $union.big_(lambda in [lambda_0,lambda_1]) S_lambda$
-//   ]
-//   #proof[
-//     Consider, for any continuous function $f$, the auxiliary function
-//     $
-//       g : lambda |-> max_(p in S_lambda) f.
-//     $
-//     One can quite quickly check this function must be continuous, and we can restrict it to a map $g : [lambda_0, lambda_1] -> RR$, it then achieves its maximum at some $lambda$, which is then achieved at some point $p in S_lambda$.
-//   ]
-//
-//   Because this is true we have a uniform lower bounded on $||nabla lambda||$ on the set ${ p in N : lambda_0 < $
-// ]
-
+and we want to construct nice coordinates on
+$
+    D := { p in N : lambda_0 <= lambda(p) <= lambda_1 }
+$<domain_def>
 // TODO: FIX NORMAL VECTORS TO INTEGRAL HYPERSURFACES TO USE CORRECT LETTER
-We will start with compactness, allowing us to lower bound important quantities uniformly.
+We will start with proving that $D$ is compact, allowing us to lower bound important quantities uniformly.
 #proposition[
   For any $lambda_1 > lambda_0 > 0$ in the image of $lambda$, the subset
-  $
-    D := { p in N : lambda_0 <= lambda(p) <= lambda_1 }
-  $
+  $D$ defined by @eqn-domain_def
   is compact.
 ]<prop-compact_region>
 #proof[
   First we will show that $D$ is a fiber bundle over $[lambda_0, lambda_1]$, to see this fix $lambda in [lambda_0, lambda_1]$, then set $S_lambda = { p in N : lambda(p) = lambda }$, it is an integrable hypersurface of $X^perp$ and is compact. Then consider the flow of $X^perp$, since $S_lambda$ is compact we can pick $epsilon > 0$ such that the flow of $X^perp$ exists for $t in [-epsilon, epsilon]$ for all points $p in S_lambda$.
-  Now the image of $S_lambda$ under this flow is another integrable hypersurface, this is because $X^perp$ is a conformal vector field and so under its flow, itself and orthogonality are preserved. Hence the flow of $X^perp$ fixes its orthogonal distribution $cal(D)(X^perp)$, and thus also its foliation. Hence for some $lambda' < lambda < lambda''$ we have that the flow of $X^perp$ is homeomorphism 
+  Now the image of $S_lambda$ under this flow is another integrable hypersurface, this is because $X^perp$ is a conformal vector field and so under its flow, itself and orthogonality are preserved. Hence the flow of $X^perp$ fixes its orthogonal distribution $cal(D)(X^perp)$, and thus also its foliation. Hence for some $lambda' < lambda < lambda''$ we can reparametrize the flow of $X^perp$ to get the homeomorphism
   $
-    cal(F) : S_lambda times [lambda', lambda ''] -> lambda^(-1)([lambda', lambda''])
+    cal(F) : S_lambda times [lambda', lambda ''] -> lambda^(-1)([lambda', lambda'']),
   $
   and thus $D$ is a fiber bundle.
 
-  Now it is well known that a fiber bundle is compact if and only if the base space and the fiber are both compact.
+  Now it is well known that a fiber bundle is compact if the base space and the fiber are both compact, which proves the desired result.
+]
+
+We can now use these lower bounds to construct a nice coordinate system for $D$.
+#proposition[
+  For any $lambda in [lambda_0, lambda_1]$, and any point $p in S_lambda$ there exists an integral curve of $X(t)$ going through $p$ which intersects $S_(lambda_0)$ at exactly one point.
+]
+#proof[
+  First we prove existence, consider the flow of $-X(t)$ acting on $p$, lets call this flow $cal(F)$. Notice that
+  $
+    diff_t lambda(cal(F)(p,t)) = - 2 Lambda < 0
+  $
+  and so this function is decreasing. Then at some point $lambda(cal(F)(p,t)) = lambda_0$ since otherwise $cal(F)(p,t)$ remains forever in $D$ where $- 2 Lambda < -epsilon < 0$ for some positive $epsilon$ which is a contradiction.
+
+  To show uniqueness assume that the flow $cal(F)(p,t)$ intersects $S_(lambda_0)$ at more than one point. Then we have $lambda(cal(F)(p,t_1)) = lambda(cal(F)(p,t_2))$ and so by Rolle's theorem we have that $diff_t lambda(cal(F)(p,t_3)) = 0$ which contradicts the fact that $- 2 Lambda < 0$.
+]
+Using the unique intersection point we found above as a 'projection map' onto $S_(lambda_0)$ we get a diffeomorphism $F_t : D -> S_(lambda_0) times [lambda_0, lambda_1]$. Note that this diffeomorphism depends on $t$ because $X(t)$ depends on $t$.
+
+We can now write the metric of $D$ using this diffeomorphism.
+#proposition[
+  The pullback $F_t^* g$ can be written as
+  $
+    F_t^* g = G(p,lambda) g_1 compose pi_1 + H(p,lambda) g_2 compose pi_2.
+  $
+  Here $pi_1,pi_2$ are projections onto the tangent spaces of $S_(lambda_0)$ and $[lambda_0, lambda_1]$ respectively, $g_1$ is the induced metric on $S_(lambda_0)$, $g_2$ is the metric on $RR$, and $G,H$ are smooth functions.
+]
+#proof[
+  Fix some point $q = (p, lambda) in D$, then we have that $q = cal(F)((p,lambda_0), s)$ where $cal(F)$ is the flow of $X(t)$. Write the integral curve connecting $(p,lambda)$ with $(p,lambda_0)$ as $gamma : [0,s] -> D$. Then write along this curve we have
+  $
+    diff_s g = cal(L)_(X(t)) g = 2 phi g
+  $
+  and so
+  $
+    (g|_(S_(lambda)))|_(p, lambda) = exp(integral_0^s 2 phi(gamma(z)) dif z) (g|_(S_lambda_0))|_(p, lambda_0)
+  $
+  and so since this $s$ is a smooth function of $(p,lambda)$ then we can write
+  $
+    G(p,lambda) = exp(integral_0^s 2 phi(gamma(z)) dif z).
+  $
+
+  Then we just choose $H(p,lambda) = ||ov(nabla) lambda||$ which completes the proof.
+]
+We can now start converting our hypersurface flow into a flow of functions.
+
+
+#proposition[
+  A hypersurface $M$ contained in $D$ is star-shaped with respect to $X(t)$ if and only if it can be identified using $F_t$ with a graph of $f: S_(lambda_0) -> [lambda_0, lambda_1]$.
+]
+#proof[
+  Assume that it can be identified with the graph of a function $f$, then at a point $p in S_(lambda_0)$ consider coordinates $(x^1,...,x^n)$. Then 
 ]
 
 
