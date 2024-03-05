@@ -1797,39 +1797,98 @@ We can now use these lower bounds to construct a nice coordinate system for $D$.
 ]
 Using the unique intersection point we found above as a 'projection map' onto $S_(lambda_0)$ we get a diffeomorphism $F_t : D -> S_(lambda_0) times [lambda_0, lambda_1]$. Note that this diffeomorphism depends on $t$ because $X(t)$ depends on $t$.
 
-We can now write the metric of $D$ using this diffeomorphism.
-#proposition[
-  The pullback $F_t^* g$ can be written as
-  $
-    F_t^* g = G(p,lambda) g_1 compose pi_1 + H(p,lambda) g_2 compose pi_2.
-  $
-  Here $pi_1,pi_2$ are projections onto the tangent spaces of $S_(lambda_0)$ and $[lambda_0, lambda_1]$ respectively, $g_1$ is the induced metric on $S_(lambda_0)$, $g_2$ is the metric on $RR$, and $G,H$ are smooth functions.
-]
-#proof[
-  Fix some point $q = (p, lambda) in D$, then we have that $q = cal(F)((p,lambda_0), s)$ where $cal(F)$ is the flow of $X(t)$. Write the integral curve connecting $(p,lambda)$ with $(p,lambda_0)$ as $gamma : [0,s] -> D$. Then write along this curve we have
-  $
-    diff_s g = cal(L)_(X(t)) g = 2 phi g
-  $
-  and so
-  $
-    (g|_(S_(lambda)))|_(p, lambda) = exp(integral_0^s 2 phi(gamma(z)) dif z) (g|_(S_lambda_0))|_(p, lambda_0)
-  $
-  and so since this $s$ is a smooth function of $(p,lambda)$ then we can write
-  $
-    G(p,lambda) = exp(integral_0^s 2 phi(gamma(z)) dif z).
-  $
-
-  Then we just choose $H(p,lambda) = ||ov(nabla) lambda||$ which completes the proof.
-]
+// We can now write the metric of $D$ using this diffeomorphism.
+// #proposition[
+//   The pullback $F_t^* g$ can be written as
+//   $
+//     F_t^* g = G(p,lambda) g_1 compose pi_1 + H(p,lambda) g_2 compose pi_2.
+//   $
+//   Here $pi_1,pi_2$ are projections onto the tangent spaces of $S_(lambda_0)$ and $[lambda_0, lambda_1]$ respectively, $g_1$ is the induced metric on $S_(lambda_0)$, $g_2$ is the metric on $RR$, and $G,H$ are smooth functions.
+// ]
+// #proof[
+//   Fix some point $q = (p, lambda) in D$, then we have that $q = cal(F)((p,lambda_0), s)$ where $cal(F)$ is the flow of $X(t)$. Write the integral curve connecting $(p,lambda)$ with $(p,lambda_0)$ as $gamma : [0,s] -> D$. Then write along this curve we have
+//   $
+//     diff_s g = cal(L)_(X(t)) g = 2 phi g
+//   $
+//   and so
+//   $
+//     (g|_(S_(lambda)))|_(p, lambda) = exp(integral_0^s 2 phi(gamma(z)) dif z) (g|_(S_lambda_0))|_(p, lambda_0)
+//   $
+//   and so since this $s$ is a smooth function of $(p,lambda)$ then we can write
+//   $
+//     G(p,lambda) = exp(integral_0^s 2 phi(gamma(z)) dif z).
+//   $
+//
+//   Then we just choose $H(p,lambda) = ||ov(nabla) lambda||$ which completes the proof.
+// ]
 We can now start converting our hypersurface flow into a flow of functions.
 
-
+// TODO: REPLACE WITH S_0
 #proposition[
-  A hypersurface $M$ contained in $D$ is star-shaped with respect to $X(t)$ if and only if it can be identified using $F_t$ with a graph of $f: S_(lambda_0) -> [lambda_0, lambda_1]$.
+  A hypersurface $M$ contained in $D$ is star-shaped with respect to $X(t)$ if and only if it can be identified using $F_t$ with a graph of smooth function $f: S_(lambda_0) -> [lambda_0, lambda_1]$.
 ]
 #proof[
-  Assume that it can be identified with the graph of a function $f$, then at a point $p in S_(lambda_0)$ consider coordinates $(x^1,...,x^n)$. Then 
+  Assume that $M$ can be identified with the graph of $f$, then set $F : S_(lambda_0) -> S_(lambda_0) times [lambda_0, lambda_1]$ be the embedding of the graph
+  $
+    F : y |-> (y, f(y)).
+  $
+  Then if $u$ is not zero at some point of $M$, then we can choose the orientation of $M$ so that it is star-shaped, so we may assume that $u = 0$ at some point of $M$. This would imply that $X(t)$ is orthogonal to the normal $nu$ of the graph at that point and thus is tangent to $M$. By definition this would mean that
+  $
+    F_* v = X(t)
+  $
+  for some vector $v in T_p S_(lambda_0)$. But now we can see that
+  $
+    F_* v = hat(v) + v(f) diff_lambda,
+  $
+  where $hat(v)$ is the extension of $v$ to $D$ by the flow of $X(t)$. Hence by the definition of the identification $F_t$ we know that $X(t)$ is the velocity of the integral curves parametrized by $lambda$ and thus $diff_lambda$ is colinear with $X(t)$. We then have
+  $
+    X(t) - v(f) diff_lambda = hat(v)
+  $
+  and thus $v$ is colinear with $X(t)$. But this is not possible since
+  $
+    ip(hat(v), X(t))|_(p, f(p)) = cal(F)_* (ip(v,X(t))|_(p,0), s)
+  $
+  for some $s$ by definition of $hat(v)$ and thus
+  $
+    ip(hat(v), X(t))|_(p, f(p))
+    = exp(integral_0^s 2 phi dif z) ip(v, X(t))|_(p,0)
+  $
+  and also
+  $
+    ip(hat(v), hat(v))|_(p, f(p)) = exp(integral_0^s 2 phi dif z) ip(v, v)|_(p,0),\
+    ip(X(t), X(t))|_(p, f(p)) = exp(integral_0^s 2 phi dif z) ip(X(t), X(t))|_(p,0)
+  $
+  and so since
+  $
+    ip(hat(v), X(t))|_(p,0)
+    <
+    sqrt(
+      ip(X(t), X(t))|_(p,0)
+      dot
+      ip(hat(v), hat(v))|_(p,0)
+    )
+  $
+  we also have
+  $
+    ip(hat(v), X(t))|_(p,f(p))
+    <
+    sqrt(
+      ip(X(t), X(t))|_(p,f(p))
+      dot
+      ip(hat(v), hat(v))|_(p,f(p))
+    )
+  $
+  which contradicts the fact that they are colinear.
+
+  On the other hand assume that a surface is star-shaped, then first we prove that it intersects every integral curve of $X(t)$ at most once, to see this note that if it were to intersect it twice, then we would have $ip(nu,X(t_1))$ be positive and $ip(nu,X(t_2))$ be negative or vice versa, where $t_1, t_2$ are the intersection times. But this directly contradicts the fact that it is star-shaped. We thus have an injective map $pi : M -> S_(lambda_0)$ since the all the integral curves intersect $S_(lambda_0)$ at exactly one point.
+
+  It will be enough to show that $pi$ is also a diffeomorphism, as then its inverse will exactly be the embedding of the graph of a function. It in fact suffices just to show it is a local diffeomorphism, since then it is a bijection onto its image and thus a diffeomorphism onto its image. Now we check that this is indeed the case, fix a point $p in M$ and take an orthonormal frame $e_1,...,e_n$ of $S_(lambda_0)$ centered at $f(p)$ and extend it to $n$ vector fields $hat(e)_1,...,hat(e)_n,hat(nu)$ of $D$ through the flow of $X(t)$. Now at the point $p$ consider the projection $P : T_p N -> span(hat(e)_1,...,hat(e)_n)$ induced by the frame $hat(e)_1,...,hat(e)_n,X(t)$ (i.e. the projection with kernel $span(X(t))$). If we restrict this map to $T_p N$ the projection kernel of this linear map is zero since anything in the kernel must be colinear with $X(t)$ and thus cannot be in $T_p M$ since that would mean $ip(X(t), nu) = 0$ which contradicts star-shapedness.
+
+  Now we see that the projection is precisely the differential of $pi$ and thus it is a local diffeomorphism.
 ]
+
+Using this graph representation we can interpret our lower bound on $u$ as an upper bound on $f$.
+
 
 
 #proposition("Short Time Existence")[
@@ -1842,4 +1901,4 @@ We can now start converting our hypersurface flow into a flow of functions.
 #bibliography("Thesis.bib", style: "springer-mathphys")
 
 
-
+// TODO: CHECK ALL INNER PRODUCTS
