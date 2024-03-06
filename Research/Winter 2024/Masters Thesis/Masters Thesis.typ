@@ -1188,7 +1188,7 @@ Our flow will consist of two steps,
 + First we will use a time dependent conformal vector field $X(t) = X^perp + X^top (1-t/T_0)$ for some constant $T_0$, we will consider the flow with velocity
   $
     f = n phi - H ip(X(t), nu),
-  $
+  $<flow_def>
   we will run this flow until $t = T_0$.
 + If the flow survives after $t = T_0$ we will stop the flow, and then set $X(t) = X^perp$, we then continue with the flow
   $
@@ -1229,7 +1229,7 @@ The first result we will prove is arguably the most important result, as it will
 #proposition[
   The evolution equation for $lambda$ under the flow is
   $
-    L lambda = - 2 Lambda n phi u^top - 2 u ip(ov(nabla) Lambda, pi(X^perp)).
+    L lambda = - 2 Lambda n phi u^top - 2 u ip(nabla Lambda, X^perp).
   $
 ]
 #proof[
@@ -1256,16 +1256,16 @@ The first result we will prove is arguably the most important result, as it will
   Next by @prop-h_props we know that $ov(nabla)_i e_i = - h_(i i) nu = - H nu$. Combining these we get that
   $
     Delta lambda
-    &= 2 Lambda (n phi - H ip(X^perp, nu)) + 2 ip(ov(nabla) Lambda, pi(X^perp))
-    = 2 Lambda (n phi - H u^perp) + 2 ip(ov(nabla) Lambda, pi(X^perp)).
+    &= 2 Lambda (n phi - H ip(X^perp, nu)) + 2 ip(nabla Lambda, X^perp)
+    = 2 Lambda (n phi - H u^perp) + 2 ip(nabla Lambda, X^perp).
   $
 
   Finally we compute
   $
     (diff_t - u Delta) lambda
-    &= 2 Lambda ( (n phi - H u) u^perp - (n phi - H u^perp) u) - 2 ip(ov(nabla)Lambda, pi(X^perp))
-    \ &= 2 Lambda (- n phi u^top) - 2 ip(ov(nabla) Lambda, pi(X^perp))
-    = - 2 Lambda n phi u^top - 2 ip(ov(nabla) Lambda, pi(X^perp))
+    &= 2 Lambda ( (n phi - H u) u^perp - (n phi - H u^perp) u) - 2 ip(nabla Lambda, X^perp)
+    \ &= 2 Lambda (- n phi u^top) - 2 ip(nabla Lambda, X^perp)
+    = - 2 Lambda n phi u^top - 2 ip(nabla Lambda, X^perp)
   $
 ]
 
@@ -1400,9 +1400,9 @@ This next evolution is nearly as important, our parabolic operator has a $u$ fac
   $
   and then we use @eqn-ric_orthogonal-phi to get
   $
-    - n nu(phi) + ov(Delta) phi u^perp/phi - ip(X^perp, nu)(ov(Hess)_phi (N^perp, cal(N)^perp))/phi
+    - n nu(phi) + ov(Delta) phi u^perp/phi - ip(X^perp, nu)(ov(Hess)_phi (cal(N)^perp, cal(N)^perp))/phi
     \ =
-    - n nu(phi) + u^perp/phi (ov(Delta) phi - (ov(Hess)_phi (N^perp, cal(N)^perp))).
+    - n nu(phi) + u^perp/phi (ov(Delta) phi - (ov(Hess)_phi (cal(N)^perp, cal(N)^perp))).
   $
   Now we use @eqn-ric_x to get
   $
@@ -1543,7 +1543,7 @@ This next evolution is nearly as important, our parabolic operator has a $u$ fac
   $
     ov(Delta)||X^top||u^top/(||X^top||) - ip(X^top, nu)(ov(Hess)_(||X^top||) (N^top, cal(N)^top))/(||X^top||)
     =
-    - u^top/(||X^top||) (ov(Delta)||X^top|| - ov(Hess)_(||X^top||) (N^top, cal(N)^top)).
+    - u^top/(||X^top||) (ov(Delta)||X^top|| - ov(Hess)_(||X^top||) (cal(N)^top, cal(N)^top)).
   $
   Now we use @eqn-ric_x to get
   $
@@ -1672,8 +1672,8 @@ Now that we can bound $u$ using $H$, we just need to show that $H$ grows suffici
   The evolution equation for $H$ is
   $
     L H &= 2 ip(nabla H, nabla u) + H ip(X, nabla H) - phi (H^2 - n |A|^2)
-    + n(ov(Hess)_phi (nu,nu) - ov(Hess)_phi (N^perp,N^perp))
-    \ &+ med n phi (ov(Ric)(N^perp,N^perp) - ov(Ric)(nu,nu))
+    + n(ov(Hess)_phi (nu,nu) - ov(Hess)_phi (cal(N)^perp,cal(N)^perp))
+    \ &+ med n phi (ov(Ric)(cal(N)^perp,cal(N)^perp) - ov(Ric)(nu,nu))
   $
 ]
 #proof[
@@ -1702,7 +1702,7 @@ Now that we can bound $u$ using $H$, we just need to show that $H$ grows suffici
   but now we use @ric_x to get
   $
     L H
-    &= n (phi ov(Ric)(N^perp,N^perp) - ov(Hess)_phi (N^perp, N^perp)) + n ov(Hess)_phi (nu,nu) + 2 ip(nabla H, nabla u)\ &+ H ip(nabla H, X) + phi (H^2 - n|A|^2) - med n phi ov(Ric)(nu,nu)
+    &= n (phi ov(Ric)(cal(N)^perp,cal(N)^perp) - ov(Hess)_phi (cal(N)^perp, cal(N)^perp)) + n ov(Hess)_phi (nu,nu) + 2 ip(nabla H, nabla u)\ &+ H ip(nabla H, X) + phi (H^2 - n|A|^2) - med n phi ov(Ric)(nu,nu)
     \ &= 2 ip(nabla H, nabla u) + H ip(nabla H, X) + phi (H^2 - n|A|^2) + n phi (ov(Ric)(cal(N)^perp,cal(N)^perp) - ov(Ric)(nu,nu)) \ &+med n (ov(Hess)_phi (nu,nu) - ov(Hess)_phi (cal(N)^perp, cal(N)^perp))
   $
 ]
@@ -1782,9 +1782,9 @@ We will start with proving that $D$ is compact, allowing us to lower bound impor
   Now it is well known that a fiber bundle is compact if the base space and the fiber are both compact, which proves the desired result.
 ]
 
-We can now use these lower bounds to construct a nice coordinate system for $D$.
+We can now use these lower bounds to construct a nice coordinate system for $D$, we will do this by flowing the surface $S_(lambda_0)$ to cover the entirety of $D$. For brevity we will shorten $S_(lambda_0)$ to $S$.
 #proposition[
-  For any $lambda in [lambda_0, lambda_1]$, and any point $p in S_lambda$ there exists an integral curve of $X(t)$ going through $p$ which intersects $S_(lambda_0)$ at exactly one point.
+  For any $lambda in [lambda_0, lambda_1]$, and any point $p in S_lambda$ there exists an integral curve of $X(t)$ going through $p$ which intersects $S$ at exactly one point.
 ]
 #proof[
   First we prove existence, consider the flow of $-X(t)$ acting on $p$, lets call this flow $cal(F)$. Notice that
@@ -1793,107 +1793,106 @@ We can now use these lower bounds to construct a nice coordinate system for $D$.
   $
   and so this function is decreasing. Then at some point $lambda(cal(F)(p,t)) = lambda_0$ since otherwise $cal(F)(p,t)$ remains forever in $D$ where $- 2 Lambda < -epsilon < 0$ for some positive $epsilon$ which is a contradiction.
 
-  To show uniqueness assume that the flow $cal(F)(p,t)$ intersects $S_(lambda_0)$ at more than one point. Then we have $lambda(cal(F)(p,t_1)) = lambda(cal(F)(p,t_2))$ and so by Rolle's theorem we have that $diff_t lambda(cal(F)(p,t_3)) = 0$ which contradicts the fact that $- 2 Lambda < 0$.
+  To show uniqueness assume that the flow $cal(F)(p,t)$ intersects $S$ at more than one point. Then we have $lambda(cal(F)(p,t_1)) = lambda(cal(F)(p,t_2))$ and so by Rolle's theorem we have that $diff_t lambda(cal(F)(p,t_3)) = 0$ which contradicts the fact that $- 2 Lambda < 0$.
 ]
-Using the unique intersection point we found above as a 'projection map' onto $S_(lambda_0)$ we get a diffeomorphism $F_t : D -> S_(lambda_0) times [lambda_0, lambda_1]$. Note that this diffeomorphism depends on $t$ because $X(t)$ depends on $t$.
+Using the unique intersection point we found above as a 'projection map' onto $S$ we get a diffeomorphism $F_t : D -> S times [lambda_0, lambda_1]$. Note that this diffeomorphism depends on $t$ because $X(t)$ depends on $t$.
 
-// We can now write the metric of $D$ using this diffeomorphism.
-// #proposition[
-//   The pullback $F_t^* g$ can be written as
-//   $
-//     F_t^* g = G(p,lambda) g_1 compose pi_1 + H(p,lambda) g_2 compose pi_2.
-//   $
-//   Here $pi_1,pi_2$ are projections onto the tangent spaces of $S_(lambda_0)$ and $[lambda_0, lambda_1]$ respectively, $g_1$ is the induced metric on $S_(lambda_0)$, $g_2$ is the metric on $RR$, and $G,H$ are smooth functions.
-// ]
-// #proof[
-//   Fix some point $q = (p, lambda) in D$, then we have that $q = cal(F)((p,lambda_0), s)$ where $cal(F)$ is the flow of $X(t)$. Write the integral curve connecting $(p,lambda)$ with $(p,lambda_0)$ as $gamma : [0,s] -> D$. Then write along this curve we have
-//   $
-//     diff_s g = cal(L)_(X(t)) g = 2 phi g
-//   $
-//   and so
-//   $
-//     (g|_(S_(lambda)))|_(p, lambda) = exp(integral_0^s 2 phi(gamma(z)) dif z) (g|_(S_lambda_0))|_(p, lambda_0)
-//   $
-//   and so since this $s$ is a smooth function of $(p,lambda)$ then we can write
-//   $
-//     G(p,lambda) = exp(integral_0^s 2 phi(gamma(z)) dif z).
-//   $
-//
-//   Then we just choose $H(p,lambda) = ||ov(nabla) lambda||$ which completes the proof.
-// ]
-We can now start converting our hypersurface flow into a flow of functions.
+We can now start converting our hypersurface flow into a flow of functions, we will denote by $tilde(nabla)$ the induced connection onto $S$.
 
-// TODO: REPLACE WITH S_0
 #proposition[
-  A hypersurface $M$ contained in $D$ is star-shaped with respect to $X(t)$ if and only if it can be identified using $F_t$ with a graph of smooth function $f: S_(lambda_0) -> [lambda_0, lambda_1]$.
-]
+  A hypersurface $M$ contained in $D$ is star-shaped with respect to $X(t)$ if and only if it can be identified using $F_t$ with a graph of smooth function $f: S -> [lambda_0, lambda_1]$.
+]<prop-graph>
 #proof[
-  Assume that $M$ can be identified with the graph of $f$, then set $F : S_(lambda_0) -> S_(lambda_0) times [lambda_0, lambda_1]$ be the embedding of the graph
+  First assume that $M$ can be identified with the graph of $f$, then set $F : S -> S times [lambda_0, lambda_1]$ be the embedding of the graph
   $
     F : y |-> (y, f(y)).
   $
-  Then if $u$ is not zero at some point of $M$, then we can choose the orientation of $M$ so that it is star-shaped, so we may assume that $u = 0$ at some point of $M$. This would imply that $X(t)$ is orthogonal to the normal $nu$ of the graph at that point and thus is tangent to $M$. By definition this would mean that
+  One can easily compute that for $v in T_p S$
   $
-    F_* v = X(t)
+    F_* v = hat(v) + v(f) diff_lambda
   $
-  for some vector $v in T_p S_(lambda_0)$. But now we can see that
+  where $hat(v)$ is the extension of $v$ over the integral curve containing $p$ through the flow of $X(t)$.
+  Then let $v$ be the unit vector which maximizes the length of the orthogonal projection of $X(t)$ onto $F_* v$, this length is
   $
-    F_* v = hat(v) + v(f) diff_lambda,
+    ip(v + v(f) diff_lambda, X(t))/(||v + v(f) diff_lambda||)
+    =
+    ip(v + v(f) diff_lambda, X(t))/(||v + v(f) diff_lambda||)
   $
-  where $hat(v)$ is the extension of $v$ to $D$ by the flow of $X(t)$. Hence by the definition of the identification $F_t$ we know that $X(t)$ is the velocity of the integral curves parametrized by $lambda$ and thus $diff_lambda$ is colinear with $X(t)$. We then have
+  now orthogonally decompose $v$ as $v = a diff_lambda + b z$ where $z$ is a unit vector orthogonal to $diff_lambda$ and by extension also $X(t)$. We then have
   $
-    X(t) - v(f) diff_lambda = hat(v)
+    ip(a diff_lambda + b z + v(f) diff_lambda, X(t))/(||a diff_lambda + b z + v(f) diff_lambda||)
+    &=
+    ip(b z + (a + v(f)) diff_lambda, X(t))/(||b z + (a + v(f)) diff_lambda||)
+    \ &=
+    ((a+v(f))ip(diff_lambda, X(t)))/(sqrt(b^2 + (a+v(f))^2||diff_lambda||^2))
+    \ &=
+    ((a+v(f)))/(sqrt(b^2/(||diff_lambda||^2) + (a+v(f))^2))||X(t)||.
   $
-  and thus $v$ is colinear with $X(t)$. But this is not possible since
+  Now since we are on a compact surface we have uniform bounds on $v(f)$ and $b$ is non-zero (since $v$ is not colinear with $X(t)$) we have
   $
-    ip(hat(v), X(t))|_(p, f(p)) = cal(F)_* (ip(v,X(t))|_(p,0), s)
+    ((a+v(f)))/(sqrt(b^2/(||diff_lambda||^2) + (a+v(f))^2)) < 1 - epsilon
   $
-  for some $s$ by definition of $hat(v)$ and thus
+  for some $epsilon > 0$. Now from this we get that the projection $pi$ of $X(t)$ onto $M$ satisfies
   $
-    ip(hat(v), X(t))|_(p, f(p))
-    = exp(integral_0^s 2 phi dif z) ip(v, X(t))|_(p,0)
+    ||pi(X(t))||^2 < ||X(t)||^2 (1 - epsilon')
   $
-  and also
+  and so we have
   $
-    ip(hat(v), hat(v))|_(p, f(p)) = exp(integral_0^s 2 phi dif z) ip(v, v)|_(p,0),\
-    ip(X(t), X(t))|_(p, f(p)) = exp(integral_0^s 2 phi dif z) ip(X(t), X(t))|_(p,0)
+    u^2 = ||X(t)||^2 - ||pi(X(t))||^2 > ||X(t)||^2epsilon'
   $
-  and so since
-  $
-    ip(hat(v), X(t))|_(p,0)
-    <
-    sqrt(
-      ip(X(t), X(t))|_(p,0)
-      dot
-      ip(hat(v), hat(v))|_(p,0)
-    )
-  $
-  we also have
-  $
-    ip(hat(v), X(t))|_(p,f(p))
-    <
-    sqrt(
-      ip(X(t), X(t))|_(p,f(p))
-      dot
-      ip(hat(v), hat(v))|_(p,f(p))
-    )
-  $
-  which contradicts the fact that they are colinear.
+  and so up to a change of orientation our surface is star-shaped.
 
-  On the other hand assume that a surface is star-shaped, then first we prove that it intersects every integral curve of $X(t)$ at most once, to see this note that if it were to intersect it twice, then we would have $ip(nu,X(t_1))$ be positive and $ip(nu,X(t_2))$ be negative or vice versa, where $t_1, t_2$ are the intersection times. But this directly contradicts the fact that it is star-shaped. We thus have an injective map $pi : M -> S_(lambda_0)$ since the all the integral curves intersect $S_(lambda_0)$ at exactly one point.
+  On the other hand assume that a surface is star-shaped, then first we prove that it intersects every integral curve of $X(t)$ at most once, to see this note that if it were to intersect it twice, then we would have $ip(nu,X(t_1))$ be positive and $ip(nu,X(t_2))$ be negative or vice versa, where $t_1, t_2$ are the intersection times. But this directly contradicts the fact that it is star-shaped. We thus have an injective map $pi : M -> S$ since the all the integral curves intersect $S$ at exactly one point.
 
-  It will be enough to show that $pi$ is also a diffeomorphism, as then its inverse will exactly be the embedding of the graph of a function. It in fact suffices just to show it is a local diffeomorphism, since then it is a bijection onto its image and thus a diffeomorphism onto its image. Now we check that this is indeed the case, fix a point $p in M$ and take an orthonormal frame $e_1,...,e_n$ of $S_(lambda_0)$ centered at $f(p)$ and extend it to $n$ vector fields $hat(e)_1,...,hat(e)_n,hat(nu)$ of $D$ through the flow of $X(t)$. Now at the point $p$ consider the projection $P : T_p N -> span(hat(e)_1,...,hat(e)_n)$ induced by the frame $hat(e)_1,...,hat(e)_n,X(t)$ (i.e. the projection with kernel $span(X(t))$). If we restrict this map to $T_p N$ the projection kernel of this linear map is zero since anything in the kernel must be colinear with $X(t)$ and thus cannot be in $T_p M$ since that would mean $ip(X(t), nu) = 0$ which contradicts star-shapedness.
+  It will be enough to show that $pi$ is also a diffeomorphism, as then its inverse will exactly be the embedding of the graph of a function. It in fact suffices just to show it is a local diffeomorphism, since then it is a bijection onto its image and thus a diffeomorphism onto its image. Now we check that this is indeed the case, fix a point $p in M$ and take an orthonormal frame $e_1,...,e_n$ of $S$ centered at $f(p)$ and extend it to $n$ vector fields $hat(e)_1,...,hat(e)_n,hat(nu)$ of $D$ through the flow of $X(t)$. Now at the point $p$ consider the projection $P : T_p N -> span(hat(e)_1,...,hat(e)_n)$ induced by the frame $hat(e)_1,...,hat(e)_n,X(t)$ (i.e. the projection with kernel $span(X(t))$). If we restrict this map to $T_p N$ the projection kernel of this linear map is zero since anything in the kernel must be colinear with $X(t)$ and thus cannot be in $T_p M$ since that would mean $ip(X(t), nu) = 0$ which contradicts star-shapedness.
 
-  Now we see that the projection is precisely the differential of $pi$ and thus it is a local diffeomorphism.
+  Now we see that the projection is precisely the differential of $pi$ and it is a linear isomorphism and thus $pi$ is a local diffeomorphism.
 ]
 
-Using this graph representation we can interpret our lower bound on $u$ as an upper bound on $f$.
+In fact, by the first argument in the proof above we get that lower bounds on $u$ are equivalent to upper bounds on $||tilde(nabla) f||$.
+#corollary[
+  There are functions $M(epsilon)$ and $epsilon(M)$ such that
+  $
+    sup_(S) ||tilde(nabla) f|| < M => inf_S u > epsilon(M) quad "and" \
+    inf_(S) u > epsilon => sup_(S) ||tilde(nabla) f|| < M(epsilon)
+  $
+]
 
+We will now construct the flow in the following way, first we use @prop-graph to identify our initial surface $M_0$ with a graph of the function $lambda$ over $S$. Then $M_t$ solving @eqn-flow_def is equivalent to it being the graph of a function $lambda$ solving
+$
+  cases(L lambda = - 2 Lambda n phi u^top - 2 u ip(nabla Lambda, X^perp)\,,
+    lambda(x,0) = lambda(x)\,,
+  )
+$<pde_formulation>
+up to an appropriate diffeomorphism that handles points changing which integral curve they are on (this is alright as all normal flows are diffeomorphism invariant). This identification is through $G : (x,t,lambda) |-> F_t (x, lambda)$.
 
+Next we solve this @pde_formulation purely in function space. We then apply appropriate diffeomorphisms to convert this solution to a solution of our normal flow.
 
 #proposition("Short Time Existence")[
-  The normal flow with velocity $n phi - H u$ exists for some interval $[0,T)$.
+  For any star-shaped hypersurface $M_0$, the normal flow with velocity $n phi - H u$ with initial condition $M_0$ exists for some time interval $[0,T)$.
 ]<prop-flow_short_time>
+#proof[
+  By the processed described above it is enough to show that @pde_formulation has a solution for some time interval $[0,T)$. To see this we need to rewrite all geometric objects of the PDE in terms of $w$ and its derivatives. We will work with in normal coordinates $x^1,...,x^n$ on $S$, in which the induced metric is given by
+  $
+    g_(i j) = ip(F_* e_i, F_* e_j)
+    = ip(hat(e)_i, hat(e)_j) + diff_j f ip(hat(e)_i, diff_lambda) + diff_i f ip(hat(e)_j, diff_lambda) + (diff_i f) (diff_j f) ip(diff_lambda, diff_lambda).
+  $
+  Notice that all 4 inner products in the expression are smooth functions of $(x,lambda)$ and so the coefficients are smooth functions of $x,lambda, D lambda$. We then immediately get that
+  $
+    g^(i j)(x, lambda, D lambda), quad det(g)(x, lambda, D lambda)
+  $
+  are both also smooth functions of their inputs. Now by the Gram-Schmidt method we get that the normal vector to the graph can be given by
+  $
+    nu = X(t) - sum_i ip(hat(e)_i + diff_i f diff_lambda, X(t))/ip(hat(e)_i + diff_i f diff_lambda, hat(e)_i + diff_i f diff_lambda) (hat(e)_i + diff_i f diff_lambda)
+  $
+  appropriately normalized, which is once again a smooth function of $x,lambda, D lambda$, hence $u^top$ and $u$ are also smooth functions of $x, lambda, D lambda$. Finally all ambient objects like $X^perp, Lambda, phi$ are all smooth functions of $x,lambda$. Finally we use the standard coordinate form of a Laplacian (see @leeIntroductionRiemannianManifolds2018a[p.~32] Proposition 2.46) to get
+  $
+    u Delta lambda = u/sqrt(det g)(x,lambda, D lambda) dot diff_i ((g^(i j) sqrt(det g) (x, lambda, D)) diff_j lambda)
+  $Hence we can rewrite @pde_formulation as
+  $
+    diff_t lambda - u(x, lambda, D lambda)
+  $
+]
 
 
 #pagebreak(weak: true)
