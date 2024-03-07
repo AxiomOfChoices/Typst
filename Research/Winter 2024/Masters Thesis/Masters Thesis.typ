@@ -1887,10 +1887,14 @@ Next we solve this @pde_formulation purely in function space. We then apply appr
   $
   appropriately normalized, which is once again a smooth function of $x,lambda, D lambda$, hence $u^top$ and $u$ are also smooth functions of $x, lambda, D lambda$. Finally all ambient objects like $X^perp, Lambda, phi$ are all smooth functions of $x,lambda$. Finally we use the standard coordinate form of a Laplacian (see @leeIntroductionRiemannianManifolds2018a[p.~32] Proposition 2.46) to get
   $
-    u Delta lambda = u/sqrt(det g)(x,lambda, D lambda) dot diff_i ((g^(i j) sqrt(det g) (x, lambda, D)) diff_j lambda)
-  $Hence we can rewrite @pde_formulation as
+    u Delta lambda = u/sqrt(det g)(x,lambda, D lambda) dot diff_i ((g^(i j) sqrt(det g) (x, lambda, D lambda)) diff_j lambda),
   $
-    diff_t lambda - u(x, lambda, D lambda)
+  where importantly $u/sqrt(det g)(x,lambda, D lambda)$ is uniformly bounded from below for some short time by our uniform lower bounds on $u$.
+  Hence we can rewrite @pde_formulation as
+  $
+    diff_t lambda - A(x, lambda, D lambda) dot diff_i (B^(i j)(x, lambda, D lambda)) diff_j lambda)
+    =
+    C(x,lambda, D lambda)
   $
 ]
 
