@@ -1894,7 +1894,10 @@ Next we solve this @pde_formulation purely in function space. We then apply appr
   $
     diff_t lambda - A(x, lambda, D lambda) dot diff_i (B^(i j)(x, lambda, D lambda)) diff_j lambda)
     =
-    C(x,lambda, D lambda)
+    C(x,lambda, D lambda),
+  $
+  where $A$ is uniformly bounded from below by a positive $epsilon$. Now let us write $B^(i j)$ with arbitrary inputs as $B^(i j) (y, z, p)$, we can then rewrite the equation as
+  $
   $
 ]
 
