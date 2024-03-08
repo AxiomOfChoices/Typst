@@ -1077,33 +1077,6 @@ We conclude this chapter with the main theorem proved by Li and Pan
   $
 ]<thrm-li_pan>
 
-// #pagebreak(weak: true)
-// == Doubly Twisted Product Spaces
-// Before we reach the main results of this thesis we want to mention the connection between quasi-closed conformal vector fields and twisted product manifolds.
-//
-// #definition[
-//   Let $(M,g_M)$ and $(N,g_n)$ be Riemannian manifolds, we can define a metric on $M times N$ by
-//   $
-//     g(x,y) = f^2(x,y) g_M (x) compose pi_1 + g^2(x,y) g_N (y) compose pi_2,
-//   $
-//   where $x,y$ are points of $M$ and $N$ respectively. This is called the _twisted product space_ with the _twisting factors_ $f$ and $g$ being functions $f : M times N -> RR_(> 0)$ and $g : M times N -> RR_(> 0)$, it is often denoted $attach(M, bl: f) times attach(N, bl: g)$
-// ]
-//
-// Now in the same way that closed conformal vector field is locally equivalent to a warped product space, a quasi-closed conformal vector field is locally equivalent to a twisted product space.
-// #proposition[
-//   Let $N$ be a Riemannian manifold admitting a quasi-closed conformal vector field $X$. Then around any point $p$ where $X$ does not vanish, there is a coordinate neighborhood $U$ of $p$ such that
-//   $
-//     U = attach(RR, bl: f) times attach(B, bl: g)
-//   $
-// ]
-// #proof[
-//   Let $Phi_t$ be the flow induced by $X$, then consider the integral surface $S$ passing through $p$. Using @leeIntroductionSmoothManifolds2012[Theorem 9.22] we get local coordinates $(s^1,...,s^(n+1))$ in which
-//   $
-//     X = diff_(s_1)
-//   $
-//   and in which $S$ is the set where $s_1 = 0$. 
-//   Then clearly in these coordinates the image of $S$ under the flows $Phi_t$ are the level surfaces $s_1 = c$ for some constant $c$. Now the flow $Phi_t$ is a conformal map, 
-// ]
 
 #pagebreak(weak: true)
 = Main Results
