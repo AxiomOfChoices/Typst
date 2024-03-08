@@ -1865,13 +1865,91 @@ Next we solve this @pde_formulation purely in function space. We then apply appr
   where importantly $u/sqrt(det g)(x,lambda, D lambda)$ is uniformly bounded from below for some short time by our uniform lower bounds on $u$.
   Hence we can rewrite @pde_formulation as
   $
-    diff_t lambda - A(x, lambda, D lambda) dot diff_i (B^(i j)(x, lambda, D lambda)) diff_j lambda)
+    diff_t lambda - A(x, lambda, D lambda) dot diff_i (B^(i)(x, lambda, D lambda))
     =
     C(x,lambda, D lambda),
   $
-  where $A$ is uniformly bounded from below by a positive $epsilon$. Now let us write $B^(i j)$ with arbitrary inputs as $B^(i j) (y, z, p)$, we can then rewrite the equation as
+  where $A$ is uniformly bounded from below by a positive $epsilon$. Now let us write $B^(i)$ with arbitrary inputs as $B^(i j) (y, z, p)$, we can then rewrite the equation as
   $
+    diff_t lambda - A(x, lambda, D lambda) ((diff_(y^i) B^(i))(x, lambda, D lambda)\ + (diff_(z) B^(i))(x, lambda, D lambda)(diff_i lambda) + (diff_(p^j) B^(i))(x, lambda, D lambda)(diff_i diff_j lambda))
+     =
+    C(x,lambda, D lambda).
   $
+  It then remains to show that $diff_(p^j) B^i$ is uniformly positive definite which will allow us to apply our PDE results.
+
+  Recall that $B^i = g^(i k)(x, lambda, D lambda) sqrt(det g(x, lambda, D lambda)) diff_k lambda$, we thus need to get an explicit form for this expression, this will take several steps. First we can compute this expression assuming that $lambda = lambda_0$, since $lambda$ uniformly scales all geometric properties through the flow of $(t)$. Then at $lambda = lambda_0$ we get
+  $
+    g = tilde(g) + dif f times.circle pi(diff_lambda) + pi(diff_lambda) times.circle dif f + ||diff_lambda||^2 dif f times.circle dif f
+  $
+  where $tilde(g)$ is the metric on $S$, and $pi(diff_lambda)$ is the orthogonal projection of $diff_lambda$ onto $S$ identified with its dual one form $ip(pi(diff_lambda), dot)$. We start by calculating the determinant.
+  #lemma[
+    The determinant $det g$ is given in normal coordinates on $S$ as
+    $
+      det g = (1 + dif f(pi(diff_lambda)))^2 + ||diff_lambda^perp||^2||dif f||^2
+    $
+    where $diff_lambda^perp$ is the component of $diff_lambda$ orthogonal to $S$ and all norms are taken with respect to the ambient metric $g$.
+  ]
+  #proof[
+    We can rotate the orthonormal coordinates so that $diff_i f = 0$ for $i >= 2$ and $ip(pi(diff_lambda), e_i) = 0$ for $i >= 3$, then our metric in these coordinates has the following block form
+    $
+      mat(1 + 2||dif f||ip(pi(diff_lambda), e_1) + ||diff_lambda||^2||dif f||^2, ||dif f||ip(pi(diff_lambda), e_2), 0; ||dif f||ip(pi(diff_lambda), e_2), 1, 0; 0,0,I_(n-2 times n-2); augment: #(hline: (1,2), vline: (1,2))).
+    $
+    In these coordinates the determinant is easily computed as
+    $
+      &1 + 2||dif f||ip(pi(diff_lambda), e_1) + ||diff_lambda||^2||dif f||^2 - ||dif f||^2ip(pi(diff_lambda), e_2)^2
+      \ = &1 + 2||dif f||ip(pi(diff_lambda), e_1) + ||diff_lambda^perp||^2||dif f||^2 + ||dif f||^2 ip(pi(diff_lambda), e_1)^2
+      \ = &(1 + ||dif f||ip(pi(diff_lambda), e_1))^2 + ||diff_lambda^perp||^2||dif f||^2
+      = (1 + dif f((pi(diff_lambda)))^2 + ||diff_lambda^perp||^2||dif f||^2
+    $
+    and so since this equality is tensorial and does not involve coordinates, it is coordinate independent and thus is always true.
+  ]
+
+  Next we need to calculate the inverse matrix
+  #lemma[
+    The inverse matrix for the metric in normal coordinates on $S$ is given by
+    $
+      g^(i j)
+      =&
+      1/det(g) ((1 + 2dif f(pi(diff_lambda)) + ||dif f||^2||diff_lambda||^2) delta^(i j) - (pi(diff_lambda) times.circle dif f)^(i j)\ &- (dif f times.circle pi(diff_lambda))^(i j) - (||diff_lambda^perp||^2+2dif f(pi(diff_lambda))) (dif f times.circle dif f)^(i j)\ &+ ||dif f||^2(pi(diff_lambda) times.circle pi(diff_lambda)))
+    $
+  ]
+  #proof[
+    We verify by computing the product
+    $
+      &det(g) g_(i k) g^(k j)
+      \ =&
+      (1 + 2dif f(pi(diff_lambda)) + ||dif f||^2||diff_lambda||^2) delta^(i j)
+      \ &+med(1 + 2dif f(pi(diff_lambda)) + ||dif f||^2||diff_lambda||^2) ((pi(diff_lambda) times.circle dif f)^(i j) + (dif f times.circle pi(diff_lambda))^(i j))
+      \ &-med((pi(diff_lambda) times.circle dif f)^(i j) + (dif f times.circle pi(diff_lambda))^(i j))
+      \ &+med(1 + 2dif f(pi(diff_lambda)) + ||dif f||^2||diff_lambda||^2)||diff_lambda||^2 (dif f times.circle dif f)^(i j) - ||diff_lambda||^2 (dif f times.circle dif f)^(i j)
+      \ &-med((pi(diff_lambda) times.circle dif f)^(i k) + (dif f times.circle pi(diff_lambda))^(i k))((pi(diff_lambda) times.circle dif f)^(k j) + (dif f times.circle pi(diff_lambda))^(k j))
+      \ &-med ((pi(diff_lambda) times.circle dif f)^(i k) + (dif f times.circle pi(diff_lambda))^(i k))||diff_lambda||^2(dif f times.circle dif f)^(k j)
+      \ &-med ||diff_lambda||^2(dif f times.circle dif f)^(i k)((pi(diff_lambda) times.circle dif f)^(k j) + (dif f times.circle pi(diff_lambda))^(k j))
+      \ &-med||dif f||^2||diff_lambda||^4 (dif f times.circle dif f)^(i j)
+      \ =&
+      (1 + 2dif f(pi(diff_lambda)) + ||dif f||^2||diff_lambda||^2) delta^(i j)
+      \ &+med(2dif f(pi(diff_lambda)) + ||dif f||^2||diff_lambda||^2) ((pi(diff_lambda) times.circle dif f)^(i j) + (dif f times.circle pi(diff_lambda))^(i j))
+      \ &+med 2dif f(pi(diff_lambda))||diff_lambda||^2 (dif f times.circle dif f)^(i j)
+      \ &-med((pi(diff_lambda) times.circle dif f)^(i k) + (dif f times.circle pi(diff_lambda))^(i k))((pi(diff_lambda) times.circle dif f)^(k j) + (dif f times.circle pi(diff_lambda))^(k j))
+      \ &-med ((pi(diff_lambda) times.circle dif f)^(i k) + (dif f times.circle pi(diff_lambda))^(i k))||diff_lambda||^2(dif f times.circle dif f)^(k j)
+      \ &-med ||diff_lambda||^2(dif f times.circle dif f)^(i k)((pi(diff_lambda) times.circle dif f)^(k j) + (dif f times.circle pi(diff_lambda))^(k j))
+      \ =&
+      (1 + dif f(pi(diff_lambda)) + ||dif f||^2||diff_lambda||^2) delta^(i j)
+      \ &+med 2dif f(pi(diff_lambda)) ((pi(diff_lambda) times.circle dif f)^(i j) + (dif f times.circle pi(diff_lambda))^(i j))
+      \ &+med 2dif f(pi(diff_lambda))||diff_lambda||^2 (dif f times.circle dif f)^(i j)
+      \ &-med((pi(diff_lambda) times.circle dif f)^(i k) + (dif f times.circle pi(diff_lambda))^(i k))((pi(diff_lambda) times.circle dif f)^(k j) + (dif f times.circle pi(diff_lambda))^(k j))
+      \ &-med ((dif f times.circle pi(diff_lambda))^(i k))||diff_lambda||^2(dif f times.circle dif f)^(k j)- ||diff_lambda||^2(dif f times.circle dif f)^(i k)((pi(diff_lambda) times.circle dif f)^(k j))
+    $
+    $
+      =&
+      (1 + dif f(pi(diff_lambda)) + ||dif f||^2||diff_lambda||^2) delta^(i j)
+      \ &+med 2dif f(pi(diff_lambda)) ((pi(diff_lambda) times.circle dif f)^(i j) + (dif f times.circle pi(diff_lambda))^(i j))
+      \ &-med((pi(diff_lambda) times.circle dif f)^(i k) + (dif f times.circle pi(diff_lambda))^(i k))((pi(diff_lambda) times.circle dif f)^(k j) + (dif f times.circle pi(diff_lambda))^(k j))
+      \ =&
+      (1 + dif f(pi(diff_lambda)) + ||dif f||^2||diff_lambda||^2) delta^(i j)
+      \ &+med((pi(diff_lambda) times.circle dif f)^(i k) - (dif f times.circle pi(diff_lambda))^(i k))((pi(diff_lambda) times.circle dif f)^(k j) - (dif f times.circle pi(diff_lambda))^(k j))
+    $
+  ]
 ]
 
 
