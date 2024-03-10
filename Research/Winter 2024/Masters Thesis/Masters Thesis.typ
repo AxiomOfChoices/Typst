@@ -20,6 +20,7 @@
   Master of Science
   ],
   middletitle: [
+      #image("./thumbnail_HIGH RES RED.png", width: 50%)
       Mathematics and Statistics \
       McGill University \
       Montreal, Quebec, Canada],
@@ -33,6 +34,7 @@
 #show: thmrules
 #show: outline_style
 
+#set page(margin: (x: 1in, top: 1in, bottom: 1in))
 
 #pagebreak(weak:true)
 #show: start_outline
@@ -47,10 +49,20 @@ Then, concurrently with the writing of this thesis, Li and Pan reframed the tech
 
 This thesis continues the effort to use such flows, together with my collaborator Joshua Flynn we pushed the flow even further, allowing us to weaken the assumptions on the ambient space even further and even weaken the star-shapedness assumption, which was key to all previous results.
 
+#pagebreak(weak:true)
+= Abrégé
+Cette thèse vise à couvrir de manière générale le sujet des flots géométriques, et plus spécifiquement une variante du flot de courbure moyenne. Le domaine des flots géométriques utilise des résultats de la théorie des équations aux dérivées partielles (EDP), plus précisément des EDP paraboliques, pour obtenir de nouvelles perspectives sur la géométrie riemannienne.
+
+L'un des plus grands défis souvent abordés par les flots de courbures moyennes est le problème isopérimétrique. Ce problème demande de classer les espaces qui minimisent le périmètre pour un volume donné (d'où le nom). La première utilisation des flots de courbures moyennes pour attaquer ce problème remonte à Huisken en 1984 @huiskenFlowMeanCurvature1984, qui l'a prouvé dans le cas des frontières de domaines convexes dans l'espace euclidien. Depuis lors, des tentatives ont été faites pour pousser ses méthodes plus loin. Plus récemment, en 2013, Guan et Li @guanMeanCurvatureType2013 ont construit un nouveau flot normalisé qui leur a permis de prouver l'inégalité dans le cas de frontières de domaines en forme d'étoile dans les formes spatiales. Peu de temps après, en 2018, Guan, Li et Wang ont poussé ce flot encore plus loin, ce qui leur a permis de prouver le résultat dans une certaine classe d'espaces de produits déformés @guanVolumePreservingFlow2018.
 
 #pagebreak(weak:true)
 = Acknowledgements
-First I would like to thank my supervisor, Professor Pengfei Guan, for his regular assistance both before and after the start of my Masters program. He was always there to help me understand concepts I would otherwise spend weeks grappling with. Secondly, I would like to thank my collaborator, Doctor Joshua Flynn, without whom this project would have never happened. Bouncing ideas off one another was one of the best parts of my Masters. I would additionally like my good friends Sam Zeitler, Bart Syroka, Jessie Meanwell, Aaron Shalev and Michael for making the last year the best year of my Life.
+First I would like to thank my supervisor, Professor Pengfei Guan, for his regular assistance both before and after the start of my Masters program. He was always there to help me understand concepts I would otherwise spend weeks grappling with.
+
+Secondly, I would like to thank my collaborator, Doctor Joshua Flynn, without whom this project would have never happened. Bouncing ideas off one another was one of the best parts of my Masters.
+
+I would also like my good friends Sammir Rahman, William Holman-Bissegger, Jenny Xu, Dao-Chen Yuan, Viet Nguyen, Margaret Zhou, Tiffany Yong, Sam Zeitler, Bart Syroka, Jessie Meanwell, Aaron Shalev, Michael Cimino as well as the whole of the graduate community at McGill, for making my year at McGill the best year of my life.
+
 Finally I would like to thank my family, and especially my mom, for always being there to help and support me whenever I would feel down and lost.
 
 #pagebreak(weak:true)
@@ -69,6 +81,15 @@ In the simple case of 2 and 3 dimensions we all know that the answer is a circle
 
 One of the ways to answer such a question is with the method of geometric flows, we will start with a shape which will likely not be optimal, and then we will morph it over time to make it optimal.
 
+The Thesis will be split into 3 Chapters, \
+This first chapter will establish all standard theory of Geometric Analysis used in the results of this Thesis. \
+The second chapter will discuss the method of geometric flows to solve the Isoperimetric problem, as well as the geometric setting introduced by Li and Pan in @jiayuIsoperimetricProblemRiemannian2023. \
+The third chapter introduces a more general setting and extends the results to that setting too, first by computing the evolution equations for various geometric quantities and then by proving existence of the flow.
+
+This will all lead to the proof of the following theorem.
+#theorem[
+  Let $N$ be an ambient manifold admitting a conformal vector field $X$ and a foliation $cal(F)$, such that both are compatible (see @head-setting) and satisfy @assum-required. Then the leaves $S_alpha$ of the foliation $cal(F)$ are the Isoperimetric profile of the class of all hypersurfaces satisfying $ip(X,nu) > 0$. // TODO: FINISH THEOREM
+]<thrm-conclusion>
 
 == Concepts and Notation
 This document assumes general knowledge of differential and Riemannian geometry, see @leeIntroductionSmoothManifolds2012 and @leeIntroductionRiemannianManifolds2018 for great introductions, respectively.
@@ -79,23 +100,32 @@ In general, tensorial constructions defined on $N$ will be written with an overl
 
 Often for a matrix $M_(i j)$ we will use the notation $M_(i j) >= #h(0em) (>) med med 0$ to denote the fact that $M_(i j)$ is positive semi-definite (definite), and similarly for $M_(i j) <= #h(0em) (<) med med 0$.
 
-We can use the Riemannian metric $ov(g)$ to take inner products of tangent vectors in the same tangent space $T_p N$, for tangent vectors $X,Y in T_p N$ we will write this as $ip(X,Y)$. Since the metric $g$ is just the restriction of $ov(g)$ onto $T_p M$ when we think of it as a subspace of $T_p N$, because of this we will use the same notation $ip(X,Y)$ for $X,Y in T_p M$.
+We can use the Riemannian metric $ov(g)$ to take inner products of tangent vectors in the same tangent space $T_p N$, for tangent vectors $X,Y in T_p N$ we will write this as $ip(X,Y)$. Since the metric $g$ is just the restriction of $ov(g)$ onto $T_p M$ when we think of it as a subspace of $T_p N$, we will use the same notation $ip(X,Y)$ for $X,Y in T_p M$.
 
-The Riemannian metric $ov(g)$ defines with it a Riemannian volume form which we will call $dif V$, this form can be restricted to $Omega$ to give and allow us to define 
+The Riemannian metric $ov(g)$ defines with it a Riemannian volume form which we will call $dif V$, this form can be restricted to $Omega$ to allow us to define 
 $
   Volume(Omega) = integral_Omega dif V,
 $
-we will often write $Volume(M)$ as our $Omega$ can be determined uniquely an orientation on $M$ (more on that later). Similarly the metric $g$ defines a volume form on $M$ which we will call $dif S$, using which we define
+we will often write $V(M)$ as our $Omega$ can be determined uniquely an orientation by on $M$. Similarly the metric $g$ defines a volume form on $M$ which we will call $dif S$, using which we define
 $
   Area(M) = integral_M dif S.
 $
-We can now define the Isoperimetric profile of $N$ to be the function 
+We will often write $A(M)$ for brevity.
+We can now define the Isoperimetric profile of $N$ to be the function
 $
-  I(v) := inf { Area(M) : M in frak(X)(N) "and" Volume(M) = v},
+  I(v) := inf { A(M) : M in frak(X)(N) "and" V(M) = v}.
 $
+If for some family of surfaces $S_alpha$ we have $I(V(S_alpha)) = A(S_alpha)$ then we will also refer to ${ S_alpha }$ as the Isoperimetric profile, the meaning will be clear from context.
+
 The Isoperimetric Problem now asks us to
-+ Show there exist elements $M in frak(X)(N)$ that attain the infimum above.
-+ Characterize these elements.
++ Show there exists a family of hypersurfaces $S_alpha in frak(X)(N)$ which is the Isoperimetric profile.
++ Characterize this family.
+
+In practice the above problem is extremely difficult so we often restrict ourself to a subclass of surfaces. For a subclass $cal(Z) seq frak(X)(N)$ the Isoperimetric profile of $cal(Z)$ is the function
+$
+  I(v) := inf { A(M) : M in cal(Z) "and" V(M) = v }
+$
+and the same questions can be asked of this case.
 
 We will now start to build up the concepts that allow us to solve this problem.
 
@@ -111,22 +141,22 @@ Working with Riemannian geometry is almost always easier when done with coordina
   $
   forms an orthonormal basis _at the point $p$_. These are called _orthonormal coordinates_.
 ]
-#proposition[
-  Let $M$ and admissible submanifold of $N$, at any point $p in M$ there exists a chart $(U,phi)$ of $N$ such that
-  $
-    e_i = diff/(diff x^i)
-  $
-  forms an orthonormal basis for $T_p M$ for $i <= n$ _at $p$_ and $e_(n+1) = nu$ _on $U$_. These are called _Fermi coordinates_. In general, when we are dealing with Fermi coordinates and write $e_i$ we are excluding $e_(n+1)$ and refer to it as $nu$ instead.
-]<prop-fermi_coords>
-#proof[
-  The proof for the first proposition is standard and can be found in any differential geometry textbook, for the second proposition see @leeIntroductionRiemannianManifolds2018(p.~183).
-]
+// #proposition[
+//   Let $M$ and admissible submanifold of $N$, at any point $p in M$ there exists a chart $(U,phi)$ of $N$ such that
+//   $
+//     e_i = diff/(diff x^i)
+//   $
+//   forms an orthonormal basis for $T_p M$ for $i <= n$ _at $p$_ and $e_(n+1) = nu$ _on $U$_. These are called _Fermi coordinates_. In general, when we are dealing with Fermi coordinates and write $e_i$ we are excluding $e_(n+1)$ and refer to it as $nu$ instead.
+// ]<prop-fermi_coords>
+// #proof[
+//   The proof for the first proposition is standard and can be found in any differential geometry textbook, for the second proposition see @leeIntroductionRiemannianManifolds2018(p.~183).
+// ]
 
 Then we define the second fundamental form $h$ to be the bilinear form given by
 $
    h(X,Y) = ip(X, ov(nabla)_Y nu).
 $
-This second fundamental form encodes within itself how the manifold $M$ lies inside $N$, it also carries with it a number of useful properties, the most important of which is that it is symmetric, see @leeIntroductionRiemannianManifolds2018[p.~227] for details. Also of much importance is the trace of this form, taken with respect to the metric, which we write as $H = h_(i i)$, which is called the _mean curvature_. Also its eigenvalues $kappa_i$ called _principle curvatures_.
+This second fundamental form encodes within itself how the manifold $M$ lies inside $N$, it also carries with it a number of useful properties, the most important of which is that it is symmetric, see @leeIntroductionRiemannianManifolds2018[p.~227] for details. Also of much importance is the trace of this form, taken with respect to the metric, which we write as $H = h_(i i)$, which is called the _mean curvature_. Also its eigenvalues $kappa_i$ taken with respect to the metric are called _principle curvatures_.
 
 
 Let us write up some properties of the second fundamental form.
@@ -154,9 +184,9 @@ $
 $
 proving the claim.
 
-Now for #link(<prop-h_neg>)[(c)] we note first that $nabla_X Y = ( ov(nabla)_Y X)^top$ for $X,Y in T_p M$, see, for instance, @jostRiemannianGeometryGeometric2011[p.~223]. This will mean that since $e_i$ are orthonormal then
+Now for #link(<prop-h_neg>)[(c)] we note first that $nabla_X Y = pi( ov(nabla)_Y X)$ for $X,Y in T_p M$ where $pi$ is the orthogonal projection to $T_p M$, see, for instance, @jostRiemannianGeometryGeometric2011[p.~223]. This will mean that since $e_i$ are orthonormal then
 $
-  (ov(nabla)_i e_j)^top = nabla_i e_j = 0
+  pi(ov(nabla)_i e_j) = nabla_i e_j = 0
 $
 for all $i,j$ and so $ov(nabla)_i e_j = b_(i j) nu$ for some matrix $b$ of coefficients. Now we have
 $
@@ -195,9 +225,10 @@ We will also need another well known geometric identity,
   $
 ]<lemma-codazzi>
 #proof[
-  See @petersenRiemannianGeometry2016[p.~93], note that some references have a similar equation of opposite sign due to difference in defining the second fundamental form.
+  See @petersenRiemannianGeometry2016[p.~93], note that some references have a similar equation of opposite sign due to a difference in defining the second fundamental form.
 ]
 
+== Conformal vector fields
 A conformal vector field is a vector field $X$ with the property that $lie_X ov(g) = 2 phi g$, where $phi$ is any smooth function called the _conformal factor_ of $X$. The Lie derivative is a little hard to work with for our purposes so we will follow the calculations of @deshmukhGeometryConformalVector2017 to obtain better formulations for the properties of conformal vector fields
 
 #proposition[
@@ -234,7 +265,7 @@ $
   ip(nabla_Y X, Z) = phi ip(Y,Z) + ip(psi Y, Z).
 $
 Note that this is also the decomposition of the $nabla X$ into its symmetric and anti-symmetric parts, that is $
-  Sym(nabla X) = phi g
+  Sym(nabla X) = phi g quad "and" quad AntiSym(nabla X) = ip(psi(dot), dot)
 $
 
 In the special case that $phi = 0$ we call $X$ a Killing vector field.
@@ -312,11 +343,11 @@ To see why conformal vector fields are so useful in the study of the Isoperimetr
 ]
 
 == Partial Differential Equations <sect-PDE>
-The Partial Differential Equations (PDEs) we will be dealing with most in this document are parabolic PDEs, so we will go over their properties first.
+The Partial Differential Equations (PDEs) we will be dealing with most in this thesis are parabolic PDEs, so we will dedicate this section to going over their properties.
 
 
 
-Let $T in (0,infinity]$ and $U seq M$ a smooth open domain, a function $u : [0,T] times U$ is said to solve a *quasi-linear parabolic PDE* if it satisfies a differential equation of the form
+Let $T in (0,infinity]$ and $U seq M$ be a smooth open domain, a function $u : [0,T] times U$ is said to solve a *quasi-linear parabolic PDE* if it satisfies a differential equation of the form
 $ diff_t u (x,t) = a^(i j)(x,t,u,nabla u) nabla_i nabla_j u + G(x,t,u,nabla u) $<parabolic_pde>
 where $a$ is symmetric positive definite matrix depending smoothly on its inputs and $G$ is a function depending smoothly on its inputs.
 
@@ -332,7 +363,7 @@ for all $v in T_p M$ everywhere.
 The most important tool in the analysis of parabolic PDEs is the maximum principle, a form of which we will now prove.
 
 #proposition[
-  Assume $u$ solves @eqn-parabolic_pde and that at a maximum of $u$ the inequality $G(x,t,u,nabla u) < f(t)$ holds, then we have for all $t in [0,T]$
+  Assume $u$ solves @eqn-parabolic_pde and that at a spacial maximum of $u$ the inequality $G(x,t,u,nabla u) < f(t)$ holds, then we have for all $t in [0,T]$
   $ sup_(x in U) u(x,t) <= sup_(x in U) u(x,0) + integral_0^t f(s) dif s $<max_priniciple_linear>
   if instead we have $G(x,t,u,nabla u) < B u(x,t)$ for some constant $B in RR$ then we have
   $ sup_(x in U) u(x,t) <= (sup_(x in U) u(x,0)) e^(B t) $<max_priniciple_exp>
@@ -353,11 +384,11 @@ The most important tool in the analysis of parabolic PDEs is the maximum princip
   $
     v(y, t) > 0
   $
-  and so the maximum of $v$ is positive. But now let $(z,t')$ be said maximum, we have that
+  and so the maximum of $v$ is positive. But now let $(z,t')$ be said maximum, we have that the maximum is either on the interior of $[0,T] times U$ or on the boundary ${T} times U$, it cannot be on ${0} times U$ since there we have $v(x, 0) <= 0$. Thus we have that
   $
     nabla v(z,t') = 0, nabla_i nabla_j v(z,t') <= 0 "as well as" diff_t v(z,t') >= 0
   $
-  we thus have
+  and so
   $
     0 <= diff_t v(x,t) = a^(i j)(x,t,v,nabla v) nabla_i nabla_j v + G(x,t, v, nabla v) - f(t)
     < 0
@@ -368,10 +399,10 @@ The most important tool in the analysis of parabolic PDEs is the maximum princip
   $ v(x,t) = e^(-B t) u(x,t) - sup_(x in U) u(x,0) $
 ]
 
-The second most important tool is short time-existence, which will be extremely important as we want to use the derivatives of geometric quantities to characterize them, so we need the flow to exists for some non-zero amount of time.
+The second most important tool is short-time existence, it will be extremely important as we want to use the derivatives of geometric quantities to characterize them, so we need the flow to exists for some non-zero amount of time.
 
 #theorem[
-  If $u(0,dot)$ is a smooth initial condition and @eqn-parabolic_pde is uniformly parabolic then @eqn-parabolic_pde has a solution $u$ for some time $T > 0$ which is smooth on $[0,T)$. Furthermore, if there is a uniform bound
+  If $u(0,dot)$ is a smooth initial condition and @eqn-parabolic_pde is uniformly parabolic then @eqn-parabolic_pde has a solution $u$ for some time $T > 0$ which is smooth on $[0,T)$. Furthermore, if there is an apriori uniform bound
   $
     ||u(t,dot)||_(C^(1+r)) <= K "for all" t in [0,s)
   $
@@ -389,11 +420,11 @@ The last PDE results which we will need are the famous Nash-Moser estimates, for
 #theorem("Nash-Moser estimates")[
   Let $u$ be a solution to uniformly parabolic @eqn-parabolic_pde on $[0,T)$ with smooth initial condition, if we know that
   $
-    |u(t,dot)| < c_1 "and" ||nabla u(t, dot)|| <= c_2 "on" [0,T)
+    ||u(t,dot)||_(C^0(U)) < c_1 "and" ||nabla u(t, dot)||_(C^0(U)) <= c_2 "on" [0,T)
   $
   then on any subdomain $U'$ with $ov(U') seq U$ we have for some $r > 0$ depending only $c_1,c_2,A,B$ that
   $
-    ||u(t,dot)||_(C^(1+r)) <= C(c_1,c_2,A,B,d)
+    ||u(t,dot)||_(C^(1+r)(U')) <= C(c_1,c_2,A,B,d)
   $
   where $d$ is the distance between $diff U'$ and $diff U$.
 ]<thrm-nash_moser>
@@ -415,7 +446,7 @@ The last PDE results which we will need are the famous Nash-Moser estimates, for
 
 == Evolving Hypersurfaces
 
-Now that we are familiar with geometry and parabolic PDEs we can start to use them together. This is done by use of *geometric flows*.
+Now that we are familiar with geometry and PDEs we can start to use them together. This is done by use of *geometric flows*.
 #definition[
   Let $F : M -> N$ be an admissible hypersurface. Let $F_t$ be a function $F : I times M -> N$, where $I = [0,T)$ for some fixed $T$ and $F_0 = F$ on $M$. $F_t$ is called a _normal flow_ with _normal velocity_ $f$ if
   $
@@ -430,7 +461,7 @@ Now that we are familiar with geometry and parabolic PDEs we can start to use th
 
 As a manifold flows it's various properties, both local and global, will change, the equations governing these changes are called _evolution equations_. For ambient objects, i.e. those objects that are simply restricted to the hypersurface, this evolution is simple.
 #proposition[
-  Let $T$ be any tensor on $N$, then we call $T|_(M_t)$ the orthogonal projection of $T$ onto $T_p M_t$. We then have
+  Let $T$ be any tensor on $N$, then we write $T|_(M_t)$ to denote the orthogonal projection of $T$ onto $T_p M_t$. We then have along the flow $M_t$
   $
     diff_t (T|_(M_t)) = (f ov(nabla)_nu T)|_(M_t)
   $
@@ -497,16 +528,16 @@ Now that we know how the metric evolves there are some immediate consequences th
     = - ip(nu, diff_t diff_j F) e_j
     = - ip(nu, diff_j (f nu)) e_j
     = - ip(nu, f diff_j nu + nu diff_j f) e_j
-    \ &= - ip(nu, f h_(i j) e_i + nu nabla_e_j f) e_j wide "apply orthogonality of" nu "and" e_i
-    \ &= - ip(nu, nu nabla_e_j f) e_j = - nabla_e_j f e_j = - nabla f.
+    \ &= - ip(nu, f h_(i j) e_i + nu nabla_j f) e_j wide "apply orthogonality of" nu "and" e_i
+    \ &= - ip(nu, nu nabla_j f) e_j = - nabla_j f e_j = - nabla f.
   $
-  Note that on line 2 we also implicitly used the fact that the Christoffel symbols vanish in Fermi coordinates around the point $p$.
+  Note that on line 2 we also implicitly used the fact that the Christoffel symbols vanish in normal coordinates around the point $p$.
 
   For the volume form, we know that $dif S = sqrt(det(g)) dif x_1 ... dif x_n$ and so we can compute
   $
     diff_t (dif S) = diff_t (sqrt(det(g))) dif x_1 ... dif x_n.
   $
-  Now recall that for a parametrized matrix $A(t)$ we have $ diff_t det(A(t)) = det(A(t)) tr(diff_t A(t)) $ we then have
+  Now recall that for a parametrized matrix $A(t)$ we have $ diff_t det(A(t)) = det(A(t)) tr(diff_t A(t)) $ and so
   $
     diff_t (sqrt(det(g))) dif x ... dif x
     &= 1/(2sqrt(det(g))) diff_t (det(g)) dif x_1 ... dif x_n 
@@ -576,7 +607,7 @@ We have one final evolution equation to find, and that is the one for the second
     ip(diff_j diff_i (f nu) + (diff_t ov(Gamma)_(rho sigma)^k) (diff_i F^rho diff_j F^sigma) ov(e)_k + ov(Gamma)_(rho sigma)^k diff_t (diff_i F^rho diff_j F^sigma ov(e)_k), nu)
     \ &- med ip(diff_j diff_i F, nabla f)
   $
-  now the Christoffel symbols vanish at $p$, so we get
+  now the Christoffel symbols vanish at $p$, so wherever they appear without a time derivative they vanish there, we hence get
   $
     -diff_t h_(i j) &= ip(diff_j (nu diff_i f + f diff_i nu) + (f diff_nu ov(Gamma)_(rho sigma)^k) (diff_i F^rho diff_j F^sigma) ov(e)_k, nu)
     - ip(diff_j diff_i F, nabla f)
@@ -605,13 +636,13 @@ We have one final evolution equation to find, and that is the one for the second
     \ &=
     diff_i diff_j f + f (diff_nu ov(Gamma)^nu_(rho sigma)) diff_i F^rho diff_j F^sigma
     \ &+ med
-    f ip(h_(i k) diff_j diff_k F + (diff_j h_(i k)) (diff_k F) - (diff_j ov(Gamma)_(rho sigma)^k) diff_i F^rho nu^sigma ov(e)_k - ov(Gamma)_(rho sigma)^k diff_j (diff_i F^rho v^sigma), nu)
+    f ip(h_(i k) diff_j diff_k F + (diff_j h_(i k)) (diff_k F) - (diff_j ov(Gamma)_(rho sigma)^k) diff_i F^rho nu^sigma ov(e)_k - ov(Gamma)_(rho sigma)^k diff_j (diff_i F^rho v^sigma ov(e)_k), nu)
   $
-  but now again the Christoffel symbols vanish and since $nu$ is orthogonal to all tangent vectors, we can simplify the second term to get
+  but now again the Christoffel symbols vanish and since $nu$ is orthogonal to all tangent vectors, the second and fourth term in the inner product vanish and so we are left with
   $
     f ip(h_(i k) diff_j diff_k F - (diff_j ov(Gamma)_(rho sigma)^k) diff_i F^rho nu^sigma ov(e)_k, nu)
     =
-    - f h_(i k) h_(j k) - f (diff_j ov(Gamma)_(rho sigma)^nu) diff_i F^rho nu^sigma
+    - f h_(i k) h_(j k) - f (diff_j ov(Gamma)_(rho sigma)^nu) diff_i F^rho nu^sigma.
   $
   Now recall that in orthonormal coordinates the Riemann tensor is given by
   $
@@ -620,7 +651,7 @@ We have one final evolution equation to find, and that is the one for the second
   and so we get
   $
     - diff_t h_(i j) &=
-    diff_i diff_j f + f (diff_nu ov(Gamma)^nu_(rho sigma)) diff_i F^rho diff_j F^sigma - f (diff_j ov(Gamma)_(rho sigma)^nu) diff_i F^rho nu^sigma + f h_(i k) h_(j k)
+    diff_i diff_j f + f (diff_nu ov(Gamma)^nu_(rho sigma)) diff_i F^rho diff_j F^sigma - f (diff_j ov(Gamma)_(rho sigma)^nu) diff_i F^rho nu^sigma - f h_(i k) h_(j k)
     \ &= diff_i diff_j f - f h_(i k) h_(j k) + f ov(R)^nu_(nu i j)
   $
   which then since we are in orthonormal coordinates we know that $diff_i diff_j f = nabla_i nabla_j f$, and since the middle term is not tensorial we make it tensorial by contracting with the metric and so we get the desired result.
@@ -639,14 +670,36 @@ We have one final evolution equation to find, and that is the one for the second
     = h_(i j) diff_t (g^(i j)) + g^(i j) diff_t (h_(i j))
     \ &= h_(i j) (- 2 f h^(i j)) + g^(i j) (- nabla_i nabla_j f + f (h_(i k) h_(k j) - ov(R)^(nu)_(nu i j)))
     \ &= - 2 f|A|^2 - Delta f + f (h_(i k)  h_(i k) - ov(R)^(nu)_(nu i i))
-    \ &= - Delta f - f |A|^2 - f ov(Ric)(nu,nu)
+    \ &= - Delta f - f|A|^2 - f ov(Ric)(nu,nu)
   $
 ]
 
 #pagebreak(weak: true)
 = The Geometric Flow Method
-With the preliminaries out of the way we can begin to discuss how we can attempt to attack the Isoperimetric problem in the class of warped product spaces, and specifically the key properties exhibited by these spaces that we will later use to generalize these methods.
+With the preliminaries out of the way we can begin to discuss how we can attempt to attack the Isoperimetric problem. This is formalized in the *flow method*.
+#theorem[
+  Consider two classes of admissable hypersurfaces $cal(Z),cal(P)$ such that the following conditions hold.
+  + For each hypersurface $M in cal(Z)$ we can define a flow $M_t$ which exists for all time.
+  + $V(M_t)$ is constant and $A(M_t)$ is non-decreasing.
+  + The flow converges to a hypersurface $M_t -> M_infinity$ with $M_infinity in cal(P)$.
+  Then $cal(P)$ is the Isoperimetric profile of $cal(Z)$, in the sense that for each $M in cal(Z)$ there is a hypersurface $S in cal(P)$ with
+  $
+    V(M) = V(S) "and" A(M) >= A(S)
+  $
+]<thrm-flow_method>
+#proof[
+  Let $M_t$ be the flow of $M$. Then $M_t -> S$ for some hypersurface $S in cal(P)$ and so
+  $
+    V(M) = V(M_t) = lim_(t -> infinity) V(M_t) = V(S)
+  $
+  and
+  $
+    A(M) >= lim_(t -> infinity) A(M_t) = A(S)
+  $
+  which proves the theorem.
+]
 
+We will now consider two previous uses of this method that will motivate our use of it in the third chapter.
 == Warped Product Spaces
 Warped products are in essence a generalization of the Polar coordinates in $RR^2$ so let us first look at those. The Polar coordinates $(r,theta)$ in $RR^2$ are defined implicitly in terms of standard Euclidean coordinates, through $(x,y) = (r cos(theta), r sin(theta))$, where we have $r > 0$ and $-pi/2 < theta < pi/2$. Now the Euclidean metric is given by $g = dif x^2 + dif y^2$ and so we can compute its form in polar coordinates as
 $
@@ -669,7 +722,6 @@ where $pi_1,pi_2$ are projections onto the tangent spaces of $RR$ and $S^1$ resp
 A similar constructions works in higher dimensions, where we have $RR^n = RR_+ times S^(n - 1)$.
 
 It is this decomposition that we aim to generalize with the warped product space.
-
 #definition[
   Let $(M,g_M)$ and $(N,g_n)$ be Riemannian manifolds, we can define a metric on $M times N$ by
   $
@@ -678,7 +730,7 @@ It is this decomposition that we aim to generalize with the warped product space
   where $x,y$ are points of $M$ and $N$ respectively. This is called the _warped product space_ with the _warping factor_ $f$ being a function $f : M -> RR_(> 0)$, it is often denoted $M times_f N$
 ]
 
-Note that in practice we will always suppress, the projections $pi_1$ and $pi_2$ for clarity.
+Note that in practice we will always suppress the projections $pi_1$ and $pi_2$ for clarity.
 
 The most common warped product spaces we see in practice are those of the form $RR_+ times_f N$ for some $N$, for example the 3 space forms, $S^n, RR^n, HH^n$, are of the form
 $
@@ -706,25 +758,54 @@ These spaces carry a lot of nice properties, but the most important one for us i
   $
   Note that if we set $Phi(r) = integral_0^r f(s) dif s$ then $nabla Phi(r) = f(r) diff_r$ and so $ip(nabla_Y X, Z)$ is just $Hess_f (Y,Z)$ and so it is symmetric and so its anti-symmetric component vanishes.
 ]
-
 Note that since its a gradient, $X$ in the above proposition is closed.
 
-Apart from being a closed conformal vector field, this vector field also has other properties that help us with the flow we want to create. Recall that in Euclidean space spheres are the optimal shapes for the Isoperimetric inequality, in polar coordinates spheres take the simple form of sets where $r = r_0$ for some fixed $r_0$.
+Recall that in Euclidean space spheres are the optimal shapes for the Isoperimetric inequality, in polar coordinates spheres take the simple form of sets where $r = r_0$ for some fixed $r_0$.
+Using the geometric properties of warped product spaces and the vector field $X$, Guan, Li and Wang were able to use the flow method to prove that this is fact generalizes, the Isoperimetric profile for a large class of warped product spaces are exactly the level sets of the projection onto $RR$.
+
+#theorem("Guan, Li, Wang")[
+  Let $N = RR_+ times_f B$ with $B$ closed and $f$ satisfying some technical conditions. Then among the admissable hypersurfaces such that $ip(f(r) diff_r, nu)$ is everywhere positive, the Isoperimetric consists of level sets of $r$.
+]
+The proof is detailed in @guanVolumePreservingFlow2018, we will not consider these details too much as they will quickly get generalized by the next work.
+
+== Manifolds Admitting Compatible Conformal Vector Fields
+Now it turns out that these closed conformal vector fields characterize warped products of the form we saw in the previous section, namely, if a manifold admits a closed conformal vector field then it can locally be written in the form $RR_+ times_f N$ for some manifolds $N$ and function $f$, see @tashiroCompleteRiemannianManifolds1965[Lemma 1.2]. This suggests that if we want to weaken the conditions of Guan, Li and Wang we should perhaps consider the case of non-closed conformal vector fields.
+
+This idea was first explored by Li and Pan @jiayuIsoperimetricProblemRiemannian2023, where they formalized the necessary conditions on the ambient manifold in terms of a conformal vector field, and used this to weaken the assumptions on the vector field. They also derive a number of key properties for a conformal vector field satisfying their conditions.
+
+They start with with a conformal vector field $X$ on $N$ with conformal factor $phi$ which is non-zero on an open dense set $U$. They then assume $X$ satisfies the following conditions.
+#conditions[
+  + The distribution $cal(D)(X) seq T U$ defined by $cal(D)(X)|_p = { v in T_p N | ip(v,X) = 0 }$ is integrable on the set $U$.
+  + $phi > 0$ everywhere on $U$.
+  + The integral surfaces of $cal(D)(X)$ are compact level sets of $(||X||)/phi$ on U.
+  + $phi^2 - X(phi) > 0$ everywhere on $U$.
+  + The normal vector $cal(N)$ to the integral surfaces of $cal(D)(X)$ is the only direction of minimal Ricci curvature, that is for every unit vector $v$ which is not colinear with $cal(N)$ we have
+    $
+      ov(Ric)(cal(N),cal(N)) < ov(Ric)(v,v).
+    $
+]<cond-pan_li>
+
+They consider the class $frak(Y)$ of admissable hypersurfaces which is star-shaped with respect to $X$, that is admissable hypersurfaces $M$ for which $u = ip(X, nu)$ is positive along $M$. They define the normal flow with velocity $f = n phi - H u$ and prove the following results about this flow.
+#lemma[
+  + For a hypersurface $M in frak(Y)$ the normal flow with velocity $f = n phi - H u$ exists for all time $t in [0,infinity)$.
+  + Along this flow volume is fixed and area is non-increasing.
+  + The flow converges in the limit to an integral hypersurface of $cal(D)(X)$.
+]
+Applying this to @thrm-flow_method they then prove the following
+#theorem("Li and Pan")[
+  Let $N$ be an ambient manifold admitting a conformal vector field $X$ satisfying @cond-pan_li, then for any star-shaped hypersurface $M$ there exists an integral surface $S$ of $cal(D)(X)$ with
+  $
+    V(S) = V(M) "and" A(M) >= A(S)
+  $
+]<thrm-li_pan>
 
 == Quasi-Closed Conformal Vector Fields
-Now it turns out that these closed conformal vector fields characterize warped products of the form above, namely, if a manifold admits a closed conformal then it can locally be written in the form $RR_+ times_f N$ for some manifolds $N$ and function $f$, see @tashiroCompleteRiemannianManifolds1965[Lemma 1.2]. We thus know that having a closed conformal vector field is too strong of a condition, we want to try and weaken it.
 
-This idea was first explored by Li and Pan @jiayuIsoperimetricProblemRiemannian2023, where they formalized the necessary conditions on the ambient manifold in terms of conformal vector fields. They also derive a number of key properties for a conformal vector fields satisfying their conditions. In this section we will rewrite some of their conditions and conclusions in a form that is easier to use.
+In this section we will rewrite some of the conditions of Li and Pan and the results that follow from those conditions in a form that is easier to use.
 
-First let us declare some useful conditions that we will need, let $N$ be the complete ambient manifold which admits a conformal vector field $X$ on some open subset $U$ which does not vanish on that subset, with conformal factor $phi$. We will consider the following two conditions
-#conditions[
-+ The distribution $cal(D)(X) seq T U$ defined by $cal(D)(X)|_p = { v in T_p N | ip(v,X) = 0 }$ is integrable on the set $U$.
-+ The integral surfaces of $cal(D)(X)$ are level sets of $(||X||)/phi$ wherever it is defined.
-]<conditions-quasi_closed>
+Let us recall the setting, we let $N$ be the complete ambient manifold which admits a conformal vector field $X$ on some open subset $U$ which does not vanish on that subset, with conformal factor $phi$. 
 
-These conditions are key to the success of this method, they are vital to many of the identities that Li and Pan derived and used to get a handle on the normal flow they construct.
-
-We will now start analysing the consequences of these conditions.
+We will start with the #link(<cond-pan_li>)[first condition].
 #proposition[
   Let $X$ be a conformal vector field $X$ such that condition 1 holds, then the associated tensor field $psi$ satisfies
   $
@@ -738,19 +819,19 @@ We see then that such a conformal vector field is 'almost' closed since its asso
 #definition[
   We will call a conformal vector field $X$ satisfying condition $1$, a _quasi-closed_ conformal vector field.
 ]
-The rest of this section will be devoted to properties of quasi-closed conformal vector fields, for the rest of this section we will fix a quasi-closed conformal vector field $X$ with conformal factor $phi$ and associated tensor field $psi$. We will fix a point $p in U$ and an arbitrary vector $Y in T_p U$. We will denote $cal(N) = X/(||X||)$ the normal vector to the integral surfaces of $cal(D)(X)$. We will also refer to $cal(D)(X),U(X)$ as $cal(D),U$ for brevity. We will start with a key property regarding the integral surfaces of $cal(D)$.
+The rest of this section will be devoted to properties of quasi-closed conformal vector fields. We will fix a point $p in U$ and an arbitrary vector $Y in T_p U$. We will denote $cal(N) = X/(||X||)$ the normal vector to the integral surfaces of $cal(D)(X)$. We will also refer to $cal(D)(X)$ as $cal(D)$ for brevity. We will start with a key property regarding the integral surfaces of $cal(D)$.
 #proposition[
   Let $S$ be an integral surface of $cal(D)$, then $S$ is totally umbilical, that is at every point $p in S$ we have
   $
     h_(i j) = f(p) g_(i j),
   $
-  for some function $f$ on $S$. Furthermore we have $f$ is equal to $phi/(||X||)$.
+  for some function $f$ on $S$. Furthermore we have $f = phi/(||X||)$.
 ]
 #proof[
-  We have in coordinates
+  We have in coordinates on $S$, 
   $
     h_(i j) = ip(ov(nabla)_i cal(N), e_j) = ip(ov(nabla)_i X/(||X||), e_j)
-    = ip((ov(nabla)_i X)/(||X||) - X/(||X||^2) (ov(nabla)_i ||X||), e_j)
+    = ip((ov(nabla)_i X)/(||X||) - X/(||X||^2) (ov(nabla)_i||X||), e_j)
   $
   then since $X$ is orthogonal to the tangent vector $e_j$ we get
   $
@@ -768,7 +849,11 @@ Now we want the integral surfaces $S$ of $cal(D)$ to be our Isoperimetric profil
  If $X$ satisfies condition $2$, then the integral surfaces of $cal(D)$ are totally umbilical with constant mean curvature $H = n phi/(||X||)$.
 ]
 
-Now consider, for a moment, the spheres in $RR^n$ of radius $r$. They are the integral surfaces for the orthogonal distribution to $X = x^i diff_i$ which is a closed conformal vector field with factor $phi = 2$. We see that their mean curvature is $H = (2n) / r$, we thus see that the mean curvature is inversely proportional to a certain 'scale' function, in this case $r$.
+#definition[
+  We will call quasi-closed conformal vector field $X$ _symmetric_ if it satisfies condition 2.
+]
+
+Now consider, for a moment, the spheres in $RR^n$ of radius $r$. They are the integral surfaces for the orthogonal distribution to $X = x^i diff_i$ which is a closed conformal vector field with factor $phi = 2$. We see that their mean curvature is $H = (2n) / r$, we thus see that the mean curvature is inversely proportional to a certain 'scale' function, in this case $r$. This scale function will turn out to be extremely useful in many of our future calculations, so we give it a name here.
 
 #definition[
   Wherever $phi != 0$ on $U$, we will call the following function the _scale_ function for $X$
@@ -794,22 +879,21 @@ Since we know $lambda$ is constant on integral surfaces, its gradient must be co
     \ &= 2 (phi^2 - X(phi))/phi^3 X
   $
 ]
-This coefficient function will also appear many times so we will call it $Lambda$.
-
-Now as we saw, for a quasi-closed conformal vector field we have that $ip(psi(v), w)$ vanishes on $cal(D)$, but with condition 2 we can actually be more precise than this.
+Now as we saw, for a quasi-closed conformal vector field we have that $ip(psi(v), w)$ vanishes on $cal(D)$ and this turns out to be enough to get a precise equation for $psi$ even when $v,w$ are not in $cal(D)$.
 #proposition[
+  We have
   $
     psi(Y) = (ip(Y, ov(nabla)||X||) X - ip(Y, X) ov(nabla)||X||)/(||X||).
   $
-  Furthermore if $X$ satisfies condition 2, wherever $phi != 0$ we have
+  Furthermore if $X$ symmetric, then wherever $phi != 0$ we have
   $
     psi(Y) = (ip(Y, ov(nabla)phi) X - ip(Y, X) ov(nabla)phi)/(phi).
   $
 ]<prop-psi_exact>
 #proof[
-  Recall that $ip(psi(Y),Z)$ is anti-symmetric in $Y,Z$ so we may assume WLOG one of the two is in $cal(D)$ and hence also WLOG assume that it is $Y$. Then by @prop-psi_vanish we may assume that $Z$ is colinear with $Y$. We thus have $ip(Y,Z) = 0$ so
+  Recall that $ip(psi(Y),Z)$ is anti-symmetric in $Y,Z$ so we may assume WLOG one of the two is in $cal(D)$ and hence also WLOG assume that it is $Y$. Then by @prop-psi_vanish we may assume that $Z$ is colinear with $X$. We thus have $ip(Y,Z) = 0$ so
   $
-    ip(psi(Y), Z) &= ip(Z,X)/(||X||) ip(ov(nabla)_Y X, X) = 1/2 ip(Z,X)/(||X||) ov(nabla)_Y ip(X,X)\ &= 1/2 ip(Z,X)/(||X||) ip(Y, ov(nabla)||X||^2)
+    ip(ov(nabla)_Y X, Z) &= ip(Z,X)/(||X||^2) ip(ov(nabla)_Y X, X) = 1/2 ip(Z,X)/(||X||^2) ov(nabla)_Y ip(X,X)\ &= 1/2 ip(Z,X)/(||X||^2) ip(Y, ov(nabla)||X||^2)
     = ip(Z,X)/(||X||) ip(Y, ov(nabla)||X||)
   $
   We can then anti-symmetrize this to get that for arbitrary $Y,Z$
@@ -849,7 +933,7 @@ We note here two other useful ways to write the covariant derivative of $X$
   $
     ov(nabla)_Y X/(||X||) = - ip(X,Y)/(||X||) ov(nabla)||X||
   $
-  if $X$ satisfies condition 2 then where $phi != 0$ we have
+  if $X$ is symmetric then where $phi != 0$ we have
   $
     ov(nabla)_Y X/(phi) = X - ip(X,Y)/phi^2 ov(nabla) phi
   $
@@ -874,7 +958,7 @@ We note here two other useful ways to write the covariant derivative of $X$
   $
     (psi(Y),Z) = 2(AntiSym(ov(nabla)||X||^flat times.circle X^flat)(Y,Z))/(||X||).
   $
-  Furthermore if $X$ satisfies condition 2, wherever $phi != 0$ we have
+  Furthermore if $X$ is symmetric, wherever $phi != 0$ we have
   $
     (psi(Y),Z) = 2(AntiSym(ov(nabla)phi^flat times.circle X^flat)(Y,Z))/(phi).
   $
@@ -896,7 +980,7 @@ We can also rewrite some of the Riemann and Ricci curvatures of the ambient mani
   $
     ||X||ov(Ric)(X,Y) = ip(ov(nabla)_Y ov(nabla)||X||, X) = ip(ov(nabla)_X ov(nabla)||X||, Y) = 0
   $<ric_orthogonal>
-  If $X$ satisfies condition 2, then wherever $phi != 0$ we have
+  If $X$ is symmetric, then wherever $phi != 0$ we have
   $
     ov(R)(Y,X,Y,X) &= -phi ip(ov(nabla)_Y ov(nabla)phi, Y) + ip(X,Y)^2/(phi) ip(ov(nabla)_cal(N) ov(nabla)phi, cal(N))
     \ ov(Ric)(X,Y) &= -(ip(X,Y))/(phi) (ov(Delta)phi - ip(ov(nabla)_cal(N) ov(nabla) phi, cal(N)))
@@ -916,7 +1000,7 @@ We can also rewrite some of the Riemann and Ricci curvatures of the ambient mani
     ip(ov(nabla)_i (-(ip(ov(e)_j, X) ov(nabla)||X||)/(||X||^2)) - ov(nabla)_j (-(ip(ov(e)_i, X) ov(nabla)||X||)/(||X||^2)), ov(e)_k)
     \ &=
     - ov(nabla)_i ((ip(ov(e)_j, X))/(||X||^2)) ov(e)_k (||X||) + ov(nabla)_j ((ip(ov(e)_i, X))/(||X||^2)) ov(e)_k (||X||)
-    \ &-(ip(ov(e)_j, X))/(||X||^2) ip(ov(nabla)_i ov(nabla) ||X||, ov(e)_k) + (ip(ov(e)_i, X))/(||X||^2) ip(ov(nabla)_j ov(nabla) ||X||, ov(e)_k)
+    \ &-(ip(ov(e)_j, X))/(||X||^2) ip(ov(nabla)_i ov(nabla) ||X||, ov(e)_k) + (ip(ov(e)_i, X))/(||X||^2) ip(ov(nabla)_j ov(nabla) ||X||, ov(e)_k).
   $
   Now let us deal with the first two terms, expanding gives us
   $
@@ -926,16 +1010,16 @@ We can also rewrite some of the Riemann and Ricci curvatures of the ambient mani
     +
     2 (ip(X, ov(e)_j) ov(e)_i (||X||)
     -
-    ip(X, ov(e)_i) ov(e)_j (||X||))/(||X||^3))
+    ip(X, ov(e)_i) ov(e)_j (||X||))/(||X||^3)),
   $
-  then by definition the left denominator here is $ip(psi(ov(e)_j), ov(e)_i)$ which we can expand by @prop-psi_exact we will see that these terms exactly cancel the other terms in the brackets.
+  then by definition the left denominator here is $2ip(psi(ov(e)_j), ov(e)_i)$ which we can expand by @prop-psi_exact, this quickly shows that these terms exactly cancel the other terms in this above expression.
 
   Now we are left with
   $
     ov(R)(ov(e)_i, ov(e)_j, X/(||X||), ov(e)_k)
-    = (ip(ov(e)_i, X))/(||X||^2) ip(ov(nabla)_j ov(nabla)||X||, ov(e)_k) - (ip(ov(e)_j, X))/(||X||^2) ip(ov(nabla)_i ov(nabla)||X||, ov(e)_k)
+    = (ip(ov(e)_i, X))/(||X||^2) ip(ov(nabla)_j ov(nabla)||X||, ov(e)_k) - (ip(ov(e)_j, X))/(||X||^2) ip(ov(nabla)_i ov(nabla)||X||, ov(e)_k),
   $<riemann_exact>
-  Now by linearity we can substitute $ov(e)_i = ov(e)_k = Y$ and $ov(e)_j = X$, this gives us
+  by linearity we can substitute $ov(e)_i = ov(e)_k = Y$ and $ov(e)_j = X$, this gives us
   $
     ov(R)(Y, X, X/(||X||), Y)
     = (ip(Y, X))/(||X||^2) ip(ov(nabla)_X ov(nabla)||X||, Y) - (ip(X, X))/(||X||^2) ip(ov(nabla)_Y ov(nabla)||X||, Y)
@@ -950,13 +1034,13 @@ We can also rewrite some of the Riemann and Ricci curvatures of the ambient mani
   $
     ov(R)(e_i, e_j, e_k, cal(N)) = - nabla_i h_(j k) + nabla_j h_(i k) = 0
   $
-  and so in particular, by linearity
+  and so in particular, by taking trace over $j,k$ and using linearity to substitute $e_i = Y$ we get
   $
     ov(Ric)(Y, X) = 0
   $
   for any $Y in cal(D)$.
 
-  Now by using @riemann_exact but tracing over $e_i$ and $e_k$ and plugging in $ov(e)_j = Y$ gives us
+  Now by using @eqn-riemann_exact but tracing over $e_i$ and $e_k$ and plugging in $ov(e)_j = Y$ gives us
   $
     ov(Ric)(Y, X) = - ip(Y, X)/(||X||) ov(Delta)||X|| + 1/(||X||) ip(ov(nabla)_Y ov(nabla)||X||, X)
   $<ricci_simplified>
@@ -970,7 +1054,7 @@ We can also rewrite some of the Riemann and Ricci curvatures of the ambient mani
   Now plugging @eqn-ric_orthogonal into @eqn-riemann_simplified gives us
   $
     ov(R)(Y, X, X, Y)
-    &= -||X||ip(ov(nabla)_Y ov(nabla)||X||, Y) + (ip(Y, X))/(||X||)ip(ov(nabla)_(||X||cal(N)) ov(nabla)||X||, (cal(N)||X||ip(X,Y))/(||X||^2))
+    &= -||X||ip(ov(nabla)_Y ov(nabla)||X||, Y) + (ip(Y, X))/(||X||)ip(ov(nabla)_(||X||cal(N)) ov(nabla)||X||, cal(N)ip(X/(||X||),Y))
     \ &= -||X||ip(ov(nabla)_Y ov(nabla)||X||, Y) + (ip(Y, X)^2)/(||X||)ip(ov(nabla)_(cal(N)) ov(nabla)||X||, cal(N))
   $
   which is the first result.
@@ -978,7 +1062,7 @@ We can also rewrite some of the Riemann and Ricci curvatures of the ambient mani
   For the second result we do the same thing with @eqn-ricci_simplified, we get
   $
     ov(Ric)(Y, X) 
-    &= - ip(Y, X)/(||X||) ov(Delta)||X|| + 1/(||X||) (||X||^2ip(X,Y))/ip(X,X) ip(ov(nabla)_(cal(N) ) ov(nabla)||X||, cal(N))
+    &= - ip(Y, X)/(||X||) ov(Delta)||X|| +1/(||X||)ip(ov(nabla)_(cal(N)ip(cal(N), Y)) ov(nabla)||X||, cal(N)||X||)
     \ &= - ip(Y, X)/(||X||) (ov(Delta)||X|| - ip(ov(nabla)_(cal(N)) ov(nabla)||X||, cal(N)))
   $
   which is our second result.
@@ -991,95 +1075,9 @@ We can also rewrite some of the Riemann and Ricci curvatures of the ambient mani
     \ &=
     ip(ov(nabla)_i (ov(e)_j -(ip(ov(e)_j, X) ov(nabla) phi)/(phi^2)) - ov(nabla)_j (ov(e)_i - (ip(ov(e)_i, X) ov(nabla) phi)/(phi^2)), ov(e)_k)
   $
-  We now note that $ov(nabla)_i ov(e)_j$ and $ov(nabla)_j ov(e)_i$ are both zero because we are working in orthonormal coordinates. After that the calculation is identical to the first case.
+  We now note that $ov(nabla)_i ov(e)_j$ and $ov(nabla)_j ov(e)_i$ are both zero because we are working in normal coordinates. After that the calculation is identical to the first case.
 ]
 
-We will now give an outline of the method used by Li and Pan, which we will then expand on in the next chapter.
-
-Li and Pan assume that they have a quasi-closed conformal vector field $X$ which satisfies condition 2. \
-Their basic plan then has 4 steps
-+ They consider, for every admissable hypersurface $M$ in some class $cal(Z)$, the normal flow with velocity $f = n phi - H u$, where $u$ is the #link(<def-support>)[support function] for $X$.
-+ They demonstrate the class $cal(Z)$ is preserved under this flow.
-+ They demonstrate that under this flow, $V(M)$ is fixed and $A(M)$ is non-increasing.
-+ They demonstrate that this flow always converges and it always converges to the integral hypersurface of $X$.
-
-#proposition[
-  Assume that the steps above all hold, then for every admissable hypersurface $M in cal(Z)$ there exists an integral hypersurface $S$ of $X$ with
-  $
-    V(M) = V(S) "and" A(M) >= A(S).
-  $
-  Hence the integral hypersurfaces of $S$ attain the Isoperimetric profile for $cal(Z)$.
-]
-#proof[
-  Let $M_t$ be the flow of $M$ as in the steps above. Then $M_t -> S$ for some admissable hypersurface $S$ and so
-  $
-    V(M) = V(M_t) = lim_(t -> infinity) V(M_t) = V(S)
-  $
-  and
-  $
-    A(M) >= lim_(t -> infinity) A(M_t) = A(S)
-  $
-]
-
-Now the class considered by Li and Pan is the class of star-shaped hypersurfaces, that is hypersurfaces with $u > 0$ everywhere.
-In order to show all the steps of the plan work they had to make some additional assumptions on the ambient manifold.
-#assumptions[
-  + $U$ is a dense open set in $N$.
-  + $phi > 0$ everywhere on $U$.
-  + $Lambda > 0$ everywhere on $U$.
-  + The integral hypersurfaces of $X$ are compact.
-  + $cal(N)$ is the only direction of minimal Ricci curvature, that is for every unit vector $v$ which is not colinear with $cal(N)$ we have
-    $
-      ov(Ric)(cal(N),cal(N)) < ov(Ric)(v,v).
-    $
-]<assum-pan_li_general>
-
-We will quickly show how under these assumptions the third step holds.
-#proposition[
-  Under @assum-pan_li_general, we have that for a star-shaped hypersurface
-  $
-    diff_t V(M_t) = 0 "and" diff_t A(M_t) <= 0.
-  $
-]<prop-vol_area_specific_flow>
-#proof[
-  Immediately from @prop-vol_area_variation and @lemma-integral_identities, we have
-  $
-    diff_t V(M_t) = integral_M (n phi - H u) dif S = 0.
-  $
-
-  For area we have
-  $
-    diff_t A(M_t) &= integral_M H (n phi - H u) dif S 
-    \ &= n/(n-1) integral_M ov(Ric)(nu, X - u nu) dif S - 1/n integral_M u sum_(i < j) (kappa_i - kappa_j)^2 dif S
-  $
-  now since $u$ is everywhere positive the second integral here is always positive and thus
-  $
-    diff_t A(M_t) <= n/(n-1) integral_M ov(Ric)(nu, X - u nu) dif S
-  $
-  now from @prop-riemann_ricci_x_identity we get that
-  $
-    ov(Ric)(nu, X - u nu)
-    &=
-    ov(Ric)(nu, X) - u ov(Ric)(nu, nu)
-    =
-    ip(nu, cal(N)) ov(Ric)(cal(N), X) - u ov(Ric)(nu, nu)
-    \ &=
-    u ov(Ric)(cal(N), cal(N)) - u ov(Ric)(nu, nu)
-    = u (ov(Ric)(cal(N), cal(N)) - ov(Ric)(nu,nu))
-  $
-  and so by the last assumption we get that this is a non-positive term and so
-  $
-    diff_t A(M_t) <= n/(n-1) integral_M u (ov(Ric)(cal(N), cal(N)) - ov(Ric)(nu,nu)) dif S <= 0.
-  $
-]
-
-We conclude this chapter with the main theorem proved by Li and Pan
-#theorem("Li and Pan")[
-  Let $N$ be an ambient manifold admitting a conformal vector field $X$ satisfying @conditions-quasi_closed and @assum-pan_li_general, then for any star-shaped hypersurface $M$ there exists an integral surface $S$ of $X$ with
-  $
-    V(S) = V(M) "and" A(M) >= A(S)
-  $
-]<thrm-li_pan>
 
 
 #pagebreak(weak: true)
@@ -1135,25 +1133,30 @@ We can then try to consider foliations which are in some sense 'compatible' with
 ]
 
 == Setting
-We will consider a complete $n+1$ dimensional Riemannian manifold $N$, with $n >= 2$. On this manifold we consider a conformal vector field $X$ along with a foliation $cal(F)$ which are compatible in the sense that the foliation $cal(F)$ induces a decomposition $X = X^perp + X^top$ where $X^perp$ is a quasi-closed conformal vector field with integral surfaces $S_alpha in cal(F)$ and $X^top$ is a quasi-closed Killing vector field, that is its conformal factor is zero.
+<head-setting>
+We will consider a complete $n+1$ dimensional Riemannian manifold $N$, with $n >= 2$. On this manifold we consider a complete conformal vector field $X$ which is non-zero on an open set $U$, along with a foliation $cal(F)$. We assume the two are are compatible, in the sense that the foliation $cal(F)$ induces a decomposition $X = X^perp + X^top$ where $X^perp$ is a quasi-closed symmetric conformal vector field with integral surfaces $S_alpha in cal(F)$ and $X^top$ is a quasi-closed Killing vector field, that is its conformal factor is zero.
 
-We will associate with $X^perp$ its conformal factor $phi$ which is the same as that of $X$, we will also associate the scale function (@def-scale) $lambda$ and its derivative $Lambda$ (@prop-lambda_def). We will also denote by $psi^perp$ and $psi^top$ the associated tensor fields (@prop-psi_exact) of $X^perp$ and $X^top$ respectively.
+We will associate with $X^perp$ its conformal factor $phi$ which is the same as that of $X$, we will also associate the scale function (@def-scale) $lambda$ and its derivative $Lambda$ (@prop-lambda_def). We will denote by $psi^perp$ and $psi^top$ the associated tensor fields (@prop-psi_exact) of $X^perp$ and $X^top$ respectively.
+We will also define
+$
+  cal(N)^perp = X^perp/(||X^perp||) "and" cal(N)^top = X^top/(||X^top||)
+$
 
 We will also make the following assumptions
 #assumptions[
-+ The conformal factor $phi$ of $X^perp$ is everywhere positive.
-+ The function $Lambda$ (@prop-lambda_def) is everywhere positive.
-+ The function $Lambda phi^3 + X^top (phi)$ is everywhere positive.
-+ The integral hypersurfaces of $X^perp$ are compact.
-+ The directions $X^perp$ and $X^top$ are both of least Ricci curvature, that is for any tangent vector $Y in T_p N$ we have
++ The conformal factor $phi$ of $X^perp$ is positive on $U$.
++ The function $Lambda$ (@prop-lambda_def) is positive on $U$.
++ The function $Lambda phi^3 + X^top (phi)$ is positive on $U$.
++ The integral hypersurfaces $S_alpha$ are compact.
++ The directions $X^perp$ and $X^top$ are both of least Ricci curvature, that is for any unit vector $Y in T_p U$ we have
   $
-    1/(||Y||^2) ov(Ric)(Y,Y)
+    ov(Ric)(Y,Y)
     >=
-    1/(||X^perp||^2) ov(Ric)(X^perp,X^perp)
+    ov(Ric)(cal(N)^perp,cal(N)^perp)
     =
-    1/(||X^top||^2) ov(Ric)(X^top,X^top)
+    ov(Ric)(cal(N)^top,cal(N)^top)
   $
-]
+]<assum-required>
 
 
 The first condition informally means that $X^perp$ is a dilation-like vector field, because under its first order vector field flow volumes increase. \
@@ -1169,15 +1172,15 @@ Our flow will consist of two steps,
   we will run this flow until $t = T_0$.
 + If the flow survives after $t = T_0$ we will stop the flow, and then set $X(t) = X^perp$, we then continue with the flow
   $
-    f = n phi - H ip(X, nu)
+    f = n phi - H ip(X^perp, nu)
   $
   for however long the flow lasts.
 
 Note that in this setting, $u$'s definition depends on time but we will drop this dependence in our notation and only explicitly mention it when it comes up.
 Note that, if $u > 0$ when $t = T_0$, then at that point in time the surface is star-shaped with respect to just $X^perp$ so we can apply the methods of Li and Pan.
 
-For now we will assume that the flow exists on some interval $[0,T)$ with $T <= T_0$, we will show this must be the case later, in @prop-flow_short_time. We will also assume that $u$ remains positive on $[0,T)$, this will be proven in @head-evolution_equation_u.
-We will now start computing the evolution of various geometric quantities along our flow. For convenience we will define the factor 
+For now we will assume that the flow exists on some interval $[0,T)$, we will show this must be the case later, in @prop-flow_short_time. We will also assume that $u$ remains positive on $[0,T)$, this will be proven in @head-evolution_equation_u.
+We will now start computing the evolution of various geometric quantities along our flow. For convenience we will define the factor
 $
   Xi(t) =(1 - t/T_0).
 $
@@ -1201,6 +1204,75 @@ $
   \
   pi(X^top) = X^top - u^top nu = ip(X^top, e_i) e_i.
 $
+
+For some calculations we will assume $t <= T_0$, for $t > T_0$ we can simply set $Xi(t) = Xi'(t) = 0$  and the calculations still follow.
+== Variation of Area and Volume
+Information about the variation of area and volume along our flow is crucial to the success of the fow method, so we will start with that.
+#proposition[
+  Let $M_t$ be a solution to the flow for $t in [0,T)$, we have
+  $
+    diff_t V(M_t) = 0 quad "and" quad diff_t A(M_t) <= 0.
+  $
+  It thus follows that volume is fixed and area is non-increasing.
+]<prop-vol_area_evolution>
+#proof[
+  We @prop-vol_area_variation to calculate the variation of volume and area.
+  For volume we have due to @lemma-integral_identities
+  $
+    diff_t V(M_t) = integral_(M_t) f dif S = integral_(M_t) n phi - H u dif S = 0.
+  $
+
+  For area we get
+  $
+    diff_t A(M_t)
+    &= integral_(M_t) H f dif S = integral_(M_t) H (n phi - H u) dif S
+    \ &= n/(n - 1) integral_(M_t) ov(Ric)(nu, X(t) - u nu) dif S - 1/n integral_(M_t) u sum_(i < j) (kappa_i - kappa_j)^2 dif S
+  $
+  now we write $X(t) = X^perp + Xi(t) X^top$ and $u = u^perp + u^top$ to get
+  $
+    ov(Ric)(nu, X(t) - u nu)
+    &=
+    ov(Ric)(nu, X^perp - u^perp nu)
+    +
+    ov(Ric)(nu, Xi(t) X^top - u^top nu)
+    \ &=
+    ov(Ric)(nu, X^perp)
+    +
+    Xi(t) ov(Ric)(nu, X^top)
+    - (u^perp + u^top)ov(Ric)(nu,nu)
+  $
+  then by @eqn-ric_orthogonal we get
+  $
+    ov(Ric)(nu, X(t) - u nu)
+    = &
+    ip(nu, X^perp) ov(Ric)(cal(N)^perp, cal(N)^perp)
+    +
+    ip(nu, Xi(t) X^top) ov(Ric)(cal(N)^top, cal(N)^top)
+    \ &- med (u^perp + u^top)ov(Ric)(nu,nu)
+    \ = &
+    u^perp ov(Ric)(cal(N)^perp, cal(N)^perp)
+    +
+    u^top ov(Ric)(cal(N)^top, cal(N)^top) - med (u^perp + u^top)ov(Ric)(nu,nu).
+  $
+  Now due to assumption 5 we get that $ov(Ric)(cal(N)^perp, cal(N)^perp) = ov(Ric)(cal(N)^top, cal(N)^top)$ and so
+  $
+    ov(Ric)(nu, X(t) - u nu)
+    =&
+    (u^perp + u^top) ov(Ric)(cal(N)^perp, cal(N)^perp) - med (u^perp + u^top)ov(Ric)(nu,nu).
+    \ =&
+    u (ov(Ric)(cal(N)^perp, cal(N)^perp) - ov(Ric)(nu,nu)).
+  $
+  Plugging this into the variation of area we get 
+  $
+    diff_t A(M_t)
+    &= n/(n - 1) integral_(M_t) ov(Ric)(nu, X(t) - u nu) dif S - 1/n integral_(M_t) u sum_(i < j) (kappa_i - kappa_j)^2 dif S
+    \ &= n/(n - 1) integral_(M_t) u (ov(Ric)(cal(N)^perp, cal(N)^perp) - ov(Ric)(nu,nu)) dif S - 1/n integral_(M_t) u sum_(i < j) (kappa_i - kappa_j)^2 dif S.
+  $
+  But now again by assumption 5 we get that the term $ov(Ric)(cal(N)^perp, cal(N)^perp) - ov(Ric)(nu,nu)$ is always non-positive and the term $(kappa_i - kappa_j)$ is clearly always non-positive so both of these integrals are non-positive and thus $diff_t A(M_t) <= 0$.
+]
+
+By this theorem we get the second condition of @thrm-flow_method.
+
 == Evolution Equation for $lambda$
 The first result we will prove is arguably the most important result, as it will guarantee our hypersurface remains within a compact subset.
 #proposition[
@@ -1328,11 +1400,11 @@ This next evolution is nearly as important, our parabolic operator has a $u$ fac
     nabla_i ((2 AntiSym(ov(nabla)phi^flat times.circle X^(perp flat))(e_i,nu))/(phi))
     \ &=
     ((ov(nabla)_i 2 AntiSym(ov(nabla)phi^flat times.circle X^(perp flat))(e_i,nu))/(phi)
-    +
+    \ &+
     (2 AntiSym(ov(nabla)phi^flat times.circle X^(perp flat))(ov(nabla)_i e_i,nu))/(phi)
     \ &+ med
     (2 AntiSym(ov(nabla)phi^flat times.circle X^(perp flat))(e_i,ov(nabla)_i nu))/(phi)
-    -
+    \ &-
     (2 AntiSym(ov(nabla)phi^flat times.circle X^(perp flat))(e_i,nu))/(phi^2)ov(nabla)_i phi.
   $
   We notice that since $ov(nabla)_i e_i = - H nu$ the second term will have two $nu$ inputs into an anti-symmetrization, making it vanish. Similarly, since $ov(nabla)_i nu = h_(i j) e_j$ the third term will have the inputs $(e_i,e_j)$ symmetrized by $h_(i j)$ and thus will also vanish. We are thus left with
@@ -1381,7 +1453,7 @@ This next evolution is nearly as important, our parabolic operator has a $u$ fac
     \ =
     - n nu(phi) + u^perp/phi (ov(Delta) phi - (ov(Hess)_phi (cal(N)^perp, cal(N)^perp))).
   $
-  Now we use @eqn-ric_x to get
+  This form allows us to use @eqn-ric_x to get
   $
     - n nu(phi) - ov(Ric)(X^perp, nu).
   $<u_perp_step_3>
@@ -1398,7 +1470,7 @@ This next evolution is nearly as important, our parabolic operator has a $u$ fac
     (ov(nabla)_i h_(i j)) ip(X^perp, e_j)
     +
     h_(i j) (phi ip(e_i, e_j) + ip(psi^perp (e_i), e_j))
-    -
+    \ &-
     h_(i j) h_(i j) ip(X^perp, nu).
   $
   Since $h_(i j)$ is symmetric the third term here vanishes and so we are left with
@@ -1452,7 +1524,7 @@ This next evolution is nearly as important, our parabolic operator has a $u$ fac
       Delta u^top = - u^top ov(Ric)(nu,nu) + ip(nabla H, X^top) - |A|^2 u^top
     $
   ]
-  Again we compute from definitions, we will use $X^top$ instead of $Xi(t) X^top$ since that does not change any of the calculations and both are Killing vector fields.
+  Again we compute from definitions, we will use $X^top$ instead of $Xi(t) X^top$ since that does not change any of the calculations and both are Killing vector fields,
   $
     Delta u^top
     &= nabla_i nabla_i ip(X^top, nu)
@@ -1480,7 +1552,7 @@ This next evolution is nearly as important, our parabolic operator has a $u$ fac
   We notice that since $ov(nabla)_i e_i = - H nu$ the second term will have two $nu$ inputs into an anti-symmetrization, making it vanish. Similarly, since $ov(nabla)_i nu = h_(i j) e_j$ the third term will have the inputs $(e_i,e_j)$ symmetrized by $h_(i j)$ and thus will also vanish. We are thus left with
   $
     nabla_i (ip(psi^top (e_i), nu))
-    &=
+    \ =
     2 ((ov(nabla)_i AntiSym(ov(nabla)||X^top||^flat times.circle X^(top flat)))(e_i,nu))/(||X^top||) -
     ip(psi^top (e_i), nu) (ov(nabla)_i||X^top||)/(||X^top||). #h(2em)
   $ <u_top_step_2>
@@ -1518,8 +1590,8 @@ This next evolution is nearly as important, our parabolic operator has a $u$ fac
   $
   and then we use @eqn-ric_orthogonal-phi to get
   $
-    ov(Delta)||X^top||u^top/(||X^top||) - ip(X^top, nu)(ov(Hess)_(||X^top||) (N^top, cal(N)^top))/(||X^top||)
-    =
+    ov(Delta)||X^top||u^top/(||X^top||) - ip(X^top, nu)(ov(Hess)_(||X^top||) (cal(N)^top, cal(N)^top))/(||X^top||)
+    \ =
     - u^top/(||X^top||) (ov(Delta)||X^top|| - ov(Hess)_(||X^top||) (cal(N)^top, cal(N)^top)).
   $
   Now we use @eqn-ric_x to get
@@ -1578,6 +1650,7 @@ This next evolution is nearly as important, our parabolic operator has a $u$ fac
     -
     |A|^2 u^top
   $
+  which proves the claim.
 
   Combined with the previous claim we get that
   $
@@ -1649,8 +1722,8 @@ Now that we can bound $u$ using $H$, we just need to show that $H$ grows suffici
   The evolution equation for $H$ is
   $
     L H &= 2 ip(nabla H, nabla u) + H ip(X, nabla H) - phi (H^2 - n |A|^2)
-    + n(ov(Hess)_phi (nu,nu) - ov(Hess)_phi (cal(N)^perp,cal(N)^perp))
-    \ &+ med n phi (ov(Ric)(cal(N)^perp,cal(N)^perp) - ov(Ric)(nu,nu))
+    \ &+ n(ov(Hess)_phi (nu,nu) - ov(Hess)_phi (cal(N)^perp,cal(N)^perp))
+    + med n phi (ov(Ric)(cal(N)^perp,cal(N)^perp) - ov(Ric)(nu,nu))
   $
 ]
 #proof[
@@ -1722,14 +1795,18 @@ With this linear bound we get an inverse linear lower bound on $u$.
 == Existence and Convergence
 We now have everything we need to prove the flow exists until $t = T_0$.
 #proposition[
-  A surface $M$ which is star-shaped with respect to $X^perp + X^top$ remains star-shaped with respect to $X(t)$ for all $t in [0,T_0)$, furthermore the flow exists at $t = T_0$ and there the surface is star-shaped with respect to $X^perp$.
+  If a surface $M$ which is star-shaped with respect to $X^perp + X^top$ admits a flow $M_t$, then $M_t$ remains star-shaped with respect to $X(t)$ for all $t in [0,T_0)$, furthermore if the flow exists at $t = T_0$ then there the surface is star-shaped with respect to $X^perp$.
 ]
 #proof[
   We have showed that $u$ is uniformly bounded for $t in [0,T_0)$, hence it is also uniformly bounded in the limit $t = T_0$.
 ]
 
 We now shift out focus to rewriting this flow as a flow of functions instead of hypersurfaces, which will allow us to apply the results of @sect-PDE to it.
-We want to write our hypersurface as a graph over an integral hypersurface of $X^perp$, since this is not a warped product space we need to be careful with this construction. We will fix a starting hypersurface $M$, and set
+We want to write our hypersurface as a graph over an integral hypersurface of $S_lambda$ where
+$
+  S_lambda = { p in N : lambda(p) = lambda},
+$
+since this is not a warped product space we need to be careful with this construction. We will fix a starting hypersurface $M$, and set
 $
   lambda_0 = min_(p in M) lambda(p)
   quad
@@ -1741,7 +1818,6 @@ and we want to construct nice coordinates on
 $
     D := { p in N : lambda_0 <= lambda(p) <= lambda_1 }
 $<domain_def>
-// TODO: FIX NORMAL VECTORS TO INTEGRAL HYPERSURFACES TO USE CORRECT LETTER
 We will start with proving that $D$ is compact, allowing us to lower bound important quantities uniformly.
 #proposition[
   For any $lambda_1 > lambda_0 > 0$ in the image of $lambda$, the subset
@@ -1774,7 +1850,7 @@ We can now use these lower bounds to construct a nice coordinate system for $D$,
 ]
 Using the unique intersection point we found above as a 'projection map' onto $S$ we get a diffeomorphism $F_t : D -> S times [lambda_0, lambda_1]$. Note that this diffeomorphism depends on $t$ because $X(t)$ depends on $t$.
 
-We can now start converting our hypersurface flow into a flow of functions, we will denote by $tilde(nabla)$ the induced connection onto $S$.
+We can now convert our hypersurface flow into a flow of functions.
 
 #proposition[
   A hypersurface $M$ contained in $D$ is star-shaped with respect to $X(t)$ if and only if it can be identified using $F_t$ with a graph of smooth function $f: S -> [lambda_0, lambda_1]$.
@@ -1826,7 +1902,7 @@ We can now start converting our hypersurface flow into a flow of functions, we w
   Now we see that the projection is precisely the differential of $pi$ and it is a linear isomorphism and thus $pi$ is a local diffeomorphism.
 ]
 
-In fact, by the first argument in the proof above we get that lower bounds on $u$ are equivalent to upper bounds on $||tilde(nabla) f||$.
+In fact, by the first argument in the proof above we get that lower bounds on $u$ are equivalent to upper bounds on $||tilde(nabla) f||$ where $tilde(nabla)$ is the connection on $S$>
 #corollary[
   There are functions $M(epsilon)$ and $epsilon(M)$ such that
   $
@@ -1884,11 +1960,11 @@ Next we solve this @pde_formulation purely in function space. We then apply appr
   $
     V^k (t) = g^(i j)(t) (Gamma^k_(i j) (t) - tilde(Gamma)^k_(i j)).
   $
-  We will now apply a time-dependent diffeomorphism to our flow to see how it changes. Assume that $f$ solves @eqn-simple_pde_formulation, then we get that $h : = f compose Phi_t^(-1)$ solves
+  We will now apply a time-dependent diffeomorphism $Phi_t$ to our flow to see how it changes. Assume that $f$ solves @eqn-simple_pde_formulation, then we get that $h : = f compose Phi_t^(-1)$ solves
   $
     diff_t (h compose Phi_t) = - u(Phi_t (x),h compose Phi_(t), D (h compose Phi_t)) Delta (h compose Phi_t) + B(Phi_t (x), h compose Phi_t, D (h compose Phi_t))
   $
-  now recall that the right hand side here is actually $(n phi - H u) (ov(nabla) lambda)$ and is actually a geometric quantity, hence it does not depend on parametrization and so we can rewrite the right hand side as
+  now recall that the right hand side here is actually $(n phi - H u) ip(ov(nabla) lambda, nu)$ and is actually a geometric quantity, hence it does not depend on parametrization and so we can rewrite the right hand side as
   $
     (- u(x,h, D h) Delta h + B(x, h, D h)) compose Phi_t
   $
@@ -1918,14 +1994,14 @@ Now that we showed short-time existence we can use @cor-u_const_bound along with
 $
   ||nabla f|| < epsilon
 $
-for all $t in [0,T)$. This along with @thrm-nash_moser gives us estimates on $||nabla f||_(C^(1+r))$ which then together with @thrm-pde_short_time gives us a stronger existence statement.
+for all $t in [0,T)$. This along with @thrm-nash_moser this gives us estimates on $||nabla f||_(C^(1+r))$ which then together with @thrm-pde_short_time gives us a stronger existence statement.
 #corollary[
   For any star-shaped hypersurface $M_0$, the normal flow with velocity $n phi - H u$ with initial condition $M_0$ exists on $[0,T_0]$.
 ]
 #proof[
-  We will again first pass to the function space and consider the evolution of the graph of the function $f$. Existence on $[0,T_0)$ is immediate by @thrm-pde_short_time along with @thrm-nash_moser. Then to get existence at $t = T_0$ we will take a sequence $t_n -> T_0$ with $f(t, dot) -> g$ and use Arzelà–Ascoli Theorem to prove $g$ is smooth. Continuity of $f$ in $t$ then implies that $g$ is independent of choice of $t$.
+  We will again first pass to the function space and consider the evolution of the graph of the function $f$. Existence on $[0,T_0)$ is immediate by @thrm-pde_short_time along with @thrm-nash_moser. Then to get existence at $t = T_0$ we will take a sequence $t_n -> T_0$ with $f(t, dot) -> g$ and use Arzelà–Ascoli Theorem to prove $g$ is smooth. Bounds on $f_t$ then imply that $f$ cannot infinitely oscillate in $t$ and so $g$ is independent of choice of sequence $t_n$.
 
-  To use Arzelà–Ascoli like this, we will need uniform bounds on all derivatives of $f$, here we will use @thrm-pde_short_time once again. Note that by @thrm-pde_short_time we get that
+  To use Arzelà–Ascoli like this, we will need uniform bounds on all derivatives of $f$, here we will use @thrm-pde_short_time once again. Note that by the second part of @thrm-pde_short_time we get that
   $
     ||f(t, dot)||_(C^(2+r)) <= B(||f(t,dot)||_(C^(1+r)))
   $
@@ -1934,7 +2010,12 @@ for all $t in [0,T)$. This along with @thrm-nash_moser gives us estimates on $||
 
 We now know that the flow survives until $t = T_0$. When the flow reaches this point we stop it and change the flow by removing the tangential component $X^top$ entirely, only leaving $X^perp$. With this simpler flow Li and Pan @jiayuIsoperimetricProblemRiemannian2023 showed that $u$ is uniformly bounded from below for _all_ time and thus our results prove that the flow exists for all $t in [0,infinity)$.
 
-We now want to show that the limit of this flow is precisely an integral hypersurface of $X^perp$, to do this we will again use a trick where we take a limit of an entire interval of our flow.
+#proposition[
+  The flow described in @head-setting exists for all time $t in [0,infinity)$.
+]
+This proves the first condition of @thrm-flow_method.
+
+We now want to show that the limit of this flow is precisely an integral hypersurface $S_lambda$, to do this we will use a trick where we take a limit of an entire interval of our flow.
 To be more precise assume that $F: M times [0, infinity) -> N$ solves the flow, then consider the functions $F_n : M times [0,1] -> N$ defined by
 $
   F_n (t, p) = F(n+t, p).
@@ -1964,7 +2045,7 @@ for some function $F_(infinity) : M times [0,1] -> N$ which is also a solution t
   which immediately gives us that $Q(F_infinity (0, dot)) = Q(F_infinity (1, dot))$. But now $Q$ is non-increasing along the flow and thus $Q(F_infinity (t, dot))$ is constant.
 ]
 
-We now first apply this to the surface area $A(M_t)$. Since it is clearly continuous and non-increasing by @prop-vol_area_specific_flow, the above proposition implies that $F_infinity (t, dot)$ has constant surface area. Due to the variation formula for surface area we get that
+We now first apply this to the surface area $A(M_t)$. Since it is clearly continuous and non-increasing by @prop-vol_area_evolution, the above proposition implies that $F_infinity (t, dot)$ has constant surface area. Due to the variation formula for surface area we get that
 $
   0 = integral_(M) = n/(n-1) integral_M u(ov(Ric)(cal(N)^perp,cal(N)^perp) - ov(Ric)(nu,nu)) dif S - 1/n integral_M u sum_(i < j) (kappa_i - kappa_j)^2 dif S
 $
@@ -2000,7 +2081,7 @@ We can use this along with @lemma-codazzi to get that
 $
   0 = ov(Ric)(nu, e_i) = ov(Rm)(e_i,e_j,e_j,nu)
   = - (nabla_i h)(e_j,e_j) + (nabla_j h)(e_i,e_j)
-$
+$t
 Now since $F_infinity (t, dot)$ is totally umbilical we know that $h = H/n g_(i j)$ and so we have
 $
   nabla_k h = (nabla_k H)/n g_(i j)
@@ -2077,7 +2158,17 @@ and so the speed function is nowhere negative. But now by @lemma-integral_identi
 $
   integral_M (n phi - H u) dif S = 0
 $
-and so since it is nowhere negative the speed function must be everywhere zero and so we must have $lambda = lambda_max$ on all of $M$. Since $lambda_min$ is also constant on $[0,1]$ we get that $lambda$ is constant on all of $M$ for all time $[0,1]$ and thus the limit of the flow is an integral hypersurface of $X^perp$.
+and so since it is nowhere negative the speed function must be everywhere zero and so we must have $lambda = lambda_max$ on all of $M$. Since $lambda_min$ is also constant on $[0,1]$ we get that $lambda$ is constant on all of $M$ for all time $[0,1]$ and thus the limit of the flow is an integral hypersurface $S_lambda$.
+
+#proposition[
+  The limit as $t -> infinity$ of $M_t$ is an integral hypersurface $S_lambda$
+]<prop-limit_surface>
+This proves the last condition of @thrm-flow_method, and thus proves @thrm-conclusion.
+
+== Conclusion
+The result of @thrm-conclusion provides is the best known result for the Isoperimetric inequality using the flow method. And we suspect that it is unlikely to be improved without a major change of approach. The reason is that already the evolution equations are quite difficult to handle and require a 2 step flow which is extremely rare in the literature. Because of this the author does not believe that there are many fruitful research directions stemming from this specific result
+
+However, many of the tricks and methodologies used to prove this result are novel and not specific to this setup. For example, the proof of @prop-limit_surface used a novel from linear algebra applied along with the Codazzi equation to greatly reduce the necessary conditions for convergence, this trick is likely to be useful in other extrinsic flows like Inverse Mean Curvature Flow. The aforementioned 2 step flow could also likely be used in other geometric flows to 'smooth out' the target manifold before applying a known canonical flows. An interesting case could be the normalized Ricci flow which shares many of the properties of Mean Curvature Flow.
 
 #pagebreak(weak: true)
 

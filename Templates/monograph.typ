@@ -7,8 +7,6 @@
   show heading.where(level: 3): set text(size: 18pt)
   set text(size: 12pt)
   show heading: set block(above: 0.9em, below: 1em)
-
-  
   doc
 }
 
