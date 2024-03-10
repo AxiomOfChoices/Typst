@@ -41,16 +41,16 @@
 This thesis aims to loosely cover the subject of geometric flows, and more specifically a variant of the mean curvature flow.
 The subject of geometric flows uses results in PDE theory theory, more specifically parabolic PDEs, to gain new insight about Riemannian geometry.
 
-One of the biggest problems often tackled by mean curvature flows is the Isoperimetric problem. The Isoperimetric problem asks us to classify the spaces that minimize perimeter for a given volume (hence the name), the first use of mean curvature flows to attack this problem was due to Huisken in 1984 #cite(<huiskenFlowMeanCurvature1984>) who proved it in case of boundaries of convex domains in Euclidean, and since then there have been attempts to push his methods further. More recently, in 2013, Guan and Li #cite(<guanMeanCurvatureType2013>) constructed a new normalized flow which allows them to prove the inequality in the case of boundaries of star-shaped domains in Space forms. Shortly after, in 2018, Guan, Li and Wang pushed this flow even further which allowed them to prove the result in a certain class of warped product spaces #cite(<guanVolumePreservingFlow2018>).
+One of the biggest problems often tackled by mean curvature flows is the Isoperimetric problem. The Isoperimetric problem asks us to classify the spaces that minimize perimeter for a given volume (hence the name), the first use of mean curvature flows to attack this problem was due to Huisken in 1984 @huiskenFlowMeanCurvature1984 who proved it in case of boundaries of convex domains in Euclidean, and since then there have been attempts to push his methods further. More recently, in 2013, Guan and Li @guanMeanCurvatureType2013 constructed a new normalized flow which allows them to prove the inequality in the case of boundaries of star-shaped domains in Space forms. Shortly after, in 2018, Guan, Li and Wang pushed this flow even further which allowed them to prove the result in a certain class of warped product spaces @guanVolumePreservingFlow2018.
 
-Then, concurrently with the writing of this thesis, Li and Pan reframed the technique in terms of conformal vector fields, allowing them to weaken the assumptions on the ambient space @jiayuIsoperimetricProblemRiemannian2023a.
+Then, concurrently with the writing of this thesis, Li and Pan reframed the technique in terms of conformal vector fields, allowing them to weaken the assumptions on the ambient space @jiayuIsoperimetricProblemRiemannian2023.
 
 This thesis continues the effort to use such flows, together with my collaborator Joshua Flynn we pushed the flow even further, allowing us to weaken the assumptions on the ambient space even further and even weaken the star-shapedness assumption, which was key to all previous results.
 
 
 #pagebreak(weak:true)
 = Acknowledgements
-First I would like to thank my supervisor, Professor Pengfei Guan, for his regular assistance both before and after the start of my Masters program. He was always there to help me understand concepts I would otherwise spend weeks grappling with. Secondly, I would like to thank my collaborator, Doctor Joshua Flynn, without whom this project would have never happened. He would always chime in with timely ideas whenever we would get stuck. I would additionally like to thank my two good friends, Sam Zeitler and Bart Syroka for always being there to bounce ideas of or listen to my insane ramblings.
+First I would like to thank my supervisor, Professor Pengfei Guan, for his regular assistance both before and after the start of my Masters program. He was always there to help me understand concepts I would otherwise spend weeks grappling with. Secondly, I would like to thank my collaborator, Doctor Joshua Flynn, without whom this project would have never happened. Bouncing ideas off one another was one of the best parts of my Masters. I would additionally like my good friends Sam Zeitler, Bart Syroka, Jessie Meanwell, Aaron Shalev and Michael for making the last year the best year of my Life.
 Finally I would like to thank my family, and especially my mom, for always being there to help and support me whenever I would feel down and lost.
 
 #pagebreak(weak:true)
@@ -65,13 +65,13 @@ The body of the thesis is largely taken from the paper co-authored by myself and
 
 The Isoperimetric Problem asks a seemingly simple question:\ Among all regions occupying a given volume which has the least perimeter?
 
-In the simple case of 2 and 3 dimensions we all know that the answer is a circle and a sphere respectively, and when we extend it to $n$ dimensions in Euclidean space, the answer remains the $n-1$ dimensional hypersphere. However, if we try to generalize this question to a larger domain the answer very quickly becomes intractable.
+In the simple case of 2 and 3 dimensions we all know that the answer is a circle and a sphere respectively, and when we extend it to $n$ dimensions in Euclidean space, the answer remains the $n-1$ dimensional hypersphere. However, if we try to generalize this question to a larger domain the problem very quickly becomes intractable.
 
 One of the ways to answer such a question is with the method of geometric flows, we will start with a shape which will likely not be optimal, and then we will morph it over time to make it optimal.
 
 
 == Concepts and Notation
-This document assumes general knowledge of differential and Riemannian geometry, see @leeIntroductionSmoothManifolds2012 and @leeIntroductionRiemannianManifolds2018a for great introductions, respectively.
+This document assumes general knowledge of differential and Riemannian geometry, see @leeIntroductionSmoothManifolds2012 and @leeIntroductionRiemannianManifolds2018 for great introductions, respectively.
 
 For the rest of this document we will use the following notation, $N$ is an $n+1$ dimensional Riemannian manifold with metric $ov(g)$ within which we have a compact domain $Omega$ with boundary $diff Omega = M$ such that $F : M -> N$ is an embedding making $M$ a Riemannian hypersurface. We then set $g := F^* ov(g)$ to be the induced metric on $M$. We will in general identify $M$ with its image $F(M)$ and use the two interchangeably. We will write $frak(X)(N)$ to the set of surfaces that can be defined as above and call any such surface any such surface an _admissable_ hypersurface.
 
@@ -119,14 +119,14 @@ Working with Riemannian geometry is almost always easier when done with coordina
   forms an orthonormal basis for $T_p M$ for $i <= n$ _at $p$_ and $e_(n+1) = nu$ _on $U$_. These are called _Fermi coordinates_. In general, when we are dealing with Fermi coordinates and write $e_i$ we are excluding $e_(n+1)$ and refer to it as $nu$ instead.
 ]<prop-fermi_coords>
 #proof[
-  The proof for the first proposition is standard and can be found in any differential geometry textbook, for the second proposition see @leeIntroductionRiemannianManifolds2018a(p.~183).
+  The proof for the first proposition is standard and can be found in any differential geometry textbook, for the second proposition see @leeIntroductionRiemannianManifolds2018(p.~183).
 ]
 
 Then we define the second fundamental form $h$ to be the bilinear form given by
 $
    h(X,Y) = ip(X, ov(nabla)_Y nu).
 $
-This second fundamental form encodes within itself how the manifold $M$ lies inside $N$, it also carries with it a number of useful properties, the most important of which is that it is symmetric, see @leeIntroductionRiemannianManifolds2018a[p.~227] for details. Also of much importance is the trace of this form, taken with respect to the metric, which we write as $H = h_(i i)$, which is called the _mean curvature_. Also its eigenvalues $kappa_i$ called _principle curvatures_.
+This second fundamental form encodes within itself how the manifold $M$ lies inside $N$, it also carries with it a number of useful properties, the most important of which is that it is symmetric, see @leeIntroductionRiemannianManifolds2018[p.~227] for details. Also of much importance is the trace of this form, taken with respect to the metric, which we write as $H = h_(i i)$, which is called the _mean curvature_. Also its eigenvalues $kappa_i$ called _principle curvatures_.
 
 
 Let us write up some properties of the second fundamental form.
@@ -208,7 +208,7 @@ A conformal vector field is a vector field $X$ with the property that $lie_X ov(
   where $eta$ is the dual one form to $X$ defined by $eta(Z) = ip(X,Z)$
 ]
 #proof[
-  We have by Koszul's formula (@leeIntroductionRiemannianManifolds2018a[p.~123])
+  We have by Koszul's formula (@leeIntroductionRiemannianManifolds2018[p.~123])
   $
     2 ip(ov(nabla)_Y X, Z) =& Y(ip(X,Z)) + X(ip(Y,Z)) - Z(ip(X,Y))
     \ &- ip([X,Y],Z) - ip([Y,Z],X) - ip([X,Z],Y)
@@ -385,7 +385,7 @@ The second most important tool is short time-existence, which will be extremely 
   Proposition 8.2 in @taylorPartialDifferentialEquations2023[p.~411] for the first statement, and Theorem 4.28 in @liebermanSecondOrderParabolic1996[p.~77] for the second statement.
 ]
 
-The last PDE results which we will need are the famous Nash-Moser estimates, for full details see @taylorPartialDifferentialEquations2023 @ladyzenskajaLinearQuasilinearEquations1968a.
+The last PDE results which we will need are the famous Nash-Moser estimates, for full details see @taylorPartialDifferentialEquations2023 @ladyzenskajaLinearQuasilinearEquations1968.
 #theorem("Nash-Moser estimates")[
   Let $u$ be a solution to uniformly parabolic @eqn-parabolic_pde on $[0,T)$ with smooth initial condition, if we know that
   $
@@ -398,7 +398,7 @@ The last PDE results which we will need are the famous Nash-Moser estimates, for
   where $d$ is the distance between $diff U'$ and $diff U$.
 ]<thrm-nash_moser>
 #proof[
-  We will use Theorem 1.1 in @ladyzenskajaLinearQuasilinearEquations1968a[p.~517], it is enough to show that the functions
+  We will use Theorem 1.1 in @ladyzenskajaLinearQuasilinearEquations1968[p.~517], it is enough to show that the functions
   $
     diff_(x^k) a^(i j)(x,t,v,p),
     diff_v a^(i j)(x,t,v,p),
@@ -714,7 +714,7 @@ Apart from being a closed conformal vector field, this vector field also has oth
 == Quasi-Closed Conformal Vector Fields
 Now it turns out that these closed conformal vector fields characterize warped products of the form above, namely, if a manifold admits a closed conformal then it can locally be written in the form $RR_+ times_f N$ for some manifolds $N$ and function $f$, see @tashiroCompleteRiemannianManifolds1965[Lemma 1.2]. We thus know that having a closed conformal vector field is too strong of a condition, we want to try and weaken it.
 
-This idea was first explored by Li and Pan @jiayuIsoperimetricProblemRiemannian2023a, where they formalized the necessary conditions on the ambient manifold in terms of conformal vector fields. They also derive a number of key properties for a conformal vector fields satisfying their conditions. In this section we will rewrite some of their conditions and conclusions in a form that is easier to use.
+This idea was first explored by Li and Pan @jiayuIsoperimetricProblemRiemannian2023, where they formalized the necessary conditions on the ambient manifold in terms of conformal vector fields. They also derive a number of key properties for a conformal vector fields satisfying their conditions. In this section we will rewrite some of their conditions and conclusions in a form that is easier to use.
 
 First let us declare some useful conditions that we will need, let $N$ be the complete ambient manifold which admits a conformal vector field $X$ on some open subset $U$ which does not vanish on that subset, with conformal factor $phi$. We will consider the following two conditions
 #conditions[
@@ -1932,7 +1932,7 @@ for all $t in [0,T)$. This along with @thrm-nash_moser gives us estimates on $||
   and so by setting $r' = 1+r$ we can repeat this process to get bounds on higher and higher derivatives of $f$, which completes the proof.
 ]
 
-We now know that the flow survives until $t = T_0$. When the flow reaches this point we stop it and change the flow by removing the tangential component $X^top$ entirely, only leaving $X^perp$. With this simpler flow Li and Pan @jiayuIsoperimetricProblemRiemannian2023a showed that $u$ is uniformly bounded from below for _all_ time and thus our results prove that the flow exists for all $t in [0,infinity)$.
+We now know that the flow survives until $t = T_0$. When the flow reaches this point we stop it and change the flow by removing the tangential component $X^top$ entirely, only leaving $X^perp$. With this simpler flow Li and Pan @jiayuIsoperimetricProblemRiemannian2023 showed that $u$ is uniformly bounded from below for _all_ time and thus our results prove that the flow exists for all $t in [0,infinity)$.
 
 We now want to show that the limit of this flow is precisely an integral hypersurface of $X^perp$, to do this we will again use a trick where we take a limit of an entire interval of our flow.
 To be more precise assume that $F: M times [0, infinity) -> N$ solves the flow, then consider the functions $F_n : M times [0,1] -> N$ defined by
