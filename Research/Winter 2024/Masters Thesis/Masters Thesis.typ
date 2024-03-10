@@ -41,7 +41,7 @@
 This thesis aims to loosely cover the subject of geometric flows, and more specifically a variant of the mean curvature flow.
 The subject of geometric flows uses results in PDE theory theory, more specifically parabolic PDEs, to gain new insight about Riemannian geometry.
 
-One of the biggest problems often tackled by mean curvature flows is the Isoperimetric problem. The Isoperimetric problem asks us to classify the spaces that minimize perimeter for a given volume (hence the name), the first use of mean curvature flows to attack this problem was due to Huisken in 1984 #cite(<huiskenFlowMeanCurvature1984>) who proved it in case of boundaries of convex domains in Euclidean, and since then there have been attempts to push his methods further. More recently, in 2013, Guan and Li #cite(<guanMeanCurvatureType2013a>) constructed a new normalized flow which allows them to prove the inequality in the case of boundaries of star-shaped domains in Space forms. Shortly after, in 2018, Guan, Li and Wang pushed this flow even further which allowed them to prove the result in a certain class of warped product spaces #cite(<guanVolumePreservingFlow2018>).
+One of the biggest problems often tackled by mean curvature flows is the Isoperimetric problem. The Isoperimetric problem asks us to classify the spaces that minimize perimeter for a given volume (hence the name), the first use of mean curvature flows to attack this problem was due to Huisken in 1984 #cite(<huiskenFlowMeanCurvature1984>) who proved it in case of boundaries of convex domains in Euclidean, and since then there have been attempts to push his methods further. More recently, in 2013, Guan and Li #cite(<guanMeanCurvatureType2013>) constructed a new normalized flow which allows them to prove the inequality in the case of boundaries of star-shaped domains in Space forms. Shortly after, in 2018, Guan, Li and Wang pushed this flow even further which allowed them to prove the result in a certain class of warped product spaces #cite(<guanVolumePreservingFlow2018>).
 
 Then, concurrently with the writing of this thesis, Li and Pan reframed the technique in terms of conformal vector fields, allowing them to weaken the assumptions on the ambient space @jiayuIsoperimetricProblemRiemannian2023a.
 
@@ -371,17 +371,21 @@ The most important tool in the analysis of parabolic PDEs is the maximum princip
 The second most important tool is short time-existence, which will be extremely important as we want to use the derivatives of geometric quantities to characterize them, so we need the flow to exists for some non-zero amount of time.
 
 #theorem[
-  If $u(0,dot)$ is a smooth initial condition and @eqn-parabolic_pde is uniformly parabolic then @eqn-parabolic_pde has a solution $u$ for some time $T > 0$ which is smooth on $[0,T)$. Furthermore, if there is a uniform bound 
+  If $u(0,dot)$ is a smooth initial condition and @eqn-parabolic_pde is uniformly parabolic then @eqn-parabolic_pde has a solution $u$ for some time $T > 0$ which is smooth on $[0,T)$. Furthermore, if there is a uniform bound
   $
-    ||u(t,dot)||_(C^(1+r)) <= K "with" t "fixed in" [0,s)
+    ||u(t,dot)||_(C^(1+r)) <= K "for all" t in [0,s)
   $
-  for some constants $r > 0$, $K > 0$ then $T > s$.
-]
+  for some constants $r > 0$, $K > 0$, then the solution exists on $[0,s)$ and satisfies a bound
+  $
+    ||u(t, dot)||_(C^(2+r)) <= B(K)
+  $
+  where $B$ is some constant depending on $K$.
+]<thrm-pde_short_time>
 #proof[
-  Proposition 8.2 in @taylorPartialDifferentialEquations2023[p.~411].
+  Proposition 8.2 in @taylorPartialDifferentialEquations2023[p.~411] for the first statement, and Theorem 4.28 in @liebermanSecondOrderParabolic1996[p.~77] for the second statement.
 ]
 
-The last PDE results which we will need are the famous Nash-Moser estimates, for a detailed dive see @taylorPartialDifferentialEquations2023 @ladyzenskajaLinearQuasilinearEquations1968a.
+The last PDE results which we will need are the famous Nash-Moser estimates, for full details see @taylorPartialDifferentialEquations2023 @ladyzenskajaLinearQuasilinearEquations1968a.
 #theorem("Nash-Moser estimates")[
   Let $u$ be a solution to uniformly parabolic @eqn-parabolic_pde on $[0,T)$ with smooth initial condition, if we know that
   $
@@ -391,8 +395,8 @@ The last PDE results which we will need are the famous Nash-Moser estimates, for
   $
     ||u(t,dot)||_(C^(1+r)) <= C(c_1,c_2,A,B,d)
   $
-  where $d$ is the distance between $diff (U')$ and $diff U$.
-]
+  where $d$ is the distance between $diff U'$ and $diff U$.
+]<thrm-nash_moser>
 #proof[
   We will use Theorem 1.1 in @ladyzenskajaLinearQuasilinearEquations1968a[p.~517], it is enough to show that the functions
   $
@@ -640,7 +644,7 @@ We have one final evolution equation to find, and that is the one for the second
 ]
 
 #pagebreak(weak: true)
-= Warped Product-Like Spaces
+= The Geometric Flow Method
 With the preliminaries out of the way we can begin to discuss how we can attempt to attack the Isoperimetric problem in the class of warped product spaces, and specifically the key properties exhibited by these spaces that we will later use to generalize these methods.
 
 == Warped Product Spaces
@@ -1036,7 +1040,7 @@ We will quickly show how under these assumptions the third step holds.
   $
     diff_t V(M_t) = 0 "and" diff_t A(M_t) <= 0.
   $
-]
+]<prop-vol_area_specific_flow>
 #proof[
   Immediately from @prop-vol_area_variation and @lemma-integral_identities, we have
   $
@@ -1204,7 +1208,7 @@ The first result we will prove is arguably the most important result, as it will
   $
     L lambda = - 2 Lambda n phi u^top - 2 u ip(nabla Lambda, X^perp).
   $
-]
+]<prop-lambda_evolution>
 #proof[
   First we compute the time derivative of $lambda$, since it is an ambient quantity this is easy by @prop-ambient_evolution.
   We get
@@ -1710,7 +1714,7 @@ With this linear bound we get an inverse linear lower bound on $u$.
     u(p,t) >= epsilon/(1 + T_0)
   $
   for all $t in [0,T)$ and $p in M_t$.
-]
+]<cor-u_const_bound>
 #proof[
   Combining @cor-H_linear_bound with @cor-u_inverse_bound we immediately get the desired result.
 ]
@@ -1829,7 +1833,7 @@ In fact, by the first argument in the proof above we get that lower bounds on $u
     sup_(S) ||tilde(nabla) f|| < M => inf_S u > epsilon(M) quad "and" \
     inf_(S) u > epsilon => sup_(S) ||tilde(nabla) f|| < M(epsilon)
   $
-]
+]<cor-derivative_bound>
 
 We will now construct the flow in the following way, first we use @prop-graph to identify our initial surface $M_0$ with a graph of the function $lambda$ over $S$. Then $M_t$ solving @eqn-flow_def is equivalent to it being the graph of a function $f$ solving
 $
@@ -1845,155 +1849,240 @@ Next we solve this @pde_formulation purely in function space. We then apply appr
   For any star-shaped hypersurface $M_0$, the normal flow with velocity $n phi - H u$ with initial condition $M_0$ exists for some time interval $[0,T)$.
 ]<prop-flow_short_time>
 #proof[
-  By the processed described above it is enough to show that @pde_formulation has a solution for some time interval $[0,T)$, this is quite difficult with classic PDE methods since our parabolic operator $L$ depends on the induced metric $g$ of the graph which in turn depends on the gradient of $f$ in a highly complex manner. To counteract this we will use a technique called DeTurcks trick, which will allow us to exploit the diffeomorphism invariance of our situation.
+  By the processed described above it is enough to show that @pde_formulation has a solution for some time interval $[0,T)$.
+
+
+  To see this we need to rewrite all geometric objects of the PDE in terms of $w$ and its derivatives. We will work with in normal coordinates $x^1,...,x^n$ on $S$, in which the induced metric is given by
+  $
+    g_(i j) = ip(F_* e_i, F_* e_j)
+    = ip(hat(e)_i, hat(e)_j) + diff_j f ip(hat(e)_i, diff_lambda) + diff_i f ip(hat(e)_j, diff_lambda) + (diff_i f) (diff_j f) ip(diff_lambda, diff_lambda).
+  $
+  Notice that all 4 inner products in the expression are smooth functions of $(x,lambda)$ and so the entries are smooth functions of $x,f, D f$. We then immediately get that
+  $
+    g^(i j)(x, f, D f), quad det(g)(x, f, D f)
+  $
+  are both also smooth functions of their inputs. Now by the Gram-Schmidt method we get that the normal vector to the graph can be given by
+  $
+    nu = X(t) - sum_i ip(hat(e)_i + diff_i f diff_lambda, X(t))/ip(hat(e)_i + diff_i f diff_lambda, hat(e)_i + diff_i f diff_lambda) (hat(e)_i + diff_i f diff_lambda)
+  $
+  appropriately normalized, which is once again a smooth function of $x,f, D f$, hence $u^top$ and $u$ are also smooth functions of $x, f, D f$. Finally all ambient objects like $X^perp, Lambda, phi$ are all smooth functions of $x,lambda$ and hence $x,f$. We can thus rewrite @eqn-pde_formulation as
+  $
+    diff_t f = - u(x,f,D f) Delta f + B(x,f,D f).
+  $<simple_pde_formulation>
+  At first glance this seems like a standard parabolic PDE but in fact our Laplacian is with respect to the induced metric which depends on the gradient of $f$ in a complicated manner.
+    To counteract this we will use a technique called DeTurcks trick, which will allow us to exploit the diffeomorphism invariance of our geometric flow to sidestep this complexity.
+
+  We recall that in coordinates the Laplacian takes the form
+  $
+    Delta f = g^(i j) (diff_i diff_j f - Gamma^k_(i j) diff_k f)
+  $
+  where both the inverse metric and the Christoffel Symbols depend on the induced metric. Now let us fix some other metric, for example the metric on $M_0$, we will call this metric $tilde(g)$ and its Christoffel symbols $tilde(Gamma)$. We recall that object
+  $
+    Gamma^k_(i j) - tilde(Gamma)^k_(i j)
+  $
+  is actually coordinate independent and is a tensor. Hence we can define the time dependent vector field
+  $
+    V^k (t) = g^(i j)(t) (Gamma^k_(i j) (t) - tilde(Gamma)^k_(i j)).
+  $
+  We will now apply a time-dependent diffeomorphism to our flow to see how it changes. Assume that $f$ solves @eqn-simple_pde_formulation, then we get that $h : = f compose Phi_t^(-1)$ solves
+  $
+    diff_t (h compose Phi_t) = - u(Phi_t (x),h compose Phi_(t), D (h compose Phi_t)) Delta (h compose Phi_t) + B(Phi_t (x), h compose Phi_t, D (h compose Phi_t))
+  $
+  now recall that the right hand side here is actually $(n phi - H u) (ov(nabla) lambda)$ and is actually a geometric quantity, hence it does not depend on parametrization and so we can rewrite the right hand side as
+  $
+    (- u(x,h, D h) Delta h + B(x, h, D h)) compose Phi_t
+  $
+  and so $h$ solves
+  $
+    diff_t (h compose Phi_t) = (- u(x,h, D h) Delta h + B(x, h, D h)) compose Phi_t.
+  $
+  But now we can simplify the left hand side by chain rule to get
+  $
+    (diff_t h) compose Phi_t + (d h compose Phi_t)(diff_t Phi_t) = (- u(x,h, D h) Delta h + B(x, h, D h)) compose Phi_t.
+  $
+  Next we assume that $diff_t Phi_t = (u (x, h, D h) V (t)) compose Phi_t$, this gives us
+  $
+    (diff_t h) compose Phi_t + (u (x, h, D h) d h(V (t))) compose Phi_t = (- u(x,h, D h) Delta h + B(x, h, D h)) compose Phi_t \
+    diff_t h + u (x, h, D h) d h(V (t)) = - u(x,h, D h) Delta h + B(x, h, D h),
+  $
+  and from the definition of $V^k (t)$ we get
+  $
+    diff_t h = - (u g^(i j))(x, h, D h)(diff_i diff_j h - tilde(Gamma)^k_(i j) diff_k h) + B(x, h, D h).
+  $
+  Now importantly in this PDE $tilde(Gamma)$ is fixed and $(u g^(i j))(x, h, D h)$ is uniformly positive semi-definite since they are uniformly positive semi-definite at $t = 0$ and are also positive-semi-definite for some non-zero time interval. Hence by @thrm-pde_short_time we get that this PDE does have a solution for some time interval $[0,T)$.
+
+  Once we have this solution $h$, we can use it to construct the diffeomorphism $Phi_t$ by simply considering the flow of the time dependent vector field $u(x, h, D h) V(t)$ which exists for all time by standard ODE theory. Then $h compose Phi_t$ is a solution to @eqn-simple_pde_formulation which proves short time existence.
 ]
-  // To see this we need to rewrite all geometric objects of the PDE in terms of $w$ and its derivatives. We will work with in normal coordinates $x^1,...,x^n$ on $S$, in which the induced metric is given by
-  // $
-  //   g_(i j) = ip(F_* e_i, F_* e_j)
-  //   = ip(hat(e)_i, hat(e)_j) + diff_j f ip(hat(e)_i, diff_lambda) + diff_i f ip(hat(e)_j, diff_lambda) + (diff_i f) (diff_j f) ip(diff_lambda, diff_lambda).
-  // $
-  // Notice that all 4 inner products in the expression are smooth functions of $(x,lambda)$ and so the entries are smooth functions of $x,f, D f$. We then immediately get that
-//   $
-//     g^(i j)(x, f, D f), quad det(g)(x, f, D f)
-//   $
-//   are both also smooth functions of their inputs. Now by the Gram-Schmidt method we get that the normal vector to the graph can be given by
-//   $
-//     nu = X(t) - sum_i ip(hat(e)_i + diff_i f diff_lambda, X(t))/ip(hat(e)_i + diff_i f diff_lambda, hat(e)_i + diff_i f diff_lambda) (hat(e)_i + diff_i f diff_lambda)
-//   $
-//   appropriately normalized, which is once again a smooth function of $x,f, D f$, hence $u^top$ and $u$ are also smooth functions of $x, f, D f$. Finally all ambient objects like $X^perp, Lambda, phi$ are all smooth functions of $x,lambda$ and hence $x,f$. Finally we use the standard coordinate form of a Laplacian (see @leeIntroductionRiemannianManifolds2018a[p.~32] Proposition 2.46) to get
-//   $
-//     u Delta f = u/sqrt(det g)(x, f, D f) dot diff_i ((g^(i j) sqrt(det g) (x, f, D f)) diff_j f),
-//   $
-//   where importantly $u/sqrt(det g)(x, f, D f)$ is uniformly bounded from below for some short time by our uniform lower bounds on $u$.
-//   Hence we can rewrite @pde_formulation as
-//   $
-//     diff_t f - A(x, f, D f) dot diff_i (B^(i)(x, f, D f))
-//     =
-//     C(x, f, D f),
-//   $
-//   where $A$ is uniformly bounded from below by a positive $epsilon$. Now let us write $B^(i)$ with arbitrary inputs as $B^(i) (y, z, p)$, we can then rewrite the equation as
-//   $
-//     diff_t f - A(x, f, D f) ((diff_(y^i) B^(i))(x, f, D f)\ + (diff_(z) B^(i))(x, f, D f)(diff_i f) + (diff_(p^j) B^(i))(x, f, D f)(diff_i diff_j f))
-//     =
-//     C(x, f, D f).
-//   $
-//   Now the $diff_(y^i) B^i$ and $diff_z B^i$ terms can both be absorbed into the $C$ on the other side as they do not contain any second derivatives, this leaves us with
-//   $
-//     diff_t f - A(x, f, D f) ((diff_(p^j) B^(i))(x, f, D f)(diff_i diff_j f))
-//     =
-//     C(x, f, D f).
-//   $
-//   It then remains to show that $diff_(p^j) B^i$ is uniformly positive definite which will allow us to apply our PDE results.
-//
-//   Since $B^i = g^(i k)(x, f, D f) sqrt(det g(x, f, D f)) diff_k f$, we thus need to get an explicit form for this expression, this will take several steps. First we can compute this expression assuming that $f = lambda_0$, since $lambda$ uniformly scales all geometric properties through the flow of $(t)$. Then at $lambda = lambda_0$ we get
-//   $
-//     g = tilde(g) + dif f times.circle pi(diff_lambda) + pi(diff_lambda) times.circle dif f + ||diff_lambda||^2 dif f times.circle dif f
-//   $
-//   where $tilde(g)$ is the metric on $S$, and $pi(diff_lambda)$ is the orthogonal projection of $diff_lambda$ onto $S$ identified with its dual one form $ip(pi(diff_lambda), dot)$. We start by calculating the determinant.
-//   #lemma[
-//     The determinant $det g$ is given in normal coordinates on $S$ as
-//     $
-//       det g = (1 + dif f(pi(diff_lambda)))^2 + ||diff_lambda^perp||^2||dif f||^2
-//     $
-//     where $diff_lambda^perp$ is the component of $diff_lambda$ orthogonal to $S$ and all norms are taken with respect to the ambient metric $g$.
-//   ]
-//   #proof[
-//     We can rotate the orthonormal coordinates so that $diff_i f = 0$ for $i >= 2$ and $ip(pi(diff_lambda), e_i) = 0$ for $i >= 3$, then our metric in these coordinates has the following block form
-//     $
-//       mat(1 + 2||dif f||ip(pi(diff_lambda), e_1) + ||diff_lambda||^2||dif f||^2, ||dif f||ip(pi(diff_lambda), e_2), 0; ||dif f||ip(pi(diff_lambda), e_2), 1, 0; 0,0,I_(n-2 times n-2); augment: #(hline: (1,2), vline: (1,2))).
-//     $
-//     In these coordinates the determinant is easily computed as
-//     $
-//       &1 + 2||dif f||ip(pi(diff_lambda), e_1) + ||diff_lambda||^2||dif f||^2 - ||dif f||^2ip(pi(diff_lambda), e_2)^2
-//       \ = &1 + 2||dif f||ip(pi(diff_lambda), e_1) + ||diff_lambda^perp||^2||dif f||^2 + ||dif f||^2 ip(pi(diff_lambda), e_1)^2
-//       \ = &(1 + ||dif f||ip(pi(diff_lambda), e_1))^2 + ||diff_lambda^perp||^2||dif f||^2
-//       = (1 + dif f((pi(diff_lambda)))^2 + ||diff_lambda^perp||^2||dif f||^2
-//     $
-//     and so since this equality is tensorial and does not involve coordinates, it is coordinate independent and thus is always true.
-//   ]
-//
-//   Next we need to find the inverse matrix for the metric, the calculations here are quite long so we leave them for the appendix @lemma-inverse.
-//   We now get that
-//   $
-//     B^i (y,z,p) 
-//     =& 1/sqrt((1+ip(p,diff_lambda))^2+||p||^2||diff_lambda^perp||^2) (((1 + ip(p, diff_lambda))^2 + ||p||^2||diff_lambda^perp||^2) p^i
-//       \ &-med (1 + ip(p, diff_lambda))(pi(diff_lambda)^i||p||^2 + p^i ip(diff_lambda, p))
-//       \ &-med||diff_lambda^perp||^2 p^i||p||^2 + ||p||^2 pi(diff_lambda)^i ip(diff_lambda, p)),
-//     \ =& 1/sqrt((1+ip(p,diff_lambda))^2+||p||^2||diff_lambda^perp||^2) ((1 + ip(p, diff_lambda)) p^i- ||p||^2 pi(diff_lambda)^i ),
-//   $
-//   and now differentiating this with respect to $p$ gives us
-//   $
-//   $
-//
-// ]
-//
-//
-// #pagebreak(weak: true)
-//
-// = Appendix
-//
-// == Inverse metric calculation
-//   #lemma[
-//     The inverse matrix for the metric in normal coordinates on $S$ is given by
-//     $
-//       g^(i j)
-//       =&
-//       1/det(g) (((1 + dif f(pi(diff_lambda)))^2 + ||dif f||^2||diff_lambda^perp||^2) delta^(i j)
-//       \ &-med (1 + dif f(pi(diff_lambda)))((pi(diff_lambda) times.circle dif f)^(i j)+ (dif f times.circle pi(diff_lambda))^(i j))
-//       \ &-med||diff_lambda^perp||^2 (dif f times.circle dif f)^(i j) + ||dif f||^2(pi(diff_lambda) times.circle pi(diff_lambda))^(i j))
-//     $
-//   ]<lemma-inverse>
-//   #proof[
-//     #let df = $dif f$
-//     #let dl = $diff_lambda$
-//     #let dlp = $diff_lambda^perp$
-//     #let ot = $times.circle$
-//     We verify by computing the product
-//     $
-//       &det(g) g_(i k) g^(k j)
-//       \ =& ((1+df(pi(dl)))^2+||df||^2||dlp||^2)delta_i^j
-//       \ &- med (1 + df(pi(dl)))(pi(dl) ot df + df ot pi(dl))_i^j
-//       \ &- med ||dlp||^2(df ot df)_i^j + ||df||^2 (pi(dl) ot pi(dl))_i^j
-//       \ &+ med ((1+df(pi(dl)))^2+||df||^2||dlp||^2)(pi(dl) ot df + df ot pi(dl))_i^j
-//       \ &- med (1+df(pi(dl)))(pi(dl) ot df + df ot pi(dl))_(i k)(pi(dl) ot df + df ot pi(dl))^(k j)
-//       \ &- med ||dlp||^2(df ot df)_(i k)(pi(dl) ot df + df ot pi(dl))^(k j)
-//       \ &+ med ||df||^2(pi(dl) ot pi(dl))_(i k)(pi(dl) ot df + df ot pi(dl))^(k j)
-//       \ &+ med ((1+df(pi(dl)))^2+||df||^2||dlp||^2)||dl||^2(df ot df)_i^j
-//       \ &- med (1+df(pi(dl)))(pi(dl) ot df + df ot pi(dl))_(i k)||dl||^2(df ot df)^(k j)
-//       \ &- med ||dlp||^2(df ot df)_(i k)||dl||^2(df ot df)^(k j)
-//       \ &+ med ||df||^2(pi(dl) ot pi(dl))_(i k)||dl||^2(df ot df)^(k j) 
-//       \ =& ((1+df(pi(dl)))^2+||df||^2||dlp||^2)delta_i^j
-//       \ &- med (1 + df(pi(dl)))(pi(dl) ot df + df ot pi(dl))_i^j
-//       \ &- med ||dlp||^2(df ot df)_i^j + ||df||^2 (pi(dl) ot pi(dl))_i^j
-//       \ &+ med ((1+df(pi(dl)))^2+||df||^2||dlp||^2)(pi(dl) ot df + df ot pi(dl))_i^j
-//       \ &- med (1+df(pi(dl)))(df(pi(dl)) pi(dl) ot df + ||pi(dl)||^2 df ot df)_i^j
-//       \ &- med (1+df(pi(dl)))(||df||^2 pi(dl) ot pi(dl) + df(pi(dl)) df ot pi(dl))_i^j
-//     $
-//     $
-//       &- med ||dlp||^2(df(pi(dl)) df ot df + ||df||^2 df ot pi(dl))_i^(j)
-//       \ &+ med ||df||^2(||pi(dl)||^2 pi(dl) ot df + df(pi(dl)) pi(dl) ot pi(dl))_i^(j)
-//       \ &+ med ((1+df(pi(dl)))^2+||df||^2||dlp||^2)||dl||^2(df ot df)_i^j
-//       \ &- med (1+df(pi(dl)))(||df||^2 pi(dl) ot df + df(pi(dl)) df ot df)_(i)^j||dl||^2
-//       \ &- med ||dlp||^2||df||^2||dl||^2(df ot df)^(k j)
-//       \ &+ med ||df||^2||dl||^2(df(pi(dl)))(pi(dl) ot df)^(k j)
-//
-//       \ =& ((1+df(pi(dl)))^2+||df||^2||dlp||^2)delta_i^j
-//       \ &+(-||dlp||^2-||pi(dl)||^2-df(pi(dl))||pi(dl)||^2 -||dlp||^2df(pi(dl))
-//       \ &+med||dl||^2+2df(pi(dl))||dl||^2 + df(pi(dl))^2||dl||^2+||dl||^2||df|^2||dlp||^2
-//       \ &- med||dl||^2df(pi(dl)) - ||dl||^2 (df(pi(dl)))^2 - ||dlp||^2||df||^2||dl||^2) (df ot df)_i^j
-//       \ &+ med(-1-df(pi(dl))+(1+df(pi(dl)))^2+||df||^2||dlp||^2 - med df(pi(dl)) 
-//       \ &-med df(pi(dl))^2+||df||^2||pi(dl)||^2 - med (1+df(pi(dl)))||df||^2||dl||^2
-//       \ &+med||df||^2||dl||^2 df(pi(dl)))(pi(dl) ot df)_i^j
-//       \ &+med(-1 - df(pi(dl))+1+2df(pi(dl))+df(pi(dl))^2+||df||^2||dlp||^2
-//       \ &-med df(pi(dl)) - df(pi(dl))^2 - ||dlp||^2||df||^2)(df ot pi(dl))_i^j
-//       \ &+ med (||df||^2 - (1+df(pi(dl)))||df||^2 + ||df||^2 df(pi(dl))) (pi(dl) ot pi(dl))_i^(j)
-//       \ =& ((1+df(pi(dl)))^2+||df||^2||dlp||^2)delta_i^j = det(g) delta_i^j
-//     $
-//   ]
+
+Now that we showed short-time existence we can use @cor-u_const_bound along with @cor-derivative_bound to get that as long as $T <= T_0$
+$
+  ||nabla f|| < epsilon
+$
+for all $t in [0,T)$. This along with @thrm-nash_moser gives us estimates on $||nabla f||_(C^(1+r))$ which then together with @thrm-pde_short_time gives us a stronger existence statement.
+#corollary[
+  For any star-shaped hypersurface $M_0$, the normal flow with velocity $n phi - H u$ with initial condition $M_0$ exists on $[0,T_0]$.
+]
+#proof[
+  We will again first pass to the function space and consider the evolution of the graph of the function $f$. Existence on $[0,T_0)$ is immediate by @thrm-pde_short_time along with @thrm-nash_moser. Then to get existence at $t = T_0$ we will take a sequence $t_n -> T_0$ with $f(t, dot) -> g$ and use Arzelà–Ascoli Theorem to prove $g$ is smooth. Continuity of $f$ in $t$ then implies that $g$ is independent of choice of $t$.
+
+  To use Arzelà–Ascoli like this, we will need uniform bounds on all derivatives of $f$, here we will use @thrm-pde_short_time once again. Note that by @thrm-pde_short_time we get that
+  $
+    ||f(t, dot)||_(C^(2+r)) <= B(||f(t,dot)||_(C^(1+r)))
+  $
+  and so by setting $r' = 1+r$ we can repeat this process to get bounds on higher and higher derivatives of $f$, which completes the proof.
+]
+
+We now know that the flow survives until $t = T_0$. When the flow reaches this point we stop it and change the flow by removing the tangential component $X^top$ entirely, only leaving $X^perp$. With this simpler flow Li and Pan @jiayuIsoperimetricProblemRiemannian2023a showed that $u$ is uniformly bounded from below for _all_ time and thus our results prove that the flow exists for all $t in [0,infinity)$.
+
+We now want to show that the limit of this flow is precisely an integral hypersurface of $X^perp$, to do this we will again use a trick where we take a limit of an entire interval of our flow.
+To be more precise assume that $F: M times [0, infinity) -> N$ solves the flow, then consider the functions $F_n : M times [0,1] -> N$ defined by
+$
+  F_n (t, p) = F(n+t, p).
+$
+These are all solutions to the flow and by Arzelà–Ascoli we can, after passing to a subsequence, get that
+$
+  F_n -> F_(infinity)
+$
+for some function $F_(infinity) : M times [0,1] -> N$ which is also a solution to the flow.
+
+#proposition[
+  If $Q$ is a positive continuous geometric property of an embedding $F : M -> N$ such that $Q(F(t, dot))$ is non-increasing, then $Q(F_infinity (t, dot))$ is constant on $[0,1]$.
+]<prop-const_geometry>
+#proof[
+  Since for any $t in [0,1]$ the sequence $Q(F_n (t, dot))$ is positive non increasing and thus its limit exists. Hence we have
+  $
+    Q(F_infinity (t, dot)) = lim_(n -> infinity) Q(F_n (t,dot))
+  $
+  which after plugging in $t = 0,1$ gives us
+  $
+    Q(F_infinity (0, dot)) = lim_(n -> infinity) Q(F_n (0,dot))
+    = lim_(n -> infinity) Q(F(n,dot)),
+    \
+    Q(F_infinity (1, dot)) = lim_(n -> infinity) Q(F_n (1,dot))
+    = lim_(n -> infinity) Q(F(n+1,dot)),
+  $
+  which immediately gives us that $Q(F_infinity (0, dot)) = Q(F_infinity (1, dot))$. But now $Q$ is non-increasing along the flow and thus $Q(F_infinity (t, dot))$ is constant.
+]
+
+We now first apply this to the surface area $A(M_t)$. Since it is clearly continuous and non-increasing by @prop-vol_area_specific_flow, the above proposition implies that $F_infinity (t, dot)$ has constant surface area. Due to the variation formula for surface area we get that
+$
+  0 = integral_(M) = n/(n-1) integral_M u(ov(Ric)(cal(N)^perp,cal(N)^perp) - ov(Ric)(nu,nu)) dif S - 1/n integral_M u sum_(i < j) (kappa_i - kappa_j)^2 dif S
+$
+and so we get that $kappa_i = kappa_j$ for all $i,j$ and so $F_infinity (t, dot)$ is totally umbilical. Secondly we get that $ov(Ric)(cal(N)^perp, cal(N)^perp) = ov(Ric)(nu,nu)$, this is important due to the following lemma.
+#lemma[
+  Let $S$ be a symmetric bilinear form and $ip(dot,dot)$ an inner product on a vector space $V$. If $X$ is a unit vector with respect to $ip(dot,dot)$ such that $S(X,X)$ is minimal/maximal among all other such unit vectors, then $X$ is an eigenvalue of
+  $
+    T(S(X, dot))
+  $
+  where $T$ is the isomorphism $V^* -> V$ induced by $ip(dot,dot)$.
+]
+#proof[
+  Since $S$ is symmetric bilinear it has a basis of eigenvectors $e_i$ that is orthonormal with respect to $ip(dot,dot)$. Let $lambda_i$ be their eigenvalues which we can assume are ordered in increasing order. For all unit vectors $v = a_1 e_1 + ... + a_n e_n$ we have
+  $
+    ip(v,v) = a_1^2 + a_2^2 + ... + a_n^2 = 1
+  $
+  and we also have
+  $
+    S(v,v) = lambda_1 a_1^2 + lambda_2 a_2^2 + ... + lambda_n a_n^2
+    <= lambda_n a_1^2 + lambda_n a_2^2 + ... + lambda_n a_n^2
+    = lambda_n
+  $
+  and so since $S(e_n, e_n) = lambda_n$ we have that $e_n$ is a unit vector with $S(e_n,e_n)$ maximal.
+  Now assume that $v$ is another unit vector with $S(v,v)$ also maximal, then we must have $S(v,v) = lambda_n$ and so since
+  $
+    lambda_n = S(v,v) = lambda_1 a_1^2 + lambda_2 a_2^2 + ... + lambda_n a_n^2 = lambda_n + (lambda_1 - lambda_n) a_1 ^2 + ... + (lambda_(n - 1) - lambda_n) a_(n-1)^2
+  $
+  and since we know that $lambda_(i) - lambda_n$ is always negative and $a_(i)^2$ always positive, we must have that for each $i < n$, either $lambda_i = lambda_n$ or $a_i = 0$. We thus have that $v$ can be written as a sum of eigenvectors all with eigenvalue $lambda_n$ and thus $v$ is itself also an eigenvector.
+]
+
+Applying this lemma to our situation we get that $nu$ is an eigenvector of the Ricci tensor since it is symmetric bilinear.
+We can use this along with @lemma-codazzi to get that
+$
+  0 = ov(Ric)(nu, e_i) = ov(Rm)(e_i,e_j,e_j,nu)
+  = - (nabla_i h)(e_j,e_j) + (nabla_j h)(e_i,e_j)
+$
+Now since $F_infinity (t, dot)$ is totally umbilical we know that $h = H/n g_(i j)$ and so we have
+$
+  nabla_k h = (nabla_k H)/n g_(i j)
+$
+which when plugged into the equation above gives us
+$
+  0 &= - (nabla_i h)(e_j,e_j) + (nabla_j h)(e_i,e_j)
+  = - (nabla_i H)/n ip(e_j, e_j) + (nabla_j H)/n ip(e_i, e_j)
+  = - nabla_i H + (nabla_i H)/n
+  \ &= - nabla_i H (n-1)/n
+$
+and so $nabla H = 0$ so we get that $H$ is constant along $F_infinity (t, dot)$ (though not necessarily constant in time).
+
+Next we get apply @prop-const_geometry to $max_M lambda$, this is also a non-increasing quantity due to @prop-lambda_evolution and is continuous so this is valid, and so we get that $max_M lambda(F_infinity (t, dot))$ is constant on $[0,1]$.
+#proposition[
+  At $t = 1/2$ there is at least one maximal point which is stationary, that is we have a point $p$ with $diff_t lambda(t,p) = 0$ and $lambda(1/2,p) = max_M lambda(F_infinity (1/2, p))$.
+]
+#proof[
+  For brevity we will write $lambda_max(t) := max_M lambda(F_infinity (t, p))$.
+  We prove by contrapositive, assume that there are no stationary maximal points, if any maximal point $p$ satisfies
+  $
+    diff_t lambda(1/2,p) > 0
+  $
+  then we have
+  $
+    lambda_max (1/2+h)
+    >=
+    lambda(1/2+h, p)
+    =
+    lambda(1/2,p) + h (diff_t lambda(1/2,p)) + O(h^2)
+  $
+  and so for small enough $h > 0$ we get that $lambda_max (t)$ is not constant.
+
+  Otherwise we have that $diff_t lambda(1/2, p) < 0$ for all maximal points $p$ let $S$ denote the set of all maximum points, since $S$ is the preimage of $lambda_max (1/2)$ under a continuous function it is closed and thus compact in $M$. Hence there is positive $epsilon$ such that $diff_t lambda(1/2, dot) < -epsilon$ on $S$. We can now define the open set
+  $
+    U := (lambda(1/2, dot))^(-1) ((lambda_max (1/2) - epsilon, lambda_max (1/2) + epsilon))
+  $
+  which is clearly a neighborhood of $S$. Now the set $M backslash U$ is closed, hence compact, hence on it $lambda(1/2, dot)$ achieves a maximum. But this maximum cannot be $lambda_max (1/2)$ since this set does not contain $S$ and so on $M backslash U$ we have that $lambda(1/2, dot) < lambda_max (1/2) - epsilon'$ for some positive $epsilon' > 0$ and also on $M backslash U$ we have $diff_t lambda(1/2, dot) < B$ for some large positive $B$. But then we get that for $t = 1/2 + h$ we have
+  $
+    lambda(1 / 2 + h, p) <= cases(
+      lambda_max (1/2) - h epsilon + O(h^2) : p in U,
+      lambda_max (1/2) - epsilon' + B h : p in M backslash U
+    )
+  $
+  and so by picking small enough positive $h$ we get that
+  $
+    lambda(1/2 + h, p) < lambda_max (1/2)
+  $
+  everywhere and so we again get that $lambda_max (t)$ is not constant.
+
+  By contrapositive we get that since it is constant at least one stationary maximal point exists.
+]
+
+Now at a stationary maximal point we know that
+$
+  0 = diff_t lambda(t, p) = 2 (n phi - H u) Lambda u
+$
+and so since $Lambda$ and $u$ are positive we must have that $n phi - H u = 0$. Now again, at a maximum point, we know that $nu$ is colinear with the gradient of $lambda$ and so $nu = cal(N)^perp$ and so $u = ||X^perp||$. This then gives us that
+$
+  0 = n phi - H u = n phi - H||X^perp||= phi (n - H(||X^perp||)/phi)
+  = phi (n - H lambda^(1/2))
+$
+and so since $phi$ is positive we get that $n - H lambda^(1/2) = 0$ and thus $H = n lambda^(-1/2)$ at a stationary maximal point. But now we recall that $H$ is constant along $M$ for any fixed time and so at $t = 1/2$ we get that
+$
+  H = n (lambda_max)^(-1/2).
+$
+
+We can now calculate that at any point $p$ of $M$ at $t = 1/2$ we have
+$
+  n phi - H u >= n phi - n (lambda_max)^(-1/2)||X^perp||||nu||
+  = n phi (1 - (lambda/lambda_max)^(1/2)).
+$
+and so the speed function is nowhere negative. But now by @lemma-integral_identities we get that
+$
+  integral_M (n phi - H u) dif S = 0
+$
+and so since it is nowhere negative the speed function must be everywhere zero and so we must have $lambda = lambda_max$ on all of $M$. Since $lambda_min$ is also constant on $[0,1]$ we get that $lambda$ is constant on all of $M$ for all time $[0,1]$ and thus the limit of the flow is an integral hypersurface of $X^perp$.
+
 #pagebreak(weak: true)
 
 
-#bibliography("Thesis.bib", style: "springer-mathphys")
+#bibliography("Thesis.bib", style: "bib-style.csl")
 
 
 // TODO: CHECK ALL INNER PRODUCTS
