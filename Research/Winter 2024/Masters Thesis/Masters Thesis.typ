@@ -203,7 +203,7 @@ which proves the claim.
 Finally for #link(<prop-h_laplace>)[(d)], we have
 $
     ov(Delta) f
-  & = ip(ov(nabla)_i ov(nabla) f, e_i) + ip(ov(nabla)_nu ov(nabla), nu)
+  & = ip(ov(nabla)_i ov(nabla) f, e_i) + ip(ov(nabla)_nu ov(nabla) f, nu)
   = ov(nabla)_i ip(ov(nabla) f, e_i) - ip(ov(nabla) f, ov(nabla)_i e_i) + ip(ov(nabla)_nu ov(nabla), nu)
   \ & = nabla_i ip(nabla f, e_i) - ip(ov(nabla) f, -H nu) + ip(ov(nabla)_nu ov(nabla), nu)
   \ & = Delta f + H nu(f) + ip(ov(nabla)_nu ov(nabla), nu)
