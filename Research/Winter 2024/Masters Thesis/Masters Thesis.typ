@@ -55,6 +55,9 @@ Cette thèse vise à couvrir de manière générale le sujet des flots géométr
 
 L'un des plus grands défis souvent abordés par les flots de courbures moyennes est le problème isopérimétrique. Ce problème demande de classer les espaces qui minimisent le périmètre pour un volume donné (d'où le nom). La première utilisation des flots de courbures moyennes pour attaquer ce problème remonte à Huisken en 1984 @huiskenFlowMeanCurvature1984, qui l'a prouvé dans le cas des frontières de domaines convexes dans l'espace euclidien. Depuis lors, des tentatives ont été faites pour pousser ses méthodes plus loin. Plus récemment, en 2013, Guan et Li @guanMeanCurvatureType2013 ont construit un nouveau flot normalisé qui leur a permis de prouver l'inégalité dans le cas de frontières de domaines en forme d'étoile dans les formes spatiales. Peu de temps après, en 2018, Guan, Li et Wang ont poussé ce flot encore plus loin, ce qui leur a permis de prouver le résultat dans une certaine classe d'espaces de produits déformés @guanVolumePreservingFlow2018.
 
+Puis, simultanément à la rédaction de cette thèse, Li et Pan ont reformulé la technique en termes de champs vectoriels conformes, ce qui leur a permis de relâcher les hypothèses sur l'espace ambiant @jiayuIsoperimetricProblemRiemannian2023.
+
+Cette thèse poursuit l'effort d'utiliser de tels écoulements, avec mon collaborateur Joshua Flynn, nous avons poussé le flot encore plus loin, nous permettant de relâcher encore davantage les hypothèses sur l'espace ambiant et même affaiblir l'hypothèse de domaines en forme d'étoile, qui était cruciale pour tous les résultats précédents.
 #pagebreak(weak:true)
 = Acknowledgements
 First I would like to thank my supervisor, Professor Pengfei Guan, for his regular assistance both before and after the start of my Masters program. He was always there to help me understand concepts I would otherwise spend weeks grappling with.
