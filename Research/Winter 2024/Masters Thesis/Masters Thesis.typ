@@ -64,7 +64,7 @@ First I would like to thank my supervisor, Professor Pengfei Guan, for his regul
 
 Secondly, I would like to thank my collaborator, Doctor Joshua Flynn, without whom this project would have never happened. Bouncing ideas off one another was one of the best parts of my Masters.
 
-I would also like my good friends Sammir Rahman, William Holman-Bissegger, Jenny Xu, Dao-Chen Yuan, Viet Nguyen, Margaret Zhou, Tiffany Yong, Sam Zeitler, Bart Syroka, Jessie Meanwell, Aaron Shalev, Michael Cimino as well as the whole of the graduate community at McGill, for making my year at McGill the best year of my life.
+I would also like to thank my good friends Sammir Rahman, William Holman-Bissegger, Jenny Xu, Dao-Chen Yuan, Viet Nguyen, Margaret Zhou, Tiffany Yong, Sam Zeitler, Bart Syroka, Jessie Meanwell, Aaron Shalev, Michael Cimino as well as the whole of the graduate community at McGill, for making my year at McGill the best year of my life.
 
 Finally I would like to thank my family, and especially my mom, for always being there to help and support me whenever I would feel down and lost.
 
