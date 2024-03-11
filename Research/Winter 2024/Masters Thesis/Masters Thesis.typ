@@ -231,7 +231,7 @@ We will also need another well known geometric identity,
   See @petersenRiemannianGeometry2016[p.~93], note that some references have a similar equation of opposite sign due to a difference in defining the second fundamental form.
 ]
 
-== Conformal vector fields
+== Conformal Vector Fields
 A conformal vector field is a vector field $X$ with the property that $lie_X ov(g) = 2 phi g$, where $phi$ is any smooth function called the _conformal factor_ of $X$. The Lie derivative is a little hard to work with for our purposes so we will follow the calculations of @deshmukhGeometryConformalVector2017 to obtain better formulations for the properties of conformal vector fields
 
 #proposition[
