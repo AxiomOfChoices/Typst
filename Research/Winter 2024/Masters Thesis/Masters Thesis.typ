@@ -1720,6 +1720,7 @@ Now we can start to analyse this evolution equation to get results about $u$.
 ]
 
 Now that we can bound $u$ using $H$, we just need to show that $H$ grows sufficiently slowly, to guarantee the flow exists until $t = T_0$.
+#pagebreak(weak: true)
 == Evolution Equation for $H$
 #proposition[
   The evolution equation for $H$ is
