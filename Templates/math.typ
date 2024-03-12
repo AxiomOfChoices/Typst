@@ -34,6 +34,7 @@
 #let div = math.op("div")
 #let tp = math.op("tp")
 #let Aut = math.op("Aut")
+#let Age = math.op("Age")
 #let SH = math.op("SH")
 #let Sc = math.op("Sc")
 #let span = math.op("Span")
@@ -59,7 +60,6 @@
 #let claim = thmbox(
   "claim",            // Lemmas use the same counter as Theorems
   "Claim",
-  base: "theorem",
   fill: rgb("#ffefe6")
 )
 #let proposition = thmbox(

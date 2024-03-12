@@ -1702,9 +1702,9 @@ Now to prove the theorem.
 
   $mM$ is called _universal_ if it is $|mM|$-universal.
 
-  $mM$ is $< alpha_0$-universal if for every $n$, $mM$ realizes all types in $S_n^(Th(mM)) (nothing)$.
+  $mM$ is $< aleph_0$-universal if for every $n$, $mM$ realizes all types in $S_n^(Th(mM)) (nothing)$.
 ]
-
+// TODO: ADD CLARIFICATION HERE
 #theorem[
   If $mM$ is $kappa$-saturated then $mM$ is $kappa$-homogeneous and $kappa$-universal.
 ]
@@ -1714,3 +1714,68 @@ Now to prove the theorem.
   For $kappa$-universality we let $mN equiv mM$, and $||mN|| <= kappa$. \ Then we enumerate $mN = {a_alpha : alpha < kappa}$, and we construct $f(a_alpha)$ by induction. We set $p = tp(a_alpha quo { a_beta : beta < alpha })$ and then $q = f(p)$ and so we just set $f(a_alpha)$ to be any element which realizes $q$.
 ]
 // TODO: MAKE ALL THESE PROOFS CLEARER
+
+#theorem[
+  If $mM$ is $kappa$-homogeneous and $< aleph_0$-universal then $mM$ is $kappa$-saturated.
+]
+#proof[
+  Let $A seq mM$ with $|A| < kappa$, let $p in S(A)$, we want to show that $p(M) != nothing$, we prove this by induction on $|A|$.
+
+  // TODO: ADD REFERENCE TO EXTENSION
+  First assume that $|A|$ is finite, then let $mN$ be an extension $mM elm mN$ which realizes the type $p$ through some element $b$. Then consider the type $q = tp^mN (A union b)$, by $< aleph_0$ universality we get that $mM$ realizes $q$ through some set $A'$ and element $b'$. But then by homogeneity since $A$ and $A'$ have the same type we can map $A',b'$ to inside $mM$ so that the image of $A'$ is $A$. But then the image of $b'$ realizes $p$ so we are done. 
+
+  Next we use induction, assume that the statement holds for all $A'$ with $|A'| < mu$, we want to show it holds for $|A| = mu$. Enumerate ${ a_alpha : alpha < mu}$, then let $p_0$ be all the formulas in $p$ that do not use any of the constants in $A$. Since $mM$ realizes $p_0$ let $b$ be a witness $p_0$, let $mN$ again be an extension of $mM$ which realizes $p$ with $b'$ as a witness.
+
+// TODO: FIX B AND B' IN THIS PROOF.
+  Now $b$ and $b'$ have the same type, so if we consider $tp^mN(a_0 quo b')$ we can replace $b'$ by $b$ in every formula and obtain a type over $b$ in $mM$, by inductive hypothesis this type will be witnessed by an element $a'_0$ in $mM$. We then repeat this by induction, assuming we found $a'_beta$ for $beta < alpha$, then we can consider the type $tp^mN (a_alpha quo a_(< alpha) b')$, we again replace $a_(< alpha) b'$ in the parameters by $a'_(< alpha) b$ and then we get the element $a'_alpha$ in $mM$.
+
+  We thus obtain $A' = {a'_alpha : alpha < mu}$ such that $b$ satisfies the same formula over $A'$ as $b'$ satisfies over $A$. We then can use homogeneity to map $A',b$ into $mM$ so that the image of $A$ is $A'$, then the image of $b$ is a witness to type $p$. 
+]
+
+== Fraïssé Theory
+#definition[
+  Let $mM$ be a countable structure in a countable language $L$. The $Age(mM)$ is the family of finitely generated submodels of $mM$. Alternatively $Age(mM)$ is the set of Isomorphism classes of finitely generated $L$-models that can be embedded into $mM$.
+]
+#proposition[
+  + Hereditary Property (HP) - If $A in Age(mM)$ and $B$ embeds into $A$ then $B in Age(mM)$.
+  + Joint Embedding Property (JEP) - If $A,B in Age(mM)$ then there exists $C in Age(mM)$, such that $A,B$ both embed into $C$. 
+]
+#proof[
+  // TODO: FINISH
+  Exercise.
+]
+
+#proposition[
+  Let $K$ be a countable class of finitely generated $L$-structures, if $K$ satisfies HP and JEP as above, then $K = Age(mM)$ for some countable model $mM$.
+]
+#proof[
+  Enumerate $K = {B_1,B_2,...}$. By induction construct a sequence $A_n in K$ such that $A_1 seq A_2 seq ...$ as follows. Start with $A_0 = B_0$, now given $A_n$ we let $A_(n + 1) in K$ be an element such that $A_n,B_n$ both embed into $A_(n+1)$. Now at the end we take $mM = union.big_(n=1)^infinity A_n$.
+
+  It is clear that $Age(mM)$ is contained in $K$ since every finitely generated submodel of $mM$ is a submodel of some $A_n$ and thus is in $K$. On the other hand for each $B_i in K$ then it embeds into $A_(i + 1)$ and thus into $mM$. 
+]
+
+#definition[
+  // TODO: ADD COMMUTATIVE DIAGRAM
+  A class $K$ has the amalgamation property (AP) if for every $A,B,C in K$ such that $A$ embeds into both $B$ and $C$, then there exists a $D in K$ such that $B$ embeds into $D$ and $C$ embeds into $D$.
+  $D$ is sometimes called an amalgam of $B,C$ over $A$.
+]
+
+#definition[
+  A countable structure $mM$ is called _ultrahomogeneous_ if every partial isomorphism $A -> B$ between finitely generated substructures $A,B seq mM$ extends to an automorphism $mM -> mM$.
+]
+
+#proposition[
+  If $mM$ is an ultrahomogeneous then $Age(mM)$ satisfies AP.
+]
+#proof[
+  Exercise.
+]
+It turns out that the converse to this result is also true.
+#theorem("Fraïssé")[
+  If $K$ satisfies HP, JEP then there exists a unique ultrahomogeneous $mM$ such that $K = Age(mM)$.
+  This is often denoted as $M = lim K$.
+]
+Before we start with the proof we need to introduce a bit of theory.
+#definition[
+  A structure $mM$ is weakly homogeneous, if for all finitely generated $A,B seq mM$ with $A seq B$ and all embeddings $f : A -> mM$ we have an extension $g : B -> mM$.
+]
