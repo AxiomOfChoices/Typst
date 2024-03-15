@@ -678,9 +678,17 @@ We have one final evolution equation to find, and that is the one for the second
 ]
 
 #pagebreak(weak: true)
-= The Geometric Flow Method
+= Constrained Geometric Flow Method
+
 With the preliminaries out of the way we can begin to discuss how we can attempt to attack the Isoperimetric problem. This is formalized in the *flow method*.
-#theorem[
+
+// TODO: ADD GAGE HAMILTON
+This method was first used by Gage and Hamilton in their curve shortening flow in $RR^2$. Then in 1984 Huisken extended these methods to the case of convex $RR^n$ hypersurfaces.
+
+Most recently Guan, Li and Wang used instead the *constrained flow method* to relax the convexity requirement to star-shapedness.
+
+This constrained method highly depends on the #link(<lemma-integral_identities>)[Minkowski Identities] which allows us to get a handle on the change in area and in volume along a special class of flows.
+#theorem("Constrained Flow Method")[
   Consider two classes of admissable hypersurfaces $cal(Z),cal(P)$ such that the following conditions hold.
   + For each hypersurface $M in cal(Z)$ we can define a flow $M_t$ which exists for all time.
   + $V(M_t)$ is constant and $A(M_t)$ is non-decreasing.
@@ -1003,7 +1011,7 @@ We can also rewrite some of the Riemann and Ricci curvatures of the ambient mani
     ip(ov(nabla)_i (-(ip(ov(e)_j, X) ov(nabla)||X||)/(||X||^2)) - ov(nabla)_j (-(ip(ov(e)_i, X) ov(nabla)||X||)/(||X||^2)), ov(e)_k)
     \ &=
     - ov(nabla)_i ((ip(ov(e)_j, X))/(||X||^2)) ov(e)_k (||X||) + ov(nabla)_j ((ip(ov(e)_i, X))/(||X||^2)) ov(e)_k (||X||)
-    \ &-(ip(ov(e)_j, X))/(||X||^2) ip(ov(nabla)_i ov(nabla) ||X||, ov(e)_k) + (ip(ov(e)_i, X))/(||X||^2) ip(ov(nabla)_j ov(nabla) ||X||, ov(e)_k).
+    \ &-(ip(ov(e)_j, X))/(||X||^2) ip(ov(nabla)_i ov(nabla)||X||, ov(e)_k) + (ip(ov(e)_i, X))/(||X||^2) ip(ov(nabla)_j ov(nabla)||X||, ov(e)_k).
   $
   Now let us deal with the first two terms, expanding gives us
   $
@@ -1290,7 +1298,7 @@ The first result we will prove is arguably the most important result, as it will
   $
     diff_t lambda &= (n phi - H u) ov(nabla)_nu lambda 
     = (n phi - H u) ip(nu, ov(nabla) lambda)
-    = (n phi - H u) 2 Lambda (nu, X^perp)
+    = (n phi - H u) 2 Lambda ip(nu, X^perp)
     \ &= 2 (n phi - H u) Lambda u^perp.
   $
   For the induced Laplacian we get
@@ -1415,7 +1423,7 @@ This next evolution is nearly as important, our parabolic operator has a $u$ fac
     nabla_i (ip(psi^perp (e_i), nu))
     &=
     ((ov(nabla)_i 2 AntiSym(ov(nabla)phi^flat times.circle X^(perp flat)))(e_i,nu))/(phi) -
-    ip(psi^perp (e_i), nu) (ov(nabla)_i phi)/phi.
+    ip(psi^perp (e_i), nu) (ov(nabla)_i phi)/phi. wide
   $ <u_perp_step_2>
   Now we can compute the covariant derivative of the anti-symmetrization
   $
