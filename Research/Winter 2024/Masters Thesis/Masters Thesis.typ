@@ -49,6 +49,7 @@ Then, concurrently with the writing of this thesis, Li and Pan reframed the tech
 
 This thesis continues the effort to use such flows, together with my collaborator Joshua Flynn we pushed the flow even further, allowing us to weaken the assumptions on the ambient space even further and even weaken the star-shapedness assumption, which was key to all previous results.
 
+
 #pagebreak(weak:true)
 = Abrégé
 Cette thèse vise à couvrir de manière générale le sujet des flots géométriques, et plus spécifiquement une variante du flot de courbure moyenne. Le domaine des flots géométriques utilise des résultats de la théorie des équations aux dérivées partielles (EDP), plus précisément des EDP paraboliques, pour obtenir de nouvelles perspectives sur la géométrie riemannienne.
@@ -80,7 +81,8 @@ The body of the thesis is largely taken from the paper co-authored by myself and
 
 The Isoperimetric Problem asks a seemingly simple question:\ Among all regions occupying a given volume which has the least perimeter?
 
-In the simple case of 2 and 3 dimensions we all know that the answer is a circle and a sphere respectively, and when we extend it to $n$ dimensions in Euclidean space, the answer remains the $n-1$ dimensional hypersphere. However, if we try to generalize this question to a larger domain the problem very quickly becomes intractable.
+In the simple case of 2 and 3 dimensions we all know that the answer is a circle and a sphere respectively, and when we extend it to $n$ dimensions in Euclidean space, the answer remains the $n-1$ dimensional hypersphere, for a large variety of various proofs in this simple case see @buragoGeometricInequalities1988.
+However, if we try to generalize this question to a more general ambient domain, the problem very quickly becomes intractable.
 
 One of the ways to answer such a question is with the method of geometric flows, we will start with a shape which will likely not be optimal, and then we will morph it over time to make it optimal.
 
@@ -91,7 +93,7 @@ The third chapter introduces a more general setting and extends the results to t
 
 This will all lead to the proof of the following theorem.
 #theorem[
-  Let $N$ be an ambient manifold admitting a conformal vector field $X$ and a foliation $cal(F)$, such that both are compatible (see @head-setting) and satisfy @assum-required. Then the leaves $S_alpha$ of the foliation $cal(F)$ are the Isoperimetric profile of the class of all hypersurfaces satisfying $ip(X,nu) > 0$. // TODO: FINISH THEOREM
+  Let $N$ be an ambient manifold admitting a conformal vector field $X$ and a foliation $cal(F)$, such that both are compatible (see @head-setting) and satisfy @assum-required. Then the leaves $S_alpha$ of the foliation $cal(F)$ are the Isoperimetric profile of the class of all hypersurfaces satisfying $ip(X,nu) > 0$.
 ]<thrm-conclusion>
 
 == Concepts and Notation
@@ -288,7 +290,7 @@ To see why conformal vector fields are so useful in the study of the Isoperimetr
   $
     integral_M (n phi - H u) dif S = 0
   $
-  and 
+  and
   $
     integral_M H (n phi - H u) dif S = n/(n-1) integral_M ov(Ric)(nu, X - u nu) dif S - 1/n integral_M u sum_(i < j) (kappa_i - kappa_j)^2 dif S
   $
@@ -682,10 +684,9 @@ We have one final evolution equation to find, and that is the one for the second
 
 With the preliminaries out of the way we can begin to discuss how we can attempt to attack the Isoperimetric problem. This is formalized in the *flow method*.
 
-// TODO: ADD GAGE HAMILTON
-This method was first used by Gage and Hamilton in their curve shortening flow in $RR^2$. Then in 1984 Huisken extended these methods to the case of convex $RR^n$ hypersurfaces.
+This method was first used by Gage and Hamilton in their curve shortening flow in $RR^2$ @Gage1986. Then in 1984 Huisken extended these methods to the case of convex hypersurfaces in $RR^n$ @huiskenFlowMeanCurvature1984.
 
-Most recently Guan, Li and Wang used instead the *constrained flow method* to relax the convexity requirement to star-shapedness.
+Most recently Guan-Li used instead the *constrained flow method* to relax the convexity requirement to star-shapedness @guanMeanCurvatureType2013.
 
 This constrained method highly depends on the #link(<lemma-integral_identities>)[Minkowski Identities] which allows us to get a handle on the change in area and in volume along a special class of flows.
 #theorem("Constrained Flow Method")[
@@ -2188,4 +2189,3 @@ However, many of the tricks and methodologies used to prove this result are nove
 #bibliography("Thesis.bib", style: "bib-style.csl")
 
 
-// TODO: CHECK ALL INNER PRODUCTS

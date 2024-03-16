@@ -84,6 +84,9 @@
     </layout>
   </citation>
   <bibliography entry-spacing="0" second-field-align="flush">
+    <sort>
+      <key macro="author" names-min="3" names-use-first="3" />
+    </sort>
     <layout>
       <text variable="citation-number" suffix=". "/>
       <text macro="author" suffix=": "/>
