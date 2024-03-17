@@ -43,7 +43,7 @@
 
 
 #let symbol_replacing(doc) ={
-  show sym.emptyset: set text(font: "Fira Sans")
+  show math.equation: set text(features: ("cv01",))
   doc
 }
 #let theorem = thmbox(

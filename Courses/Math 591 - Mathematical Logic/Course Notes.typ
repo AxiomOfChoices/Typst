@@ -905,7 +905,7 @@ We will next show how to construct saturated models, to complete this we will ne
   For every $kappa$, for every $mM$, there exists a model $mN$ with $mN gt.curly mM$ and $mN$ is $kappa$-saturated.
   
   If $kappa$ is _weakly inaccessible_, that is $lambda < kappa => 2^lambda <= kappa$ (note that such cardinals cannot be proved to exist in ZFC) then for every $mM$ with $|mM| <= kappa$ there exists $mN$ with $mN gt.curly mM$ saturated with size $kappa$.
-]
+]<thrm-saturation>
 #proof[
   Assume that $L$ is countable, then $S_n^T (A) <= 2^(|A| + aleph_0)$ by @prop-types_cantor_space. Let $mu = 2^kappa$, note that $cf(mu) > kappa$ by @thrm-Konig.
 
@@ -1765,17 +1765,67 @@ Now to prove the theorem.
 ]
 
 #proposition[
-  If $mM$ is an ultrahomogeneous then $Age(mM)$ satisfies AP.
+  If $mM$ is ultrahomogeneous then $Age(mM)$ satisfies AP.
 ]
 #proof[
   Exercise.
 ]
 It turns out that the converse to this result is also true.
 #theorem("Fraïssé")[
-  If $K$ satisfies HP, JEP then there exists a unique ultrahomogeneous $mM$ such that $K = Age(mM)$.
-  This is often denoted as $M = lim K$.
+  If $K$ satisfies HP, JEP, AP then there exists a unique ultrahomogeneous $mM$ such that $K = Age(mM)$.
+  This is often denoted as $M = lim K$, and called the Fraïssé limit of $K$.
 ]
 Before we start with the proof we need to introduce a bit of theory.
 #definition[
   A structure $mM$ is weakly homogeneous, if for all finitely generated $A,B seq mM$ with $A seq B$ and all embeddings $f : A -> mM$ we have an extension $g : B -> mM$.
 ]
+// TODO: ADD COMMUTATIVE DIAGRAM
+
+#proposition[
+  If $mM$ is ultrahomogeneous then $mM$ is weakly homogeneous.
+]
+#proof[
+  Exercise.
+]
+
+One can notice that the definition of weak homogeneity is ideal for extending back and forth maps, as is confirmed in the next proposition.
+#lemma[
+  For $mM,mN$ weakly homogeneous with $Age(mM) = Age(mN)$, every isomorphism  $f : A -> B$ between finitely generated substructures $A seq mM$, $B seq mN$, extends to a full isomorphism $g : mM -> mN$.
+]<lem-weak_iso_extension>
+#proof[
+  We use back and forth, as usual we will attempt to build a map $f_n : A_n -> B_n$, starting with $f : A -> B$. On even induction steps we try to extend the domain of $f_n$ from $A_n$ to $A_(n+1)$. Notice that $A_(n+1)$ is in $Age(mM)$ and thus by assumption also in $Age(mN)$. Then by weak homogeneity we have that $f_n : A_n -> mN$ extends into $f_n' : A_(n+1) -> mM$, we then call $B_(n+1) = f_n'(A_(n+1))$ and $f_(n+1) = f_n'$.
+
+  On odd steps we do the same thing but swap $mM$ and $mN$.
+]
+
+// TODO: MAKE K BOLD FOR ALL ITS USES.
+#corollary[
+  For $mM$ countable, weakly homogeneous is equivalent to ultrahomogeneous.
+]
+#proof("Fraïssé's Theorem")[
+  Uniqueness is easily shown since ultrahomogeneity implies weak homogeneity which allows us to apply @lem-weak_iso_extension to the empty isomorphism.
+
+  For existence, by the corollary above, it is enough to find a weakly homogeneous countable model $mM$ such that $Age(mM) = K$.
+
+  Enumerate $K = {B_n : n in NN}$, and all pairs of embedding $f_n: B_(k_n) -> B_(ell_n)$. We want to construct a sequence $A_n seq A_(n+1)$ such that $A_n in K$ for all $n$, with the additional property that if we have an embedding $B_(k_n) -> A_m$ for some $m <= n$ then 2we also have an extension $B_(ell_n) -> A_(n+1)$.
+
+  To guarantee this we can use AP. The union of $A_n$ is then the desired structure. // TODO: ADD A COMMUTATIVE DIAGRAM.
+]
+
+== Monster Model
+Let $kappa$ be a big cardinal (not too large, something of the order $2^(display(2)^(display(scripts(dots.up)^display(omega))))$). Ideally we would like a saturated model of size $kappa$, but as we saw in @thrm-saturation this is often quite difficult to achieve. Instead, in practice, we often use a $kappa$-saturated model which is $kappa$-strongly homogeneous.
+
+#theorem[
+  For $kappa >= aleph_0$, $T$ complete and $L$ countable, there exists a model $frak(C) sat T$ which is $kappa$-saturated and $kappa$-strongly homogeneous.
+]
+Before we prove this we will need a tiny lemma.
+#lemma[
+  For all $mN sat T$ there exists an elementary extension $mN elm mN'$, such that
+  - For all $A seq mN$ with $|A| < kappa$ all of $S_(A)$ are realized in $mN'$
+  - For all $f : A -> B$ elementary embedding between two $A,B seq mN$ with $|A|,|B| < ||mN||$, $f$ can be extended to $f' : A' -> B'$ also an elementary embedding with $A union mN seq A'$ and $B union mN seq B'$.
+// TODO: ADD EMBEDDING SYMBOL
+]
+#proof[
+
+]
+

@@ -86,8 +86,8 @@ However, if we try to generalize this question to a more general ambient domain,
 
 One of the ways to answer such a question is with the method of geometric flows, we will start with a shape which will likely not be optimal, and then we will morph it over time to make it optimal.
 
-The Thesis will be split into 3 Chapters, \
-This first chapter will establish all standard theory of Geometric Analysis used in the results of this Thesis. \
+The thesis will be split into 3 Chapters, \
+This first chapter will establish all standard theory of Geometric Analysis used in the results of this thesis. \
 The second chapter will discuss the method of geometric flows to solve the Isoperimetric problem, as well as the geometric setting introduced by Li and Pan in @jiayuIsoperimetricProblemRiemannian2023. \
 The third chapter introduces a more general setting and extends the results to that setting too, first by computing the evolution equations for various geometric quantities and then by proving existence of the flow.
 
