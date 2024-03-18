@@ -12,6 +12,7 @@
     let numbers = counter(heading).at(it.location())
     let display-number = numbering(it.numbering, ..numbers)
     let body = it.body
+    pagebreak(weak: true)
     block([*#body #display-number*])
   }
   doc
