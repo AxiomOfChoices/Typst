@@ -1802,6 +1802,7 @@ One can notice that the definition of weak homogeneity is ideal for extending ba
 #corollary[
   For $mM$ countable, weakly homogeneous is equivalent to ultrahomogeneous.
 ]
+// TODO: ADD LINK TO THEOREM
 #proof("Fraïssé's Theorem")[
   Uniqueness is easily shown since ultrahomogeneity implies weak homogeneity which allows us to apply @lem-weak_iso_extension to the empty isomorphism.
 
@@ -1815,17 +1816,55 @@ One can notice that the definition of weak homogeneity is ideal for extending ba
 == Monster Model
 Let $kappa$ be a big cardinal (not too large, something of the order $2^(display(2)^(display(scripts(dots.up)^display(omega))))$). Ideally we would like a saturated model of size $kappa$, but as we saw in @thrm-saturation this is often quite difficult to achieve. Instead, in practice, we often use a $kappa$-saturated model which is $kappa$-strongly homogeneous.
 
-#theorem[
+#theorem("Monster Model")[
   For $kappa >= aleph_0$, $T$ complete and $L$ countable, there exists a model $frak(C) sat T$ which is $kappa$-saturated and $kappa$-strongly homogeneous.
-]
+]<thrm-monster>
 Before we prove this we will need a tiny lemma.
 #lemma[
   For all $mN sat T$ there exists an elementary extension $mN elm mN'$, such that
-  - For all $A seq mN$ with $|A| < kappa$ all of $S_(A)$ are realized in $mN'$
+  - For all $A seq mN$ with $|A| < kappa$ all of $S(A)$ are realized in $mN'$
   - For all $f : A -> B$ elementary embedding between two $A,B seq mN$ with $|A|,|B| < ||mN||$, $f$ can be extended to $f' : A' -> B'$ also an elementary embedding with $A union mN seq A'$ and $B union mN seq B'$.
 // TODO: ADD EMBEDDING SYMBOL
-]
+]<lem-monster_extension>
 #proof[
+  Let $mu = ||mN||$, then for the first condition we simply pick $mN'$ which is $mu^+$-saturated through @thrm-saturation.
 
+  Now assume that we have an embedding $f : A -> B$, since $mN'$ is $mu$-saturated we can, by a simple inductive argument, construct an extension $g : mN -> mN'$. Now the issue here is that $g(mN)$ might contain $mN$ which is required by the lemma.
+
+  To fix this set $mN_0 = g(mN)$, and construct $h : mN_0 union mN -> mN'$ extending $g^(-1)$. We then can set $A' = h(mN_0 union mN)$ and $B' = mN_0 union mN$. Then $h^(-1) : A' -> B'$ is an extension of $f$ as desired.
 ]
 
+#proof([of @thrm-monster])[
+  We will construct an elementary chain $mN_alpha$ with $alpha < kappa^+$, $mN_alpha sat T$.
+  - $mN_0$ can be arbitrary
+  - For limit $alpha$ we will have $mN_alpha = union.big_(gamma < alpha) mN_gamma$
+  - For $alpha + 1$ we will have $mN_(alpha + 1)$ be the extension of $mN_alpha$ provided by @lem-monster_extension.
+
+  We then set $frak(C) = union.big_(alpha < kappa^+) mN_alpha$, note that since $kappa^+$ is regular then $cf (kappa^+) = kappa^+$.
+
+  Now we check $kappa$-saturation, if $A seq mM$, $|A| < kappa$, $p in S(A)$, we know that $A seq mN_alpha$ for some $alpha$ by regularity of $kappa$. So we also know that $p$ is realized in $mN_(alpha+1)$ and thus since this is an elementary chain $p$ is realized through the same element in $frak(C)$.
+
+  Next we check $kappa$-homogeneity, if $A,B in frak(C)$, $|A|,|B| < kappa$, $f : A -> B$, there is $alpha$ such that $A,B seq mN_alpha$ again by regularity. We then fix $f = f_alpha$ use @lem-monster_extension to extend $f_alpha$ to $f_(alpha+1)$, we repeat this for successor steps and for limit steps we union. We can continue doing this for all $alpha$ to extend $f$ to an automorphism $g : frak(C) -> frak(C)$.
+]
+
+#remark[
+  Since $frak(C)$ has so many automorphisms, it is often useful to consider, for any subset $A seq frak(C)$ with $|A| seq kappa$, the group $Aut(frak(C) quo A)$ consisting of automorphisms of $frak(C)$ that fix $A$. This group naturally acts on $frak(C)^n$.
+
+  One can easily show that for any two tuples $ov(x),ov(y)$, they are in the same orbit of $Aut(frak(C) quo A)$ if and only if $tp(ov(x) quo A) = tp(ov(y) quo A)$.
+  So orbits of $Aut(frak(C) quo A)$ are equivalent to realizations of $S(A)$.
+]
+
+== Indiscernibles
+#definition[
+  Let $(I, <=)$ be a linear order, a set $A = { a_i : i seq I } seq mM$ is called _order-indiscernible_ if for all formulas $ phi (x_1,...,x_n)$ and linear suborders $forall i_i < ... < i_n, j_1 < ... < j_n in I$ we have
+  $
+    mM sat phi(a_(i_1),...,a_(i_n)) <=> mM sat phi(a_(j_1),...,a_(j_n))
+  $
+]
+#example[
+  $D L O_0$ with $A = mM = I = QQ$ is order indiscernible.
+
+  If $K > L$ are algebraically closed fields with $K$ transcendental over $L$, then a transcendental basis of $K$ over $L$ is also an example.
+
+  Any basis of an infinite dimensional vector space.
+]
