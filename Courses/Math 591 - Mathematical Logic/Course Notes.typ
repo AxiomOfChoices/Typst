@@ -1969,5 +1969,159 @@ Before we prove this we will need a tiny lemma.
 ]
 
 #example[
-  $D L O_o$ is not $aleph_0$-stable since $S_1(QQ) tilde.equiv RR$ which has larger cardinality than $aleph_0$. 
+  $D L O_o$ is not $aleph_0$-stable since $S_1(QQ) tilde.equiv RR$ which has larger cardinality than $aleph_0$.
 ]
+
+#theorem[
+  $T$ is totally transcendental if and only if it is $aleph_0$ stable.
+]
+#proof[
+  One direction is obvious, for the other direction we prove by contrapositive. Suppose $T$ is not $kappa$ stable for some $kappa$, that is, there is a model $mM sat T$ with a subset $A seq mM$, $|A| = kappa$ satisfying $|S_1(A)| > kappa$.
+
+  We now want to find a countable subset $A_0 seq A$ such that $S_1 (A_0) >= 2^(aleph_0)$. We will call a formula $phi$ *big* if the neighborhood $[phi] seq S_1 (A)$ has size $|[phi]| > kappa$.
+  #lemma[
+    If $phi$ is big, then there exists $psi$ such that both $phi and psi$ and $phi and (not psi)$ are big.
+  ]
+  #proof[
+    Assume for a contradiction that for each $psi$ either $phi and psi$ or $phi and (not psi)$ are not big, since $phi$ is big the other must be big and then WLOG we can assume $phi and psi$ is small and $phi and (not psi)$ is big.
+
+    We now can write
+    $
+      [phi] = union.big_{psi : phi and psi "is not big"} [phi and not psi] union {p}.
+    $
+    where
+    $
+      p = {phi and psi : phi and psi "is big" } in S_1 (A)
+    $
+    // TODO: JUSTIFY P MORE
+  ]
+  Now using this lemma we can keep splitting $S_1 (A)$ into a tree of formulas $phi_s$ such that at each level all the subsets $[phi_s]$ are big.
+
+  Now let $A_0$ be the set of parameters in the formulas $phi_s$, this set is countable since there are countably many formulas.
+
+  For every branch $x in 2^omega$ we can consider the type we get by putting all the formulas of the branch in a set gives a type which we can complete to get a type in $S_1 (A_0)$. These types are not equal for different branches, and there are $2^(aleph_0)$ many branches so $S_1 (A_0)$ has cardinality at least $2^(aleph_0)$.
+  // TODO: ADD DIAGRAM
+]
+
+== Ranks in Topological Spaces
+#definition[
+  We define the _Cantor-Bendixson derivative_ as $X' = X backslash { "isolated points of" X }$. 
+  We then define $X^(alpha)$ by induction on $alpha$, 
+  - $X^(alpha + 1) = (X^alpha)'$.
+  - $X^gamma = sect.big_(beta < gamma) X^(beta)$.
+]
+// TODO: FIX LONG DEFINITIONS
+#definition[
+  If $X$ is separable then $exists alpha < omega_1$ such that $X^(alpha) = X^(alpha + 1)$.
+  The minimal $alpha$ at which this stabilizes is called the _Cantor-Bendixson rank_, often written as
+  $
+    CB(X) = min {alpha : X^(alpha) = X^(alpha+1)}.
+  $
+  The left over after removing these isolated points is called the _perfect kernel_, written as
+  $
+    X^infinity = sect.big_(alpha < CB(X) + 1) X^(alpha)
+  $
+  and it is, as the name suggests, perfect, as in it does not have any isolated points.
+]
+#definition[
+  As a bit of abuse of notation we also define the function
+  $
+    CB : X -> Ord union {infinity}
+  $
+  as
+  $
+    CB(p) = cases(min(alpha : p in.not X^alpha) &: p in.not X^infinity, infinity &: p in X^infinity)
+  $
+]
+
+#definition[
+  Assume that $X$ is a $0$ dimensional space, that is
+  $
+    Clop(X) = {U seq X : U "is clopen"}
+  $
+  forms a basis.
+
+  We define (again with abuse of notation) $CB : Clop(X) -> Ord union {infinity}$, by induction
+  - $CB(U) >= 0$ if $U != nothing$ and $CB(nothing) = -1$.
+  - $CB(U) >= alpha + 1$ if $forall n$ we can find $V_1,...,V_n$ disjoint clopen subsets of of $U$ with $CB (V_i) >= alpha$.
+  - $CB(U) >= gamma$ if $forall beta < gamma$ we have $CB (U) >= beta$. 
+]
+
+#example[
+  $X = alpha + 1$ for $alpha$ some ordinal, we can define a topology by setting $(gamma, beta]$ to be the open basis.
+
+  Write $alpha$ in its Cantor normal form
+  $
+    alpha = omega^(alpha_0) k_0 + .... + omega^(alpha_ell) k_ell
+  $
+  then $CB(alpha+1) = alpha_0$.
+]
+
+#proposition[
+  For $X$ being $0$-dimensional compact space and $U,V$ clopen subsets.
+
+  + $CB(U) = 0$ if and only if $U$ is finite.
+  + If $U seq V$ then $CB(U) <= CB(V)$.
+  + $CB(U union V) = max { CB(U), CB(V) }$.
+  + $CB (U >= alpha + 1)$ if and only if there is an infinite sequence $V_n seq U$ which is open and disjoint with $CB(V_i) >= alpha$.
+  + If $p in X$ then $CB(p) = min { CB(U) : p in U "with" U "clopen"}$.
+  + $CB(U) = max { CB(p) : p in U }$.
+]<prop-cb_rank_properties>
+#proof[
+  + Exercise.
+  + Exercise.
+  + One direction is clear by 2, for the other we prove by induction that if $CB (U union V) >= alpha$ then either $CB(U) >= alpha$ or $CB(V) >= alpha$, we leave induction step as exercise.
+  + One direction is again clear, for the other we assume that $CB(U) >= alpha + 1$ then we can find two disjoint $U_1, U_2$ clopen subsets of $U$ with $CB(U_1),CB(U_2) >= alpha$. We can then enlarge $U_2$ to $U backslash U_1$ and then by $3$ we know that one of $U_1,U_2$ has $CB(U_i) = alpha + 1$ so we can repeat this splitting again on that $U_i$. Doing this by induction we get a sequence of $U_i$ with $CB(U_i) >= alpha$ as desired.
+  + Exercise.
+  + Exercise.
+]
+
+With these topological preliminaries out of the way we can apply them to Model Theory, namely noticing that $S_n (A)$ for any $A$ is always a $0$-dimensional compact Hausdorff space.
+
+== Morley Rank
+Let $T$ be a complete theory and $mM sat T$ an $aleph_0$-saturated model.
+#definition[
+  We define the _Morley Rank_ as a function
+  $
+    RM : Def_mM(mM) -> Ord union {infinity}
+  $ 
+  where $Def_mM(mM)$ are the definable sets with $mM$ as parameters, we define it through
+  $
+    RM(phi) = CB([phi] sect S_1 (mM))
+  $
+]
+#proposition[
+  + $RM(phi) = 0$ if and only if $phi(mM)$ is finite.
+  + If $phi proves psi$ then $RM(phi) <= RM(psi)$.
+  + $RM(phi or psi) = max(RM(phi), RM(psi))$.
+]
+#proof[
+  Follows from @prop-cb_rank_properties with a little effort, details left as Exercise.
+]
+
+#definition[
+  For a type $p in S_1 (mM)$ we define
+  $
+    RM(p) = min { RM(phi) : phi in p}
+  $
+]
+
+#proposition[
+  $RM(p) = CB(p)$ where we see $p$ as a point in $S_1(mM)$.
+]
+#proof[
+  Directly from @prop-cb_rank_properties point 5.
+]
+
+Since the definitions heavily depend on $mM$ it is natural to ask whether we can say anything about how these properties change when we change the model. In fact we can, and this is formalized in the following proposition.
+#proposition[
+  If $phi$ is a formula with parameters in $mM$, $mM$ is $aleph_0$ saturated and $mM elm mN$ is an $aleph_0$-saturated extension then
+  $
+    RM^mM(phi) = RM^mN(phi)
+  $
+]
+#proof[
+  Exercise on assignment, will add when due date is passed.
+]
+
+By convention we usually define $RM$ inside the Monster Model, since we can easily embed other models into it.
