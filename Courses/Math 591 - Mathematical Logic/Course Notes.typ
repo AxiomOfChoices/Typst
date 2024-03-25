@@ -1974,7 +1974,7 @@ Before we prove this we will need a tiny lemma.
 
 #theorem[
   $T$ is totally transcendental if and only if it is $aleph_0$ stable.
-]
+]<thrm-stable>
 #proof[
   One direction is obvious, for the other direction we prove by contrapositive. Suppose $T$ is not $kappa$ stable for some $kappa$, that is, there is a model $mM sat T$ with a subset $A seq mM$, $|A| = kappa$ satisfying $|S_1(A)| > kappa$.
 
@@ -2005,7 +2005,7 @@ Before we prove this we will need a tiny lemma.
 
 == Ranks in Topological Spaces
 #definition[
-  We define the _Cantor-Bendixson derivative_ as $X' = X backslash { "isolated points of" X }$. 
+  We define the _Cantor-Bendixson derivative_ as $ X' = X backslash { "isolated points of" X }. $
   We then define $X^(alpha)$ by induction on $alpha$, 
   - $X^(alpha + 1) = (X^alpha)'$.
   - $X^gamma = sect.big_(beta < gamma) X^(beta)$.
@@ -2091,7 +2091,7 @@ Let $T$ be a complete theory and $mM sat T$ an $aleph_0$-saturated model.
   $
 ]
 #proposition[
-  + $RM(phi) = 0$ if and only if $phi(mM)$ is finite.
+  + $RM(phi) = 0$ if and only if $phi(mM)$ is finite (we sometimes call this $phi$ being _algebraic_).
   + If $phi proves psi$ then $RM(phi) <= RM(psi)$.
   + $RM(phi or psi) = max(RM(phi), RM(psi))$.
 ]
@@ -2117,7 +2117,7 @@ Since the definitions heavily depend on $mM$ it is natural to ask whether we can
 #proposition[
   If $phi$ is a formula with parameters in $mM$, $mM$ is $aleph_0$ saturated and $mM elm mN$ is an $aleph_0$-saturated extension then
   $
-    RM^mM(phi) = RM^mN(phi)
+    RM^mM (phi) = RM^mN (phi)
   $
 ]
 #proof[
@@ -2125,3 +2125,99 @@ Since the definitions heavily depend on $mM$ it is natural to ask whether we can
 ]
 
 By convention we usually define $RM$ inside the Monster Model, since we can easily embed other models into it.
+
+Notice that we can extend this definition to not complete types, we do this through
+$
+  RM(p) = min {RM(phi) : phi in p}.
+$
+
+#proposition[
+  If $p$ is a type over $A$, then there is a complete $q$ extending $p$ with
+  $
+    RM(p) = RM(q)
+  $
+]
+#proof[
+  We know that $p$ corresponds to a closed set of $S_1(A)$, we then consider the collection of formulas
+  $
+    q_0 = { not phi : RM(p union {phi}) < RM(p)}
+  $
+  one can check that $q_0$ is also a type which extend $p$. //TODO: COMPLETE PROOF THAT IT IS A TYPE.
+
+  Any $q$ completing $q_0$ is an extension of $p$ with correct rank. //TODO: ADD INTUITION HERE.
+]
+
+#theorem[
+  Let $T$ be a complete theory, $T$ is totally transcendental if and only if $RM(x = x) < infinity$.
+]<thrm-rank_well_defined>
+
+#remark[
+  This is actually equivalent to $RM(x = x) < omega_1$, this is left as an exercise.
+]
+#proof([of @thrm-rank_well_defined])[
+  Suppose that $RM(x = x) = infinity$, then there is some ordinal $beta$ such if $RM(phi) > beta$ then $RM(phi) = infinity$ (since we can never have arbitrarily large ranks). // TODO: ADD MORE EXPLANATION HERE.
+
+  We will now construct a tree of formulas $phi_n$ indexed by $n in 2^(< omega)$, we start with $phi_nothing = (x = x)$ and continue by noticing that $RM(phi_nothing) > beta + 1$ implies that we can find two formulas $phi_0$and $phi_1$ with $RM(phi_0),RM(phi_1) > beta$ and hence we also have $RM(phi_0) = RM(phi_1) = infinity$. We then continue this and keep splitting formulas $phi_n$ to get a tree of non empty formulas. 
+
+  Morally the construct of this tree is using the fact that Morally rank 'stabilizes' in a very similar way as Scott rank.
+
+  There are then at least $2^(aleph_0)$ leaves in this tree which correspond to at least $2^(aleph_0)$ types over the set of parameters of all $phi_n$ which is a countable set.
+
+  For the other direction assume that $T$ is not transcendental and that $RM(x = x) < infinity$, then we can construct a similar tree as in the proof of @thrm-stable. Let $alpha = inf (RM(phi_n) : 2^(< omega))$, then if $RM(phi_(n)) = alpha$ then we can expand the tree starting from $phi_n$ to get arbitrarily large collections of disjoint formulas $phi_i$ that each have rank at least $alpha$, this then implies that $RM(phi_n) = alpha + 1$, and so the infimum is actually at least $alpha+1$, which is a contradiction.
+]
+
+#definition[
+  ${ov(a)_i : i in I} seq mM$ is called _indiscernible_, if for any two sequences of tuples $i_1 != ... != i_n seq I$ and $j_1 != ... != j_n seq I$ we have
+  $
+    tp(ov(a)_i_1,...,ov(a)_i_n) = tp(ov(a)_j_1,...,ov(a)_j_n)
+  $
+]
+
+#theorem[
+  If $T$ is stable then every order indiscernible sequence is indiscernible.
+]
+#proof[
+  Let $kappa$ be such that $T$ is $kappa$-stable, then assuming, aiming for a contradiction, that $(a_i : i in I)$ is order indiscernible but not indiscernible. WLOG we may assume that $I$ has a dense subset $J$ of size $kappa$ and that every non-empty interval has size at least $kappa$. // TODO: JUSTIFY THIS THROUGH STRETCHING.
+
+  By assumption we have a finite sequence $1,...,n in I$ (we will write them as integer for simplicity) and a permutation $sigma$ such that
+  $
+    tp(a_1,...,a_n) != tp(a_sigma(1),...,a_sigma(n)),
+  $
+  namely for some formula $phi$ we have
+  $
+    sat phi(a_1,...,a_n) "and" sat not phi(a_sigma(1),...,a_sigma(n))
+  $
+  then by writing $sigma = tau_1 ... tau_m$ where $tau_i$ are each transpositions of consecutive integers, we notice that by considering the partial products $tau_1...tau_j$ we know that at some $j$ $phi$ flips from being true to not true and hence we can reduce this to the case of one such transposition. That is
+  $
+    sat phi(a_1,...,a_(i-1),a_i,a_(i+1),a_(i+2)...,a_n)
+  $
+  and
+  $
+    sat not phi(a_1,...,a_(i-1),a_(i+1),a_(i),a_(i+2)...,a_n).
+  $
+
+  Now let $A = {a_j : j in J} union {a_1,...,a_(i-1),a_(i+2),...,a_n}$, we can now show that for any $i' < i'' in (i, i+1)$ (interval inside the ordering of $I$ not in the integers) we have
+  $
+    tp(a_(i') quo A) != tp(a_(i'') quo A)
+  $
+
+  Let $j in J$ be such that $i' < j < i''$, then consider the formula
+  $
+    chi(x,y) = phi(a_1,...,a_(i-1),x,y,a_(i+2),...,a_n)
+  $
+  then we have by assumption $sat chi(a_i,a_(i+1))$ and $sat not chi(a_(i+1), a_i)$ so by order indiscernibility we have
+  $
+    sat chi(i',j),  sat not chi(i'',j)
+  $
+  // TODO: ADD INTUITION
+]
+
+// TODO: ADD MONSTER MODEL NOTATION.
+
+#proposition[
+  If $X$ is a compact space and $U seq X$ with $CB(U) = alpha$, then there exists $n$ such that if $U_1,...,U_k seq U$ which are disjoint with $CB(U_i) >= alpha$ then $k <= n$.
+]
+#proof[
+  Directly by definition.
+]
+// TODO: MOVE PROPOSITION.

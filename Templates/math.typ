@@ -34,9 +34,11 @@
 #let div = math.op("div")
 #let tp = math.op("tp")
 #let Aut = math.op("Aut")
+#let Rad = math.op("Rad")
 #let CB = math.op("CB")
 #let Ord = math.op("Ord")
 #let Clop = math.op("Clop")
+#let conv = math.op("Conv")
 #let RM = math.op("RM")
 #let Age = math.op("Age")
 #let SH = math.op("SH")
@@ -60,6 +62,11 @@
   "theorem",            // Lemmas use the same counter as Theorems
   "Lemma",
   fill: rgb("#efe6ff")
+)
+#let conjecture = thmbox(
+  "theorem",            // Lemmas use the same counter as Theorems
+  "Conjecture",
+  fill: rgb("#FFBE98")
 )
 #let claim = thmbox(
   "claim",            // Lemmas use the same counter as Theorems
