@@ -2,7 +2,7 @@
 #set document(
   title: "Curriculum Vitae", author: name, keywords: ("Mathematics", "Analysis", "Geometry", "Geometric Analysis"),
 )
-#set text(size: 11pt, font: ("EB Garamond", "Tex Gyre Adventor"))
+#set text(size: 11pt, font: ("EB Garamond"))
 #set page(margin: (x: 1.0in, y: 1.0in), width: 7.5in, height: 9.0in)
 #set par(first-line-indent: 0cm, leading: (0.9 * 0.65em), justify: true)
 
@@ -14,8 +14,12 @@
 #set terms(separator: context(h(1em, weak: true)))
 
 #let tabbed_list = table.with(
-  inset: 0pt, column-gutter: 1em, row-gutter: 1em, stroke: none, columns: 2,
+  inset: 0pt, column-gutter: 1em, row-gutter: 1em, stroke: none, columns: (1.4cm, 1fr)
 )
+
+#show heading: set block(above: 22pt + 1em, below: 4pt + 1em)
+#show heading: set text(font: "Tex Gyre Heros", size: 10pt, weight: "bold", tracking: 0.03em)
+#show heading: it => upper(it)
 
 #let date = datetime.today()
 #let month_year_date = date.display("[month repr:long] [year]")
@@ -37,3 +41,14 @@
 )
 
 = Education
+#tabbed_list(
+  [M.S.], [Mathematics and Statistics],
+  [B.S.], [Honours Mathematics and Computer Science]
+)
+
+= Research Areas
+- Geometric analysis, specifically geometric flows and their application to geometric inequalities.
+
+- Mean Curvature Flow, Ricci Flow.
+
+#bibliography("Preprints.bib", style:"springer-mathphys", full: true, title: "Preprints")
