@@ -18,8 +18,7 @@ doc)
 
 #set page(margin: (x: 2cm, top: 2cm, bottom: 2cm))
 
-= Basic Definitions and Concepts
-== Models and Languages
+= Models and Languages
 #definition[
   A _model_ or _structure_ is a tuple $ mM = (M, (f_i)_(i in I), (R_j)_(j in J), (c_k)_(k in K)) $
   where 
@@ -193,7 +192,7 @@ We extend our definition of interpretation of terms to terms of $L(mM)$ by setti
   - If $sigma$ is of the form $exists x thin phi$ then $mM sat sigma$ if there exists $a in |mM|$ with $mM sat phi(subs(underline(a),x))$. Similarly for $forall x thin phi$.
 ]
 #pagebreak(weak: true)
-== Model equivalences
+= Model equivalences
 #definition[
   Let $mM$ be a model. The _theory_ of $mM$ is defined also
   $
@@ -337,7 +336,7 @@ As an example use we have the following theorem.
   - For any theory $T$ which is complete and consistent, there exists a model $mM$ with $T = Th(mM)$.
 ]
 
-== Categoricity
+= Categoricity
 #definition[
   Let $kappa$ be an infinite cardinal, a theory $T$ is $kappa$-categorical if it has infinitely many models but exactly one model (up to isomorphism) of size $kappa$.
 ]
@@ -476,7 +475,7 @@ We will now use this lemma to prove a slightly weaker statement that will then u
   on the first turn we pick $m_0$ and let Prover map it to some element of $|mN|$. On the second turn we pick the smallest index element of $|mN|$ that has not been picked before and force Prover to map it. We continue this, on odd turns we pick the smallest index element of $|mM|$ that has not been picked before, and on even turns we pick the smallest index element of $|mN|$ that has not been picked before. This essentially forces Prover to use the back-and-forth method. Since every element of both models will eventually be mapped and since Prover has to win this game, the resulting map $union.big_i f_i$ will be an isomorphism between $mM$ and $mN$.
 ]
 
-== Ultrafilters and Ultraproducts
+= Ultrafilters and Ultraproducts
 
 #definition[
   A family $cal(F) seq cal(P)(I)$ is called a filter if it is non empty, does not contain the empty set and satisfies the two conditions 
@@ -661,7 +660,7 @@ This definition is not really satisfying from the point of view of model theory 
 ]
 
 #pagebreak(weak: true)
-== Types and Definable Sets
+= Types and Definable Sets
 We will now develop more tools to use with models, first of these is the *type*, in short, a type is to formulas what a satisfiable theory is to sentences.
 #definition[
   Let $L$ be countable, and $T$ a complete $L$-theory.
@@ -1036,7 +1035,7 @@ We now have a powerful way to think about and use types in proofs.
 ]
 
 Now that we have the tools to omit types, we can use it to characterize the $aleph_0$-categorical theories.
-#theorem("Ryll-Nardzweski")[
+#theorem("Ryll-Nardzewski")[
   Let $T$ be a complete theory over a countable language $L$, the following are equivalent.
   - $T$ is $aleph_0$-categorical.
   - $forall n, S_n^T (nothing)$ is finite.
@@ -1061,7 +1060,7 @@ Now that we have the tools to omit types, we can use it to characterize the $ale
   In $A C F_p$ we have that the type of any irreducible polynomial is isolated while the type of the transcendental number is not isolated.
 ]
 
-== Automorphism groups
+= Automorphism groups
 In algebra for some algebraic structure an important role is played by the automorphism groups of these structures. As model theory is a sort of algebra without algebra we will also use automorphism groups.
 #definition[
   Let $mM$ be a countable structure of a countable language $L$. We define the automorphism group $Aut (mM)$ to be
@@ -1098,7 +1097,7 @@ $Aut(mM)$ acts on $mM^n$ for all $n$, and is in fact a Polish topological group.
   Exercise.
 ]
 
-== Infinite-Ary-Logic and Scott Analysis
+= Infinitary Logic and Scott Analysis
 We now want to take a short look at different types of logic.
 
 $cal(L)_(omega_1,omega)$ is the extension of finite order logic over a countable language $L$, where in formulas we allow infinite countable $or.big, and.big$.
@@ -1258,6 +1257,8 @@ We also have a partial converse to this result.
     mN tilde.eq mM <=> mN equiv_alpha mM
   $
 ]
+// TODO: FIX CHAPTERS
+// TODO: FIX Lowenheim-Skolem NAME
 
 However, with a bit of trickery, we can define a sentence which does uniquely classify our countable model.
 #definition[
@@ -1300,7 +1301,7 @@ However, with a bit of trickery, we can define a sentence which does uniquely cl
   This describes how we do the odd steps, on even steps we just swap $mN$ and $mM$.
 ]
 
-== Quantifier Elimination
+= Quantifier Elimination
 #definition[
   A theory $T$ has _quantifier elimination_, if for every formula $phi(ov(x))$ there exists a quantifier free formula $psi(ov(x))$ such that
   $
@@ -1443,7 +1444,7 @@ What we see in this proof is that quantifier elimination is intimately related t
 ]
 
 #pagebreak(weak: true)
-== Algebraic Geometry
+= Algebraic Geometry
 Now that we have quantifier elimination of $A C F_p$ we can use that to very quickly prove the foundations of algebraic geometry
 #theorem("Lefchetz's principle")[
   Let $sigma$ be a sentence in the language of fields. TFAE
@@ -1637,14 +1638,11 @@ We can now prove the strong form of @cor-weak_null
   then since $p(ov(x))$ is definable over $K$ subset of $K^m$. Since the theory of $K$ has quantifier elimination, $p(ov(x))$ is definable by a quantifier free formula and thus is constructible.
 ]
 
-== Homogeneous Structures
+= Homogeneous Structures
 #definition[
   $mM$ is $kappa$-_homogeneous_ if for every subset $A seq mM$ with $|A| < kappa$, every elementary embedding $f : A -> mM$ and every element $a in mM$ there is an extension $g : A union {a} -> mM$ which is also an elementary embedding.
 
   $mM$ is called _homogeneous_ if it is $|mM|$-homogeneous. $mM$ is _strongly_ $kappa$-_homogeneous_ if we have an extension $g : mM -> mM$ of $f$ instead.
-]
-#remark[
-  Sometimes strong homogeneity is called ultra homogeneity.
 ]
 
 One might wonder why we do not similarly define $mM$ to be strongly homogeneous if it is strongly $|mM|$-homogeneous. This is explained by the following proposition.
@@ -1732,7 +1730,7 @@ Now to prove the theorem.
   We thus obtain $A' = {a'_alpha : alpha < mu}$ such that $b$ satisfies the same formula over $A'$ as $b'$ satisfies over $A$. We then can use homogeneity to map $A',b$ into $mM$ so that the image of $A$ is $A'$, then the image of $b$ is a witness to type $p$. 
 ]
 
-== Fraïssé Theory
+= Fraïssé Theory
 #definition[
   Let $mM$ be a countable structure in a countable language $L$. The $Age(mM)$ is the family of finitely generated submodels of $mM$. Alternatively $Age(mM)$ is the set of Isomorphism classes of finitely generated $L$-models that can be embedded into $mM$.
 ]
@@ -1813,7 +1811,7 @@ One can notice that the definition of weak homogeneity is ideal for extending ba
   To guarantee this we can use AP. The union of $A_n$ is then the desired structure. // TODO: ADD A COMMUTATIVE DIAGRAM.
 ]
 
-== Monster Model
+= Monster Model
 Let $kappa$ be a big cardinal (not too large, something of the order $2^(display(2)^(display(scripts(dots.up)^display(omega))))$). Ideally we would like a saturated model of size $kappa$, but as we saw in @thrm-saturation this is often quite difficult to achieve. Instead, in practice, we often use a $kappa$-saturated model which is $kappa$-strongly homogeneous.
 
 #theorem("Monster Model")[
@@ -1854,7 +1852,7 @@ Before we prove this we will need a tiny lemma.
   So orbits of $Aut(frak(C) quo A)$ are equivalent to realizations of $S(A)$.
 ]
 
-== Indiscernibles
+= Indiscernibles
 #definition[
   Let $(I, <=)$ be a linear order, a set $A = { a_i : i seq I } seq mM$ is called _order-indiscernible_ if for all formulas $ phi (x_1,...,x_n)$ and linear suborders $forall i_i < ... < i_n, j_1 < ... < j_n in I$ we have
   $
@@ -2003,7 +2001,7 @@ Before we prove this we will need a tiny lemma.
   // TODO: ADD DIAGRAM
 ]
 
-== Ranks in Topological Spaces
+= Ranks in Topological Spaces
 #definition[
   We define the _Cantor-Bendixson derivative_ as $ X' = X backslash { "isolated points of" X }. $
   We then define $X^(alpha)$ by induction on $alpha$, 
@@ -2078,7 +2076,7 @@ Before we prove this we will need a tiny lemma.
 
 With these topological preliminaries out of the way we can apply them to Model Theory, namely noticing that $S_n (A)$ for any $A$ is always a $0$-dimensional compact Hausdorff space.
 
-== Morley Rank
+= Morley Rank
 Let $T$ be a complete theory and $mM sat T$ an $aleph_0$-saturated model.
 #definition[
   We define the _Morley Rank_ as a function
@@ -2159,7 +2157,7 @@ $
 
   We will now construct a tree of formulas $phi_n$ indexed by $n in 2^(< omega)$, we start with $phi_nothing = (x = x)$ and continue by noticing that $RM(phi_nothing) > beta + 1$ implies that we can find two formulas $phi_0$and $phi_1$ with $RM(phi_0),RM(phi_1) > beta$ and hence we also have $RM(phi_0) = RM(phi_1) = infinity$. We then continue this and keep splitting formulas $phi_n$ to get a tree of non empty formulas. 
 
-  Morally the construct of this tree is using the fact that Morally rank 'stabilizes' in a very similar way as Scott rank.
+  Morally the construct of this tree is using the fact that Moraly rank 'stabilizes' in a very similar way as Scott rank.
 
   There are then at least $2^(aleph_0)$ leaves in this tree which correspond to at least $2^(aleph_0)$ types over the set of parameters of all $phi_n$ which is a countable set.
 
