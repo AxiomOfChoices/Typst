@@ -1,67 +1,54 @@
-#show heading: set text(font: "Linux Biolinum")
+#let name = "Jacob Reznikov"
+#set document(
+  title: "Curriculum Vitae", author: name, keywords: ("Mathematics", "Analysis", "Geometry", "Geometric Analysis"),
+)
+#set text(size: 11pt, font: ("EB Garamond"))
+#set page(margin: (x: 1.0in, y: 1.0in), width: 7.5in, height: 9.0in)
+#set par(first-line-indent: 0cm, leading: (0.9 * 0.65em), justify: true)
 
-#show link: underline
+#let tab_width = 1.7cm
+#let list_spacing = 1em
+#let title(it) = text(weight: "bold", size: 25pt)[#it]
 
-// Uncomment the following lines to adjust the size of text
-// The recommend resume text size is from `10pt` to `12pt`
-// #set text(
-//   size: 12pt,
-// )
+#set list(marker: [], body-indent: 0pt, tight: false, spacing: list_spacing)
+#set terms(separator: context(h(1em, weak: true)))
 
-// Feel free to change the margin below to best fit your own CV
-#set page(
-  margin: (x: 0.9cm, y: 1.3cm),
+#let tabbed_list = table.with(
+  inset: 0pt, column-gutter: 1em, row-gutter: 1em, stroke: none, columns: (1.4cm, 1fr)
 )
 
-// For more customizable options, please refer to official reference: https://typst.app/docs/reference/
+#show heading: set block(above: 22pt + 1em, below: 4pt + 1em)
+#show heading: set text(font: "Tex Gyre Heros", size: 10pt, weight: "bold", tracking: 0.03em)
+#show heading: it => upper(it)
 
-#set par(justify: true)
+#let date = datetime.today()
+#let month_year_date = date.display("[month repr:long] [year]")
 
-#let chiline() = {v(-3pt); line(length: 100%); v(-5pt)}
+#title(name)
+#v(1em)
+#table(
+  columns: 2, stroke: none, inset: 0pt, block(width: 70%)[
+    Department of Mathematics\
+    McGill University
+  ], block(
+    width: auto,
+  )[
+    #set align(end)
+    #link("mailto:yakov.reznikov@mail.mcgill.ca")[yakov.reznikov\@mail.mcgill.ca]\
+    \+1~514~443~4196\
+    // TODO: INSERT WEBSITE LINK HERE
+  ],
+)
 
-= Jacob Reznikov
+= Education
+#tabbed_list(
+  [M.S.], [Mathematics and Statistics],
+  [B.S.], [Honours Mathematics and Computer Science]
+)
 
-yakov.reznikov\@mail.mcgill.ca |
-#link("https://github.com/axiomofchoices")[github.com/axiomofchoices] | #link("INSERT_WEBSITE_HERE")[INSERT_WEBSITE_HERE]
+= Research Areas
+- Geometric analysis, specifically geometric flows and their application to geometric inequalities.
 
-== Education
-#chiline()
+- Mean Curvature Flow, Ricci Flow.
 
-*McGill University* #h(1fr) 2022/09 -- 2024/04 \
-Master of Science, GPA 4.00/4.00 #h(1fr) Montreal, QC, Canada \
-- Teaching Assistant for Math 133,141,240,315 for (Fall 2022, Winter 2023, Fall 2023, Winter 2024)
-- Courses: Geometric Analysis, PDEs 1-2, Lie Groups 1-2
-
- #h(1fr) 2333/23 -- 2333/23 \
-#lorem(5) #h(1fr) #lorem(2) \
-- #lorem(10)
-
-== Work Experience
-#chiline()
-
-*#lorem(2)* #h(1fr) 2333/23 -- 2333/23 \
-#lorem(5) #h(1fr) #lorem(2) \
-- #lorem(20)
-- #lorem(30)
-- #lorem(40)
-
-*#lorem(2)* #h(1fr) 2333/23 -- 2333/23 \
-#lorem(5) #h(1fr) #lorem(2) \
-- #lorem(20)
-- #lorem(30)
-- #lorem(40)
-
-== Projects
-#chiline()
-
-*#lorem(2)* #h(1fr) 2333/23 -- 2333/23 \
-#lorem(5) #h(1fr) #lorem(2) \
-- #lorem(20)
-- #lorem(30)
-- #lorem(40)
-
-*#lorem(2)* #h(1fr) 2333/23 -- 2333/23 \
-#lorem(5) #h(1fr) #lorem(2) \
-- #lorem(20)
-- #lorem(30)
-- #lorem(40)
+#bibliography("Preprints.bib", style:"springer-mathphys", full: true, title: "Preprints")
