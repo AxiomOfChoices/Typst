@@ -2175,7 +2175,7 @@ $
   If $T$ is stable then every order indiscernible sequence is indiscernible.
 ]
 #proof[
-  Let $kappa$ be such that $T$ is $kappa$-stable, then assuming, aiming for a contradiction, that $(a_i : i in I)$ is order indiscernible but not indiscernible. WLOG we may assume that $I$ has a dense subset $J$ of size $kappa$ and that every non-empty interval has size at least $kappa$. // TODO: JUSTIFY THIS THROUGH STRETCHING.
+  Let $kappa$ be such that $T$ is $kappa$-stable, then assuming, aiming for a contradiction, that $(a_i : i in I)$ is order indiscernible but not indiscernible. WLOG we may assume that $I$ has a dense subset $J$ of size $<= kappa$ and that every non-empty interval has size at least $kappa$. // TODO: JUSTIFY THIS THROUGH STRETCHING.
 
   By assumption we have a finite sequence $1,...,n in I$ (we will write them as integer for simplicity) and a permutation $sigma$ such that
   $
@@ -2214,8 +2214,158 @@ $
 
 #proposition[
   If $X$ is a compact space and $U seq X$ with $CB(U) = alpha$, then there exists $n$ such that if $U_1,...,U_k seq U$ which are disjoint with $CB(U_i) >= alpha$ then $k <= n$.
-]
+]<prop-CB_degree>
 #proof[
   Directly by definition.
 ]
 // TODO: MOVE PROPOSITION.
+//
+
+
+#definition[
+  We call the minimal such $n$ in @prop-CB_degree the $CB$-degree of $U$.
+]
+
+#definition[
+  If $phi$ is a formula over $A$ with $A seq frak(C)$. The _Morley degree_ of $phi$ is the $CB$-degree of $[phi] seq S(mM)$, where $mM$ is any $aleph_0$-saturated model containing $A$.
+
+  We denote it $deg_mM (phi)$.
+]
+
+#proposition[
+  $deg_mM (phi)$ does not depend on $mM$.
+]
+
+#proposition[
+  If $phi$ has Morley degree $n$, then there exists formulas $phi_1,...,phi_n$ all with $deg(phi) = 1$ such that
+  $
+    [phi] = [phi_1] union ... union [phi_n]
+  $
+]
+#proposition[
+  - If $RM(phi_1) = RM(phi_2) < infinity$ and $phi_1 (mM) sect phi_2 (mM) = nothing$ then #h(1fr)
+    $
+      deg(phi_1 or phi_2) = deg(phi_1) + deg(phi_2)
+    $
+  - If $RM(phi_1) < RM(phi_2)$ then
+    $
+      deg(phi_1 or phi_2) = deg(phi_2)
+    $
+]
+#proof[
+  Exercise.
+]
+
+As usual we extend these definitions to types
+#definition[
+  If $p$ is a type then its _degree_ is defined as
+  $
+    deg(p) = min {deg(phi) : p proves phi and RM(phi) = RM(p) }
+  $
+
+  A type is stationary if $deg(p) = 1$.
+]
+
+= Algebraic and Definable Closure
+
+#definition[
+  We say that a formula $phi(ov(x), ov(a))$ is _algebraic_ if
+  $phi(frak(C))$ is finite.
+
+  We say a type $p$ is _algebraic_ if $p(frak(C))$ is finite.
+
+  The _algebraic closure_ $acl(A)$ of a set $A$ is the set of tuples $ov(a)$ such that $tp(ov(a) quo A)$ is algebraic. We sometimes think of it as a subset of the model $frak(C)$.
+
+  The _definable closure_ $dcl(A)$ of a set $A$ is the set of tuples $ov(a)$ such that $tp(ov(a) quo A)$ has a unique realization.
+]
+
+#remark[
+  We do not call formulas or types with a unique realization "definable formulas" or "definable types" because those terms are already in use in model theory for something else.
+]
+
+#proposition[
+  + $p$ is algebraic if and only if there is a formula implied by $p$ which is algebraic.
+  + $|p(frak(C))| = 1$ if and only if there is a formula implied by $p$ such that $|phi(frak(C))| = 1$.
+]<prop-algebraic_passing_to_formulas>
+#proof[
+  The backwards direction is immediate since the any realization of $p$ is also a realization of $phi$.
+
+  On the other hand assume that $p$ is algebraic, then we know that the collection of formulas
+  $
+    { ov(x)_1 != ov(x)_2 : m != n} union union.big_(n=1)^infinity {phi(ov(x)_n) : phi in p}.
+  $
+  is not realizable, since that would contradict the fact that it is algebraic. Hence by compactness some finite subcollection of these formulas is also not realizable. But then we have some formulas $phi_1,...,phi_n$ which are not consistent with ${ ov(x)_1 != ov(x)_2 : m != n }$, we then have 
+  $
+    Phi := phi_1(ov(x)) and ... and phi_n (ov(x))
+  $
+  is also not consistent with ${ ov(x)_1 != ov(x)_2 : m != n }$ and so $Phi$ is formula implied by $p$ which has finitely many realizations.
+
+  For 2 we do the exact same thing.
+]
+
+#proposition[
+  If $mM elm frak(C)$ arbitrary with $phi(ov(x))$ a formula over $mM$. $phi$ is algebraic if and only if $phi(mM)$ is finite.
+]
+#proof[
+  Forward direction is obvious.
+
+  Assume that $mM$ has at most $n$ many realizations of $phi$, then we can write the formula
+  $
+    exists ov(x)_1 ov(x)_2 ... ov(x)_n forall y (and.big_(i=1)^n y!= x) => not phi(y)
+  $
+  and since it is not true in $mM$ it is not true in $frak(C)$, hence $frak(C)$ also has at most $n$ many realizations.
+]
+
+#proposition[
+  $tp(a b quo A)$ is algebraic if and only if $tp(a quo A)$ and $tp(b quo A a)$ are algebraic.
+]<prop-algebraic_decomposition>
+#proof[
+  Let $p = tp(a b quo A)$, $q = tp(a quo A)$, $p_a = tp(b quo A a)$.
+
+  Assume that $p$ is algebraic, we want to show that $q$ is algebraic, we have a map $p(frak(C)) -> q(frak(C))$ defined by forgetting the second coordinate of the tuple. It is onto because if $a' in q(frak(C))$ then by homogeneity of $frak(C)$ we get that there is a $b'$ such that $a'b'$ has the same type as $a b$ and so $a'b' in p(frak(C))$ and projects onto $a'$. Hence $q(frak(C))$ is finite.
+
+  We also see that $p_a (frak(C))$ is finite since if there were infinitely many realizations of it then the pairs $(a,b_i)$ would all be unique in $p(frak(C))$ which would contradict the fact that $p$ is algebraic.
+  
+  On the other hand assume that $q, p_a$ are algebraic, then by homogeneity we know that $|p_(a') (frak(C))|= |p_a (frak(C))|$ and so since
+  $
+    p(frak(C)) = union_(a' in q(frak(C))) {a'} times p_(a') (frak(C))
+  $
+  we get that $p(frak(C))$ is finite.
+]
+
+#proposition[
+  + $A seq seq acl(A)$.
+  + If $A subset B$ then $acl(A) seq acl(B)$.
+  + $acl(acl(A)) = acl(A)$.
+  + $acl(A) = display(union.big_(A_0 seq A\ A_0 "finite") acl(A_0))$.
+  + $A seq dcl(A) seq acl(A)$.
+  + If $A$ is a subset of $B$ then $dcl(A) seq dcl(B)$.
+  + $dcl(dcl(A)) = dcl(A)$
+  + $dcl(A) = display(union.big_(A_0 seq A\ A_0 "finite") dcl(A_0))$.
+
+  Properties 1,2,3 and 5,6,7 are sometimes shortened to "$acl$/$dcl$ is a monotone idempotent operator".
+]
+#proof[
+  All are trivial apart from 3,7.
+
+  For 3 first let $a in acl(acl(A))$, by @prop-algebraic_passing_to_formulas we get that there is a formula $phi(ov(x), ov(b))$ with parameters $ov(b) in acl(A)$ such that $|phi(x,ov(b)) < infinity$ and so that $sat phi(a,ov(b))$.
+
+  $tp(a quo A ov(b))$ is algebraic and $tp(ov(b) quo A)$ is algebraic so by @prop-algebraic_decomposition we get that $tp(a ov(b) quo A)$ is algebraic so by @prop-algebraic_decomposition again $tp(a quo A)$ is algebraic.
+]
+
+#example[
+  Let $T = A C F_p$,
+  $
+  acl(A) = "algebraic closure of" (A).
+  $
+
+  $a in acl(A)$ if and only if $I(a quo lr(angle.l A angle.r)) != 0$.  
+
+  The defined closure is more interesting, it is
+  $
+    dcl(A) = cases((A) "if" p = 0, hat((A))^(rad) "if" p > 0)
+  $
+  one would expect it to always be $(A)$ but in positive characteristic we can also take $p$-th roots because of the properties of the Frobenious map.
+
+]
+
