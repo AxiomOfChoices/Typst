@@ -1,25 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Math Notes</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="./style.css" rel="stylesheet">
-  </head>
-  <body>
-    <main>
-      <ul id="notelist">
-        <li>
-          <a href="Mathematical Logic.pdf?time_stamp=1711745363">
-            Math 591 - Mathematical Logic
-          </a>
-        </li>
-        <li>
-          <a href="Geometric Analysis.pdf?time_stamp=1711745363">
-            Math 595 - Geometric Analysis
-          </a>
-        </li>
-      </ul>
-    </main>
-  </body>
-</html>
+[
+  {
+    path: "Mathematical Logic.pdf?time_stamp=1711745495",
+    name: "Math 591 - Mathematical Logic"
+  },
+  {
+    path: "Geometric Analysis.pdf?time_stamp=1711745495",
+    name: "Math 595 - Geometric Analysis"
+  }
+]
