@@ -2,7 +2,7 @@
 #set document(
   title: "Curriculum Vitae", author: name, keywords: ("Mathematics", "Analysis", "Geometry", "Geometric Analysis"),
 )
-#set text(size: 11pt, font: ("EB Garamond"))
+#set text(size: 11pt, font: ("EB Garamond 12"))
 #set page(margin: (x: 1.0in, y: 1.0in), width: 7.5in, height: 9.0in)
 #set par(first-line-indent: 0cm, leading: (0.9 * 0.65em), justify: true)
 
