@@ -36,14 +36,14 @@
     #set align(end)
     #link("mailto:yakov.reznikov@mail.mcgill.ca")[yakov.reznikov\@mail.mcgill.ca]\
     \+1~514~443~4196\
-    // TODO: INSERT WEBSITE LINK HERE
+    #link("https://axiomofchoice.dev")[axiomofchoice.dev]
   ],
 )
 
 = Education
 #tabbed_list(
-  [M.S.], [Mathematics and Statistics],
-  [B.S.], [Honours Mathematics and Computer Science]
+  [M.S.], [Mathematics and Statistics, McGill University, Montreal, 2022-2024],
+  [B.S.], [Honours Mathematics and Computer Science, McGill University, Montreal, 2019-2022]
 )
 
 = Research Areas
