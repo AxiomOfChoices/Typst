@@ -17,7 +17,7 @@ html{
   font-family: 'Gyre';
 }
 
-main{
+body{
   display:grid;
   place-items: center;
 }
