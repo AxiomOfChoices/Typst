@@ -206,14 +206,14 @@ An important consequence of this definition is that every sentence of $L(mM)$ is
 #pagebreak(weak: true)
 = Model equivalences
 #definition[
-  Let $mM$ be a model. The _theory_ of $mM$ is defined also
+  Let $mM$ be a model in the language $L$. The _theory_ of $mM$ is defined as
   $
-  Th(mM) = { sigma "is an" L"-sentence" : mM sat sigma}
+    Th_L(mM) = { sigma "is an" L"-sentence" : mM sat sigma}.
   $
+  If $L$ is clear from context we will often omit it.
 
   We say that two $L$-structures, $mM$ and $mN$, are _elementarily equivalent_, and write $mM equiv mN$ if $Th(mM) = Th(mN)$.
 ]
-#v(-2%)
 #definition[
   We write $mM tilde.equiv mN$ and say that $mM$ and $mN$ are _isomorphic_ if there is a bijection $g : |mM| -> |mN|$ with
   $
@@ -244,6 +244,19 @@ Elementarily equivalence means that the two models agree on all $L$-sentences, w
 These two definitions also deal with concept of 'substructure' on different resolutions. A standard substructure is a very weak property, substructures $mM$ of $mN$ could have radically different behaviour (we will see many examples of this).
 
 However, an _elementary substructure_ must agree with its superstructure on _all formulas_ involving the smaller structures inputs, this is a much stronger condition and is akin to a subfield in algebra.
+#proposition[
+  If $mM elm mN$ then $mM$ is elementary equivalent to $mN$.
+]
+#proof[
+  This is immediate from the definition of elementary equivalence.
+]
+
+#proposition[
+  If $mM elm mN$ and $mN elm mM$ then $mM tilde.equiv mN$.
+]
+#proof[
+  This is also immediate.
+]
 
 #theorem("Tarski-Vaught test")[
   Suppose $mM$ is an $L$-structure, $A seq |mM|$, then $A$ is the universe of an elementary substructure iff the following condition holds, called the Tarski-Vaught test (T-V test)
@@ -275,27 +288,26 @@ However, an _elementary substructure_ must agree with its superstructure on _all
 #proof[
   Set $kappa = |A| + |L| + aleph_0$, using induction we will define a sequence $A_n$ of subsets of $mM$, where at each step $n$ we will try to satisfy all existential statements in $Th_L(A_(n-1))(mM)$, we will then set $|mN| = union.big_(n) A_n$.
 
-  First we set $A_0 = A$, then at step $n > 0$, we will consider all formulas in $L(A_(n-1))$ (there are $|kappa times NN| = |kappa|$ many of them) and for each formula $phi(ov(x))$ we will pick some collection of elements $ov(a) seq |mM|$ such that $mM sat phi(ov(a))$, then we will add $ov(a)$ to $A_(n-1)$, adding these elements for each formula gives us $A_n$.
+  First we set $A_0 = A$, then at step $n > 0$, we will consider all formulas in $L(A_(n-1))$ (there are $|kappa times NN| = |kappa|$ many of them, see @prop-cardinal_arithmetic) and for each formula $phi(ov(x))$ we will pick some collection of elements $ov(a) seq |mM|$ such that $mM sat phi(ov(a))$, then we will add $ov(a)$ to $A_(n-1)$, adding these elements for each formula gives us $A_n$.
 
   Now we can use @thrm-tv_test to check that $mN elm mM$. Let $phi(ov(a)) = exists x (psi(x),ov(a))$ be a formula in $Th_L(mN)(mM)$, then $ov(a) in |mN|$ and so $ov(a) in A_n$ for some $n$ and thus for some $b in A_(n+1)$ we have $mN sat psi(b, ov(a))$ and thus $mN sat phi(ov(a))$.
 ]
 
 #remark("Skolem's Paradox")[
-  Let $Z F C^* seq Z F C$ be a finite substructure which proves Cantor's theorem. Let $V sat Z F C^*$. By the previous theorem we can find a countable $mM elm V$ for which $mM sat Z F C^*$ and $mM sat$ "exists an uncountable set".
+  Let $Z F C^* seq Z F C$ be a finite theory which proves Cantor's theorem. Let $V sat Z F C^*$. By the previous theorem we can find a countable $mM elm V$ for which $mM sat Z F C^*$ and $mM sat$ "exists an uncountable set".
 ]
 
 #definition[
-  In FOL we have the concept of a _proof system_, consisting of two parts. 
-  _Axioms_, and _proofs_ which is a finite sequence of $L$-formulas such that every step is either an axiom of follows from the previous steps using an inference rule.
-
+  In first order logic we have the concept of a _proof system_, consisting of two parts.
+  _Axioms_ which are formulas which are declared to always be true, and _proofs_ which is a finite sequence of $L$-formulas such that every step is either an axiom of follows from the previous steps using an inference rule.
 ]
 
 #example[
   An example proof system has the following 4 types of axioms.
   - All instances of propositional tautologies are axioms.
-  - $[forall x thin phi -> psi] -> [phi -> forall psi]$  as long as $x$ is not free in $phi$.
+  - $[forall x thin (phi -> psi)] -> [phi -> forall psi]$  as long as $x$ is not free in $phi$.
   - $forall x -> phi(subs(t,s))$ where $t$ is any $L$-term where the substitution is correct.
-  - $x = x$, \ $x = y -> t(...,x,...) = t(...,y,...)$ for any $L$-term, \ $x = y -> (phi(...,x,...) -> phi(...,y,...))$
+  - $x = x$, \ $x = y -> t(...,x,...) = t(...,y,...)$ for any $L$-term $t$, \ $x = y -> (phi(...,x,...) -> phi(...,y,...))$ for any formula $phi$.
 
   And the following inference rules.
   - If $phi$ and $phi -> psi$ then $psi$.
@@ -305,7 +317,9 @@ However, an _elementary substructure_ must agree with its superstructure on _all
 We will use the notation $Gamma proves phi$ to mean "$Gamma$ proves $phi$" and define it as the existence of a proof whose final step is $phi$ and every step is either an axiom or an element of $Gamma$ or follows from a previous step or by an inference in $phi$.
 
 #definition[
-  We say that $Gamma$ is consistent if there exists $phi$ such that $Gamma tack.r.not phi$.
+  We say that $Gamma$ is _consistent_ if there exists $phi$ such that $Gamma tack.r.not phi$.
+
+  We say that $Gamma$ _has a model_ if there is a model $mM$ such that $mM sat phi$ for all $phi in Gamma$.
 ]
 
 By a famous theorem of Gödel that we will not prove in this class we can actually not care about any proof system details.
@@ -319,8 +333,8 @@ We will not prove this theorem in this class but we will use an important coroll
   Let $Gamma$ be a set of $L$-sentences, $Gamma$ has a model if and only if every finite subset of $Gamma$ has a model.
 ]
 #proof[
-  The $=>$ direction is immediate, the hard part is the $arrow.l.double$ direction. By Gödel's completeness theorem, we can replace "having a model" with "is consistent".
-  
+  The forward direction is immediate, the hard part is the backward direction. By Gödel's completeness theorem, we can replace "having a model" with "is consistent".
+
     We now prove this by contrapositive, assume that $Gamma$ is inconsistent, then we have $Gamma proves exists x thin (x = x) and (not (x=x))$, now this proof consists of finitely many steps and thus can only use finitely many statements in $Gamma$, let $Gamma_0$ be that subset of statements. Since we can prove a contradiction using $Gamma_0$ it must also be inconsistent, thus one of the finite subsets of $Gamma$ is inconsistent.
 ]
 
@@ -331,22 +345,24 @@ As an example use we have the following theorem.
 ]
 #proof[
   Let us consider the language $L' = L(mM) union {c_alpha : alpha < kappa}$ where $c_alpha$ are new constants.
-  Now set 
+  Now set
   $
-    Gamma = Th(mM) union { c_alpha eq.not c_beta : alpha eq.not beta < kappa}
+    Gamma = Th_(L')(mM) union { c_alpha eq.not c_beta : alpha eq.not beta < kappa}
   $
 
   We want to show now that $Gamma$ is consistent, to see this we use compactness and take an arbitrary finite subset $Gamma_0$. Let $alpha_1,...,alpha_n$ be such that 
-  $ Gamma_0 seq Th(mM) union { c_(alpha_i) eq.not c_(alpha_j) : i eq.not j } $
+  $
+    Gamma_0 seq Th_(L')(mM) union { c_(alpha_i) eq.not c_(alpha_j) : i eq.not j } 
+  $
   choose then any $a_1, ..., a_n in |mM|$ which are distinct and interpret $c_alpha_i$ as $a_i$ to get a model of $Gamma_0$, hence $Gamma_0$ is consistent.
 
-  Now we have by Gödel's completeness theorem that there exists a model $mN$ such that $mN sat Gamma$ then by construction we have $mM elm mN$ and $||mN|| >= kappa$ and so by #link(<thrm-downwards>)[downwards theorem] we can now decrease the cardinality until we reach $kappa$.
+  Now we have by @thrm-completeness that there exists a model $mN$ such that $mN sat Gamma$, then by construction we have $mM elm mN$ and $||mN|| >= kappa$ and so by #link(<thrm-downwards>)[downwards theorem] we can now decrease the cardinality until we reach $kappa$.
 ]
 
 
 
 #corollary[
-  If $mM$ is infinite then there exists $mN$ such that $mM equiv mN$ but $mM tilde.eq.not mN$.
+  If $mM$ is infinite then there exists $mN$ such that $mM equiv mN$ but $mM tilde.equiv.not mN$.
 ]
 #proof[
   We simply pick some $kappa > ||mM||$ and then use the upwards theorem to get a model $mN$ with $mM elm mN$ with $||mN|| = kappa$, now there can't exist a bijection between the two since they have different cardinalities.
@@ -373,7 +389,7 @@ As an example use we have the following theorem.
 ]
 
 #example[
-  Consider the language $L = (<)$, a dense linear order ($D L O_0$) is the theory generated by the additional axioms: $<$ is total, dense and has no endpoints. 
+  Consider the language $L = (<)$, a dense linear order ($DLO_0$) is the theory generated by the additional axioms: $<$ is total, dense and has no endpoints. 
   - Total means $forall x thin forall y (x = y or x < y or y < x)$ 
   - Dense means $forall x thin forall y(x < y => exists z x < z < y)$
   - No endpoints means $not (exists z thin forall x (x eq.not z => x < z))$ for the max endpoint and similarly for the min endpoint.
@@ -383,23 +399,29 @@ As an example use we have the following theorem.
   It turns out, however, that the only countable such structure is $QQ$, up to isomorphism.
 ]
 
-#proposition("Cantor")[
-  $D L O_0$ is $aleph_0$-categorical.
+
+#theorem("Cantor")[
+  $DLO_0$ is $aleph_0$-categorical.
+]<thrm-dlo_categorical>
+
+In order to prove this result we will need to use a specific technique, since it appears all over model theory we will write up the main idea here for future reference.
+#technique("Back and Forth method")[
+  Let $mM$ and $mN$ be two countable models between which we want to construct an isomorphism $mM -> mN$.
+
 ]
 
-#proof[
-  Let $(A,<)$ and $(B,<)$ be two countable models of $D L O_0$, we enumerate them $A = {a_0, a_1,...}$ and $B = {b_0, b_1, ...}$.
-  
+#proof([of @thrm-dlo_categorical])[
+  Let $(A,<)$ and $(B,<)$ be two countable models of $DLO_0$, we enumerate them $A = {a_0, a_1,...}$ and $B = {b_0, b_1, ...}$.
+
   We now use the "back and forth" method, which essentially incrementally pairs up elements of $A$ with elements of $B$, and in the limit this will give us a bijection which will be our isomorphism.
 
   More formally we will construct a sequence $phi_n : A_n -> B_n$ where $A_n seq A, B_n seq B$ where each $phi_n$ is monotone increasing, and so that at step $2n$ we have $a_n in A_n$ and $b_n in B_n$.
 
   For the base case we take $a_0$ and pair it with anything in $B$, lets say $b_20$, now we look at the smallest (in the sense of the enumeration) element $b_i$ in $B$ (in this case $b_0$), and try to map it to something in $A$. Now $b_i$ will be somehow related to $b_20$, we can now use the density and the lack of endpoints to always find an element in $A$ that has the same relations as $b_i$ so we can always find a proper pairing.
-
 ]
 
 #corollary[
-  $D L O_0 = Th(QQ,<)$, and so is complete.
+  $DLO_0 = Th(QQ,<)$, and so is complete.
 ]
 
 #example[
@@ -763,7 +785,7 @@ $
   A type $p(ov(x))$ is realized in a model $mM$ if there exists $ov(a) in mM$ with $p(ov(x)) seq tp^mM (ov(a))$.
 ]
 #example[
-  If $T = D L O_0$ and $mM = QQ$ then
+  If $T = DLO_0$ and $mM = QQ$ then
   $
     p(x) = {s < x, x < r : s < sqrt(2) < r }
   $
@@ -909,14 +931,6 @@ All of these also hold if we change $S_n^T (nothing)$ to $S_n^T (A)$
 ]
 
 We will next show how to construct saturated models, to complete this we will need a lemma.
-
-#definition[
-  For a cardinal $gamma$, $cf(gamma)$ is called the co-finality of $gamma$ and is the cardinality of the shortest unbounded sequence in $gamma$.
-]
-
-#theorem("König's theorem")[
-  For a cardinal $gamma$, $cf(2^gamma) > gamma$.
-]<thrm-Konig>
 
 #lemma[
   If $(mN_alpha)_(alpha < kappa)$ is an elementary chain, that is $mN_alpha elm mN_beta$ for $alpha < beta$. Then if $mN = union.big_(alpha = 0)^kappa mN_alpha$ we have $mN_alpha elm mN$ for all $alpha$.
@@ -1386,12 +1400,12 @@ then in the limit we have
 ]
 
 #proposition[
-  $D L O_0$ has quantifier elimination.
+  $DLO_0$ has quantifier elimination.
 ]
 #proof[
   We induct on the logical structure of $phi(ov(x))$, we show that there exists a quantifier free formula $psi(ov(x))$ such that
   $
-    D L O_0 proves forall ov(x) (phi(ov(x)) <-> psi(ov(x))).
+    DLO_0 proves forall ov(x) (phi(ov(x)) <-> psi(ov(x))).
   $
 
   For atomic formulas this is trivial, for logical connectives this is also trivial, now assume that $phi = exists x (phi'(ov(x)))$.
@@ -1416,7 +1430,7 @@ then in the limit we have
   $
   because if $ov(y)$ satisfies the left formula then it has some ordering and so we can use the automorphisms to map $ov(y)$ to some $ov(b)_i$ and then $i in I$ and thus the right side also holds. Similarly we can go the other way.
 
-  Now since $D L O_0$ is complete we can lift the above sentence from $QQ$ to $D L O_0$ and get our result.
+  Now since $DLO_0$ is complete we can lift the above sentence from $QQ$ to $DLO_0$ and get our result.
 ]
 
 What we see in this proof is that quantifier elimination is intimately related to the type structure for finite tuples. We can make this relation more precise.
@@ -1885,7 +1899,7 @@ Before we prove this we will need a tiny lemma.
   $
 ]
 #example[
-  $D L O_0$ with $A = mM = I = QQ$ is order indiscernible.
+  $DLO_0$ with $A = mM = I = QQ$ is order indiscernible.
 
   If $K > L$ are algebraically closed fields with $K$ transcendental over $L$, then a transcendental basis of $K$ over $L$ is also an example.
 
@@ -1992,7 +2006,7 @@ Before we prove this we will need a tiny lemma.
 ]
 
 #example[
-  $D L O_o$ is not $aleph_0$-stable since $S_1(QQ) tilde.equiv RR$ which has larger cardinality than $aleph_0$.
+  $DLO_o$ is not $aleph_0$-stable since $S_1(QQ) tilde.equiv RR$ which has larger cardinality than $aleph_0$.
 ]
 
 #theorem[
@@ -2429,7 +2443,7 @@ We will not go into the details of ordinal theory, that is the job of Set Theory
   + Every ordinal takes one of 3 forms
     - Zero/Empty Set: ${}$.
     - Successor ordinal: $suc(alpha) := alpha union {alpha}$ for some ordinal $alpha$, sometimes denoted $alpha^+$ or $alpha + 1$.
-    - Limit ordinal: $union.big_(gamma in X) gamma$ for some set $X$ of ordinals. 
+    - Limit ordinal: $union.big_(gamma in X) gamma$ for some set $X$ of ordinals.
 ]
 
 Ordinals are important because of their ability to extend induction.
@@ -2443,12 +2457,79 @@ Ordinals are important because of their ability to extend induction.
 
 We can also use induction for constructions.
 #theorem[
-  Let $x_alpha$ be variables indexed by ordinals $alpha$ and $p_beta$ be a property depending on all variables $x_alpha$ with $alpha <= beta$. If
-  - There is an assignment of $x_0$ such that $p_0$ is true.
-  - For any assignments of $x_alpha$ for $alpha <= beta$ such that $p_beta$ is true we have an assignment of $x_(beta + 1)$ such that $p_(beta + 1)$ is true.
-  - For any limit ordinal $gamma$ and every assignment of $x_alpha$ for $alpha < gamma$ such that $p_beta$ is true for all $beta < gamma$ we also have $p_gamma$.
+  Let $x_alpha$ be variables indexed by ordinals $alpha$ and $p_beta (x_(<=beta))$ be a property depending on all variables $x_alpha$ with $alpha <= beta$. If the following conditions hold
+  - There is an object $a_0$ such that $p_0 (a_0)$ is true.
+  - For any objects $a_alpha$ for $alpha <= beta$ such that $p_beta (x_(<= beta))$ is true there is an object $a_(beta + 1)$ such that $p_(beta + 1) (x_(<= beta + 1))$ is true.
+  - For any limit ordinal $gamma$ and any objects $a_alpha$ for $alpha < gamma$ such that $p_beta (x_(<= beta))$ is true for all $beta < gamma$ there is an object $a_(gamma)$ such that we also have $p_gamma (x_(<= gamma))$.
   Then there is an assignment of $x_alpha$ such that $p_beta$ is true for all ordinals $beta$.
 ]
+
+Here is an example of this
+#definition[
+  For any ordinal $alpha$, we define inductively
+  + $alpha + 0 = alpha$.
+  + $alpha + suc(beta) = suc(alpha + beta)$.
+  + If $gamma$ is a limit ordinal then $alpha + gamma = union.big_(beta < gamma) (alpha + beta)$.
+]
+We can similarly define multiplication and exponentiation of ordinals.
+
+Now ordinals generalize counting, but it turns out that we can use them to get a generalized notion of size.
+
+#definition[
+  Let $alpha,beta$ be two sets, we say that $alpha$ and $beta$ are _equal in cardinality_ and write $|alpha| = |beta|$ to mean that there is a bijection between $alpha$ and $beta$.
+]
+
+Now one can easily check that this is an equivalence relation when restricted to ordinals, and it thus partitions ordinals into equivalence classes.
+#definition[
+  Let $S$ be an equivalence class of cardinality in the ordinals, as a collection of ordinals it has a minimal element $kappa$, all such minimal elements are called _cardinals_.
+]
+
+Because of axiom of choice every set $X$ has a well ordering and thus is in bijection with some ordinal $alpha$, hence is also in bijection with exactly one cardinal $kappa$. We say that $kappa$ is the _cardinality_ of $X$ and denote it as $kappa = |X|$.
+
+We can index the cardinals in increasing order using ordinals, all the natural numbers are cardinals, $|NN|$ is the next ordinal which we denote $aleph_0$, the next ordinal after that is $aleph_1$ and so on.
+
+
+For cardinals we define operations differently.
+#definition[
+  We define for any two cardinals $alpha, beta$
+  $
+    alpha + beta = |alpha union.sq beta| \
+    alpha times beta = |alpha times beta| \
+    alpha^beta = |{ f : beta -> alpha}|
+  $
+]
+
+These operations are not as interesting as those of ordinals, which we see in the following proposition.
+#proposition[
+  For any two cardinals $alpha,beta$, if $alpha >= aleph_0$ or $beta >= aleph_0$ we have
+  $
+    alpha + beta = beta + alpha = alpha times beta = beta times alpha = max(alpha, beta)
+  $
+]<prop-cardinal_arithmetic>
+
+#definition[
+  The continuum hypothesis is the statement
+  $
+    2^(aleph_0) = aleph_1.
+  $
+  The generalized continuum hypothesis is the statement
+  $
+    2^(aleph_alpha) = aleph_(alpha + 1)
+  $
+  for all ordinals $alpha$.
+]
+It turns out that the continuum hypothesis is independent of $ZFC$.
+
+
+#definition[
+  For a cardinal $gamma$, $cf(gamma)$ is called the _co-finality_ of $gamma$ and is the cardinality of the shortest unbounded sequence in $gamma$.
+
+  Equivalently, $cf(gamma)$ is the largest cardinal such that for every sequence of cardinals $kappa_alpha$ smaller than $gamma$ which has length at most $cf(gamma)$, has $union.big_(alpha < cf(gamma)) kappa_alpha <= gamma$.
+]
+
+#theorem("König's theorem")[
+  For a cardinal $gamma$, $cf(2^gamma) > gamma$.
+]<thrm-Konig>
 
 
 //

@@ -49,6 +49,8 @@
 #let Sc = math.op("Sc")
 #let span = math.op("Span")
 #let ZFC = math.op("ZFC")
+#let DLO = math.op("DLO")
+#let ACF = math.op("ACF")
 #let flat = $♭$
 #let gen(x) = $lr(angle.l #x angle.r)$
 
@@ -77,10 +79,15 @@
   fill: rgb("#FFBE98")
 )
 #let claim = thmbox(
-  "claim",            // Lemmas use the same counter as Theorems
+  "theorem",            // Lemmas use the same counter as Theorems
   "Claim",
   padding: (top: 0em, bottom: 0em),
   fill: rgb("#ffefe6")
+)
+#let technique = thmplain(
+  "technique",            // Lemmas use the same counter as Theorems
+  "Technique",
+  padding: (top: 0em, bottom: 0em),
 )
 #let proposition = thmbox(
   "theorem",            // Lemmas use the same counter as Theorems
