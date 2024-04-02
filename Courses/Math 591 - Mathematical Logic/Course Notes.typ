@@ -8,7 +8,7 @@
 #show: thmrules
 #show: symbol_replacing
 #show: equation_references
-
+#set pagebreak(weak: true)
 
 #show: doc => frontpage(
   toptitle: [Mathematical Logic],
@@ -17,6 +17,8 @@ middletitle: [My course notes for the Winter 2024 Mathematical Logic course by #
 doc)
 
 #set page(margin: (x: 2cm, top: 2cm, bottom: 2cm))
+#outline()
+#pagebreak()
 
 = Models and Languages
 #definition[
@@ -48,6 +50,10 @@ doc)
   An important example is $(V,in)$ where $V$ is any set which sort of encodes set theory (though there are several issues with this).
 ]
 
+#remark[
+  For a model $mM$ we will sometimes use $|mM|$ to refer to the universe of a model and $||mM||$ to denote the cardinality of said universe. Sometimes we will also use $mM$ to refer to the underlying universe, but only when it is clear from context what we are referring to.
+]
+
 We can see already that models can encode many objects that we study in math, and there are many many more such encodings.
 
 All of this is very semantic encoding of a mathematical structure, but we will also be concerned with the syntactical encoding.
@@ -71,10 +77,6 @@ All of this is very semantic encoding of a mathematical structure, but we will a
   $
   underline(f_i)^mM = f_i, underline(R_j)^mM = R_j, underline(c_k)^(mM) = c_k
   $
-]
-
-#remark[
-  For a model $mM$ we will sometimes denote $|mM|$ to refer to the universe of a model and $||mM||$ to denote the cardinality of said universe.
 ]
 
 We have defined the symbols of $L$, but how do we speak it? We will need the following
@@ -103,9 +105,13 @@ As with any language we will build up our language first with nouns and then wit
 
   An $L$-term is said to be _constant_ if it does not contain any variables.
 ]
+A term is what we would usually call a mathematical _expression_.
+#example[
+  $f(1+2)$, $3 + x$, $sin(e^(-15 y))$ are all terms in appropriate languages.
+]
 
 #definition[
-  If $mM$ is an $L$-structure and $tau$ is a constant $L$-term then the _interpretation_ of $tau$, $tau^mM$, is defined equivalently
+  If $mM$ is an $L$-structure and $tau$ is a constant $L$-term then the _interpretation_ of $tau$, $tau^mM$, is also defined inductively
   - If $tau = c_k$ then $tau^mM = c_k^mM$
   - If $tau = f_i (tau_1,...,tau_n)$ then $tau^mM = f_i^mM (tau_1^mM, ..., tau_n^mM) in |mM|$
 ]
@@ -117,7 +123,7 @@ As with any language we will build up our language first with nouns and then wit
   $
   has the interpretation $3$.
 
-  However, in the $L$-structure $(ZZ_3, +_3, dot_3, 0,1)$ the interpretation is instead $0$
+  However, in the $L$-structure $(ZZ_3, +_3, dot_3, 0,1)$ the interpretation is instead $0$.
 ]
 
 #definition[
@@ -151,7 +157,9 @@ As with any language we will build up our language first with nouns and then wit
   $
 ]
 
-Now this is all first order logic, but one might wonder, what makes it "first"? This comes from what things we can quantify over. In first order logic we can only quantify over elements $x in |mM|$, in _second_ order logic we can quantify over subsets $S seq |mM|$ like all relations for example. We can also see this as $S in cal(P)(|mM|)$. Third order logic would then be quantification over $S in cal(P)(cal(P)(|mM|))$, and so on.
+Formulas are our bread and butter, they form the language (no pun intended) of first order logic and it is through formulas that we will express and prove all nearly all results in this course.
+
+Now this is all first order logic, but one might wonder, what makes it "first"? This comes from what things we can quantify over. In first order logic we can only quantify over elements $x in |mM|$, in _second_ order logic we can quantify over subsets $S seq |mM|$ like for example all relations. We can also see this as $S in cal(P)(|mM|)$. Third order logic would then be quantification over $S in cal(P)(cal(P)(|mM|))$, and so on.
 
 In this course, however, we will only be looking at first order logic.
 
@@ -170,8 +178,8 @@ In this course, however, we will only be looking at first order logic.
   Let $phi$ be a formula containing $x$ (which we will follow denote as $phi(x)$), $phi(subs(tau, x))$ will denote the formula obtained by replacing every free occurrence of $x$ by $tau$.
 ]
 
-Now one would expect that substitution should never change the meaning of a logical statement, but in fact, this is not quite right. 
-Consider the case $phi = forall y (y=x)$, the substitution $phi(subs(y,x))$ is changes the meaning of the statement from "all $y$ are equal to $x$" to "all $y$ are equal to themselves". We want to avoid this outcome, which we can formalize as follows.
+Now one would expect that substitution should never change the meaning of a logical formula, but in fact, this is not quite right.
+Consider the case $phi = forall y (y=x)$, the substitution $phi(subs(y,x))$ changes the meaning of the statement from "all $y$ are equal to $x$" to "all $y$ are equal to themselves". We want to avoid this outcome, which we can formalize as follows.
 #definition[
   A substitution $phi(subs(tau,x))$ is called _correct_ if no free variable of $tau$ becomes bound in $phi(subs(tau,x))$
 ]
@@ -185,12 +193,16 @@ We extend our definition of interpretation of terms to terms of $L(mM)$ by setti
 
 
 #definition[
-  Let $mM$ be an $L$-structure and $sigma$ an $L(mM)$-sentence. We say that $sigma$ is true in $mM$, and write $mM sat sigma$ if 
-  - If $sigma$ is of the form $tau_1 = tau_2$ then $M sat sigma$ if and only if $tau_1^mM = tau_2^mM$ (note that while this may look circular, the first equality is in the space of _terms_ while the second is in the universe $|mM|$)
-  - If $sigma$ is of the form $underline(R)_j (tau_1, ..., tau_n)$, then $mM sat sigma$ if and only if $(tau_1^mM, ..., tau_n^mM) in R_j$
-  - If $sigma$ is of the form $sigma_1 and sigma_2$ then $mM sat sigma_1 and sigma_2$ if $mM sat sigma_1$ and $mM sat sigma_2$. A similar definition follows for the other logical connectives.
-  - If $sigma$ is of the form $exists x thin phi$ then $mM sat sigma$ if there exists $a in |mM|$ with $mM sat phi(subs(underline(a),x))$. Similarly for $forall x thin phi$.
+  Let $mM$ be an $L$-structure and $sigma$ an $L(mM)$-sentence. We say that $sigma$ is _true_ in $mM$ or $mM$ _satisfies_ $sigma$, if $mM sat sigma$, which we define inductively as follows:
+  - If $sigma$ is of the form $tau_1 = tau_2$ then $M sat sigma$ if and only if $tau_1^mM = tau_2^mM$ 
+  - If $sigma$ is of the form $underline(R)_j (tau_1, ..., tau_n)$, then $mM sat sigma$ if and only if $(tau_1^mM, ..., tau_n^mM) in R_j^mM$
+  - If $sigma$ is of the form $sigma_1 and sigma_2$ then $mM sat sigma_1 and sigma_2$ if and only if $mM sat sigma_1$ and $mM sat sigma_2$. A similar definition follows for the other logical connectives.
+  - If $sigma$ is of the form $exists x thin phi$ then $mM sat sigma$ if there exists $a in |mM|$ with $mM sat phi(subs(a ,x))$. Similarly for $forall x thin phi$.
 ]
+
+Note that while the first step may look circular, the first equality is in the space of _terms_ while the second is in the universe $|mM|$.
+
+An important consequence of this definition is that every sentence of $L(mM)$ is either true or false in $mM$, hence either it or its negation are true in $mM$. We will formalize this very soon.
 #pagebreak(weak: true)
 = Model equivalences
 #definition[
@@ -198,45 +210,58 @@ We extend our definition of interpretation of terms to terms of $L(mM)$ by setti
   $
   Th(mM) = { sigma "is an" L"-sentence" : mM sat sigma}
   $
-  
-  We say that two $L$-structures, $mM$ and $mN$, are elementarily equivalent, and write $mM equiv mN$ if $Th(mM) = Th(mN)$.
 
-  We write that $mM seq mN$ to mean that $mM$ is a substructure of $mN$, meaning that
-  $ 
-  |mM| seq |mN|, underline(f_i)^mM seq underline(f_i)^mN, underline(R_j)^mM = underline(R_j)^mN sect |mM|^(a_j), thin thin "and" underline(c_k)^mM = underline(c_k)^mN 
-  $
-  
-  We write $mM tilde.eq mN$ and say that $mM$ and $mN$ are isomorphic if there is a bijection $g$ with 
+  We say that two $L$-structures, $mM$ and $mN$, are _elementarily equivalent_, and write $mM equiv mN$ if $Th(mM) = Th(mN)$.
+]
+#v(-2%)
+#definition[
+  We write $mM tilde.equiv mN$ and say that $mM$ and $mN$ are _isomorphic_ if there is a bijection $g : |mM| -> |mN|$ with
   $
   g(underline(c_k)^mM) = underline(c_k)^mN\
   (a_1,...,a_n) in underline(R_j)^mM <=>
   (g(a_1),...,g(a_n)) in underline(R_j)^mN\
   g(underline(f_i)^mM (a_1,...,a_n)) = underline(f_i)^mN (g(a_1),...,g(a_n))
   $
+]
+A lot of these definitions might look similar but they are of very different flavor, they all describe model equivalence but of different _resolutions_.
 
-  We write $mM elm(lt.curly.eq) thin thin mN$ to mean $mM$ is an elementary substructure of $mN$ which is true if $mM seq mN$ and for every formula $phi(ov(x))$ and for every $ov(a) seq |mM|$ we have 
-  $ 
+Elementarily equivalence means that the two models agree on all $L$-sentences, while isomorphism implies that they agree on all $L$-_formulas_ on _all inputs_ (after replacing the inputs with their images under $g$).
+#definition[
+  We write that $mM seq mN$ to mean that $mM$ is a _substructure_ of $mN$, meaning that
+  $
+  |mM| seq |mN|, underline(f_i)^mM seq underline(f_i)^mN, underline(R_j)^mM = underline(R_j)^mN sect |mM|^(a_j), thin thin "and" underline(c_k)^mM = underline(c_k)^mN
+  $
+  intuitively this means that the structure of $mM$ is induced from that of $mN$.
+]
+
+#v(-2%)
+#definition[
+  We write $mM elm mN$ to mean $mM$ is an _elementary substructure_ of $mN$ which we define to mean $mM seq mN$ and for every formula $phi(ov(x))$ and for every $ov(a) seq |mM|$ we have
+  $
   mM sat phi(ov(a)) <=> mN sat phi(ov(a))
   $
 ]
+These two definitions also deal with concept of 'substructure' on different resolutions. A standard substructure is a very weak property, substructures $mM$ of $mN$ could have radically different behaviour (we will see many examples of this).
+
+However, an _elementary substructure_ must agree with its superstructure on _all formulas_ involving the smaller structures inputs, this is a much stronger condition and is akin to a subfield in algebra.
 
 #theorem("Tarski-Vaught test")[
-  Suppose $mM$ is an $L$-structure, $A seq |mM|$, then $A$ is the universe of an elementary substructure iff the following condition holds, called the Tarski-Vaught test
+  Suppose $mM$ is an $L$-structure, $A seq |mM|$, then $A$ is the universe of an elementary substructure iff the following condition holds, called the Tarski-Vaught test (T-V test)
 
   #block(inset: (x: 2em))[For every formula $phi(x, ov(y))$ in $L$ and every $ov(a) seq A$, if $mM sat exists x thin phi(x, ov(a))$ then there exists $b in A$ such that $mM sat phi(b, ov(a))$]
 ]<thrm-tv_test>
 #proof[
-  First the $arrow.l.double$ direction, assume that the T-V test holds, then we need to show that $A$ is a substructure. First we use $phi = (x=c)$ to show that $A$ contains all constants of $mM$, then $phi = (x = phi_i (ov(a)))$ for $ov(a) seq A$, and we define the interpretation of $underline(R_j)$ to be exactly $underline(R_j)^mM sect A^(a_j)$ to make it a substructure.
+  First the backwards direction, assume that the T-V test holds, then we need to show that $A$ is a substructure. First we use $phi = (x=c)$ to show that $A$ contains all constants of $mM$, then $phi = (x = f_i (ov(a)))$ for $ov(a) seq A$ to show it contains the images of all functions, and we define the interpretation of $underline(R_j)$ to be exactly $underline(R_j)^mM sect A^(a_j)$ to make it a substructure.
 
   Now $A$ being a substructure is equivalent to 
   $
     A sat phi(ov(a)) <=> mM sat phi(ov(a))
   $
-  for all $ov(a) seq A$ and $phi$ being an _atomic_ formula. So now we only need to prove this is true for the other formula types.
+  for all $ov(a) seq A$ and $phi$ being an _atomic_ formula. So now we only need to prove this is true for the other formula types, which we do by induction on the structure of the formula.
   - The connective types are immediate.
-  - Let us assume $phi(ov(x)) = exists y thin psi(y, ov(x))$. Then $mM sat phi(ov(a))$ iff $mM sat exists y thin psi(y, ov(a))$ iff there exists $b in A$ with $mM sat psi(b, ov(a))$. But by definition this last form is equivalent to $A sat exists y thin psi(y, ov(a))$
+  - For the quantifiers we can assume that the quantifier is $exists$ as otherwise we can use negation to change $forall$ to an $exists$. Hence let us assume $phi(ov(x)) = exists y thin psi(y, ov(x))$. Then $mM sat phi(ov(a))$ iff $mM sat exists y thin psi(y, ov(a))$ iff there exists $b in A$ with $mM sat psi(b, ov(a))$. But by definition this last form is equivalent to $A sat exists y thin psi(y, ov(a))$
 
-  Assume, on the other hand, that $A$ is the universe of an elementary substructure $cal(A)$, then we need to prove the T-V test holds, assume then that for some formula $phi(x,ov(y))$ in $L$ and some $ov(a) seq A$ we have $mM sat exists x thin phi(x, ov(a))$ and so since it is an elementary substructure we also have that $cal(A) sat exists x thin phi(x, ov(a))$ and so we must have some $x in A$ such that $phi(x,ov(a))$ holds.
+  Assume, on the other hand, that $A$ is the universe of an elementary substructure $cal(A)$, then we need to prove the T-V test holds. Assume then that for some formula $phi(x,ov(y))$ in $L$ and some $ov(a) seq A$ we have $mM sat exists x thin phi(x, ov(a))$, then since $cal(A)$ it is an elementary substructure we also have that $cal(A) sat exists x thin phi(x, ov(a))$ and so we must have some $x in A$ such that $phi(x,ov(a))$ holds.
 ]
 
 
@@ -2369,3 +2394,89 @@ As usual we extend these definitions to types
 
 ]
 
+#pagebreak()
+#set heading(numbering: "A.1", supplement: [Appendix])
+#show heading: it => {
+  if it.level == 1 and it.numbering != none {
+    [#it.supplement #counter(heading).display():]
+  } else if it.numbering != none {
+    [#counter(heading).display().]
+  }
+
+  h(0.3em)
+  it.body
+  parbreak()
+}
+#counter(heading).update(0)
+#let definition = definition.with(numbering: "A.1")
+#let proposition = proposition.with(numbering: "A.1")
+#let theorem = theorem.with(numbering: "A.1")
+
+= Transfinite induction and Cardinal Arithmetic
+In model theory we very often want to count things, but natural numbers are often not enough since we deal with truly massive sets, this is where ordinals, which extend the counting of natural numbers, are very useful.
+
+#definition[
+  An _ordinal_ is a set $alpha$ such that the relation $in$ is a well ordering on $alpha$, that is a linear order where every subset $S seq alpha$ has a minimal element.
+
+  Equivalently $alpha$ has no infinite strictly decreasing sequence with respect to $in$.
+]
+
+We will not go into the details of ordinal theory, that is the job of Set Theory class. We will, however, list their key properties here.
+#proposition[
+  Assuming $ZFC$,
+  + Every well ordered set is isomorphic to some ordinal.
+  + Any collection (not necessarily a set) of ordinals has a minimal ordinal with respect to $in$.
+  + Every ordinal takes one of 3 forms
+    - Zero/Empty Set: ${}$.
+    - Successor ordinal: $suc(alpha) := alpha union {alpha}$ for some ordinal $alpha$, sometimes denoted $alpha^+$ or $alpha + 1$.
+    - Limit ordinal: $union.big_(gamma in X) gamma$ for some set $X$ of ordinals. 
+]
+
+Ordinals are important because of their ability to extend induction.
+#theorem[
+  Let $p(alpha)$ be a boolean property defined on all ordinals $alpha$. If
+  - $p({})$ is true.
+  - $p(alpha) => p(suc(alpha))$.
+  - $(forall gamma in X, p(gamma)) => p(union.big_(gamma in X) gamma)$.
+  Then $p$ is true for all ordinals.
+]
+
+We can also use induction for constructions.
+#theorem[
+  Let $x_alpha$ be variables indexed by ordinals $alpha$ and $p_beta$ be a property depending on all variables $x_alpha$ with $alpha <= beta$. If
+  - There is an assignment of $x_0$ such that $p_0$ is true.
+  - For any assignments of $x_alpha$ for $alpha <= beta$ such that $p_beta$ is true we have an assignment of $x_(beta + 1)$ such that $p_(beta + 1)$ is true.
+  - For any limit ordinal $gamma$ and every assignment of $x_alpha$ for $alpha < gamma$ such that $p_beta$ is true for all $beta < gamma$ we also have $p_gamma$.
+  Then there is an assignment of $x_alpha$ such that $p_beta$ is true for all ordinals $beta$.
+]
+
+
+//
+// Ordinals have a very natural _next_ operation, often called the successor function.
+// #definition[
+//   If $(alpha, <=)$ is an ordinal, then we define
+//   $
+//     suc(alpha) = {alpha} union alpha
+//   $
+//   and give $suc(alpha)$ the ordering $<='$ which extends $<=$ with $x <=' alpha$ for all $x in alpha$.
+// ]
+// #proposition[
+//   $(suc(alpha), <=')$ is an ordinal.
+// ]
+// #proof[
+//   Exercise.
+// ]
+//
+// #definition[
+//   Two ordinals $(alpha, scripts(<=)_alpha)$ and $(beta, scripts(<=)_beta)$ are _equivalent_ or _isomorphic_ if there is a map $g : alpha -> beta$ which is a monotonic bijection.
+// ]
+// From now on we will drop the ordering when referring to ordinals.
+// #definition[
+//   For two ordinals $alpha,beta$ we say that $alpha <= beta$ if $alpha$ 
+// ]
+//
+// Now let us see how these concepts generalize natural numbers, note that $({}, )$ is clearly an ordinal so set $alpha_0 = {}$, then by classic induction define $alpha_(n+1) = suc(alpha_n)$.
+//
+// Ordinals also have a concept of a _limit_,
+//
+//
