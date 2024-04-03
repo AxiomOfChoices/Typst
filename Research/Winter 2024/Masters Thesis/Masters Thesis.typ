@@ -1932,8 +1932,8 @@ In fact, by the first argument in the proof above we get that lower bounds on $u
 #corollary[
   There are functions $M(epsilon)$ and $epsilon(M)$ such that
   $
-    sup_(S) ||tilde(nabla) f|| < M => inf_S u > epsilon(M) quad "and" \
-    inf_(S) u > epsilon => sup_(S) ||tilde(nabla) f|| < M(epsilon)
+    sup_(S) thin ||tilde(nabla) f|| < M => inf_S u > epsilon(M) quad "and" \
+    inf_(S) u > epsilon => sup_(S) thin ||tilde(nabla) f|| < M(epsilon)
   $
 ]<cor-derivative_bound>
 
