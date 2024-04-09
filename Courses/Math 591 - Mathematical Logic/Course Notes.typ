@@ -16,7 +16,7 @@
 middletitle: [My course notes for the Winter 2024 Mathematical Logic course by #link("https://www.math.mcgill.ca/msabok/")[Marcin Sabok] at McGill],
 doc)
 
-#set page(margin: (x: 2cm, top: 2cm, bottom: 2cm))
+#set page(margin: (x: 2cm, top: 2cm, bottom: 2cm), numbering: "1")
 
 = Models and Languages
 #definition[
@@ -1971,7 +1971,7 @@ Before we prove this we will need a tiny lemma.
 ]
 
 #theorem[
-  $T$ is totally transcendental if and only if it is $aleph_0$ stable.
+  $T$ is totally transcendental if and only if it is $aleph_0$-stable.
 ]<thrm-stable>
 #proof[
   One direction is obvious, for the other direction we prove by contrapositive. Suppose $T$ is not $kappa$ stable for some $kappa$, that is, there is a model $mM sat T$ with a subset $A seq mM$, $|A| = kappa$ satisfying $|S_1(A)| > kappa$.
@@ -2479,3 +2479,93 @@ The following is standard.
   If $A$ is also a basis then $|A| = |B|$.
 ]
 
+#definition[
+  Let $mM$ be a model with $A seq mM$, the _dimension_ of a strongly-minimal formula $phi$ over $A$ is the cardinality of any basis of $phi(mM)$ (which is well defined by the work done above).
+]
+
+#theorem[
+  Suppose that $mN_1, mN_2 succ mM$ (or $mM = nothing$) are all theories of $T$, and that $phi$ is a strongly-minimal formula with parameters in $A seq mM$.
+  If $a_1,... in phi(mN_1), b_1,... in phi(mN_2)$ are independent sets then //TODO: MAKE NOTATION CLEARER
+  $
+    tp(ov(a) quo A) = tp(ov(b) quo A)
+  $
+  where $ov(a),ov(b)$ are any tuples of the same length of distinct elements of $a_i,b_i$ respectively.
+]<thrm-elementary_bases>
+#proof[
+  We induct on $n$, for $n = 1$ suppose that $mN_1 sat psi(a)$ then we want to show that $mN_2 sat psi(b)$, since $a$ is independent it cannot be algebraic so $psi(mN_1) sect phi(mN_1)$ cannot be finite.
+
+  Then since $phi$ is strongly-minimal we have that $phi(mN_1) sect psi(mN_1)$ is co-finite in $phi(mN_1)$ and so $mN_1 sat |phi(mN_1) backslash psi(mN_1)| = m$ for some $m$. But then $mN_2 sat |phi(mN_2) backslash psi(mN_2)| = m$, so since $b$ is not algebraic we cannot have $b in phi(mN_2) backslash psi(mN_2)$ and so $b in phi(mN_2) sect psi(mN_2)$ and thus $mN_2 sat psi(b)$.
+  // TODO: ADD REMARK ABOUT FINITE SET STATEMENTS AS FORMULAS.
+
+  Now for the inductive step assume $ov(a) = a_1...a_(j+1)$ and $ov(b) = b_1...b_(k+1)$ and write $ov(a)' = a_1...a_k, ov(b)'=b_1...b_k$. By inductive hypothesis we have $tp(ov(a)' quo A) = tp(ov(b)' quo A)$ and so suppose that $mN_1 sat psi(a_(k+1), ov(a)')$ and we want to show that $mN_2 sat psi(b_(k+1), ov(b)')$.
+
+  In $mN_1$ we have by the same argument that $a_(k+1)$ is not algebraic over $ov(a)'A$ and so
+  $
+    mN_1 sat |phi(mN_1) backslash psi(mN_1,ov(a)')| = n
+  $
+  hence
+  $
+    mN_2 sat |phi(mN_2) backslash psi(mN_2, ov(b)')| = n
+  $
+  and by the same argument $mN_2 sat psi(b_(n+1), ov(b))$.
+]
+
+#theorem[
+  Suppose that $mN_1, mN_2 succ mM$ (or $mM = nothing$) are all theories of $T$, and that $phi$ is a strongly-minimal formula with parameters in $A seq mN_1 sect mN_2$.
+  If
+  $
+    dim(phi(mN_1)) = dim(phi(mN_2))
+  $
+  then there exists a partial elementary map $f : phi(mN_1) ->> phi(mN_2)$.
+]
+#proof[
+  First we set $f'$ to be identity on $A$, then we pick bases $(a_alpha)_(alpha in I), (b_alpha)_(alpha in I)$. Then by mapping $a_alpha |-> b_alpha$ we know that by @thrm-elementary_bases this remains a partial embedding. We now use Zorn's lemma to pick a maximal partial embedding $f$ with respect to inclusion that contains $f'$, and we want to show that the domain of $f$ is $phi(mN_1)$ and the range is $phi(mN_2)$. 
+
+  // TODO: SIMPLIFY BASES NOTATION.
+  To see this assume that we have $x in phi(mN_1) backslash dom(f)$, then we know that $x$ is algebraic over $(a_alpha)_(alpha in I)$ so we know by assignment that it is isolated. // TODO: INCLUDE PROOF
+  Hence we can find $y in phi(mN_2)$ with $tp(x quo dom(f)) = tp(y quo rng(f))$, hence $g$ which extends $f$ by mapping $x$ to $y$ is also elementary which contradicts the fact that $f$ was maximal.
+]
+#corollary[
+  If $T$ is strongly-minimal then $mN_1 tilde.equiv mN_2$ if and only if $dim(mN_1) = dim(mN_2)$.
+]<cor-dimensions_implies_isomorphism>
+
+#corollary[
+  If $T$ is strongly-minimal, then $T$ is $kappa$-categorical for every $kappa >= aleph_1$.
+]
+#proof[
+  Let $mN_1,mN_2 sat T$ with $||mN_1|| = ||mN_2|| = kappa$ and let $I_1 seq mN_1, I_2 seq mN_2$ be bases, since $L$ is countable we have
+  $
+    ||I_1|| = ||acl(I_1)|| = ||mN_1|| = ||mN_2| = ||acl(I_2)|| = ||I_2||
+  $
+  and so by @cor-dimensions_implies_isomorphism we get that $mN_1 tilde.equiv mN_2$.
+]
+
+= Prime Model Extensions
+Let $A seq frak(C)$.
+#definition[
+  A model $mM elm frak(C)$ such that $A seq mM$ is _prime over_ $A$ if for every other model $mN$ with $A seq mN elm frak(C)$ there is an elementary embedding $mM elm mN$ which restricts to the identity on $A$.
+]
+
+#theorem[
+  If $T$ is $aleph_0$-stable then for every $A seq frak(C)$ there exists an $mM elm frak(C)$ which is prime over $A$.
+]
+#proof[
+  The strategy is quite simple, pick $delta$ with $delta <= ||frak(C)||$ and we construct $(a_alpha : alpha < delta)$ such that if there exists $a in frak(C)$ such that $tp(a quo A union a_(< alpha))$ is isolated and who's type is not realized in $A union (a_alpha : alpha < delta)$ then $a_alpha = a$ for one such $a$. At some point we stop and are left with $mM = A union {a_alpha : alpha < delta}$. Now we need to show is that $mM$ is an elementary sub model and that it is prime over $A$.
+
+  Let us denote $A_alpha = A union {a_alpha : alpha < beta}$, then we will use @thrm-tv_test to prove $mM$ is an elementary submodel, assume that in $frak(C)$ we have
+  $
+    frak(C) sat exists x phi(x, ov(a))
+  $
+  for $ov(a) in mM$, since $mM = union.big_(alpha < delta) A_alpha$ we may assume that $ov(a) in A_alpha$ for some $alpha$. By $aleph_0$-stability we know that isolated types in $S(A_alpha)$ are dense, assume otherwise, then there is a neighborhood in $S(A_alpha)$ without any isolated points. Then since we have no isolated points and the space is Hausdorff we can repeatedly split it in half to construct a tree of formulas $phi_sigma, sigma in 2^(< omega)$ such that $phi_(sigma 0), phi_(sigma 1)$ are inconsistent and both imply $phi_sigma$, this tree contradicts $aleph_0$-stability as can be seen in the proof of @thrm-stable.
+
+  Now since the isolated types in $S(A_alpha)$ are dense, we choose an isolated type $p in S(A_alpha)$ such that $phi(x, ov(a)) in p$, so let $psi$ be the formula isolating $p$, since $psi$ has finitely many parameters and $frak(C)$ is $aleph_0$ saturated we can find an element realizing $psi$ and hence $p$. Let $a in frak(C)$ with $a sat p$ then it will be added at some point to $A_alpha$ and hence will be in $mM$.
+
+  Now to show $mM$ is prime we use transfinite induction on $alpha$, the base case and limit case as trivial, then for the successor step we use the fact that if $tp(a quo B union A)$ is isolated and for any $b in B$ $tp(b quo A)$ is isolated then $tp(a quo A)$ is isolated. Now from this we get that $mM$ is prime over $A$ since we can inductively construct an embedding $mM -> mN$.
+]
+#remark[
+  This is a stronger condition than the isolated types being dense, which is what is needed to guarantee a prime model if $A$ is empty.
+]
+
+#corollary[
+  If $T$ is $aleph_0$ stable then $forall A seq frak(C)$ there exists $mM$ prime over $A$ such that for all elements $a in mM$ we have $tp(a quo A)$ is isolated.
+]
