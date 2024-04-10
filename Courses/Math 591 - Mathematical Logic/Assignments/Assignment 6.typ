@@ -67,7 +67,13 @@ Let us formalize the statement of the question.
   The limit case is also trivial.
   For the successor case assume that $RM_mM (phi) >= alpha + 1$, then there is an infinite sequence of $L(mM)$ formulas $phi_i$ that are pairwise inconsistent, imply $phi$, and have $RM_mM (phi_i) >= alpha$. The $phi_i$ are also $L(mN)$ formulas and hence by inductive hypothesis we have $RM_mN (phi_i) >= alpha$, so we also have $RM_mN (phi) >= alpha + 1$.
 
-  On the other hand assume that $RM_mN (phi) >= alpha + 1$, then there are $L(mN)$ formulas $phi_i(ov(x), ov(a))$ that are pairwise inconsistent, imply $phi(ov(x))$, and have $RM_mN (phi_i(ov(x))) >= alpha$. Then for each $i$ we have that $phi_i (mN)$ is non-empty and thus neither is $phi_i (mM)$, so let $ov(a)_i$ be tuples realizing $phi_i$ in $mM$.
-
-  Let $ov(b)$ be the parameters of $phi_i$ taken from $mN$, we know that the formula
+  On the other hand assume that $RM_mN (phi) >= alpha + 1$, then for any $n$ there are $L$-formulas $phi_i (ov(x), ov(y))$ and parameters $ov(a)_i$ for $1 <= i <= n$ such that $phi_i (ov(x), ov(a)_i)$ are pairwise inconsistent, imply $phi(ov(x))$, and have $RM_mN (phi_i (ov(x), ov(a)_i)) >= alpha$. Now consider the sentence
+  $
+    sigma = exists ov(b)_1 ... ov(b)_n thin exists ov(a)_1 ... ov(a)_n (and.big_(i) phi_(i)(ov(b)_i, ov(a)_i) and (and.big_(j != i) not phi_j (ov(b)_i, ov(a)_j))).
+  $
+  This sentence describes witnesses to the existence of $n$ representatives of distinct definable subsets of $phi(mN)$, but since this sentence is true in $mN$ it is also true in $mM$. Let $ov(b)_i, ov(a)_i$ be the witnesses to its truth in $mM$, then consider the formulas
+  $
+    psi_i (ov(x)) = phi_(i)(ov(x), ov(a)_i) and (and.big_(j != i) not phi_j (ov(x), ov(a)_j))
+  $
+  the $psi_i$ are clearly pairwise inconsistent but also $ov(b)_i in psi_i (mM)$ so they are all non-empty, hence we found $n$ disjoint non-empty subsets of $phi(mM)$. Since this is true for every $n$ and each
 ]
