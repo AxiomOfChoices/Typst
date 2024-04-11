@@ -2567,5 +2567,43 @@ Let $A seq frak(C)$.
 ]
 
 #corollary[
-  If $T$ is $aleph_0$ stable then $forall A seq frak(C)$ there exists $mM$ prime over $A$ such that for all elements $a in mM$ we have $tp(a quo A)$ is isolated.
+  If $T$ is $aleph_0$-stable then $forall A seq frak(C)$ there exists $mM$ prime over $A$ such that for all elements $a in mM$ we have $tp(a quo A)$ is isolated.
+]
+
+= Categoricity theorem
+We now start working towards Categoricity Theorem, the main result of this course.
+
+#definition[
+  Let $kappa > lambda >= aleph_0$, an $L$-theory $T$ is said to have a _$(kappa, lambda)$-model_ if there exists a model $mM sat T$ with $|mM| = kappa$ and an $L$-formula, $phi(x)$ such that $|phi(mM)| = lambda$.
+]
+
+#definition[
+  Let $mM elm mN sat T$. Then $(mN, mM)$ is a _Vaughtian pair_ if there is an $L$-formula $phi(x)$ such that $phi(mM) = phi(mN)$ are both infinite.
+]
+
+#lemma[
+  If $T$ has a $(kappa, lambda)$-model, then it has a Vaughtian pair $(mN, mM)$ such that $|mN| < kappa$ and $|mM| = lambda$.
+]
+#proof[
+  We use @thrm-downwards, we let $mN sat T$ of size $kappa$ and $phi$ be such that $|phi(mN)| = lambda$, we can then find $mM$ such that $phi(mN) seq mM$ and $mM elm mN$. Then we have $phi(mM) = phi(mN)$ by elementarity.
+]
+
+#definition[
+  Suppose $cal(U)$ is a unary predicate. Let $phi(x)$ be an $L$-formula. The _relativization_ of $phi$ to $cal(U)$, denoted $phi^cal(U)$, is defined as follows:
+  $
+    phi^cal(U) (ov(x)) := cal(U)(x_1) and ... and cal(U)(x_n) and phi(ov(x))
+  $
+  for $phi$ atomic, and
+  $
+    phi^cal(U) (ov(x)) := exists y (y and psi^cal(U) (y,z))
+  $
+]
+
+If $(mN_i, mM_i) sat T$ are Vaughtian pairs we write $(mN_1, mM_1) elm (mN_2, mN_2)$ to mean that they have the same $L$-formula in their definition, that $mN_1 elm mN_2, mM_1 elm mM_2$, and that $phi(mN_1) = phi(mN_2), phi(mM_1) = phi(mM_2)$.
+
+#lemma[
+  If $T$ has a Vaughtian pair $(mN,mM)$, then it also has a Vaughtian pair $(mN_0, mM_0)$ with $|mN_0| = |mM_0| = aleph_0$.
+]
+#proof[
+
 ]

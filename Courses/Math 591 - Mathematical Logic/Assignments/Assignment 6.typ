@@ -241,10 +241,23 @@ so $V(p)$ is is additive. Additionally we have
 $
 K sat (f(ov(x)) = 0) or (g(ov(x)) = 0) <=> f(ov(x)) g(ov(x)) = 0
 $
-and so $V(p)$ is an ideal, and in fact a prime ideal in $k[ov(x)]$.
+and so $V(p)$ is either an ideal or empty, and if it is an ideal it is a prime ideal in $k[ov(x)]$.
 
-Now
+Now the converse is also true, every prime ideal also corresponds to a type. Let $I$ be a prime ideal of $k[ov(x)]$, then consider the type
+$
+  W(I) = { f(ov(x)) = 0 : f in I }
+$
+this is not yet a complete type but we can take all the conclusions of this type to complete it. This is because $A C F_p$ has quantifier elimination so every formula is equivalent to boolean combination of polynomials, so the truth value of every formula can be derived from just the formulas in the set above. We also map the 'empty' ideal to the complete type of a transcendental number over $k$.
+
+We can see that these two operations are inverses of each other, and so complete types in $S_n (k)$ are in correspondence with prime ideals of $k[ov(x)]$.
+
+Now let us specifically consider $S_1 (k)$, take an algebraic type $p$ and consider its corresponding prime ideal $Z(p)$. Since this is an ideal in $k[x]$, which is a PID, then there is a polynomial $f$ such that $Z(p) = (f)$. Now since $Z(p)$ is a prime ideal we also know that $f$ is irreducible and thus is either linear has no roots of $k$. If it is linear then its only root is just an element of $k$ which is trivially algebraic, hence we can assume that $f$ is at least quadratic and has no roots in $k$. Now $K$ is algebraically closed so $f$ factors as
+$
+  f = product_i (x - alpha_i)
+$
+for some $alpha_i in K backslash k$, since $f$ is irreducible over $k$ then the polynomials $f$ are minimal polynomials for $alpha_i$ and so all $alpha_i$ are in the algebraic closure $ov(k)$. Conversely for any element $ov(x)$ in the algebraic closure, its minimal polynomial is irreducible and thus generates a prime ideal. We thus have that the algebraic types in $S_1 (k)$ are exactly the types of elements of the algebraic closure of $k$.
 
 = Question
 == Statement
+Show that 
 
