@@ -2434,7 +2434,7 @@ Often in math, a closure operator has another interesting property which we have
   $
     D sect sect.big_(i=1)^(n+1) {y : phi(a_i, y) and psi(y)}
   $
-  is an intersection of co-finite sets in $D$ and thus is also co-finite in $D$, hence we can pick an element $b'$ in this set. Now $b'$ satisfies $psi$, which contradicts the fact that each $a_i$ is in ${x in D : phi(x,y)}$. // TODO: ADD DIAGRAm
+  is an intersection of co-finite sets in $D$ and thus is also co-finite in $D$, hence we can pick an element $b'$ in this set. Now $b'$ satisfies $psi$, which contradicts the fact that each $a_i$ is in ${x in D : phi(x,y)}$. // TODO: ADD DIAGRAM
 ]
 
 We now know that $acl$ is an operator which is monotone idempotent with the exchange property, operators with these properties are called a _pregeometry_ or a _matroid_.
@@ -2601,14 +2601,84 @@ We now start working towards Categoricity Theorem, the main result of this cours
     phi^cal(U) (ov(x)) := exists y (y and psi^cal(U) (y,z))
   $
 ]
+#proposition[
+  If $mN$ is an $L$-model with an added unary predicate $cal(U)$, then $cal(U)(mN)$ induced an elementary $L$-submodel if and only if for any tuple $ov(a) in mM$ and any $L$-formula $phi$ we have
+  $
+    mM sat phi(ov(a)) <=> mN^(L') sat phi^cal(U)(ov(a)).
+  $
+]
+<prop-relativization>
+#proof[
+  Exercise, prove by induction.
+]
 
 If $(mN_i, mM_i) sat T$ are Vaughtian pairs we write $(mN_1, mM_1) elm (mN_2, mN_2)$ to mean that they have the same $L$-formula in their definition, that $mN_1 elm mN_2, mM_1 elm mM_2$, and that $phi(mN_1) = phi(mN_2), phi(mM_1) = phi(mM_2)$.
 
 #lemma[
-  If $T$ has a Vaughtian pair $(mN,mM)$, then it also has a Vaughtian pair $(mN_0, mM_0)$ with $|mN_0| = |mM_0| = aleph_0$.
+  If $T$ has a Vaughtian pair $(mN,mM)$, then it also has a Vaughtian pair $(mN_0, mM_0)$ with $||mN_0|| = ||mM_0|| = aleph_0$.
 ]
 #proof[
+  Set $L' = L cal {cal(U)}$ and interpret $mN$ as an $L'$ model by setting $cal(U)(x) <=> x in mM$, then consider for any $L$-formula $phi$ the $L$-sentence
+  $
+    sigma_phi := forall ov(z) ((and.big_(i <= n) cal(U)(x_i) and phi(ov(x))) -> phi^cal(U) (ov(x)))
+  $
+  since $mM elm mN$ then we have for any tuple $ov(a) in mN$
+  $
+    mN sat and.big_(i <= n) cal(U)(a_i) and phi(ov(a)) &<=> (mN sat phi(ov(a))) and ov(a) in mM => mM sat phi(ov(a)) \ &=> mN sat phi^cal(U) (ov(a))
+  $
+  and so $mN sat sigma_phi$.
 
+  Now we use @thrm-downwards to construct a countable $L'$-model $mN_0$ with $mN_0 elm mN$, then in $mN_0$ we also have $mN_0 sat sigma_phi$ for all $phi$. Then $cal(U)(mN_0)$ is exactly an elementary submodel exactly by @prop-relativization, so we will define $mM_0 := cal(U)(mN_0)$. To check that $(mN_0, mM_0)$ is a Vaughtian pair we apply @prop-relativization specifically with $phi$ being the formula that defines the infinite subset shared between $mM$ and $mN$. All its properties can be encoded as $L'$-sentences so are shared for $mN_0$.
+]
+
+#lemma[
+  Suppose that $mM elm mN sat T$, then there is a pair $mM_0 elm mN_0$ such that $(mN,mM) succ (mN_0, mM_0)$ and such that $mM_0,mN_0$ are both countable, homogeneous, and realize the same types in $S_n (T)$.
+]
+<lem-model_pair_embedding>
+// TODO: FIX REFERENCE UNDERLINING
+#proof[
+  Fix an $L$-formula $phi$ and set $L' = L union { cal(U) }$.
+
+  #claim[
+    If $ov(a) in mM_0$, and $p in S_n (ov(a))$ is realized in $mN_0$, then there exists countable extensions $(mN', mM') succ (mM_0, mN_0)$ such that $p$ is realized in $mM'$.
+  ]
+  #proof[
+    Let $L'' = L'(mN_0)$, $c$ a new constant, and let $T:= Th_(L'') (mN_0, mM_0) union {phi^cal(U) (c, ov(a) : phi in p}$. $T$ is finitely satisfiable since for any formulas $phi_i$ we have that since $p$ is realized in $mN_0$
+    $
+      mN_0 sat exists ov(x) and.big_i phi_i (ov(x))
+    $
+    and so by elementarity so does $mN_0$.
+
+    Hence let $mN' sat T$ and set $mM' = cal(U)(mN')$.
+  ]
+
+  #claim[
+    If $ov(b) in mN_0$, $p in S_n (ov(b))$, then there exists two countable models $(mN'', mM'') succ (mN_0, mM_0)$ such that $p$ is realized in $mN''$.
+  ]
+  #proof[
+    Almost exactly the same.
+  ]
+
+  With these two claims we can now construct what we want, we will build sequences of countable models $mM_i, mN_i$ such that $(mN_(i+1), mM_(i+1)) succ (mN_i, mM_i)$ and
+  - $i = 3i$: Any type $p in S_n (nothing)$ that is realized in $mN_i$ is realized in $mM_(i+1)$. We use the first claim for this.
+  - $i = 3i + 1$: If $ov(a),ov(b),ov(c) in mN_i$ are such that $tp(ov(a)) = tp(ov(c))$ then there exists a $d in mN_(i+1)$ such that $tp(ov(a)ov(c)) = tp(ov(b)ov(d))$. We use claim 2 for this.
+  - $i = 3i + 2$: If $ov(a),ov(b),ov(c) in mM_i$ are such that $tp(ov(a)) = tp(ov(c))$ then there exists a $d in mM_(i+1)$ such that $tp(ov(a)ov(c)) = tp(ov(b)ov(d))$. We use claim 1 for this.
+
+  Then it is easy to check that $mN := union.big_i mN_i$ and $mM := union.big_i mM$ work.
+]
+
+#theorem("Vaught's Two Cardinal Theorem")[
+  Let $T$ be an $L$-theory. The following are equivalent:
+  #set enum(numbering: "(1)", indent: 1em)
+  + There exist cardinals $kappa > lambda >= aleph_0$ such that $T$ has a $(kappa, lambda)$-model.
+  + $T$ has a Vaughtian pair.
+  + $T$ has an $(aleph_1, aleph_0)$-model.
+]
+<thrm-vaught_two_cardinal>
+#proof[
+  We already proved $(1) => (2)$, $(3) => (1)$ is immediate, so we just need to show $(2) => (3)$. Assume then, that $T$ has a Vaughtian pair $(mN,mM)$ with $mM,mN$ countable.
+
+  We now construct a sequence of models, $mM_alpha$ such that $(mM_(i+1), mM_(i)) equiv (mM_1, mM_(0))$, we start with $mM_0 = mM$ and $mM_1 = mN$, we do the successor step using @lem-model_pair_embedding and in limit steps we just take unions. We then set $mN' := union.big_(i < alpha) mN_i$, this is model of size $aleph_1$ but we still have that $(mN', mM)$ is a Vaughtian pair so since we have a formula $phi$ given to use by the pair, we have that $phi(mN') seq mM$ and thus $|phi(mN')| = aleph_0$ and so this $mN'$ is a $(aleph_1,aleph_0)$ model.
 ]
 
 #lemma[
@@ -2624,13 +2694,14 @@ If $(mN_i, mM_i) sat T$ are Vaughtian pairs we write $(mN_1, mM_1) elm (mN_2, mN
 
     If $A$ is the set of parameters of $phi_sigma$'s then $|S_1 (A)| >= 2^(aleph_0)$, which contradicts $aleph_0$ stability.
   ]
-  Let $phi$ be as in the claim above, we define the type // TODO: DOUBLE CHECK SYNTAX
+  Let $phi$ be as in the claim above, we define the type. // TODO: DOUBLE CHECK SYNTAX
   $
     p = { psi(x) : psi "is an" L(mM) "formula with" |psi and phi(mM)| >= aleph_1 }.
   $
   Then $p$ is a complete type in $S(mM)$ due to the defining property of $phi$, then let $mM' succ mM$ be the extension that realizes $p$, and set $c$ to be a witness.
 
-  We now take $mN$ to be the prime model over $mM union {c}$ (@def-prime_over_set), then every $b in mN$ has isolated type over $mM union {c}$. Clearly $mN$ contains $mM$ and thus all the types of $mM$, so it is enough to show that $mM$ contains all the types of $mN$. Let $Gamma(w)$ be a countable type over $mM$ that is realized in $mN$, we show that is also realized in $mM$. Let $b sat Gamma$, then $tp(b quo mM c)$ is isolated by some formula $theta(w, c)$. // TODO: FIX SPECIFICITY OF TYPES
+  We now take $mN$ to be the prime model over $mM union {c}$ (@def-prime_over_set), then every $b in mN$ has isolated type over $mM union {c}$. Clearly $mN$ contains $mM$ and thus all the types of $mM$, so it is enough to show that $mM$ contains all the types of $mN$. Let $Gamma(w)$ be a countable type over $mM$ that is realized in $mN$, we show that is also realized in $mM$. Let $b sat Gamma$, then $tp(b quo mM c)$ is isolated by some formula $theta(w, c)$. 
+  // TODO: FIX SPECIFICITY OF TYPES
 
   Now we know, since $c$ realizes $p$ and since $exists w theta(omega, c)$ is true then $exists w theta(omega, x) in p$. We also know that  
   $
@@ -2677,7 +2748,7 @@ If $(mN_i, mM_i) sat T$ are Vaughtian pairs we write $(mN_1, mM_1) elm (mN_2, mN
   If $T$ is $kappa$-categorical with $kappa >= aleph_1$ then $T$ has no Vaughtian pair.
 ]
 #proof[
-  Let $mM$ be as in @prop-unsplittable_model, let $mN$ be the $(kappa, aleph_0)$-model $mN$ proved in. // TODO: ADD REFERENCE TO THEOREM.
+  Let $mM$ be as in @prop-unsplittable_model, let $mN$ be the $(kappa, aleph_0)$-model $mN$ that we proved exists in @thrm-vaught_two_cardinal. // TODO: ADD REFERENCE TO THEOREM.
   Clearly $mM tilde.equiv.not mN$ which contradicts categoricity.
 ]
 
