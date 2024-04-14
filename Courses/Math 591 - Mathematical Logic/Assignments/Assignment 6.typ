@@ -37,6 +37,7 @@
 
 #let lemma = lemma.with(numbering: none)
 #set enum(numbering: "(a)")
+#let claim = claim.with(base_level: 1)
 
 = Question
 <question-1>
@@ -245,7 +246,7 @@ and so $V(p)$ is either an ideal or empty, and if it is an ideal it is a prime i
 
 Now the converse is also true, every prime ideal also corresponds to a type. Let $I$ be a prime ideal of $k[ov(x)]$, then consider the type
 $
-  W(I) = { f(ov(x)) = 0 : f in I }
+W(I) = {f(ov(x)) = 0 : f in I}
 $
 this is not yet a complete type but we can take all the conclusions of this type to complete it. This is because $A C F_p$ has quantifier elimination so every formula is equivalent to boolean combination of polynomials, so the truth value of every formula can be derived from just the formulas in the set above. We also map the 'empty' ideal to the complete type of a transcendental number over $k$.
 
@@ -253,11 +254,41 @@ We can see that these two operations are inverses of each other, and so complete
 
 Now let us specifically consider $S_1 (k)$, take an algebraic type $p$ and consider its corresponding prime ideal $Z(p)$. Since this is an ideal in $k[x]$, which is a PID, then there is a polynomial $f$ such that $Z(p) = (f)$. Now since $Z(p)$ is a prime ideal we also know that $f$ is irreducible and thus is either linear has no roots of $k$. If it is linear then its only root is just an element of $k$ which is trivially algebraic, hence we can assume that $f$ is at least quadratic and has no roots in $k$. Now $K$ is algebraically closed so $f$ factors as
 $
-  f = product_i (x - alpha_i)
+f = product_i (x - alpha_i)
 $
 for some $alpha_i in K backslash k$, since $f$ is irreducible over $k$ then the polynomials $f$ are minimal polynomials for $alpha_i$ and so all $alpha_i$ are in the algebraic closure $ov(k)$. Conversely for any element $ov(x)$ in the algebraic closure, its minimal polynomial is irreducible and thus generates a prime ideal. We thus have that the algebraic types in $S_1 (k)$ are exactly the types of elements of the algebraic closure of $k$.
 
 = Question
+<question-5>
 == Statement
-Show that 
+Show that any algebraic type is isolated.
+== Solution
+Let $p$ be an algebraic type, from class then we know that there is an algebraic formula $phi$ such that $phi in p$.
+Now take some model $mM sat T$ and consider the sets $A := phi(mM)$ and $B := p(mM)$. Both of these sets are finite, and we also have
+$
+B = A sect.big_(psi in p) psi(mM).
+$
+Now since $A$ is finite then $A backslash B$ is finite so enumerate it as ${ov(x)_1,...,ov(x)_n}$, then by the equation above, for each $ov(x)_i$, there is a formula $psi_i in p$ such that $mM tack.r.double.not psi_i (ov(x)_i)$.
+
+Now this means that
+$
+(phi and.big_(i <= n) psi_i)(mM) seq B,
+$
+but also we know that anything in $B$ satisfies all of these formulas so we get
+$
+B seq (phi and.big_(i <= n) psi_i)(mM)
+$
+and so $phi and.big_(i <= n) psi_i$ isolates $p$.
+
+= Question
+== Statement
+Find an example of a minimal but not strongly minimal structure.
+== Solution
+Consider the structure $(S, <)$ where $S = omega_0 union.sq omega_0^-$ where $omega_0$ has the standard well order, $omega_0^-$ has the reverse order, and every element of $omega_0^-$ is larger than every element of $omega_0$. I am certain the formula $x = x$ in this model is a minimal formula, but I am not entirely sure how to prove it.
+
+Now consider the collection of formulas
+$
+q(ov(x)) = {n < x : x in omega_0} union {x < m : m in omega_0^-},
+$
+this is clearly finitely satisfiable in $(S, <)$ and thus constitutes a type. Let $(S', <)$ denote any elementary extension which implements this type, let $y$ be the realization of this type. We now show that the formula $x = x$ is not minimal in this structure. Consider the formula $phi(z) = z < y$, we know that $phi(S')$ contains $omega_0$ while its complement contains $omega_0^-$ so neither are finite. This finishes the proof.
 
