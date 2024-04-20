@@ -171,7 +171,7 @@ In this course, however, we will only be looking at first order logic.
   $ phi' = forall x thin phi "or" phi' = exists x thin phi $
   we say that all occurrences of $x$ are _bound_ in $phi'$, and we say that $phi$ is the _range_ of $forall x$ or $exists x$ respectively.
 
-  An occurrence of a variable $x$ in a formula $phi$ is _free_ if it is not bound in $phi$. 
+  An occurrence of a variable $x$ in a formula $phi$ is _free_ if it is not bound in $phi$.
 
   An $L$-_sentence_ is an $L$-formula with no free variables.
 ]
@@ -511,7 +511,7 @@ We will now use this lemma to prove a slightly weaker statement that will then u
 #proposition[
   If $mM$ and $mN$ are countable then we also have 
   $
-    mM tilde.eq mN <=> "The Prover has a winning strategy in" Gamma(mM,mN)
+    mM tilde.equiv mN <=> "The Prover has a winning strategy in" Gamma(mM,mN)
   $
 ]
 #proof[
@@ -958,8 +958,6 @@ We will next show how to construct saturated models, to complete this we will ne
   If $(mN_alpha)_(alpha < kappa)$ is an elementary chain, that is $mN_alpha elm mN_beta$ for $alpha < beta$. Then if $mN = union.big_(alpha = 0)^kappa mN_alpha$ we have $mN_alpha elm mN$ for all $alpha$.
 ]
 #proof[
-  // Let $phi(ov(a))$ be a formula, we show that $mN_alpha sat phi(ov(a)) <=> mN sat phi(ov(a))$ for all $alpha$ by induction. Since every $mN_alpha$ is contained in $mN$ then this is true for all atomic formulas $phi$. Now we induct on the structure of $phi$, for logical connectives this is trivial. Now assume that $phi = exists x thin psi(x,ov(a))$, then certainly $mN_i sat phi => mN sat phi$, now if $mN sat phi(ov(a))$ then there is some $j >= i$ such that $b in |mN_j|$ and so $mN_j sat psi(b,ov(a))$ so $mN_j sat phi(ov(a))$ and so $mN_i sat phi(ov(a))$.
-
   We will use @thrm-tv_test to prove this, by structural induction on the formula $phi$. Assume that $ov(a) seq mN_alpha$ for some $alpha$ and $mN sat exists x thin phi(x, ov(a))$. Then for some $ov(b) in mN$ we have $mN sat phi(ov(b), ov(a))$. Now since it is a finite tuple we also have that $ov(b) in mN_beta$ for some $beta$, if $beta <= alpha$ then $ov(b) in mN_alpha$ so we are done, hence we assume that $beta > alpha$. Then we have $mM sat phi(ov(b), ov(a))$ so by induction we know that $mN_beta sat phi(ov(b), ov(a))$. But then since $beta > alpha$ we know that $mN_alpha elm mN_beta$ and thus $mN_alpha sat phi(ov(b), ov(a))$ and so the test holds by induction.
 ]
 
@@ -1104,7 +1102,7 @@ Now that we have the tools to omit types, we can use them to characterize the $a
   Let $T$ be a complete theory over a countable language $L$, the following are equivalent.
   + $T$ is $aleph_0$-categorical.
   + $forall n, S_n^T (nothing)$ is finite.
-]
+]<thrm-aleph_0_categorization>
 #proof[
   $(1) => (2)$. Suppose that $S_n^T (nothing)$ is infinite, we know that it is always a closed subset of the Cantor set. As an infinite compact space, $S_n^T (nothing)$ has a non isolated point, corresponding to a non isolated type $p$. By the omitting types theorem, there exists a model which omits $p$, since it is a type there is another model which realizes $p$, those two models then cannot be isomorphic. We can then make them both countable by @thrm-downwards which completes this side of the proof.
 
@@ -1161,7 +1159,11 @@ $Aut(mM)$ acts on $mM^n$ for all $n$, and is in fact a Polish topological group.
   $Th(mM)$ is $aleph_0$-categorical if and only if for all $n$, $Aut(mM)$ acts on $mM^n$ with finitely many orbits.
 ]
 #proof[
-  Exercise.
+  Every tuple in an orbit has the same type since $Aut(mM)$ consists of automorphisms. Hence we have that if there are finitely many orbits, each $S_n (nothing)$ is finite, making $T$ $aleph_0$-categorical by @thrm-aleph_0_categorization.
+
+  On the other hand if it is $aleph_0$-categorical, every $S_n (nothing)$ is finite, and so by @prop-type_space_injection so is every $S_n (A)$. Now let $ov(a),ov(b)$ be two tuples of the same type and consider $T(ov(a))$. In this theory we have $S_n^(T(ov(a))) (nothing) = S_n^T (ov(a))$ and thus each of its type spaces are finite. 
+
+  Now again through @thrm-aleph_0_categorization we know that $T(ov(a))$ is $aleph_0$-categorical so since we can interpret $mM$ as an $T(ov(a))$ model by interpreting $ov(a)$ as $ov(b)$, so we have an isomorphism mapping $ov(a)$ to $ov(b)$, hence they are in the same orbit. Hence there at most as many orbits as there are $n$-types, so there are finitely many orbits.
 ]
 
 = Infinitary Logic and Scott Analysis
