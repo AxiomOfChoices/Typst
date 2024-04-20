@@ -23,6 +23,7 @@
 #let cf = math.op("cf")
 #let Cn = math.op("Cn")
 #let ip(x,y) = $lr(angle.l #x, #y angle.r)$
+#let suc = math.op("suc")
 #let Area = math.op("Area")
 #let Volume = math.op("Volume")
 #let Hess = math.op("Hess")
@@ -49,6 +50,9 @@
 #let SH = math.op("SH")
 #let Sc = math.op("Sc")
 #let span = math.op("Span")
+#let ZFC = math.op("ZFC")
+#let DLO = math.op("DLO")
+#let ACF = math.op("ACF")
 #let flat = $♭$
 #let gen(x) = $lr(angle.l #x angle.r)$
 
@@ -60,32 +64,43 @@
 #let theorem = thmbox(
   "theorem",
   "Theorem",
+  padding: (top: 0em, bottom: 0em),
   fill: rgb("#e8e8f8")
 )
 
 #let lemma = thmbox(
   "theorem",            // Lemmas use the same counter as Theorems
   "Lemma",
+  padding: (top: 0em, bottom: 0em),
   fill: rgb("#efe6ff")
 )
 #let conjecture = thmbox(
   "theorem",            // Lemmas use the same counter as Theorems
   "Conjecture",
+  padding: (top: 0em, bottom: 0em),
   fill: rgb("#FFBE98")
 )
 #let claim = thmbox(
-  "claim",            // Lemmas use the same counter as Theorems
+  "theorem",            // Lemmas use the same counter as Theorems
   "Claim",
+  padding: (top: 0em, bottom: 0em),
   fill: rgb("#ffefe6")
+)
+#let technique = thmplain(
+  "technique",            // Lemmas use the same counter as Theorems
+  "Technique",
+  padding: (top: 0em, bottom: 0em),
 )
 #let proposition = thmbox(
   "theorem",            // Lemmas use the same counter as Theorems
   "Proposition",
+  padding: (top: 0em, bottom: 0em),
   fill: rgb("#efe6ff")
 )
 #let corollary = thmbox(
   "corollary",
   "Corollary",
+  padding: (top: 0em, bottom: 0em),
   base: "theorem",      // Corollaries are 'attached' to Theorems
   fill: rgb("#f8e8e8")
 )
@@ -93,12 +108,14 @@
 #let definition = thmbox(
   "definition",         // Definitions use their own counter
   "Definition",
+  padding: (top: 0em, bottom: 0em),
   fill: rgb("#e8f8e8")
 )
 
 #let exercise = thmbox(
   "exercise",
   "Exercise",
+  padding: (top: 0em, bottom: 0em),
   stroke: rgb("#ffaaaa") + 1pt,
   base: none,           // Unattached: count globally
 ).with(numbering: "I")  // Use Roman numerals
@@ -125,7 +142,6 @@
   "solution",
   "Solution",
   base: "exercise",
-  inset: 0em,
 ).with(numbering: none)
 
 #let assumptions = thmplain(
