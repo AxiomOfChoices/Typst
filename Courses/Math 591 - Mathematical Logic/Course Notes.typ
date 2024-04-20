@@ -16,13 +16,9 @@
 middletitle: [My course notes for the Winter 2024 Mathematical Logic course by #link("https://www.math.mcgill.ca/msabok/")[Marcin Sabok] at McGill],
 doc)
 
-<<<<<<< HEAD
 #set page(margin: (x: 2cm, top: 2cm, bottom: 2cm), numbering: "1")
-=======
-#set page(margin: (x: 2cm, top: 2cm, bottom: 2cm))
 #outline()
 #pagebreak()
->>>>>>> improving_notes
 
 = Models and Languages
 #definition[
@@ -94,7 +90,9 @@ We have defined the symbols of $L$, but how do we speak it? We will need the fol
 As with any language we will build up our language first with nouns and then with phrases.
 
 #remark[
-  We will often use $ov(a)$ to denote the ordered collection $(a_1,...,a_n)$ where $n$ will be clear from context.
+  We will often use $ov(a)$ to denote the ordered collection $(a_1,...,a_n)$ where $n$ will be clear from context. We will also write $ov(a) ov(b), a ov(b)$ etc to mean tuple concatenation.
+
+  We will also often use the notation $ov(a) A$ for some subset $A$ to denote $A union { a_1, ..., a_n }$, and if $A$ is finite we will use it to mean the tuple $(a_1,...,a_n,x_1,...,x_m)$ where $x_i$ are the ordered elements of $A$.
 ]
 
 #definition[
@@ -303,7 +301,7 @@ However, an _elementary substructure_ must agree with its superstructure on _all
 
 #definition[
   In first order logic we have the concept of a _proof system_, consisting of two parts.
-  _Axioms_ which are formulas which are declared to always be true, and _proofs_ which is a finite sequence of $L$-formulas such that every step is either an axiom of follows from the previous steps using an inference rule.
+  _Axioms_ which are formulas which are declared to always be true, and _proofs_ which is a finite sequence of $L$-formulas such that every step is either an axiom or follows from the previous steps using an inference rule.
 ]
 
 #example[
@@ -2876,7 +2874,6 @@ This subject, of course, goes a lot deeper than this theorem. Here is a selectio
 #theorem("Balduin-Lachlan")[
   If $T$ is $aleph_1$-categorical, not $aleph_0$-categorical, then it has $aleph_0$ countably many models of size $aleph_0$.
 ]
-=======
 #pagebreak()
 #set heading(numbering: "A.1", supplement: [Appendix])
 #show heading: it => {
