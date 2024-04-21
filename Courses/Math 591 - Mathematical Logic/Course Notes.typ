@@ -451,7 +451,7 @@ Lets see an example of this.
   $A C F_p$ is $kappa$-categorical for every uncountable $kappa$.
 ]
 #proof[
-  If $K,L sat A C F_p$ of size $kappa$. The transcendental degree, the size of a field's transcendental basis, will also be equal to $kappa$, then any bijection between transcendental bases will extend to an isomorphism between $K$ and $L$.
+  Let $K,L$ be models of $A C F_p$ of size $kappa >= aleph_1$. The transcendental degree, the size of a field's transcendental basis, will also be equal to $kappa$, then any bijection between transcendental bases will extend to an isomorphism between $K$ and $L$.
 ]
 
 #corollary[
@@ -1181,65 +1181,75 @@ $Aut(mM)$ acts on $mM^n$ for all $n$, and is in fact a Polish topological group.
   Now again through @thrm-aleph_0_categorization we know that $T(ov(a))$ is $aleph_0$-categorical so since we can interpret $mM$ as an $T(ov(a))$ model by interpreting $ov(a)$ as $ov(b)$, so we have an isomorphism mapping $ov(a)$ to $ov(b)$, hence they are in the same orbit. Hence there at most as many orbits as there are $n$-types, so there are finitely many orbits.
 ]
 
+#pagebreak()
 = Infinitary Logic and Scott Analysis
 We now want to take a short look at different types of logic.
 
 $cal(L)_(omega_1,omega)$ is the extension of finite order logic over a countable language $L$, where in formulas we allow infinite countable $or.big, and.big$.
 
 More precisely,
-+ The atomic formulas of $cal(L)_(omega_1,omega)$ are the same as in first order logic.
-+ If $phi_k$ is a countable set of formulas then
-  $
-    and.big_(k in omega) phi_k "and" or.big_(k in omega) phi_k
-  $
-  are both in $cal(L)_(omega_1,omega)$
-+ If $phi$ is in $cal(L)_(omega_1,omega)$ then $exists x (phi(x))$ and $forall y (phi(y))$ are both in $cal(L)_(omega_1,omega)$.
+#enum(indent: 0cm)[The atomic formulas of $cal(L)_(omega_1,omega)$ are the same as in first order logic.][If $phi_k$ is a countable set of formulas then $ and.big_(k in omega) phi_k "and" or.big_(k in omega) phi_k $ are both in $cal(L)_(omega_1,omega)$][If $phi$ is in $cal(L)_(omega_1,omega)$ then $exists x (phi(x))$ and $forall y (phi(y))$ are both in $cal(L)_(omega_1,omega)$.]
 
-Now recall that, in ordinary logic, for a finite model $mM$, there exists a sentence $sigma$ with $mM sat sigma$ and 
+
+Now notice that, in ordinary logic, for a finite model $mM$, there exists a sentence $sigma$ with $mM sat sigma$ and
 $
   (mN sat sigma) => mM tilde.equiv mN
 $
 Our goal now is to generalize this using our new type of logic to the case of countable models.
 
+
+#let sequiv = math.scripts(math.equiv)
+
 #definition[
   Let $mM$ be a countable structure.
-  Define $equiv_alpha$ on $mM^n$ for $alpha$ an ordinal, $n$ a natural number, by transfinite induction. 
+  Define $sequiv_alpha$ on $mM^n$ for $alpha$ an ordinal, $n$ a natural number, by transfinite induction. 
   For the base case
   $
-    ov(a) equiv_0 ov(b) quad "if" quad tp^mM (ov(a)) = tp^mM (ov(b)),
+    ov(a) sequiv_0 ov(b) quad "if" quad tp^mM (ov(a)) = tp^mM (ov(b)),
   $
   in the limit case
   $
-    ov(a) equiv_gamma ov(b) quad "if" ov(a) equiv_beta ov(b), forall beta < gamma,
+    ov(a) sequiv_gamma ov(b) quad "if" ov(a) sequiv_beta ov(b), forall beta < gamma,
   $
-  and in the successor step
+  and in the successor case
   $
-    ov(a) equiv_(alpha + 1) ov(b) quad "if" quad & forall c in mM, exists d in mM med (ov(a),c) equiv_(alpha) (ov(b), d)\ "and" quad & forall d in mM, exists c in mM med (ov(a),c) equiv_(alpha) (ov(b), d)
+    ov(a) sequiv_(alpha + 1) ov(b) quad "if" quad & forall c in mM, exists d in mM med (ov(a),c) sequiv_(alpha) (ov(b), d)\ "and" quad & forall d in mM, exists c in mM med (ov(a),c) sequiv_(alpha) (ov(b), d)
   $
 ]<def-scott_equiv>
 
-We record some important properties of these relations
+We record here some important properties of these relations
 #proposition[
-  - $equiv_alpha$ is an equivalence relation on $mM^n$ for all $n in NN$.
-  - If $alpha < beta$ and $ov(a) equiv_beta ov(b)$ then $ov(a) equiv_alpha ov(b)$.
-  - For every $ov(a)$, there is an ordinal $alpha < omega_1$ such that
-  $
-    [ov(a)]_alpha = [ov(a)]_beta quad "for all" beta >= alpha
-  $
-  where $[ov(a)]_alpha$ is the equivalence class of $ov(a)$ with respect to $equiv_alpha$.
+  + $sequiv_alpha$ is an equivalence relation on $mM^n$ for all $n in NN$.
+  + If $alpha < beta$ and $ov(a) sequiv_beta ov(b)$ then $ov(a) sequiv_alpha ov(b)$.
 ]
 Essentially we are saying that the equivalence classes of these relations form a decreasing sequence in alpha which stabilizes at some countable ordinal.
 #proof[
-  Exercise.
-  // TODO: COMPLETE PROOF
+  $(1)$ is trivial.
+
+  $(2)$. We prove by induction on $alpha$ that for any $ov(a),ov(b),c,d$ we have
+  $
+    (ov(a), c) sequiv_alpha (ov(b), d) => ov(a) sequiv_alpha ov(b).
+  $
+  For base case this is immediate, as is true for the limiting case. Assume then that this is true for $alpha$, then if $(ov(a), c) sequiv_(alpha+1) (ov(b), d)$ then
+  $
+    forall c' in mM, exists d in mM med (ov(a), c, c') sequiv_alpha (ov(b), d, d'),
+  $
+  and so by induction
+  $
+    forall c' in mM, exists d in mM med (ov(a), c) sequiv_alpha (ov(b), d),
+  $
+  and a similar working out goes for the other part of the successor case. Then by definition we get
+  $
+    ov(a) sequiv_(alpha+1) ov(b) => exists c,d in mM med (ov(a), c) sequiv_alpha (ov(b), d) => ov(a) sequiv_alpha ov(b).
+  $
 ]
 
-In fact an even stronger property is true
+We have a strong 'stabilization' property for these equivalence relations.
 #proposition[
-  There exists $alpha < omega_1$, such that $equiv_alpha$ is the same equivalence relation as $equiv_beta$ for all $beta >= alpha$.
+  There exists $alpha < omega_1$, such that $sequiv_alpha$ is the same equivalence relation as $sequiv_beta$ for all $beta >= alpha$.
 ]
 #proof[
-  For each $n$, $equiv_alpha$ forms a decreasing sequence of subsets of $mM^n times mM^n$, which is a countable set, so it must stabilize.
+  First note that if $sequiv_alpha$ is the same relation as $sequiv_(alpha + 1)$, then $sequiv_beta$ is the same as $sequiv_(beta + 1)$ for all $beta > alpha$, one can see this directly from definition.
 ]
 
 This proposition motivates the following definition.
@@ -1247,32 +1257,32 @@ This proposition motivates the following definition.
 #definition[
   The _Scott height_ (or _rank_) of a countable structure $mM$ is defined as
   $
-    SH(mM) = min { alpha < omega_1 : med equiv_alpha "is the same as" equiv_(alpha+1)}
+    SH(mM) = min { alpha < omega_1 : med sequiv_alpha "is the same as" sequiv_(alpha+1)}
   $
 ]
 
 We now want to use these tools to work towards our characterizing sentence for countable structures.
 We now define an equivalence on models that mirrors @def-scott_equiv.
 #definition[
-  We define $equiv_alpha$ on countable $L$ structures through transfinite induction.
+  We define $sequiv_alpha$ on countable $L$ structures through transfinite induction.
   For the base case
   $
-    mM equiv_0 mN "if" mM equiv mN,
+    mM sequiv_0 mN "if" mM sequiv mN,
   $
   for the limit case
   $
-    mM equiv_gamma mN "if" mM equiv_beta mN "for all" beta < gamma,
+    mM sequiv_gamma mN "if" mM sequiv_beta mN "for all" beta < gamma,
   $
   and for the successor step
   $
-    mM equiv_(alpha + 1) mN "if" quad & forall a in mM, exists b in mN, (mM, a) equiv_alpha (mN, b)
-    \ "and" quad & forall b in mN, exists a in mM, (mM, a) equiv_alpha (mN, b)
+    mM sequiv_(alpha + 1) mN "if" quad & forall a in mM, exists b in mN, (mM, a) sequiv_alpha (mN, b)
+    \ "and" quad & forall b in mN, exists a in mM, (mM, a) sequiv_alpha (mN, b)
   $
 ]
 
 We can see that this definition in fact generalizes @def-scott_equiv.
 #proposition[
-  $ov(a) equiv_alpha ov(b)$ if and only if $(mM,ov(a)) equiv_alpha (mM,ov(b))$.
+  $ov(a) sequiv_alpha ov(b)$ if and only if $(mM,ov(a)) sequiv_alpha (mM,ov(b))$.
 ]
 // TODO: COMPLETE PROOF
 
@@ -1280,7 +1290,7 @@ Now with this definition we can start to construct some characterizing sentences
 #lemma[
   $forall alpha < omega_1$, $forall ov(alpha) in mM, exists phi_alpha^(mM,ov(a)) (x) in cal(L)_(omega_1,omega)$, such that $forall mN, forall ov(b) in mN$,
   $
-    (mM, ov(a)) equiv_alpha (mN, ov(b)) <=> mN sat phi_alpha^(mM,ov(a)) (ov(b))
+    (mM, ov(a)) sequiv_alpha (mN, ov(b)) <=> mN sat phi_alpha^(mM,ov(a)) (ov(b))
   $
 ]
 #proof[
@@ -1307,10 +1317,10 @@ Unfortunately, the sentences are not exactly what we want, they only guarantee i
   $
     SH(mM) = SH(mN) = alpha,
   $ 
-  if $mM equiv_(alpha+omega) mN$, then $mM tilde.equiv mN$.
+  if $mM sequiv_(alpha+omega) mN$, then $mM tilde.equiv mN$.
 ]
 #proof[
-  Our proof will employ a back and fourth method, assume that at the step $n$ we have $(mM, a_1, ..., a_n) equiv_(alpha + 1) (mN, b_1,...,b_n)$.
+  Our proof will employ a back and fourth method, assume that at the step $n$ we have $(mM, a_1, ..., a_n) sequiv_(alpha + 1) (mN, b_1,...,b_n)$.
   Assume then that we are on an even step and want to add an element $a_(n+1)$ to this equivalence, we leave this induction step as an exercise.
 
   // TODO: COMPLETE EXERCISE
@@ -1319,17 +1329,17 @@ Unfortunately, the sentences are not exactly what we want, they only guarantee i
 
 We also have a partial converse to this result.
 #proposition[
-  Suppose that $SH(mM) = alpha$ and $mM equiv_(alpha + omega) mN$, then $SH(mN) = alpha$.
+  Suppose that $SH(mM) = alpha$ and $mM sequiv_(alpha + omega) mN$, then $SH(mN) = alpha$.
 ]
 #proof[
-  First we want to show that $SH(mN) <= alpha$. Choose $ov(a), ov(b) in mN^n$ and suppose that $ov(a) equiv_(alpha) ov(b)$. We want to show that $ov(a) equiv_(alpha + 1) ov(b)$ using $mN equiv_(alpha + omega) mM$.
+  First we want to show that $SH(mN) <= alpha$. Choose $ov(a), ov(b) in mN^n$ and suppose that $ov(a) sequiv_(alpha) ov(b)$. We want to show that $ov(a) sequiv_(alpha + 1) ov(b)$ using $mN sequiv_(alpha + omega) mM$.
   Find $ov(c),ov(d) in mM^n$ such that
   $
-    (mM,ov(c)) equiv_(alpha + 1) (mN, ov(a)) "and" (mM, ov(d)) equiv_(alpha+1) (mN, ov(b))
+    (mM,ov(c)) sequiv_(alpha + 1) (mN, ov(a)) "and" (mM, ov(d)) sequiv_(alpha+1) (mN, ov(b))
   $
   then we also have
   $
-    (mN,ov(b)) equiv_(alpha+1) (mM, ov(d)) equiv_(alpha + 1) (mM, ov(c)) equiv_(alpha + 1) (mN,ov(a))
+    (mN,ov(b)) sequiv_(alpha+1) (mM, ov(d)) sequiv_(alpha + 1) (mM, ov(c)) sequiv_(alpha + 1) (mN,ov(a))
   $
   and thus $SH(mN) <= alpha$.
 
@@ -1338,7 +1348,7 @@ We also have a partial converse to this result.
 #corollary[
   Let $mM$ be a countable structure, there exists $alpha < omega_1$ such that for every countable structure $mN$
   $
-    mN tilde.eq mM <=> mN equiv_alpha mM
+    mN tilde.eq mM <=> mN sequiv_alpha mM
   $
 ]
 // TODO: FIX CHAPTERS
@@ -1362,11 +1372,11 @@ However, with a bit of trickery, we can define a sentence which does uniquely cl
 #proof[
   The forward direction is simple, if the two models are isomorphic $mN$ satisfies the sentence of $mM$ since they have the same sentences.
 
-  For the backwards direction we want to use back and forth, we will use induction and assume we have some tuple $ov(a)$ and a partial isomorphism $f_n : mM -> mN$, in the sense that $(mM,ov(a)) equiv_alpha (mN, f_n(ov(a)))$.
+  For the backwards direction we want to use back and forth, we will use induction and assume we have some tuple $ov(a)$ and a partial isomorphism $f_n : mM -> mN$, in the sense that $(mM,ov(a)) sequiv_alpha (mN, f_n (ov(a)))$.
 
-  For $n = 0$ we have $mM equiv_alpha mN$ since $mN sat phi_alpha^(mM,nothing)$. Now assume that we have constructed the map for $n$, then we have $(mM,ov(a)) equiv_alpha (mN, f_n(ov(a)))$, then since $mN sat phi^mM$ then we get
+  For $n = 0$ we have $mM sequiv_alpha mN$ since $mN sat phi_alpha^(mM,nothing)$. Now assume that we have constructed the map for $n$, then we have $(mM,ov(a)) sequiv_alpha (mN, f_n(ov(a)))$, then since $mN sat phi^mM$ then we get
   $
-    mN sat phi_alpha^(mM, ov(a)) (f_n(ov(a))) => mN sat phi_(alpha+1)^(mM, ov(a)) (f_n(ov(a)))
+    mN sat phi_alpha^(mM, ov(a)) (f_n (ov(a))) => mN sat phi_(alpha+1)^(mM, ov(a)) (f_n (ov(a)))
   $
   but we know that
   $
@@ -1378,9 +1388,9 @@ However, with a bit of trickery, we can define a sentence which does uniquely cl
   $
   and so
   $
-    (mM, ov(a)) equiv_(alpha + 1) (mN, f_n (ov(a))).
+    (mM, ov(a)) sequiv_(alpha + 1) (mN, f_n (ov(a))).
   $
-  Now by @def-scott_equiv we get that for any element in $a in mM$ we can pick an element $b in mN$ such that $(mM, ov(a),a) equiv_alpha (mN, f_n (ov(a)), b)$ and so we set $f_(n+1)$ to be the extension of $f_n$ with $f_(n+1)(a) = b$.
+  Now by @def-scott_equiv we get that for any element in $a in mM$ we can pick an element $b in mN$ such that $(mM, ov(a),a) sequiv_alpha (mN, f_n (ov(a)), b)$ and so we set $f_(n+1)$ to be the extension of $f_n$ with $f_(n+1)(a) = b$.
 
   This describes how we do the odd steps, on even steps we just swap $mN$ and $mM$.
 ]
