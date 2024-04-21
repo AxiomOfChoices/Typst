@@ -121,10 +121,11 @@
 ).with(numbering: "I")  // Use Roman numerals
 
 // Examples and remarks are not numbered
-#let example = thmplain("example", "Example").with(numbering: none)
+#let example = thmplain("example", "Example",   inset: (x: 0.0em),
+).with(numbering: none)
 #let remark = thmbox(
   "remark",
-  "Remark",
+  "Remark",padding: (top: 0em, bottom: 0em),
   stroke: rgb("#ffaaaa") + 1pt
 ).with(numbering: none)
 
