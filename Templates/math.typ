@@ -1,4 +1,4 @@
-#import "@preview/ctheorems:1.1.0": *
+#import "@preview/ctheorems:1.1.1": *
 
 
 // Various symbols
@@ -35,6 +35,8 @@
 #let div = math.op("div")
 #let tp = math.op("tp")
 #let Aut = math.op("Aut")
+#let rng = math.op("rng")
+#let dom = math.op("dom")
 #let rad = math.op("rad")
 #let acl = math.op("acl")
 #let dcl = math.op("dcl")

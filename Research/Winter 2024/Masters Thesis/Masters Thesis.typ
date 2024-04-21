@@ -43,7 +43,7 @@
 This thesis aims to loosely cover the subject of geometric flows, and more specifically a variant of the mean curvature flow.
 The subject of geometric flows uses results in PDE theory theory, more specifically parabolic PDEs, to gain new insight about Riemannian geometry.
 
-One of the biggest problems often tackled by mean curvature flows is the Isoperimetric problem. The Isoperimetric problem asks us to classify the spaces that minimize perimeter for a given volume (hence the name), the first use of mean curvature flows to attack this problem was due to Huisken in 1984 @huiskenFlowMeanCurvature1984 who proved it in case of boundaries of convex domains in Euclidean, and since then there have been attempts to push his methods further. More recently, in 2013, Guan and Li @guanMeanCurvatureType2013 constructed a new normalized flow which allows them to prove the inequality in the case of boundaries of star-shaped domains in Space forms. Shortly after, in 2018, Guan, Li and Wang pushed this flow even further which allowed them to prove the result in a certain class of warped product spaces @guanVolumePreservingFlow2018.
+One of the biggest problems often tackled by mean curvature flows is the Isoperimetric problem. The Isoperimetric problem asks us to classify the spaces that minimize perimeter for a given volume (hence the name), the first use of mean curvature flows to attack this problem was due to Huisken in 1984 @huiskenFlowMeanCurvature1984 who proved it in case of boundaries of convex domains in Euclidean space, and since then there have been attempts to push his methods further. More recently, in 2013, Guan and Li @guanMeanCurvatureType2013 constructed a new normalized flow which allows them to prove the inequality in the case of boundaries of star-shaped domains in Space forms. Shortly after, in 2018, Guan, Li and Wang pushed this flow even further which allowed them to prove the result in a certain class of warped product spaces @guanVolumePreservingFlow2018.
 
 Then, concurrently with the writing of this thesis, Li and Pan reframed the technique in terms of conformal vector fields, allowing them to weaken the assumptions on the ambient space @jiayuIsoperimetricProblemRiemannian2023.
 
@@ -99,7 +99,7 @@ This will all lead to the proof of the following theorem.
 == Concepts and Notation
 This document assumes general knowledge of differential and Riemannian geometry, see @leeIntroductionSmoothManifolds2012 and @leeIntroductionRiemannianManifolds2018 for great introductions, respectively.
 
-For the rest of this document we will use the following notation, $N$ is an $n+1$ dimensional Riemannian manifold with metric $ov(g)$ within which we have a compact domain $Omega$ with boundary $diff Omega = M$ such that $F : M -> N$ is an embedding making $M$ a Riemannian hypersurface. We then set $g := F^* ov(g)$ to be the induced metric on $M$. We will in general identify $M$ with its image $F(M)$ and use the two interchangeably. We will write $frak(X)(N)$ to the set of surfaces that can be defined as above and call any such surface any such surface an _admissable_ hypersurface.
+For the rest of this document we will use the following notation, $N$ is an $n+1$ dimensional Riemannian manifold with metric $ov(g)$ within which we have a compact domain $Omega$ with boundary $diff Omega = M$ such that $F : M -> N$ is an embedding making $M$ a Riemannian hypersurface. We then set $g := F^* ov(g)$ to be the induced metric on $M$. We will in general identify $M$ with its image $F(M)$ and use the two interchangeably. We will write $frak(X)(N)$ to the set of surfaces that can be defined as above and call any such surface any such surface an _admissible_ hypersurface.
 
 In general, tensorial constructions defined on $N$ will be written with an overline and their versions on $M$ will be written normally. We will write the covariant derivatives on $M$ and $N$ as $nabla$ and $ov(nabla)$ respectively. We will write the Laplacian on $N$ and $M$ as $Delta$ and $ov(Delta)$ respectively. We will use Einstein summation notation for all tensor equations.
 
@@ -140,7 +140,7 @@ it thus has a canonical 'outward' pointing unit normal vector field, which we wi
 
 Working with Riemannian geometry is almost always easier when done with coordinates. In extrinsic geometry, there are two coordinate systems that we will be using repeatedly so we will list some of their properties.
 #proposition[
-  Let $M$ be a Riemannian manifold, at any point $p$ there exists a chart $(U,phi)$ with the property that that the frame
+  Let $M$ be a Riemannian manifold, at any point $p$ there exists a chart $(U,phi)$ with the property that the frame
   $
     e_i = diff/(diff x^i)
   $
@@ -565,7 +565,7 @@ Now that we have evolution equation for some local properties, we can extend tho
   $
     diff_t V(M_t) = integral_Omega div Y dif V.
   $
-  Now by divergence theorem we get that
+  Now by the divergence theorem we get that
   $
     integral_Omega div Y dif V = integral_(M_t) ip(Y, nu) dif S,
   $
@@ -690,7 +690,7 @@ Most recently Guan-Li used instead the *constrained flow method* to relax the co
 
 This constrained method highly depends on the #link(<lemma-integral_identities>)[Minkowski Identities] which allows us to get a handle on the change in area and in volume along a special class of flows.
 #theorem("Constrained Flow Method")[
-  Consider two classes of admissable hypersurfaces $cal(Z),cal(P)$ such that the following conditions hold.
+  Consider two classes of admissible hypersurfaces $cal(Z),cal(P)$ such that the following conditions hold.
   + For each hypersurface $M in cal(Z)$ we can define a flow $M_t$ which exists for all time.
   + $V(M_t)$ is constant and $A(M_t)$ is non-decreasing.
   + The flow converges to a hypersurface $M_t -> M_infinity$ with $M_infinity in cal(P)$.
@@ -776,7 +776,7 @@ Recall that in Euclidean space spheres are the optimal shapes for the Isoperimet
 Using the geometric properties of warped product spaces and the vector field $X$, Guan, Li and Wang were able to use the flow method to prove that this is fact generalizes, the Isoperimetric profile for a large class of warped product spaces are exactly the level sets of the projection onto $RR$.
 
 #theorem("Guan, Li, Wang")[
-  Let $N = RR_+ times_f B$ with $B$ closed and $f$ satisfying some technical conditions. Then among the admissable hypersurfaces such that $ip(f(r) diff_r, nu)$ is everywhere positive, the Isoperimetric consists of level sets of $r$.
+  Let $N = RR_+ times_f B$ with $B$ closed and $f$ satisfying some technical conditions. Then among the admissible hypersurfaces such that $ip(f(r) diff_r, nu)$ is everywhere positive, the Isoperimetric profile consists of level sets of $r$.
 ]
 The proof is detailed in @guanVolumePreservingFlow2018, we will not consider these details too much as they will quickly get generalized by the next work.
 
@@ -797,7 +797,7 @@ They start with with a conformal vector field $X$ on $N$ with conformal factor $
     $
 ]<cond-pan_li>
 
-They consider the class $frak(Y)$ of admissable hypersurfaces which is star-shaped with respect to $X$, that is admissable hypersurfaces $M$ for which $u = ip(X, nu)$ is positive along $M$. They define the normal flow with velocity $f = n phi - H u$ and prove the following results about this flow.
+They consider the class $frak(Y)$ of admissible hypersurfaces which is star-shaped with respect to $X$, that is admissible hypersurfaces $M$ for which $u = ip(X, nu)$ is positive along $M$. They define the normal flow with velocity $f = n phi - H u$ and prove the following results about this flow.
 #lemma[
   + For a hypersurface $M in frak(Y)$ the normal flow with velocity $f = n phi - H u$ exists for all time $t in [0,infinity)$.
   + Along this flow volume is fixed and area is non-increasing.
@@ -1729,6 +1729,7 @@ Now we can start to analyse this evolution equation to get results about $u$.
 ]
 
 Now that we can bound $u$ using $H$, we just need to show that $H$ grows sufficiently slowly, to guarantee the flow exists until $t = T_0$.
+
 #pagebreak(weak: true)
 == Evolution Equation for $H$
 #proposition[
@@ -1845,8 +1846,20 @@ We will start with proving that $D$ is compact, allowing us to lower bound impor
   $
   and thus $D$ is a fiber bundle.
 
-  Now it is well known that a fiber bundle is compact if the base space and the fiber are both compact, which proves the desired result.
+  We now prove a lemma regarding compactness of fiber bundles.
+  #lemma[
+    If $(E,B,F)$ is a fiber bundle with $E,B,F$ metric spaces and $B,F$ compact, then $E$ is also compact.
+  ]
+  #proof[
+    Let $x_n$ be a sequence of points in $E$, since $pi(x_n)$ is a sequence of points in $B$ it has a convergence subsequence $pi(x_(n_k))$. Assume that it converges to $x$, then let $U$ be a neighborhood of $x$ which trivializes the bundle $E$, in the sense that $pi^(-1)(U) = U times F$. Consider a precompact subset $V seq U$, then since $pi(x_n_k) -> x$ we know that $pi(x_n_k)$ is eventually always contained in $V$, hence $x_n_k$ is eventually always contained in $pi^(-1)(ov(V)) = ov(V) times F$. Now there is a subsequence of $x_n_k$ which is entirely contained in $ov(V) times F$ which is a product of compact sets hence compact, so $x_n_k$ has a convergent subsequence in $E$, which is also a convergent subsequence of $E$. Hence $E$ is compact.
+  ]
+
+  Now in our situation we have $D$ as a fiber bundle over $[lambda_0, lambda_1]$ with fiber $S_lambda$ which are both compact, hence $D$ is compact which proves the proposition.
+  // Now we have a fiber bundle $D$ with each fiber compact and base space $[lambda_0, lambda_1]$ which is also compact. Now we prove this with the finite intersection property, let $C_alpha$ be an arbitrary collection of closed sets such that every finite subcollection has non-empty intersection. Then we can project this collection onto $[lambda_0, lambda_1]$ to get a collection of closed hence compact subsets $pi(C_alpha)$ of $[lambda_0,lambda_1]$. Since they are compact they must have non-zero intersection so there some point $p in [lambda_0, lambda_1]$ such that $p in sect.big_alpha pi(C_alpha)$.
+  //
+  // Now consider the fiber $F = pi^(-1)(p)$, the sets $C_alpha sect F$ are closed in $F$ by definition of the subspace topology and also satisfy the finite intersection property by the paragraph above. Since $F$ is compact we know then that
 ]
+
 
 We can now use these lower bounds to construct a nice coordinate system for $D$, we will do this by flowing the surface $S_(lambda_0)$ to cover the entirety of $D$. For brevity we will shorten $S_(lambda_0)$ to $S$.
 #proposition[
@@ -1919,8 +1932,8 @@ In fact, by the first argument in the proof above we get that lower bounds on $u
 #corollary[
   There are functions $M(epsilon)$ and $epsilon(M)$ such that
   $
-    sup_(S) ||tilde(nabla) f|| < M => inf_S u > epsilon(M) quad "and" \
-    inf_(S) u > epsilon => sup_(S) ||tilde(nabla) f|| < M(epsilon)
+    sup_(S) thin ||tilde(nabla) f|| < M => inf_S u > epsilon(M) quad "and" \
+    inf_(S) u > epsilon => sup_(S) thin ||tilde(nabla) f|| < M(epsilon)
   $
 ]<cor-derivative_bound>
 

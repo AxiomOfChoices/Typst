@@ -16,7 +16,8 @@
 middletitle: [My course notes for the Winter 2024 Mathematical Logic course by #link("https://www.math.mcgill.ca/msabok/")[Marcin Sabok] at McGill],
 doc)
 
-#set page(margin: (x: 2cm, top: 2cm, bottom: 2cm))
+#set page(margin: (x: 2cm, top: 2cm, bottom: 2cm), numbering: "1")
+#set enum(numbering: "(1)", indent: 1em)
 #outline()
 #pagebreak()
 
@@ -90,7 +91,9 @@ We have defined the symbols of $L$, but how do we speak it? We will need the fol
 As with any language we will build up our language first with nouns and then with phrases.
 
 #remark[
-  We will often use $ov(a)$ to denote the ordered collection $(a_1,...,a_n)$ where $n$ will be clear from context.
+  We will often use $ov(a)$ to denote the ordered collection $(a_1,...,a_n)$ where $n$ will be clear from context. We will also write $ov(a) ov(b), a ov(b)$ etc to mean tuple concatenation.
+
+  We will also often use the notation $ov(a) A$ for some subset $A$ to denote $A union { a_1, ..., a_n }$, and if $A$ is finite we will use it to mean the tuple $(a_1,...,a_n,x_1,...,x_m)$ where $x_i$ are the ordered elements of $A$.
 ]
 
 #definition[
@@ -168,7 +171,7 @@ In this course, however, we will only be looking at first order logic.
   $ phi' = forall x thin phi "or" phi' = exists x thin phi $
   we say that all occurrences of $x$ are _bound_ in $phi'$, and we say that $phi$ is the _range_ of $forall x$ or $exists x$ respectively.
 
-  An occurrence of a variable $x$ in a formula $phi$ is _free_ if it is not bound in $phi$. 
+  An occurrence of a variable $x$ in a formula $phi$ is _free_ if it is not bound in $phi$.
 
   An $L$-_sentence_ is an $L$-formula with no free variables.
 ]
@@ -299,7 +302,7 @@ However, an _elementary substructure_ must agree with its superstructure on _all
 
 #definition[
   In first order logic we have the concept of a _proof system_, consisting of two parts.
-  _Axioms_ which are formulas which are declared to always be true, and _proofs_ which is a finite sequence of $L$-formulas such that every step is either an axiom of follows from the previous steps using an inference rule.
+  _Axioms_ which are formulas which are declared to always be true, and _proofs_ which is a finite sequence of $L$-formulas such that every step is either an axiom or follows from the previous steps using an inference rule.
 ]
 
 #example[
@@ -341,7 +344,7 @@ We will not prove this theorem in this class but we will use an important coroll
 As an example use we have the following theorem.
 
 #theorem("Lowenheim-Skolem upwards Theorem")[
-  If $mM$ is an infinite $L$-structure where $L$ is countably infinity then $forall k > ||mM||$ there exists a model $mN$ such that $mM elm mN$ and $||mN|| = k$
+  If $mM$ is an infinite $L$-structure where $L$ is countably infinite then $forall k > ||mM||$ there exists a model $mN$ such that $mM elm mN$ and $||mN|| = k$
 ]
 #proof[
   Let us consider the language $L' = L(mM) union {c_alpha : alpha < kappa}$ where $c_alpha$ are new constants.
@@ -522,7 +525,7 @@ We will now use this lemma to prove a slightly weaker statement that will then u
 #proposition[
   If $mM$ and $mN$ are countable then we also have 
   $
-    mM tilde.eq mN <=> "The Prover has a winning strategy in" Gamma(mM,mN)
+    mM tilde.equiv mN <=> "The Prover has a winning strategy in" Gamma(mM,mN)
   $
 ]
 #proof[
@@ -723,22 +726,22 @@ This definition is not really satisfying from the point of view of model theory 
 
 #pagebreak(weak: true)
 = Types and Definable Sets
-We will now develop more tools to use with models, first of these is the *type*, in short, a type is to formulas what a satisfiable theory is to sentences.
+We will now develop more tools to use with models, first of these is the *type*, in short, a type is to formulas what a satisfiable theory is to sentences. For this chapter we will assume that $L$ is a countable language unless stated otherwise.
 #definition[
-  Let $L$ be countable, and $T$ a complete $L$-theory.
+  Let $T$ be a complete $L$-theory.
   Let $mM sat T$ then for $a in |mM|$ we say that the _type_ of $a$ is
   $
   tp^mM (a) = { phi(x) : mM sat phi(a) }.
   $
   If two elements $a,b$ have the same type then we cannot distinguish $a,b$ with first order formulas.
 
-  More generally, if $ov(a)$ is a tuple of elements of $mM$ then the _type_ of $ov(a)$ is
+  More generally, if $ov(a)$ is a tuple of elements of $mM$ then the type of $ov(a)$ is
   $
     tp^mM (ov(a)) = { phi(x) : mM sat phi(ov(a)) }.
   $
 ]
 
-We will also use the following notation
+We will also sometimes use the following notation
 $
   F_L (ov(x)) = { "formulas with variables" ov(x) }
 $
@@ -792,9 +795,27 @@ $
 $
 as well as 
 $
-  S_n^T (A) = { "all complete n-types in " T "on" A}
+  S_n^T (A) = { "all complete n-types in " T "on" A}.
 $
 
+We will often drop the superscript when it is clear what theory we are working on.
+
+#proposition[
+  If $A$ is a finite set there is a natural injection $S_n^T (A) -> S_(n +|A|)^T (nothing)$.
+]<prop-type_space_injection>
+#proof[
+  Enumerate $A$ as $A = { a_1, ..., a_m }$, then consider any type $p(ov(x)) in S_n^T (A)$. Write
+  $
+    p(ov(x)) = {phi_alpha (ov(x)) : alpha in I}
+  $
+  for some index set $I$. For each $phi_alpha (ov(x))$ we can write it as $phi'_alpha (ov(x), ov(a))$ where $ov(a)$ are some parameters from $A$. Then we can define the set of formulas in $n + m$ variables:
+  $
+    q(ov(x), ov(y)) = { phi'_alpha (ov(x), ov(y))) }.
+  $
+  Since $p$ is consistent then $q$ is also consistent since any finite fragment can be realized by plugging back elements of $A$, so $q$ is a type which can be completed into a complete type in $S_(n + m)^T (nothing)$, this defines a map $f : S_n^T (A) -> S_(n +|A|)^T (nothing)$.
+
+  To see that this is an injection note that if $p != p'$ then there is some formula $phi in p$ with $not phi in p'$. Then $phi' in f(p)$ and $not phi' in f(p')$ so these cannot be equal types.  
+]
 
 #definition[
   A type $p(ov(x))$ is realized in a model $mM$ if there exists $ov(a) in mM$ with $p(ov(x)) seq tp^mM (ov(a))$.
@@ -825,7 +846,8 @@ Types have several basic properties that we will use quite often.
   Every type is a subset of a complete type since if $p$ is realized by $ov(b) in mN$ then $p seq tp^mN (subs(ov(b),A))$
 ]
 
-We can also prove the above corollary in a different way, using Zorn's lemma, we will need some more notation.
+We can also prove the above corollary in a different way, using Zorn's lemma. 
+Next we will need will need some more notation.
 #definition[
   A subset $F seq BB backslash {0}$, where $BB$ is a Boolean algebra, is a _filter_ if
   - If $a,b in F$ then $a dot b in F$.
@@ -835,7 +857,7 @@ We can also prove the above corollary in a different way, using Zorn's lemma, we
 ]
 
 #example[
-  The principal ultrafilter $cal(U)$ on $BB$ if $cal(U) = { a in BB : a >= a_0 }$ for some atom $a_0$.
+  We say an ultrafilter $cal(U)$ on $BB$ is principal if $cal(U) = { a in BB : a >= a_0 }$ for some atom $a_0$.
 ]
 #definition[
   If $BB$ is a Boolean algebra then $S(BB)$ is the set of all ultrafilters over $BB$, we can give it a topology generated by 
@@ -881,12 +903,12 @@ We can also prove the above corollary in a different way, using Zorn's lemma, we
   For every Boolean algebra $BB$ there exists a set $I$ with $BB seq cal(P)$
 ]
 #proof[
-  Set $I = S(BB)$ and the map $a |-> [a]$ is clearly a homomorphism by the above proposition, to see it is 1 to 1 we use the proof for Hausdorffness above to see that $[a] eq.not [b]$.
+  Set $I = S(BB)$, then the map $a |-> [a]$ is clearly a homomorphism by the above proposition, to see it is 1 to 1 we use the proof for Hausdorffness above to see that $[a] eq.not [b]$ if $[a] != [b]$.
 ]
 
 #proposition[
   Let $cal(U)$ be an ultrafilter, $cal(U)$ is principal iff it is isolated in $S(BB)$.
-]
+]<prop-isolated_principle_ultrafilter>
 #proof[
   Assume that ${cal(U)}$ is an open set, then ${cal(U)} = [a]$ for some $a$. Now if $a$ is not atomic then $0 < b < a$ for some $b$ and so $[a] = [a dot b] union [a dot (- b)]$ but $[a dot b],[a dot (-b)]$ are both non-empty and not equal since they both contain the ultrafilters generated by the filter 
   $
@@ -931,7 +953,7 @@ We can also identify $S_n^T (nothing)$ with $S(F_L (ov(x)))$ which makes it a co
   This construction can also be done with $L$ uncountable, we then get a homomorphism to $2^(|L|)$ seen as a product space.
 ]
 
-The closed sets of $S_n^T (nothing)$ are of the form $[p(ov(x))] = {q in S_n^T (nothing) : p seq q }$.
+The space $S_n^T (nothing)$ carries a clopen basis of the form $[phi(ov(x))] = {q in S_n^T (nothing) : phi seq q }$.
 
 All of these also hold if we change $S_n^T (nothing)$ to $S_n^T (A)$
 
@@ -951,22 +973,24 @@ We will next show how to construct saturated models, to complete this we will ne
   If $(mN_alpha)_(alpha < kappa)$ is an elementary chain, that is $mN_alpha elm mN_beta$ for $alpha < beta$. Then if $mN = union.big_(alpha = 0)^kappa mN_alpha$ we have $mN_alpha elm mN$ for all $alpha$.
 ]
 #proof[
-  Let $phi(ov(a))$ be a formula, we show that $mN_alpha sat phi(ov(a)) <=> mN_alpha$ for all alpha by induction. Since every $mN_alpha$ is contained in $mN$ then this is true for all atomic formula $phi$. Now we induct on the structure of $phi$, for logical connectives this is trivial. Now assume that $phi = exists x thin psi(x,ov(a))$, then certainly $mN_i sat phi => mN sat phi$, now if $mN sat phi(ov(a))$ then there is some $j >= i$ such that $b in |mN_j|$ and so $mN_j sat psi(b,ov(a))$ so $mN_j sat phi(ov(a))$ and so $mN_i sat phi(ov(a))$.
+  We will use @thrm-tv_test to prove this, by structural induction on the formula $phi$. Assume that $ov(a) seq mN_alpha$ for some $alpha$ and $mN sat exists x thin phi(x, ov(a))$. Then for some $ov(b) in mN$ we have $mN sat phi(ov(b), ov(a))$. Now since it is a finite tuple we also have that $ov(b) in mN_beta$ for some $beta$, if $beta <= alpha$ then $ov(b) in mN_alpha$ so we are done, hence we assume that $beta > alpha$. Then we have $mM sat phi(ov(b), ov(a))$ so by induction we know that $mN_beta sat phi(ov(b), ov(a))$. But then since $beta > alpha$ we know that $mN_alpha elm mN_beta$ and thus $mN_alpha sat phi(ov(b), ov(a))$ and so the test holds by induction.
 ]
 
 #theorem[
   For every $kappa$, for every $mM$, there exists a model $mN$ with $mN gt.curly mM$ and $mN$ is $kappa$-saturated.
-  
+
   If $kappa$ is _weakly inaccessible_, that is $lambda < kappa => 2^lambda <= kappa$ (note that such cardinals cannot be proved to exist in ZFC) then for every $mM$ with $|mM| <= kappa$ there exists $mN$ with $mN gt.curly mM$ saturated with size $kappa$.
 ]<thrm-saturation>
 #proof[
-  Assume that $L$ is countable, then $S_n^T (A) <= 2^(|A| + aleph_0)$ by @prop-types_cantor_space. Let $mu = 2^kappa$, note that $cf(mu) > kappa$ by @thrm-Konig.
+  Since $L$ is countable, then $S_n^T (A) <= 2^(|A| + aleph_0)$ by @prop-types_cantor_space. Let $mu = 2^kappa$, note that $cf(mu) > kappa$ by @thrm-Konig.
 
-  We will now construct a sequence of models $(mM_alpha)_(alpha < mu)$ with $mM_0 = mM$ and at limit $alpha$ we have $mM_alpha = union.big_(beta < alpha) mM_beta$, we will assume that $|mM_alpha| < mu$.
+  We will now construct a sequence of models $(mM_alpha)_(alpha < mu)$. 
+  We set $mM_0 = mM$, and at limit $alpha$ we have $mM_alpha = union.big_(beta < alpha) mM_beta$, we will assume that $|mM_alpha| < mu$.
+  
   At successor steps $alpha = beta + 1$, we want to find $mM_alpha$ with $mM_beta elm mM_alpha$ such that for all $A seq mM_beta$ with $|A| < kappa$, every type in $S_n^T (A)$ is realized in $mM_alpha$. 
   Now we know that for every single type $p(ov(x))$ by @prop-add_one_type we can add a realization of that type, and then by @thrm-downwards we can get that realization with size at most $mu$, so we just need to do induction again to add every type.
 
-  Let us count how many types we need to add, we know that for any fixed $A$ we have $|S_n^T (A)| <= 2^(kappa + aleph_0) = mu$. Now for any cardinality $beta$ we have that the number of subsets $A$ with $|A| = beta$ is
+  Let us count how many types we need to add, we know that for any fixed $A$ we have $|S_n^T (A)| <= 2^(kappa + aleph_0) = mu$. Now for any cardinality $beta$ we have that the number of subsets $A$ of a set of cardinality $mu$ with size $|A| = beta$ is
   $
     mu^beta = (2^kappa)^beta = 2^(kappa times beta) = 2^kappa = mu
   $
@@ -989,12 +1013,12 @@ Now the difficulty in omitting types is that some types can *never* be omitted.
 #example[
   If $c$ is a constant of a language $L$ then the type of the interpretation of $c$ can never be omitted.
 ]
-But some types can be omitted
+And yet other types can be omitted
 #example[
   The type of a transcendental number in $A C F_p$ is distinct from that of an algebraic number, and can be omitted, for example in $hat(QQ)$.
 ]
 
-The first example here is an important one to keep in mind since all the properties of that type can be proved from the single formula $x = c$.
+The first example here is an important one to keep in mind since all the properties of that type can be proved from the single formula $phi(x) = (x = c)$.
 
 #definition[
   A type $p(ov(x))$ is isolated if there exists a formula $phi(ov(x)) in p(ov(x))$ such that for every $psi(ov(x)) in p(ov(x))$ we have
@@ -1004,14 +1028,16 @@ The first example here is an important one to keep in mind since all the propert
 ]
 
 #proposition[
-  $p(ov(x)) in S_n(A)$ is isolated iff ${p}$ is open in $S_n(A)$.
+  $p(ov(x)) in S_n (A)$ is isolated iff ${p}$ is open in $S_n (A)$.
 ]
 #proof[
-  Exercise
-  // TODO: FINISH EXERCISE
+  ${p}$ being open is equivalent to $p$ being an isolated point in the topological sense in $S_n (A)$. By @prop-isolated_principle_ultrafilter we then know that this is equivalent to $p$ being a principal ultrafilter. Now for formulas $phi$, $psi$ we have
+  $
+    phi <= psi <=> T proves (psi and phi <=> phi) <=> T proves (phi => psi) 
+  $
+  and hence $p$ being a principal ultrafilter is equivalent to $p = { psi "formula" : T proves phi => psi }$ which is exactly the definition of $phi$ isolating $p$.
 ]
 
-This characterization is important due to the following fact.
 #proposition[
   If $p(ov(x))$ is isolated, then $p$ cannot be omitted.
 ]
@@ -1020,10 +1046,10 @@ This characterization is important due to the following fact.
   $
     exists x phi(ov(x))
   $
-  is a true sentence in $T$ and thus any witness of this sentence is a realization of the type.
+  is a true sentence in $T$ and thus any witness of this sentence is a realization of the type. Hence the type is realized in any model of $T$.
 ]
 
-Now apriori we would not expect this converse to hold since it feels like being isolated is quite the strong condition, but in fact the converse does hold, which is shown in this theorem.
+Now a priori we would not expect this converse to hold since it feels like being isolated is quite the strong condition, but in fact the converse does hold, which is shown in this theorem.
 
 #theorem[
   If $p(ov(x))$ is not isolated, then there exists $mM sat T$ which omits $p(ov(x))$.
@@ -1034,13 +1060,13 @@ There are many proofs of this theorem but we will use one called *Henkin's const
 
   We define the *Henkin axioms*
   $
-    H_i = (exists x phi_i (x)) -> phi_i (c_f(i)).
+    H_i = (exists x phi_i (x)) => phi_i (c_f(i)).
   $
   We now construct a sequence of sets of sentences $T_0 = T seq T_1 seq T_2 seq ...$ such that
   $
-    T_(2n+1) = T_(2n) union {H_n} quad "and" quad T_(2n+2) = T_(2n+1) union { not phi_n(c_n) } "for some" phi_n(ov(x)) in p(ov(x))
+    T_(2n+1) = T_(2n) union {H_n} quad "and" quad T_(2n+2) = T_(2n+1) union { not phi_n (c_n) } "for some" phi_n (ov(x)) in p(ov(x))
   $
-  Then taking the union of these sets we will get an axiomization of a consistent theory. We can then use Zorn's lemma to get a complete theory containing it and then if we set our universe to be the set of constants quotiented by the relation
+  Then by taking the union of these sets, we will get an axiomization of a consistent theory. We can then use Zorn's lemma to get a complete theory containing it and then if we set our universe to be the set of constants quotiented by the relation
   $
     c_i = c_j "as elements if" (c_i = c_j) "as a formula is in" T
   $
@@ -1048,8 +1074,6 @@ There are many proofs of this theorem but we will use one called *Henkin's const
   Now a model satisfying this theory will not realize the type $p(ov(x))$ since if it did then some constant would realize it which would contradict the fact that our theory contains $not phi(c_n)$ for every $n$.
 
   All that is left to do is to check that at every odd step these sentences are indeed consistent and that at even steps we can pick specific $phi_n$ to make the set of sentences consistent.
-
-  // TODO: ADD FULL PROOF
  
   For the even steps assume that $T_(2n+1)$ is consistent but for every $psi(ov(x)) in p(ov(x))$ we have that $T_(2n+1) union { not psi (c_n) }$ is inconsistent. Then $T_(2n+1)$ is $T$ where we added some finitely many sentences, so we can write $T_(2n+1) = T union { psi_j (ov(c), c_n) : j < k }$ for some $k$ and $psi_j$.
 
@@ -1059,23 +1083,23 @@ There are many proofs of this theorem but we will use one called *Henkin's const
   $
   then for every $psi(ov(x)) in p(ov(x))$ we have $T union { phi(ov(c),c_n) } union { not psi(c_n) }$ is inconsistent so
   $
-    T proves (phi(ov(c), c_n) -> psi(c_n))
+    T proves (phi(ov(c), c_n) => psi(c_n))
   $
   But now since the $T$ does not contain $c_n$ as a constant we can replace all instances of $c_n$ with $x$ and all instances of $ov(c)$ with $ov(y)$ in the proof and get that
   $
-    T proves (phi(ov(y),x)) -> psi(x))
+    T proves (phi(ov(y),x)) => psi(x))
   $
   but then this means that 
   $
-    T proves forall ov(y) (phi(ov(y), x) -> psi(x))
+    T proves forall ov(y) (phi(ov(y), x) => psi(x))
   $
   but we have that
   $
-    forall ov(y) (phi(ov(y), x) -> psi(x))
+    forall ov(y) (phi(ov(y), x) => psi(x))
     &= forall ov(y) (not phi(ov(y), x) or psi(x))
     = not exists ov(y) (phi(ov(y), x) and not psi(x))
     \ &= not (exists ov(y) phi(ov(y), x) and not psi(x))
-    = (exists ov(y) (phi(ov(y),x))) -> psi(x)
+    = (exists ov(y) (phi(ov(y),x))) => psi(x)
   $
   then $exists ov(y) (phi(ov(y),x))$ implies every $psi$ in the type $p(ov(x))$, but also $exists ov(y) (phi(ov(y),x))$ is true in $T_(2n+1)$ and thus is consistent with $T$ and thus is in the type $p$. This contradicts our assumption that $p(ov(x))$ is not isolated.
 ]
@@ -1088,34 +1112,36 @@ We now have a powerful way to think about and use types in proofs.
   $
 ]
 
-Now that we have the tools to omit types, we can use it to characterize the $aleph_0$-categorical theories.
+Now that we have the tools to omit types, we can use them to characterize the $aleph_0$-categorical theories.
 #theorem("Ryll-Nardzewski")[
   Let $T$ be a complete theory over a countable language $L$, the following are equivalent.
-  - $T$ is $aleph_0$-categorical.
-  - $forall n, S_n^T (nothing)$ is finite.
-]
+  + $T$ is $aleph_0$-categorical.
+  + $forall n, S_n^T (nothing)$ is finite.
+]<thrm-aleph_0_categorization>
 #proof[
-  $(1 => 2)$. Suppose that $S_n^T (nothing)$ is infinite, we know that it is always a closed subset of the Cantor set. As an infinite compact space, $S_n^T (nothing)$ has a non isolated point, corresponding to a non isolated type $p$. By the omitting types theorem, there exists a model which omits $p$, since it is a type there is another model which realizes $p$, those two models then cannot be isomorphic. We can then make them both countable by @thrm-downwards which completes this side of the proof.
+  $(1) => (2)$. Suppose that $S_n^T (nothing)$ is infinite, we know that it is always a closed subset of the Cantor set. As an infinite compact space, $S_n^T (nothing)$ has a non isolated point, corresponding to a non isolated type $p$. By the omitting types theorem, there exists a model which omits $p$, since it is a type there is another model which realizes $p$, those two models then cannot be isomorphic. We can then make them both countable by @thrm-downwards which completes this side of the proof.
 
-  $(2 => 1)$. We assume that $S_n^T (nothing)$ is finite. This implies that if $A seq mM sat T$, with $A$ being finite, then $S_n^T (A)$ is also finite since we can inject it into $S_(n+1)^T (nothing)$. So every type in $S_n^T (A)$ is isolated.
+  $(2) => (1)$. We assume that $S_n^T (nothing)$ is finite. This implies that if $A seq mM sat T$, with $A$ being finite, then $S_n^T (A)$ is also finite by @prop-type_space_injection. Hence $S_n^T (A)$ is a finite Hausdorff space, so every type in $S_n^T (A)$ is isolated.
+  
   Now let $mM,mN sat T$ be countable models, enumerate them as $mM = {a_0, a_1, ...}$ and $mN = {b_0, b_1, ...}$. We will now do a back and forth construction, at step $n$ we have a partial isomorphism $f_n : A_n -> B_n$. Define the tuples $ov(a) = (a_1,...,a_n), ov(b) = (b_1,...,b_n)$ containing all elements of $A_n$ and $B_n$ respectively.
   From the fact that it is a partial isomorphism we will know that
-  $
-    tp_n^mM (ov(a)) = tp_n^mN (ov(b)).
-  $
+  $tp_n^mM (ov(a)) = tp_n^mN (ov(b)).$
 
-  Now let us create the construct the maps by induction, at step $0$ we pick some $a in mM$ then $tp_n^mM (a)$is isolated. Since it is isolated every model of $T$ realizes it and so in particular there is an element $b in mN$ that realizes the type and map $a$ to it.
+  Now let us create the construct the maps by induction, at step $0$ we pick some $a in mM$, then by the discussion above $tp_n^mM (a)$ is isolated. Since it is isolated every model of $T$ realizes this type and so in particular there is an element $b in mN$ that realizes $tp_n^mM (a)$ and so we map $a$ to it.
 
-  At the inductive even steps we will pick some $a_(n+1) in mM$ and note that $tp_n^mM(A) (a_(n+1))$ is again isolated so again there is some element $b_(n+1) in mN$ such that $tp_n^mN(B)(b_(n+1)) = tp_n^mM(A) (a_(n+1))$ this type and so we can map $a_(n+1)$ to $b_(n+1)$.
-  At the odd steps we do the same thing as but pick $b in mN$ first.
+  At the inductive even steps we will pick some $a_(n+1) in mM$ and note that $tp_n^mM(A) (a_(n+1))$ is again isolated so again there is some element $b_(n+1) in mN$ such that 
+  $tp_n^mN(B)(b_(n+1)) = tp_n^mM(A) (a_(n+1))
+  $
+  and so we can map $a_(n+1)$ to $b_(n+1)$.
+  At the odd steps we do the same thing as above but pick $b_(n+1) in mN$ first.
 ]
 
 #example[
-  In $A C F_p$ we have that the type of any irreducible polynomial is isolated while the type of the transcendental number is not isolated.
+  In $A C F_p$ we have that the type of any root of an irreducible polynomial is isolated while the type of the transcendental number is not isolated.
 ]
 
 = Automorphism groups
-In algebra for some algebraic structure an important role is played by the automorphism groups of these structures. As model theory is a sort of algebra without algebra we will also use automorphism groups.
+In algebra for some algebraic structure an important role is played by the automorphism groups of these structures. As model theory is a sort of algebra without fields we will also use automorphism groups.
 #definition[
   Let $mM$ be a countable structure of a countable language $L$. We define the automorphism group $Aut (mM)$ to be
   $
@@ -1148,7 +1174,11 @@ $Aut(mM)$ acts on $mM^n$ for all $n$, and is in fact a Polish topological group.
   $Th(mM)$ is $aleph_0$-categorical if and only if for all $n$, $Aut(mM)$ acts on $mM^n$ with finitely many orbits.
 ]
 #proof[
-  Exercise.
+  Every tuple in an orbit has the same type since $Aut(mM)$ consists of automorphisms. Hence we have that if there are finitely many orbits, each $S_n (nothing)$ is finite, making $T$ $aleph_0$-categorical by @thrm-aleph_0_categorization.
+
+  On the other hand if it is $aleph_0$-categorical, every $S_n (nothing)$ is finite, and so by @prop-type_space_injection so is every $S_n (A)$. Now let $ov(a),ov(b)$ be two tuples of the same type and consider $T(ov(a))$. In this theory we have $S_n^(T(ov(a))) (nothing) = S_n^T (ov(a))$ and thus each of its type spaces are finite. 
+
+  Now again through @thrm-aleph_0_categorization we know that $T(ov(a))$ is $aleph_0$-categorical so since we can interpret $mM$ as an $T(ov(a))$ model by interpreting $ov(a)$ as $ov(b)$, so we have an isomorphism mapping $ov(a)$ to $ov(b)$, hence they are in the same orbit. Hence there at most as many orbits as there are $n$-types, so there are finitely many orbits.
 ]
 
 = Infinitary Logic and Scott Analysis
@@ -1990,6 +2020,7 @@ Before we prove this we will need a tiny lemma.
 #definition[
   A model $mM$ is an _Ehrenfeucht–Mostowski model_ if there exists an infinite order-indiscernible sequence $(a_i : i in I) seq mM$ such that $mM$ is generated by $(a_i : i in I)$. This generating sequence is called a _spine_ of $mM$.
 ]
+<def-E_M_model>
 
 #theorem[
   Let $mM$ be an Ehrenfeucht-Mostowski model with theory $T = Th(mM)$ over a countable language $L$.
@@ -2025,7 +2056,7 @@ Before we prove this we will need a tiny lemma.
 ]
 
 #theorem[
-  $T$ is totally transcendental if and only if it is $aleph_0$ stable.
+  $T$ is totally transcendental if and only if it is $aleph_0$-stable.
 ]<thrm-stable>
 #proof[
   One direction is obvious, for the other direction we prove by contrapositive. Suppose $T$ is not $kappa$ stable for some $kappa$, that is, there is a model $mM sat T$ with a subset $A seq mM$, $|A| = kappa$ satisfying $|S_1(A)| > kappa$.
@@ -2408,21 +2439,481 @@ As usual we extend these definitions to types
 ]
 
 #example[
-  Let $T = A C F_p$,
+  Let $T = A C F_p$, for a set $A$, $(A)$ denotes the field generated by $A$, we then have.
   $
   acl(A) = "algebraic closure of" (A).
   $
 
-  $a in acl(A)$ if and only if $I(a quo lr(angle.l A angle.r)) != 0$.  
+  We have $a in acl(A)$ if and only if $I(a quo lr(angle.l A angle.r)) != 0$.  
 
   The defined closure is more interesting, it is
   $
     dcl(A) = cases((A) "if" p = 0, hat((A))^(rad) "if" p > 0)
   $
-  one would expect it to always be $(A)$ but in positive characteristic we can also take $p$-th roots because of the properties of the Frobenious map.
-
+  one would expect it to always be $(A)$ but in positive characteristic we can also take $p$-th roots because of the properties of the Frobenious map. //TODO: ADD PROPERTIES
 ]
 
+Often in math, a closure operator has another interesting property which we have not talked about before, called the exchange property. A familiar example of this are vector spaces, where two basis for the same subset must have the same cardinality. We now start exploring how we can extend this to our model theoretic setting.
+
+#definition[
+  A definable (over $mM$) set $D seq mM$ is _minimal_ if $D$ is infinite and every definable subset of $D$ is either finite or co-finite.
+]
+
+#definition[
+  A formula $phi(x)$ is strongly minimal if $phi(mN)$ is minimal for each elementary extension $mM elm mN$.
+]
+
+#proposition[
+  If $mM$ is $aleph_0$-saturated then $phi(mM)$ is minimal if and only if $phi$ is strongly minimal.
+]
+
+#definition[
+  $T$ is strongly minimal if $x = x$ is strongly minimal, or equivalently all models $mM sat T$ are minimal.
+]
+
+#example[
+  $A C F_p$ is strongly minimal.
+]
+
+#proposition[
+  If $T$ is $aleph_0$-stable then there exists a formula $phi(x)$ over $frak(C)$ which is strongly minimal.
+]
+<prop-strongly_minimal_formula>
+#proof[
+  We know from @thrm-rank_well_defined that $RM(x = x) < infinity$ and since $x = x$ has infinitely many realizations we have $RM(x = x) > 0$, so we can find a formula $phi$ with $RM(phi) = 1$.
+
+  We can then pick a formula $psi$ with $[psi] seq [phi]$, $RM(psi) = 1$ and $deg(psi) = 1$. One can then check that the formula $psi$ is strongly-minimal. // TODO: ADD CHECK
+]
+
+#theorem("Exchange Property")[
+  Suppose that $D seq mM$ is minimal, $A seq D$, $a,b in D$.
+
+  If $a in acl(A b) backslash acl(A)$, then $b in acl(A a)$.
+]<thrm-exchange_property>
+#proof[
+  Since $a in acl(A b)$, there is a formula $phi(x,ov(b))$ with $ov(b) in A$ such that
+  $
+    mM sat phi(a,ov(b)) "and" |{ x in D : mM sat phi(x,ov(b))}| = n
+  $
+  for some $n in NN$.
+  Let $psi(y)$ be the formula encoding
+  $
+    |{x in D : phi(x,y)}| = n.
+  $
+  Now $psi(y)$ is either finite or co-finite in $D$ by assumption of strong minimality. If $psi(D)$ is finite then $b in acl(A)$ so $a in acl(acl(A)) = acl(A)$ which contradicts our assumption.
+
+  Hence $phi(D)$ is co-finite and so the complement is finite, we now let
+  $
+    E = D sect {y : phi(a,y) and psi(y)},
+  $
+  if $E$ is finite then $b in acl(A a)$ and so we are done, we thus assume that $E$ is co-finite.
+
+  Assume that $D backslash E$ has $ell$ elements, let $chi(x)$ be the formula that says
+  $
+    |D backslash {y : phi(x,y) and psi(y)}| = ell.
+  $
+  If $chi(mM) sect D$ is finite then $a in acl(A)$ which is again a contradiction so $chi(mM) sect D$ is co-finite.
+
+  Pick $n+1$ elements $a_1,...,a_(n+1)$ in $chi(mM) sect D$, we then have that
+  $
+    D sect sect.big_(i=1)^(n+1) {y : phi(a_i, y) and psi(y)}
+  $
+  is an intersection of co-finite sets in $D$ and thus is also co-finite in $D$, hence we can pick an element $b'$ in this set. Now $b'$ satisfies $psi$, which contradicts the fact that each $a_i$ is in ${x in D : phi(x,y)}$. // TODO: ADD DIAGRAM
+]
+
+We now know that $acl$ is an operator which is monotone idempotent with the exchange property, operators with these properties are called a _pregeometry_ or a _matroid_.
+
+#definition[
+  Let $D seq mM$ be minimal, a set $A seq D$ is _independent_ if for all $a in A$ we have  
+  $
+    a in.not acl(A backslash {a}).
+  $
+
+  If we have some other $C seq D$ then $A$ is _independent over_ $C$ if instead $a in.not acl(A union C backslash {a})$
+]
+
+#definition[
+  $A$ is a basis for $Y seq D$ if $A seq Y$, $A$ is independent and $acl(A) = acl(Y)$.
+]
+
+The following is standard.
+#lemma[
+  Let $A,B seq D$ be independent, $A seq acl(B) = Y$.
+
+  + If $A_0 seq A$, $B_0, B$ such that $A_0 union B_0$ is a basis for $Y$, for each $a in A backslash A_0$ there exists $b in B_0$ such that $A_0 union {a} union B_0 backslash {b}$ is a basis for $Y$.
+  + $|A| <= |B|$.
+]
+#proof[
+  Since $a in acl(A_0 union B_0)$ there is a finite subset $B'$ of $B_0$ such that $a in acl(A_0 union B')$, then we can pick a minimal such $B'$.
+
+  Pick $b in B'$ and by applying @thrm-exchange_property we know that
+  $
+    b in acl(A_0 union {a} union B_0 backslash {b}).
+  $
+  This then gives us that $acl(A_0 union {a} union B_0 backslash {b}) supset.eq Y$.
+
+  Now $A_0 union {a} union B_0 backslash {b}$ is independent since if $a in acl(A_0 union B_0 backslash {b})$ then $b in acl(A_0 union B_0 backslash {b})$ which contradicts the fact that $A_0 union B_0$ is a basis.
+
+  Now for the second result we know that if $|B| >= aleph_0$ then $|acl(B)| <= |B|$ since our language is countable and so the number of formulas is countable, so we have
+  $
+    |A| <= |acl(B)| <= |B|.
+  $
+  On the other hand assume that $B$ is finite, then we start with $A_0 = nothing$, $B_0 = B$ and add elements to $A_i$ while removing from $B_i$ and keeping $A_i union B_i$ a basis, since we can keep doing this until $A_i = A$ then we must have at least $|A|$ elements in $B$ and so $|A| <= |B|$.
+]
+
+#corollary[
+  If $A$ is also a basis then $|A| = |B|$.
+]
+
+#definition[
+  Let $mM$ be a model with $A seq mM$, the _dimension_ of a strongly-minimal formula $phi$ over $A$ is the cardinality of any basis of $phi(mM)$ (which is well defined by the work done above).
+]
+
+#theorem[
+  Suppose that $mN_1, mN_2 succ mM$ (or $mM = nothing$) are all theories of $T$, and that $phi$ is a strongly-minimal formula with parameters in $A seq mM$.
+  If $a_1,... in phi(mN_1), b_1,... in phi(mN_2)$ are independent sets then //TODO: MAKE NOTATION CLEARER
+  $
+    tp(ov(a) quo A) = tp(ov(b) quo A)
+  $
+  where $ov(a),ov(b)$ are any tuples of the same length of distinct elements of $a_i,b_i$ respectively.
+]<thrm-elementary_bases>
+#proof[
+  We induct on $n$, for $n = 1$ suppose that $mN_1 sat psi(a)$ then we want to show that $mN_2 sat psi(b)$, since $a$ is independent it cannot be algebraic so $psi(mN_1) sect phi(mN_1)$ cannot be finite.
+
+  Then since $phi$ is strongly-minimal we have that $phi(mN_1) sect psi(mN_1)$ is co-finite in $phi(mN_1)$ and so $mN_1 sat |phi(mN_1) backslash psi(mN_1)| = m$ for some $m$. But then $mN_2 sat |phi(mN_2) backslash psi(mN_2)| = m$, so since $b$ is not algebraic we cannot have $b in phi(mN_2) backslash psi(mN_2)$ and so $b in phi(mN_2) sect psi(mN_2)$ and thus $mN_2 sat psi(b)$.
+  // TODO: ADD REMARK ABOUT FINITE SET STATEMENTS AS FORMULAS.
+
+  Now for the inductive step assume $ov(a) = a_1...a_(j+1)$ and $ov(b) = b_1...b_(k+1)$ and write $ov(a)' = a_1...a_k, ov(b)'=b_1...b_k$. By inductive hypothesis we have $tp(ov(a)' quo A) = tp(ov(b)' quo A)$ and so suppose that $mN_1 sat psi(a_(k+1), ov(a)')$ and we want to show that $mN_2 sat psi(b_(k+1), ov(b)')$.
+
+  In $mN_1$ we have by the same argument that $a_(k+1)$ is not algebraic over $ov(a)'A$ and so
+  $
+    mN_1 sat |phi(mN_1) backslash psi(mN_1,ov(a)')| = n
+  $
+  hence
+  $
+    mN_2 sat |phi(mN_2) backslash psi(mN_2, ov(b)')| = n
+  $
+  and by the same argument $mN_2 sat psi(b_(n+1), ov(b))$.
+]
+
+#theorem[
+  Suppose that $mN_1, mN_2 succ mM$ (or $mM = nothing$) are all theories of $T$, and that $phi$ is a strongly-minimal formula with parameters in $A seq mN_1 sect mN_2$.
+  If
+  $
+    dim(phi(mN_1)) = dim(phi(mN_2))
+  $
+  then there exists a partial elementary map $f : phi(mN_1) ->> phi(mN_2)$.
+]
+#proof[
+  First we set $f'$ to be identity on $A$, then we pick bases $(a_alpha)_(alpha in I), (b_alpha)_(alpha in I)$. Then by mapping $a_alpha |-> b_alpha$ we know that by @thrm-elementary_bases this remains a partial embedding. We now use Zorn's lemma to pick a maximal partial embedding $f$ with respect to inclusion that contains $f'$, and we want to show that the domain of $f$ is $phi(mN_1)$ and the range is $phi(mN_2)$. 
+
+  // TODO: SIMPLIFY BASES NOTATION.
+  To see this assume that we have $x in phi(mN_1) backslash dom(f)$, then we know that $x$ is algebraic over $(a_alpha)_(alpha in I)$ so we know by assignment that it is isolated. // TODO: INCLUDE PROOF
+  Hence we can find $y in phi(mN_2)$ with $tp(x quo dom(f)) = tp(y quo rng(f))$, hence $g$ which extends $f$ by mapping $x$ to $y$ is also elementary which contradicts the fact that $f$ was maximal.
+]
+#corollary[
+  If $T$ is strongly-minimal then $mN_1 tilde.equiv mN_2$ if and only if $dim(mN_1) = dim(mN_2)$.
+]<cor-dimensions_implies_isomorphism>
+
+#corollary[
+  If $T$ is strongly-minimal, then $T$ is $kappa$-categorical for every $kappa >= aleph_1$.
+]
+#proof[
+  Let $mN_1,mN_2 sat T$ with $||mN_1|| = ||mN_2|| = kappa$ and let $I_1 seq mN_1, I_2 seq mN_2$ be bases, since $L$ is countable we have
+  $
+    ||I_1|| = ||acl(I_1)|| = ||mN_1|| = ||mN_2| = ||acl(I_2)|| = ||I_2||
+  $
+  and so by @cor-dimensions_implies_isomorphism we get that $mN_1 tilde.equiv mN_2$.
+]
+
+= Prime Model Extensions
+Let $A seq frak(C)$.
+#definition[
+  A model $mM elm frak(C)$ such that $A seq mM$ is _prime over_ $A$ if for every other model $mN$ with $A seq mN elm frak(C)$ there is an elementary embedding $mM elm mN$ which restricts to the identity on $A$.
+]
+<def-prime_over_set>
+
+#theorem[
+  If $T$ is $aleph_0$-stable then for every $A seq frak(C)$ there exists an $mM elm frak(C)$ which is prime over $A$.
+]
+#proof[
+  The strategy is quite simple, pick $delta$ with $delta <= ||frak(C)||$ and we construct $(a_alpha : alpha < delta)$ such that if there exists $a in frak(C)$ such that $tp(a quo A union a_(< alpha))$ is isolated and who's type is not realized in $A union (a_alpha : alpha < delta)$ then $a_alpha = a$ for one such $a$. At some point we stop and are left with $mM = A union {a_alpha : alpha < delta}$. Now we need to show is that $mM$ is an elementary sub model and that it is prime over $A$.
+
+  Let us denote $A_alpha = A union {a_alpha : alpha < beta}$, then we will use @thrm-tv_test to prove $mM$ is an elementary submodel, assume that in $frak(C)$ we have
+  $
+    frak(C) sat exists x phi(x, ov(a))
+  $
+  for $ov(a) in mM$, since $mM = union.big_(alpha < delta) A_alpha$ we may assume that $ov(a) in A_alpha$ for some $alpha$. By $aleph_0$-stability we know that isolated types in $S(A_alpha)$ are dense, assume otherwise, then there is a neighborhood in $S(A_alpha)$ without any isolated points. Then since we have no isolated points and the space is Hausdorff we can repeatedly split it in half to construct a tree of formulas $phi_sigma, sigma in 2^(< omega)$ such that $phi_(sigma 0), phi_(sigma 1)$ are inconsistent and both imply $phi_sigma$, this tree contradicts $aleph_0$-stability as can be seen in the proof of @thrm-stable.
+
+  Now since the isolated types in $S(A_alpha)$ are dense, we choose an isolated type $p in S(A_alpha)$ such that $phi(x, ov(a)) in p$, so let $psi$ be the formula isolating $p$, since $psi$ has finitely many parameters and $frak(C)$ is $aleph_0$ saturated we can find an element realizing $psi$ and hence $p$. Let $a in frak(C)$ with $a sat p$ then it will be added at some point to $A_alpha$ and hence will be in $mM$.
+
+  Now to show $mM$ is prime we use transfinite induction on $alpha$, the base case and limit case as trivial, then for the successor step we use the fact that if $tp(a quo B union A)$ is isolated and for any $b in B$ $tp(b quo A)$ is isolated then $tp(a quo A)$ is isolated. Now from this we get that $mM$ is prime over $A$ since we can inductively construct an embedding $mM -> mN$.
+]
+#remark[
+  This is a stronger condition than the isolated types being dense, which is what is needed to guarantee a prime model if $A$ is empty.
+]
+
+#corollary[
+  If $T$ is $aleph_0$-stable then $forall A seq frak(C)$ there exists $mM$ prime over $A$ such that for all elements $a in mM$ we have $tp(a quo A)$ is isolated.
+]
+
+= Categoricity theorem
+We now start working towards Categoricity Theorem, the main result of this course.
+
+#definition[
+  Let $kappa > lambda >= aleph_0$, an $L$-theory $T$ is said to have a _$(kappa, lambda)$-model_ if there exists a model $mM sat T$ with $|mM| = kappa$ and an $L(mM)$-formula, $phi(x)$ such that $|phi(mM)| = lambda$.
+]
+
+#definition[
+  Let $mM elm mN sat T$. Then $(mN, mM)$ is a _Vaughtian pair_ if there is an $L$-formula $phi(x)$ such that $phi(mM) = phi(mN)$ are both infinite.
+]
+
+#lemma[
+  If $T$ has a $(kappa, lambda)$-model, then it has a Vaughtian pair $(mN, mM)$ such that $|mN| < kappa$ and $|mM| = lambda$.
+]
+#proof[
+  We use @thrm-downwards, we let $mN sat T$ of size $kappa$ and $phi$ be such that $|phi(mN)| = lambda$, we can then find $mM$ such that $phi(mN) seq mM$ and $mM elm mN$. Then we have $phi(mM) = phi(mN)$ by elementarity.
+]
+
+#definition[
+  Suppose $cal(U)$ is a unary predicate. Let $phi(x)$ be an $L$-formula. The _relativization_ of $phi$ to $cal(U)$, denoted $phi^cal(U)$, is defined as follows:
+  $
+    phi^cal(U) (ov(x)) := cal(U)(x_1) and ... and cal(U)(x_n) and phi(ov(x))
+  $
+  for $phi$ atomic, and
+  $
+    phi^cal(U) (ov(x)) := exists y (y and psi^cal(U) (y,z))
+  $
+]
+#proposition[
+  If $mN$ is an $L$-model with an added unary predicate $cal(U)$, then $cal(U)(mN)$ induced an elementary $L$-submodel if and only if for any tuple $ov(a) in mM$ and any $L$-formula $phi$ we have
+  $
+    mM sat phi(ov(a)) <=> mN^(L') sat phi^cal(U)(ov(a)).
+  $
+]
+<prop-relativization>
+#proof[
+  Exercise, prove by induction.
+]
+
+If $(mN_i, mM_i) sat T$ are Vaughtian pairs we write $(mN_1, mM_1) elm (mN_2, mN_2)$ to mean that they have the same $L$-formula in their definition, that $mN_1 elm mN_2, mM_1 elm mM_2$, and that $phi(mN_1) = phi(mN_2), phi(mM_1) = phi(mM_2)$.
+
+#lemma[
+  If $T$ has a Vaughtian pair $(mN,mM)$, then it also has a Vaughtian pair $(mN_0, mM_0)$ with $||mN_0|| = ||mM_0|| = aleph_0$.
+]
+#proof[
+  Set $L' = L cal {cal(U)}$ and interpret $mN$ as an $L'$ model by setting $cal(U)(x) <=> x in mM$, then consider for any $L$-formula $phi$ the $L$-sentence
+  $
+    sigma_phi := forall ov(z) ((and.big_(i <= n) cal(U)(x_i) and phi(ov(x))) -> phi^cal(U) (ov(x)))
+  $
+  since $mM elm mN$ then we have for any tuple $ov(a) in mN$
+  $
+    mN sat and.big_(i <= n) cal(U)(a_i) and phi(ov(a)) &<=> (mN sat phi(ov(a))) and ov(a) in mM => mM sat phi(ov(a)) \ &=> mN sat phi^cal(U) (ov(a))
+  $
+  and so $mN sat sigma_phi$.
+
+  Now we use @thrm-downwards to construct a countable $L'$-model $mN_0$ with $mN_0 elm mN$, then in $mN_0$ we also have $mN_0 sat sigma_phi$ for all $phi$. Then $cal(U)(mN_0)$ is exactly an elementary submodel exactly by @prop-relativization, so we will define $mM_0 := cal(U)(mN_0)$. To check that $(mN_0, mM_0)$ is a Vaughtian pair we apply @prop-relativization specifically with $phi$ being the formula that defines the infinite subset shared between $mM$ and $mN$. All its properties can be encoded as $L'$-sentences so are shared for $mN_0$.
+]
+
+#lemma[
+  Suppose that $mM elm mN sat T$, then there is a pair $mM_0 elm mN_0$ such that $(mN,mM) succ (mN_0, mM_0)$ and such that $mM_0,mN_0$ are both countable, homogeneous, and realize the same types in $S_n (T)$.
+]
+<lem-model_pair_embedding>
+// TODO: FIX REFERENCE UNDERLINING
+#proof[
+  Fix an $L$-formula $phi$ and set $L' = L union { cal(U) }$.
+
+  #claim[
+    If $ov(a) in mM_0$, and $p in S_n (ov(a))$ is realized in $mN_0$, then there exists countable extensions $(mN', mM') succ (mM_0, mN_0)$ such that $p$ is realized in $mM'$.
+  ]
+  #proof[
+    Let $L'' = L'(mN_0)$, $c$ a new constant, and let $T:= Th_(L'') (mN_0, mM_0) union {phi^cal(U) (c, ov(a) : phi in p}$. $T$ is finitely satisfiable since for any formulas $phi_i$ we have that since $p$ is realized in $mN_0$
+    $
+      mN_0 sat exists ov(x) and.big_i phi_i (ov(x))
+    $
+    and so by elementarity so does $mN_0$.
+
+    Hence let $mN' sat T$ and set $mM' = cal(U)(mN')$.
+  ]
+
+  #claim[
+    If $ov(b) in mN_0$, $p in S_n (ov(b))$, then there exists two countable models $(mN'', mM'') succ (mN_0, mM_0)$ such that $p$ is realized in $mN''$.
+  ]
+  #proof[
+    Almost exactly the same.
+  ]
+
+  With these two claims we can now construct what we want, we will build sequences of countable models $mM_i, mN_i$ such that $(mN_(i+1), mM_(i+1)) succ (mN_i, mM_i)$ and
+  - $i = 3i$: Any type $p in S_n (nothing)$ that is realized in $mN_i$ is realized in $mM_(i+1)$. We use the first claim for this.
+  - $i = 3i + 1$: If $ov(a),ov(b),ov(c) in mN_i$ are such that $tp(ov(a)) = tp(ov(c))$ then there exists a $d in mN_(i+1)$ such that $tp(ov(a)ov(c)) = tp(ov(b)ov(d))$. We use claim 2 for this.
+  - $i = 3i + 2$: If $ov(a),ov(b),ov(c) in mM_i$ are such that $tp(ov(a)) = tp(ov(c))$ then there exists a $d in mM_(i+1)$ such that $tp(ov(a)ov(c)) = tp(ov(b)ov(d))$. We use claim 1 for this.
+
+  Then it is easy to check that $mN := union.big_i mN_i$ and $mM := union.big_i mM$ work.
+]
+
+#theorem("Vaught's Two Cardinal Theorem")[
+  Let $T$ be an $L$-theory. The following are equivalent:
+  + There exist cardinals $kappa > lambda >= aleph_0$ such that $T$ has a $(kappa, lambda)$-model.
+  + $T$ has a Vaughtian pair.
+  + $T$ has an $(aleph_1, aleph_0)$-model.
+]
+<thrm-vaught_two_cardinal>
+#proof[
+  We already proved $(1) => (2)$, $(3) => (1)$ is immediate, so we just need to show $(2) => (3)$. Assume then, that $T$ has a Vaughtian pair $(mN,mM)$ with $mM,mN$ countable.
+
+  We now construct a sequence of models, $mM_alpha$ such that $(mM_(i+1), mM_(i)) equiv (mM_1, mM_(0))$, we start with $mM_0 = mM$ and $mM_1 = mN$, we do the successor step using @lem-model_pair_embedding and in limit steps we just take unions. We then set $mN' := union.big_(i < alpha) mN_i$, this is model of size $aleph_1$ but we still have that $(mN', mM)$ is a Vaughtian pair so since we have a formula $phi$ given to use by the pair, we have that $phi(mN') seq mM$ and thus $|phi(mN')| = aleph_0$ and so this $mN'$ is a $(aleph_1,aleph_0)$ model.
+]
+
+#lemma[
+  Suppose $T$ is $aleph_0$-stable, $mM sat T$, $||mM|| >= aleph_1$. There exists $mN$ with $mM elm mN$ such that $mN$ and $mM$ realize the same types over countable subsets of $mM$.
+]
+#proof[
+  We start with a claim that finds an 'unsplittable' formula.
+  #claim[
+    There exists an $L(mM)$-formula $phi(x)$ such that $|phi(mM)| >= aleph_1$ and for every formula $psi(x)$ in $L(mM)$ we have $|phi and psi (mM)| <= aleph_0$ or $|phi and (not psi) (mM)| <= aleph_0$.
+  ]
+  #proof[
+    Suppose such a formula does not exist, we can then construct a tree of formulas $phi_sigma$ for $sigma in 2^(<omega)$ such that $|phi_sigma (mM)| >= aleph_1$, $phi_(sigma^0), phi_(sigma^1)$ are inconsistent and both imply $phi_sigma$.
+
+    If $A$ is the set of parameters of $phi_sigma$'s then $|S_1 (A)| >= 2^(aleph_0)$, which contradicts $aleph_0$ stability.
+  ]
+  Let $phi$ be as in the claim above, we define the type. // TODO: DOUBLE CHECK SYNTAX
+  $
+    p = { psi(x) : psi "is an" L(mM) "formula with" |psi and phi(mM)| >= aleph_1 }.
+  $
+  Then $p$ is a complete type in $S(mM)$ due to the defining property of $phi$, then let $mM' succ mM$ be the extension that realizes $p$, and set $c$ to be a witness.
+
+  We now take $mN$ to be the prime model over $mM union {c}$ (@def-prime_over_set), then every $b in mN$ has isolated type over $mM union {c}$. Clearly $mN$ contains $mM$ and thus all the types of $mM$, so it is enough to show that $mM$ contains all the types of $mN$. Let $Gamma(w)$ be a countable type over $mM$ that is realized in $mN$, we show that is also realized in $mM$. Let $b sat Gamma$, then $tp(b quo mM c)$ is isolated by some formula $theta(w, c)$. 
+  // TODO: FIX SPECIFICITY OF TYPES
+
+  Now we know, since $c$ realizes $p$ and since $exists w theta(omega, c)$ is true then $exists w theta(omega, x) in p$. We also know that  
+  $
+    mN sat forall w (theta(omega, c) -> gamma(w))
+  $
+  for all formulas $gamma in Gamma$, by definition of isolated type. We then choose to look at the set
+  $
+    Delta = {exists w theta(w, x)} union {forall w (theta(w, x) -> gamma(w)) : gamma in Gamma}
+  $
+  this set is countable and if it has a realization in $mM$, say by $c'$, then if $b'$ is the witness of $exists theta(w, c')$ in $mM$ then it satisfies the type $Gamma$.
+
+  #claim[
+    $Delta$ has a realization in $mM$.
+  ]
+  #proof[
+    For each $delta in Delta$ we have that
+    $
+      delta and phi(mM) "is co-countable in " phi(mM)
+    $
+    so
+    $
+      and.big_(delta in Delta) delta and phi(mM) "is non empty". 
+    $
+  ]
+]
+
+#proposition[
+  Let $T$ be $kappa$-categorical for some $kappa >= aleph_1$, then $T$ is $aleph_0$-stable.
+]
+#proof[
+  If $T$ is not $aleph_0$ stable, then it has a model $||mM|| = kappa$, with a countable subset $A$ such that $mM$ realizes uncountably many types over $A$. Let $T^s$ be the Skolemization of $T$ and $(I, <)$ an ordered set order isomorphic to $kappa$. Let $mN$ be an EM-Model (@def-E_M_model) generated by an order-indiscernible sequence modeled after $(I,<)$.
+
+  For every $A seq mN$, $mN$ realizes at most $|A| + aleph_0$ types over $A$ so $mM tilde.equiv.not mN$ which contradicts categoricity.
+]
+
+#proposition[
+  Let $kappa$ be uncountable and $T$ a complete theory, there exists $mM sat T$ with $||mM|| = kappa$ and any $L(mM)$-definable subset of $mM$ is either finite or has size $kappa$.
+]<prop-unsplittable_model>
+#proof[
+  Exercise, use compactness.
+]
+
+#corollary[
+  If $T$ is $kappa$-categorical with $kappa >= aleph_1$ then $T$ has no Vaughtian pair.
+]
+#proof[
+  Let $mM$ be as in @prop-unsplittable_model, let $mN$ be the $(kappa, aleph_0)$-model $mN$ that we proved exists in @thrm-vaught_two_cardinal. // TODO: ADD REFERENCE TO THEOREM.
+  Clearly $mM tilde.equiv.not mN$ which contradicts categoricity.
+]
+
+Before we jump into the proof let us slightly generalize @prop-strongly_minimal_formula.
+#lemma[
+  Let $T$ be an $aleph_0$-stable theory, $mM sat T$, there exists an $L(mM)$-formula which is minimal in $mM$.
+]
+#proof[
+  We repeat the same tree trick we keep using, if such a formula does not exist we can start with $phi_nothing = (x = x)$ and keep splitting into two 'large' parts to generate a tree of formulas $phi_sigma, sigma in 2^(<omega)$. Let $A$ be the number of parameters of each formula $phi_sigma$, then $|S_1 (A)| >= 2^(aleph_0)$.
+]
+
+Since minimality seems weak one might question the usefulness of this lemma, but that worry should disappear given the next lemma.
+#lemma[
+  Suppose $T$ has no Vaughtian pair, let $mM$ be a model of $T$, and $phi(x, ov(y))$ be an $L$-formula.
+  There is some number $n$ such that for all $ov(a) in mM$,
+  $
+    |phi(mM,ov(a))| > n => phi(mM, ov(a)) "infinite"
+  $
+]<lem-infinity_bound>
+#proof[
+  Suppose not, then for each $n in NN$ we have some tuple $ov(a)_n$ such that $phi(mM, ov(a)_n)$ is finite of size at least $n$. // TODO: GET RID OF DANGLING INEQUALITIES.
+  Let $cal(U)$ be a unary predicate, $L' = L union {cal(U)}$, let $p(ov(y))$ be the $L'$-type consisting of the formulas
+  + $cal(U)(mM)$ defined a proper elementary submodel, this is done by adding $phi^cal(U)$ for every $phi in Th(mM)$.
+  + $cal(U)(y_1) and ... and cal(U)(y_k)$.
+  + For each $n$ the formulas $|phi(mM, ov(y))| > n$.
+  + $forall x (phi(x, ov(y) -> cal(U)(x)))$.
+  #claim[
+    $p$ is consistent.
+  ]
+  #proof[
+    We can, by compactness, only show that $p'$ is consistent where we picked only finitely many formulas from (3) and keep the rest the same. To that end let $mN$ be an arbitrary proper supermodel with $mM elm mN$. Interpret $cal(U)$ as $mM$ and $ov(y)$ as $ov(a)_n$ where $n$ is the largest that we picked in (3). 
+
+    Then $phi(mM, ov(a)_n)$ is finite implies that $phi(mM, ov(a)_n) = phi(mN, ov(a)_n)$ and so $p'$ is realized.
+  ]
+  A realization of $p$ is a Vaughtian pair, which is our contradiction.
+]
+
+#corollary[
+  If $T$ has no Vaughtian pair, $mM$ is a model of $T$ and $phi$ is a minimal $L(mM)$-formula, then it is also strongly minimal.
+]
+<cor-minimal_implies_strong>
+#proof[
+  Suppose that $mN succ mM$ and $phi$ is not minimal in $mN$. Let $psi(x, y)$, $ov(a) in mN$ be such that
+  $
+    phi and psi (x, ov(a)) quad phi and not psi (x, ov(a))
+  $
+  are both infinite. Let $n$ be as in @lem-infinity_bound for both $phi and psi, phi and not psi$ (take max).
+
+  Then $mN$ satisfies
+  $
+    exists ov(y) (|phi and psi(x, ov(y))| > n) and (|phi and not psi(x, ov(a))| > n),
+  $
+  so let $ov(a)' in mM$ be such that $phi and psi (mM, ov(a)')$ and $phi and not psi (mM, ov(a'))$ are both infinite. This contradicts the fact that $phi$ is minimal in $mM$. 
+]
+
+We finally have enough tools to prove the main theorem.
+#theorem("Morley")[
+  The following are equivalent.
+  + $T$ is categorical in some uncountable cardinal $kappa$.
+  + $T$ is categorical in all uncountable cardinals.
+]
+#proof[
+  $(2) => (1)$ is trivial. Assume then that $T$ is $gamma$-categorical for some uncountable cardinal $gamma$, then it is $aleph_0$-stable and has no Vaughtian pair. Let $kappa$ be some arbitrary cardinal, Let $mM_0$ be a prime model of $T$, this is possible to find because the isolated types are dense in $mM$ (because $S(nothing)$ is countable). Let $mM,mN sat T$ with $||mM|| = ||mN|| = kappa$, then since $mM_0$ is prime $mM_0 elm mM$ and $mM_0 elm mM$.
+
+  There exists a minimal $L(mM_0)$-formula $phi$, by @cor-minimal_implies_strong we get that $phi$ is also minimal in $mM$ and in $mN$.
+  Then $|phi(mM)| = |phi(mN)| = kappa$ because we have no Vaughtian pairs. We then have $dim(phi(mM)) = dim(phi(mN))$.
+
+  Let $I$ be a basis for $phi(mM)$, and $J$ be a basis for $phi(mN)$, take any bijection $f : I -> J$. This map extends to elementary maps $f' : phi(mM) -> phi(mN)$. Now take $mM' succ mM$ prime over $phi(mM)$, since every element of $mM'$ realizes an isolated type over $phi(mM)$ then we can extend $f'$ to $f'': mM' -> rng(f'')$.
+
+  But since we have no Vaughtian pair we know that $mM' = mM$ and $rng(f'') = mN$ and so $f'' : mM -> mN$ is an isomorphism and so we are done.
+]
+
+This subject, of course, goes a lot deeper than this theorem. Here is a selection of results for the interested reader to look into.
+#theorem("Balduin-Lachlan")[
+  The following are equivalent.
+  + $T$ is uncountably categorical.
+  + $T$ is $aleph_0$-stable and has no Vaughtian pairs.
+]
+
+#theorem("Balduin-Lachlan")[
+  If $T$ is $aleph_1$-categorical, not $aleph_0$-categorical, then it has $aleph_0$ countably many models of size $aleph_0$.
+]
 #pagebreak()
 #set heading(numbering: "A.1", supplement: [Appendix])
 #show heading: it => {
@@ -2546,33 +3037,3 @@ It turns out that the continuum hypothesis is independent of $ZFC$.
   For a cardinal $gamma$, $cf(2^gamma) > gamma$.
 ]<thrm-Konig>
 
-
-//
-// Ordinals have a very natural _next_ operation, often called the successor function.
-// #definition[
-//   If $(alpha, <=)$ is an ordinal, then we define
-//   $
-//     suc(alpha) = {alpha} union alpha
-//   $
-//   and give $suc(alpha)$ the ordering $<='$ which extends $<=$ with $x <=' alpha$ for all $x in alpha$.
-// ]
-// #proposition[
-//   $(suc(alpha), <=')$ is an ordinal.
-// ]
-// #proof[
-//   Exercise.
-// ]
-//
-// #definition[
-//   Two ordinals $(alpha, scripts(<=)_alpha)$ and $(beta, scripts(<=)_beta)$ are _equivalent_ or _isomorphic_ if there is a map $g : alpha -> beta$ which is a monotonic bijection.
-// ]
-// From now on we will drop the ordering when referring to ordinals.
-// #definition[
-//   For two ordinals $alpha,beta$ we say that $alpha <= beta$ if $alpha$ 
-// ]
-//
-// Now let us see how these concepts generalize natural numbers, note that $({}, )$ is clearly an ordinal so set $alpha_0 = {}$, then by classic induction define $alpha_(n+1) = suc(alpha_n)$.
-//
-// Ordinals also have a concept of a _limit_,
-//
-//
