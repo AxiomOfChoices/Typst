@@ -408,16 +408,30 @@ In order to prove this result we will need to use a specific technique, since it
 #technique("Back and Forth method")[
   Let $mM$ and $mN$ be two countable models between which we want to construct an isomorphism $mM -> mN$.
 
-]
+  The method involves us enumerating the two models as $mM = {a_0, a_1,... }$ and $mN = {b_0, b_1, ...}$, it does not matter what in what order this enumeration happens.
+  Our goal will be to construct a sequence of functions $f_n : A_n -> B_n$, where $A_n$ and $B_n$ are substructures of $mM$ and $mN$ respectively, $f_n$ is an isomorphism between said substructures, and $f_(n+1)$ is an extension of $f_n$. Additionally we will construct $f_n$'s such that every $a_i$ and $b_i$ will eventually appear in the domain / codomain of some $f_n$.
+  Our goal then is to take the function
+  $
+    f := union_(n in NN) f_n,
+  $
+  one can easily check that this will be an isomorphism if we indeed have such a sequence.
+
+  We construct $f_n$ inductively, usually starting with either $A_0 = {a_0}$ if there is a natural $b_i$ to map it to, or with $A_0 = nothing$ otherwise. We then assume that $f_n$ is constructed and try to construct $f_(n+1)$ by adding a single element mapping, this depends on the parity of $n$. If $n$ is even we pick the element in $mM$ with smallest index that has not yet been picked, let say $a_i$, and try to find a $b_j$ that has not yet been picked such that the extended function,
+  $
+    f_(n+1) := f_n union {(a_i, b_j)},
+  $
+  is again an isomorphism of $A union {a_i}$ to $B union {b_i}$. If $n$ is odd we do the exact same thing, but instead pick $b_i$ with smallest index that has not yet been picked. Doing this means that eventually each $a_i$ and $b_i$ will eventually be mapped and thus $f$ is indeed an isomorphism.
+]<tech-back_and_forth>
+
+Lets see an example of this.
 
 #proof([of @thrm-dlo_categorical])[
-  Let $(A,<)$ and $(B,<)$ be two countable models of $DLO_0$, we enumerate them $A = {a_0, a_1,...}$ and $B = {b_0, b_1, ...}$.
+  Let $mM = (M,<)$ and $mN = (N,<)$ be two countable models of $DLO_0$, we enumerate them $M = {a_0, a_1,...}$ and $N = {b_0, b_1, ...}$.
 
-  We now use the "back and forth" method, which essentially incrementally pairs up elements of $A$ with elements of $B$, and in the limit this will give us a bijection which will be our isomorphism.
+  We use @tech-back_and_forth to construct an isomorphism, we start by with $f_0 : {a_0} -> {b_0}$. As explained above we now only need to describe how we add one element from $mM$ and $mN$.
+  Assume then that $f_n : A -> B$ is an isomorphism, then assume that we are on an even step and so we are adding some element $a_i$, then $a_i$ has some ordering compared to $A$. If $a_i$ is less than every element in $A$, then since $mN$ has no end points there is a $b_j in mN backslash B$ which is smaller than every element in $B$. Similarly if $a_i$ is larger than every element in $A$ then there exists a $b_j$ larger than every element of $B$. If $a_i$ is in between elements $x,y in B$, then because of density know that there is an element $b_j$ which is between $f(x),f(y)$. 
 
-  More formally we will construct a sequence $phi_n : A_n -> B_n$ where $A_n seq A, B_n seq B$ where each $phi_n$ is monotone increasing, and so that at step $2n$ we have $a_n in A_n$ and $b_n in B_n$.
-
-  For the base case we take $a_0$ and pair it with anything in $B$, lets say $b_20$, now we look at the smallest (in the sense of the enumeration) element $b_i$ in $B$ (in this case $b_0$), and try to map it to something in $A$. Now $b_i$ will be somehow related to $b_20$, we can now use the density and the lack of endpoints to always find an element in $A$ that has the same relations as $b_i$ so we can always find a proper pairing.
+  In all 3 cases we will map $a_i$ to $b_j$ and take that to be $f_(n+1)$. One can easily check that $f_(n+1)$ remains an isomorphism and thus the back and forth method gives us an isomorphism between $mM$ and $mN$.
 ]
 
 #corollary[
@@ -449,7 +463,7 @@ We now want to discuss how to check that two models are elementarily equivalent.
   - If $phi$ is a formula of the form $phi_1 or phi_2$ then $qd(phi) = max(qd(phi_1),qd(phi_2))$
   - If $phi$ is a formula of the form $exists x thin phi'$ then $qd(phi) = qd(phi') + 1$, similarly for $forall$.
 
-  We write $mM equiv_n mN$ to mean "$mM$ is equivalent to $mN$ up to order $n$" if for every sentence $sigma$ of quantifier depth less than $n$ we have $mM sat phi <=> mN sat phi$.
+  We write $mM equiv_n mN$ to mean "$mM$ is equivalent to $mN$ up to order $n$" if for every sentence $sigma$ of quantifier depth less than $n$ we have $mM sat sigma <=> mN sat sigma$.
 ]
 
 We now define a tool for proving such partial equivalences.
@@ -473,7 +487,7 @@ To prove this we will need a lemma first.
 #lemma[
   We say that formulas $phi(ov(x)), psi(ov(x))$ are equivalent if $forall ov(x) thin phi(ov(x)) <=> psi(ov(x))$ is true in every model. Equivalently if $forall ov(x) thin phi <=> psi$ is provable from the empty set of axioms.
 
-  For each $n, ell$ there exists a finite list $Phi_1, ..., Phi_k$ of formulas with $qd(n)$ in $ell$ variables such that every formula $phi$ with $qd(phi) <= n$ in $ell$ variables is equivalent to $phi_i$ for some $i <= k$.
+  If $L$ is finite relational then for each $n, ell$ there exists a finite list $Phi_1, ..., Phi_k$ of formulas with $qd(n)$ in $ell$ variables such that every formula $phi$ with $qd(phi) <= n$ in $ell$ variables is equivalent to $phi_i$ for some $i <= k$.
 ]
 #proof[
   We induct on $n$, $n = 0$, there are finitely many atomic formulas so we are done.
@@ -608,6 +622,7 @@ This definition is not really satisfying from the point of view of model theory 
 #remark[
   One needs to check that the last two interpretations are well defined, but this is easy to do by the definition of an ultrafilter.
 ]
+#v(-2%);
 #remark[
   If $cal(U)$ is the principal ultrafilter generated by $i_0 in I$ then 
   $ product_(i in I) mM_i slash.big cal(U) tilde.eq mM_(i_0) $
