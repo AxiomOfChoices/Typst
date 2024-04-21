@@ -1278,9 +1278,9 @@ We can see that this definition in fact generalizes @def-scott_equiv.
 
 Now with this definition we can start to construct some characterizing sentences.
 #lemma[
-  $forall alpha < omega_1$, $forall ov(alpha) in m, exists phi_alpha^(mM,ov(a)) (x) in cal(L)_(omega_1,omega)$, such that $forall mN, forall ov(b) in mN$,
+  $forall alpha < omega_1$, $forall ov(alpha) in mM, exists phi_alpha^(mM,ov(a)) (x) in cal(L)_(omega_1,omega)$, such that $forall mN, forall ov(b) in mN$,
   $
-    (mM, ov(a)) equiv_alpha (mN, ov(b)) <=> mN sat phi_alpha^(mM,ov(alpha)) (ov(beta))
+    (mM, ov(a)) equiv_alpha (mN, ov(b)) <=> mN sat phi_alpha^(mM,ov(a)) (ov(b))
   $
 ]
 #proof[
@@ -1290,14 +1290,14 @@ Now with this definition we can start to construct some characterizing sentences
   $
   If $alpha$ is a limit ordinal then
   $
-    phi_alpha^(mM,ov(a)) (ov(x)) = and.big_(beta < alpha) phi_beta^(mM, ov(a)).
+    phi_alpha^(mM,ov(a)) (ov(x)) = and.big_(beta < alpha) phi_beta^(mM, ov(a)) (ov(x)).
   $
   Finally for $alpha + 1$ we have
   $
     phi_(alpha + 1)^(mM, ov(a)) (ov(x)) = 
     ( and.big_(b in mM)  exists y phi_alpha^(mM, (ov(a), b))(ov(x),y) )
     and
-    ( forall y and.big_(b in mM)phi_alpha^(mM, (ov(a), b))(ov(x),y) )
+    ( forall y or.big_(b in mM)phi_alpha^(mM, (ov(a), b))(ov(x),y) )
   $
 ]
 
@@ -2605,7 +2605,7 @@ The following is standard.
   then there exists a partial elementary map $f : phi(mN_1) ->> phi(mN_2)$.
 ]
 #proof[
-  First we set $f'$ to be identity on $A$, then we pick bases $(a_alpha)_(alpha in I), (b_alpha)_(alpha in I)$. Then by mapping $a_alpha |-> b_alpha$ we know that by @thrm-elementary_bases this remains a partial embedding. We now use Zorn's lemma to pick a maximal partial embedding $f$ with respect to inclusion that contains $f'$, and we want to show that the domain of $f$ is $phi(mN_1)$ and the range is $phi(mN_2)$. 
+  First we set $f'$ to be identity on $A$, then we pick bases $(a_alpha)_(alpha in I), (b_alpha)_(alpha in I)$. Then by mapping $a_alpha |-> b_alpha$ we know that by @thrm-elementary_bases this remains a partial embedding. We now use Zorn's lemma to pick a maximal partial embedding $f$ with respect to inclusion that contains $f'$, and we want to show that the domain of $f$ is $phi(mN_1)$ and the range is $phi(mN_2)$.
 
   // TODO: SIMPLIFY BASES NOTATION.
   To see this assume that we have $x in phi(mN_1) backslash dom(f)$, then we know that $x$ is algebraic over $(a_alpha)_(alpha in I)$ so we know by assignment that it is isolated. // TODO: INCLUDE PROOF
