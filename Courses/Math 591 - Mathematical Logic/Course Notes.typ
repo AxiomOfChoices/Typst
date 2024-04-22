@@ -470,7 +470,7 @@ We now want to discuss how to check that two models are elementarily equivalent.
   - If $phi$ is a formula of the form $phi_1 or phi_2$ then $qd(phi) = max(qd(phi_1),qd(phi_2))$
   - If $phi$ is a formula of the form $exists x thin phi'$ then $qd(phi) = qd(phi') + 1$, similarly for $forall$.
 
-  We write $mM equiv_n mN$ to mean "$mM$ is equivalent to $mN$ up to order $n$" if for every sentence $sigma$ of quantifier depth less than $n$ we have $mM sat sigma <=> mN sat sigma$.
+  We write $mM equiv_n mN$ to mean "$mM$ is equivalent to $mN$ up to order $n$" if for every sentence $sigma$ with $qd(sigma) <= n$ we have $mM sat sigma <=> mN sat sigma$.
 ]
 
 We now define a tool for proving such partial equivalences.
@@ -502,7 +502,7 @@ To prove this we will need a lemma first.
   $
     or.big_(X in S) (and.big_(i in X) sigma_i and.big_(i in.not X) (not sigma_i))
   $
-  where $S$ is a collection of subsets of ${1,...,m}$, this case then follows from the fact that $S$ is finite. 
+  where $S$ is a collection of subsets of ${1,...,m}$, this case then follows from the fact that $S$ is finite.
   Now assume this holds for quantifier depth at most $n$, if $phi$ is of quantifier depth at most $n + 1$, then $phi$ is equivalent to a disjunction of conjunctions of formulas of the form $exists x thin phi'$ or $forall x thin phi'$, where $qd(phi') <= n$. By inductive hypothesis we then have $phi'$ is equivalent to one of finitely many formulas $Phi'_k$, then $exists x thin phi'$ is equivalent to $exists x thin Phi'_k$ and similarly for $forall$.
 ]
 
@@ -1592,7 +1592,7 @@ Now that we have quantifier elimination of $A C F_p$ we can use it to very quick
 #theorem("Lefchetz's principle")[
   Let $sigma$ be a sentence in the language of fields. TFAE
   + $sigma$ is true in every algebraically closed field of characteristic $0$.
-  + $sigma$ is true in every algebraically closed field of characteristic $p$ for all but finitely many $p$. 
+  + $sigma$ is true in every algebraically closed field of characteristic $p$ for all but finitely many $p$.
   + $sigma$ is true in every algebraically closed field of characteristic $p$ for infinitely many $p$
 ]<thrm-lef_principle>
 #proof[
@@ -1613,7 +1613,7 @@ Now that we have quantifier elimination of $A C F_p$ we can use it to very quick
   $
   so we are done.
 
-  For $(3) => (1)$, suppose that $A C F_0 tack.not sigma$ and $A C F_p proves sigma$ for infinitely many $p$. Then by completeness $A C F_0 tack.not not sigma$ so by $(1) => (2)$ there exists a prime $p_0$ such that for all prime numbers $p >= p_0$ we have $A C F_p proves not sigma$ and so we get a contradiction.
+  For $(3) => (1)$, suppose that $A C F_0 tack.not sigma$ and $A C F_p proves sigma$ for infinitely many $p$. Then by completeness $A C F_0 proves not sigma$ so by $(1) => (2)$ there exists a prime $p_0$ such that for all prime numbers $p >= p_0$ we have $A C F_p proves not sigma$ and so we get a contradiction.
 ]
 There are some fun consequences of this theorem.
 #theorem("Ax")[
@@ -1635,7 +1635,7 @@ There are some fun consequences of this theorem.
   this sentence encodes exactly the statement of the theorem for polynomials of degree $<= d$. Hence by @thrm-lef_principle since these sentences are true in $hat(FF)_p$ then they are also true in $CC$.
 ]
 
-Coming back to quantifier elimination, we have an assortment of corollaries stemming from @prop_acf_qe 
+Coming back to quantifier elimination, we have an assortment of corollaries stemming from @prop_acf_qe.
 #corollary(base: "heading")[
   Let $K < L$ both be algebraically closed fields, if $F(ov(x))$ is a system of polynomial equations and inequalities with coefficients from $K$ with a solution in $L$, then the system also has a solution in $K$.
 ]<cor-pol_equal>
@@ -1649,15 +1649,13 @@ Coming back to quantifier elimination, we have an assortment of corollaries stem
   Let $K$ be an algebraically closed field, $f_1,...,f_n in K[ov(x)]$. $f_i$ have a common zero in $K^n$ if and only if $1 in.not (f_1,...,f_n)$.
 ]<cor-weak_null>
 #proof[
-  The forward direction is very easy, if they have a common zero then everything in the ideal has that same common zero.
+  The forward direction is very easy, if they have a common zero then everything in the ideal has that same common zero, so $1 in.not (f_1,...,f_n)$.
 
   On the other hand if $1$ is not in the ideal, let $I$ be a maximal ideal containing $(f_1,...,f_n)$ then set
   $
-    L = hat(K[ov(x)] quo I)
+    Z = K[ov(x)] quo I quad quad L = hat(Z).
   $
-  which is clearly an algebraically closed field containing $K$. Now in $L$ there are common roots, they are the variables $x_1,...,x_n$. Hence by the 
-  // @cor-pol_equal 
-  we get the desired result.
+  Clearly $L$ is an algebraically closed field containing $K$. Now in $L$ there are common roots, they are the variables $x_1,...,x_n$. Hence by @cor-pol_equal we get the desired result.
 ]
 
 We can now apply this to some basic algebraic geometry.
@@ -1671,9 +1669,7 @@ We can now apply this to some basic algebraic geometry.
       I(Y) = { f in K[ov(x)] : f(ov(a)), forall ov(a) in Y}
     $
 
-    We call a subset $V$ of $K^n$ _Zariski-closed_ if $V = V(S)$ for some $S in K[ov(x)]$.
-    
-    An ideal is _radical_ if it is closed under taking roots.
+  We call a subset $V$ of $K^n$ _Zariski-closed_ if $V = V(S)$ for some $S in K[ov(x)]$. An ideal is _radical_ if it is closed under taking roots.
 ]
 #proposition[
   For all $X,Y seq K^n$
@@ -1683,25 +1679,25 @@ We can now apply this to some basic algebraic geometry.
   + The Zariski-closed sets form a topology, that is they are closed under finite unions and arbitrary intersections. In particular if $X,Y$ are Zariski-closed then 
     $
       X union Y = V(I(X) sect I(Y))
-    $ 
-    and 
+    $
+    and
     $
       X sect Y = V(I(X) + I(Y)).
     $
-]
+]<prop-zariski_props>
 #proof[
   Exercise.
 ]
 
 #theorem("Hilbert basis theorem")[
   If $K$ is a field, then $K[ov(x)]$ is a Noetherian ring. That is, there is no infinite increasing chain of ideals. In particular, every ideal is finitely generated.
-]
+]<thrm-hilbret_basis_theorem>
 
 #corollary[
   If $K$ is a field, then there is no infinite decreasing sequence of Zariski-closed sets.
 ]
 #proof[
-  We apply Hilbert's Basis theorem along with the third proposition.
+  We apply @thrm-hilbret_basis_theorem along with $(3)$ of @prop-zariski_props.
 ]
 
 #definition[
@@ -1710,7 +1706,7 @@ We can now apply this to some basic algebraic geometry.
     a dot b in I => a in I "or" b in I
   $
 ]
-Clearly every prime ideal is radical.
+Clearly every prime ideal is radical, and we have a sort of converse.
 
 #theorem("Primary decomposition")[
   If $I seq K[ov(x)]$ is a radical ideal, then there are prime ideals $J_1,...,J_n$ such that
@@ -1719,7 +1715,7 @@ Clearly every prime ideal is radical.
   $
 ]
 
-We can now prove the strong form of @cor-weak_null
+We can now prove the strong form of @cor-weak_null.
 #theorem("Hilbert Nullstellensatz strong form")[
   Let $K$ be algebraically closed, if $I subset.neq J$ and both are radical in $K[ov(x)]$, then
   $
@@ -1727,22 +1723,19 @@ We can now prove the strong form of @cor-weak_null
   $
 ]<thrm-strong_null>
 #proof[
-  Note that the non-strict inclusion is trivial, the hard part is to prove the non-strict inclusion. That is, we want to find a common root of $I$ which is not a common root of $J$. Let $p in J backslash I$, we want want to find a point $ov(b)$ which is a common root of $I$ but $p(ov(b)) != 0$.
+  Note that the non-strict inclusion is trivial, the hard part is to prove the strict inclusion. That is, we want to find a common root of $I$ which is not a common root of $J$. Let $p in J backslash I$, we want want to find a point $ov(b)$ which is a common root of $I$ but $p(ov(b)) != 0$.
 
-  We decompose $I = I_1 sect ... I_n$ into prime ideals and let $i$ be such that $p in.not I_i$.
-
-  By Hilbert basis theorem we have $I_i = (f_1,...,f_n)$ so we want to find a root of $f_1,...,f_n$ which is not a root of $p$. Let $R = K[ov(x)]/I_i$ then $R$ is an integral domain since $I_i$ is prime, let $R_0$ be the field of fractions of $R$ and $L = hat(R_0)$.
+  We decompose $I = I_1 sect ... sect I_n$ into prime ideals and let $i$ be such that $p in.not I_i$.
+  By @thrm-hilbret_basis_theorem we have $I_i = (f_1,...,f_n)$ so we want to find a root of $f_1,...,f_n$ which is not a root of $p$. Let $R = K[ov(x)] quo I_i$ then $R$ is an integral domain since $I_i$ is prime, let $R_0$ be the field of fractions of $R$ and $L = hat(R_0)$.
 
   In $L$ consider the system
   $
     cases( f_i = 0 : 1 <= i <= m, p eq.not 0)
   $
-  it has a solution in $L$ and thus by 
-  // @cor-pol_equal 
-  it also has a solution in $K$ and so we are done.
+  it has a solution in $L$ since $p != 0$ in $L$, and thus by @cor-pol_equal it also has a solution in $K$ and so we are done.
 ]
 #corollary[
-  If $I$ is a radical ideal then $I = I(V(I))$
+  If $I$ is a radical ideal then $I = I(V(I))$.
 ]
 #proof[
   Apply @thrm-strong_null to $J = I(V(I))$.
@@ -1758,12 +1751,10 @@ We can now prove the strong form of @cor-weak_null
 
   For the backward direction of (2), assume that $X$ is a Boolean combination of $Z_i$ for some Zariski-closed family $Z_i$, then by definition we have 
   $
-    Z_i = V(p^i_1) sect ... sect V(p^i_(n_i)
-  $ 
+    Z_i = V(p^i_1) sect ... sect V(p^i_(n_i))
+  $
   then immediately we have that $X$ is a boolean combination of
-  $
-    V(p^i_j)
-  $
+  $V(p^i_j)$, which are all Zariski closed sets.
 ]
 
 #definition[
@@ -1774,23 +1765,23 @@ We can now prove the strong form of @cor-weak_null
   Let $K$ be algebraically closed, the images of constructible sets by polynomial maps are constructible.
 ]
 #proof[
-  Let $X seq K^n$ be constructible, $p : K^n -> K^m$ be a polynomial map
+  Let $X seq K^n$ be constructible, $p : K^n -> K^m$ be a polynomial map, its image is given by
   $
-    p(X) = {ov(y) in K^n : exists ov(x) (ov(x) in X and ov(y) = p(ov(x)))}
+    p(X) = {ov(y) in K^n : q(ov(y)) = exists ov(x) (ov(x) in X and ov(y) = p(ov(x)))}.
   $
-  then since $p(ov(x))$ is definable over $K$ subset of $K^m$. Since the theory of $K$ has quantifier elimination, $p(ov(x))$ is definable by a quantifier free formula and thus is constructible.
+  Then since $q(ov(x))$ is a formula this image is a definable subset of $K^m$. Since the theory of $K$ has quantifier elimination, $p(ov(x))$ is definable by a quantifier free formula and thus is constructible.
 ]
 
 = Homogeneous Structures
 #definition[
   $mM$ is $kappa$-_homogeneous_ if for every subset $A seq mM$ with $|A| < kappa$, every elementary embedding $f : A -> mM$ and every element $a in mM$ there is an extension $g : A union {a} -> mM$ which is also an elementary embedding.
 
-  $mM$ is called _homogeneous_ if it is $|mM|$-homogeneous. $mM$ is _strongly_ $kappa$-_homogeneous_ if we have an extension $g : mM -> mM$ of $f$ instead.
+  $mM$ is called _homogeneous_ if it is $||mM||$-homogeneous. $mM$ is _strongly_ $kappa$-_homogeneous_ if we have an extension $g : mM -> mM$ of $f$ instead.
 ]
 
-One might wonder why we do not similarly define $mM$ to be strongly homogeneous if it is strongly $|mM|$-homogeneous. This is explained by the following proposition.
+One might wonder why we do not similarly define $mM$ to be strongly homogeneous if it is strongly $||mM||$-homogeneous. This is explained by the following proposition.
 #proposition[
-  $mM$ is homogeneous if and only if it is strongly $|mM|$-homogeneous.
+  $mM$ is homogeneous if and only if it is strongly $||mM||$-homogeneous.
 ]
 #proof[
   Exercise, quite simple using back and forth.
@@ -1800,7 +1791,7 @@ One might wonder why we do not similarly define $mM$ to be strongly homogeneous 
   If $mM equiv mN$ are saturated and are of the same cardinality then $mM tilde.equiv mN$.
 ]
 #proof[
-  We prove, as expected, by back and forth. Set $kappa = ||mM|| = ||mN|$ and numerate both models as 
+  We prove, as expected, by back and forth. Set $kappa = ||mM|| = ||mN||$ and enumerate both models as 
   $
     mM = {a_alpha : alpha < kappa } "and"
     mN = {b_alpha : alpha < kappa }.
