@@ -25,7 +25,7 @@ doc)
 = Models and Languages
 #definition[
   A _model_ or _structure_ is a tuple $ mM = (M, (f_i)_(i in I), (R_j)_(j in J), (c_k)_(k in K)) $
-  where 
+  where
   - $M$ is a set called the universe
   - $f_i$ are functions $f: M^(a_i) -> M$
   - $R_j$ are relations $R_j seq M^(a_j)$
@@ -214,14 +214,14 @@ An important consequence of this definition is that every sentence of $L(mM)$ is
 #definition[
   Let $mM$ be a model in the language $L$. The _theory_ of $mM$ is defined as
   $
-    Th_L(mM) = { sigma "is an" L"-sentence" : mM sat sigma}.
+    Th_L (mM) = { sigma "is an" L"-sentence" : mM sat sigma}.
   $
   If $L$ is clear from context we will often omit it.
 
   We say that two $L$-structures, $mM$ and $mN$, are _elementarily equivalent_, and write $mM equiv mN$ if $Th(mM) = Th(mN)$.
 ]
 #definition[
-  We write $mM tilde.equiv mN$ and say that $mM$ and $mN$ are _isomorphic_ if there is a bijection $g : |mM| -> |mN|$ with
+  We write $mM tilde.equiv mN$ and say that $mM$ and $mN$ are _isomorphic_ if there is a bijection $g : mM -> mN$ with
   $
   g(underline(c_k)^mM) = underline(c_k)^mN\
   (a_1,...,a_n) in underline(R_j)^mM <=>
@@ -241,10 +241,17 @@ Elementarily equivalence means that the two models agree on all $L$-sentences, w
 ]
 
 #definition[
-  We write $mM elm mN$ to mean $mM$ is an _elementary substructure_ of $mN$ which we define to mean $mM seq mN$ and for every formula $phi(ov(x))$ and for every $ov(a) seq |mM|$ we have
+  A map $f : A -> mM$ between two $L$-models is called an _embedding_ if it is an injective map who's image is a substructure of $mM$.
+
+  A map $f : mM -> mN$ between two $L$-models is called an _elementary embedding_ if for every tuple $ov(a) in mM^n$ and every $L$-formula we have
   $
-  mM sat phi(ov(a)) <=> mN sat phi(ov(a))
+    mM sat phi(ov(a)) <=> mN sat phi(f(ov(a))).
   $
+  We write this as $f : mM into mN$.
+]
+
+#definition[
+  We say $mM$ is an _elementary substructure_ of $mN$ if $mM seq mN$ and the inclusion map $iota : mM into mN$ is an elementary embedding. We write this as $mM elm mN$.
 ]
 These two definitions also deal with concept of 'substructure' on different resolutions. A standard substructure is a very weak property, substructures $mM$ of $mN$ could have radically different behaviour (we will see many examples of this).
 
@@ -380,6 +387,7 @@ As an example use we have the following theorem.
   - For any theory $T$ which is complete and consistent, there exists a model $mM$ with $T = Th(mM)$.
 ]
 
+#pagebreak(weak: true)
 = Categoricity
 
 One can consider a theory $T$ to be the 'resolution' of mathematical subject, the set of statement which it can prove entirely within itself. From that point of view, it is a natural question to ask, exactly how high is this resolution. That is, to what degree does a theory *uniquely determine a model*.
@@ -544,7 +552,7 @@ We will now use this lemma to prove a slightly weaker statement that will then u
   on the first turn we pick $m_0$ and let Prover map it to some element of $|mN|$. On the second turn we pick the smallest index element of $|mN|$ that has not been picked before and force Prover to map it. We continue this, on odd turns we pick the smallest index element of $|mM|$ that has not been picked before, and on even turns we pick the smallest index element of $|mN|$ that has not been picked before. This essentially forces Prover to use the back-and-forth method. Since every element of both models will eventually be mapped and since Prover has to win this game, the resulting map $union.big_i f_i$ will be an isomorphism between $mM$ and $mN$.
 ]
 
-#pagebreak(weak: true)
+// #pagebreak(weak: true)
 = Ultrafilters and Ultraproducts
 #definition[
   A family $cal(F) seq cal(P)(I)$ is called a filter if it is non empty, does not contain the empty set and satisfies the two conditions 
@@ -1146,12 +1154,14 @@ Now that we have the tools to omit types, we can use them to characterize the $a
   In $A C F_p$ we have that the type of any root of an irreducible polynomial is isolated while the type of the transcendental number is not isolated.
 ]
 
+#pagebreak(weak: true)
+
 = Automorphism groups
 In algebra for some algebraic structure an important role is played by the automorphism groups of these structures. As model theory is a sort of algebra without fields we will also use automorphism groups.
 #definition[
   Let $mM$ be a countable structure of a countable language $L$. We define the automorphism group $Aut (mM)$ to be
   $
-    Aut(mM) := { F : mM -> mM : F "is an automorphism" }
+    Aut(mM) := { F : mM into mM : F "is an automorphism" }
   $
 ]
 
@@ -1172,8 +1182,9 @@ $Aut(mM)$ acts on $mM^n$ for all $n$, and is in fact a Polish topological group.
 
   A complete metric can be defined as
   $
-    d(f,g) := exp_2 (- min {n : f(n) != g(n) "or" f^(-1)(n) != g^(-1)(n) })
+    d(f,g) := exp_2 (- min {n : f(n) != g(n) "or" f^(-1)(n) != g^(-1)(n) }),
   $
+  where $n$
 ]
 
 #theorem[
@@ -1775,9 +1786,9 @@ We can now prove the strong form of @cor-weak_null.
 
 = Homogeneous Structures
 #definition[
-  $mM$ is $kappa$-_homogeneous_ if for every subset $A seq mM$ with $|A| < kappa$, every elementary embedding $f : A -> mM$ and every element $a in mM$ there is an extension $g : A union {a} -> mM$ which is also an elementary embedding.
+  $mM$ is $kappa$-_homogeneous_ if for every subset $A seq mM$ with $|A| < kappa$, every elementary embedding $f : A into mM$ and every element $a in mM$ there is an extension $g : A union {a} into mM$ which is also an elementary embedding.
 
-  $mM$ is called _homogeneous_ if it is $||mM||$-homogeneous. $mM$ is _strongly_ $kappa$-_homogeneous_ if we have an extension $g : mM -> mM$ of $f$ instead.
+  $mM$ is called _homogeneous_ if it is $||mM||$-homogeneous. $mM$ is _strongly_ $kappa$-_homogeneous_ if we have an extension $g : mM into mM$ of $f$ instead.
 ]
 
 One might wonder why we do not similarly define $mM$ to be strongly homogeneous if it is strongly $||mM||$-homogeneous. This is explained by the following proposition.
@@ -1785,7 +1796,7 @@ One might wonder why we do not similarly define $mM$ to be strongly homogeneous 
   $mM$ is homogeneous if and only if it is strongly $||mM||$-homogeneous.
 ]
 #proof[
-  The backwards direction is immediate, so we prove the forward direction. Assume $f : A -> mM$ is an elementary embedding, then we construct a sequence of maps $f_alpha : A_alpha -> mM$. We do this by setting $f_0 = f$ and then taking unions in the limit step and adding the elements of $mM backslash A$ one by one using homogeneity in the successor step. Then $g := union.big_(alpha) f_alpha$ will be a map $g : mM -> mM$ as desired.
+  The backwards direction is immediate, so we prove the forward direction. Assume $f : A into mM$ is an elementary embedding, then we construct a sequence of maps $f_alpha : A_alpha into mM$. We do this by setting $f_0 = f$ and then taking unions in the limit step and adding the elements of $mM backslash A$ one by one using homogeneity in the successor step. Then $g := union.big_(alpha) f_alpha$ will be a map $g : mM into mM$ as desired.
 ]
 
 #proposition[
@@ -1814,14 +1825,14 @@ One might wonder why we do not similarly define $mM$ to be strongly homogeneous 
 ]<thrm-homogeneity_isomorphism>
 Before we prove this we need a small lemma
 #lemma[
-  Under the same conditions as @thrm-homogeneity_isomorphism, for any $A seq mM$, there is some embedding $A -> mN$.
+  Under the same conditions as @thrm-homogeneity_isomorphism, for any $A seq mM$, there is some elementary embedding $A into mN$.
 ]
 #proof[
   Induction on $|A|$.
   If $A$ is finite then since $mM$ and $mN$ realize the same types this is immediate.
 
   If $|A| = mu >= aleph_0$, then we can enumerate $A = {a_alpha : alpha < mu}$ and so by a sub-induction on $alpha$ we construct $f(a_alpha)$.
-  Suppose that for some fixed $alpha$ we have constructed $f(a_beta)$ for $beta < alpha$. Then let $A_alpha = {a_beta : beta <= alpha }$ then by our outer induction hypothesis there exists an embedding $g : A_alpha -> mN$. Note that we are not done since the $g$ could be incompatible with $f$, but notice that that $f compose g^(-1)$ is an embedding $g(A_alpha backslash {a_alpha}) -> mN$, so then by homogeneity we can extend this to an elementary embedding $h : g(A_alpha) -> mN$ and then we set $f(a_alpha) = h(g(a_alpha))$. This is the desired extension of $f$ to $a_alpha$.
+  Suppose that for some fixed $alpha$ we have constructed $f(a_beta)$ for $beta < alpha$. Then let $A_alpha = {a_beta : beta <= alpha }$ then by our outer induction hypothesis there exists an elementary embedding $g : A_alpha into mN$. Note that we are not done since the $g$ could be incompatible with $f$, but notice that that $f compose g^(-1)$ is an embedding $g(A_alpha backslash {a_alpha}) into mN$, so then by homogeneity we can extend this to an elementary embedding $h : g(A_alpha) into mN$ and then we set $f(a_alpha) = h(g(a_alpha))$. This is the desired extension of $f$ to $a_alpha$.
 ]
 
 The intuitive explanation for this proof is that by induction we get a sequence of maps $f_alpha$, and then by homogeneity we can arrange the images of the maps so that they sit on top of each other for increasing $alpha$, which is enough to construct a limit map.
@@ -1832,7 +1843,7 @@ Now to prove the theorem.
 ]
 
 #definition[
-  A model $mM$ is called $kappa$-_universal_ if for every $mN equiv mM$ with $||mN|| <= kappa$ there exists an elementary embedding $f : mN -> mM$.
+  A model $mM$ is called $kappa$-_universal_ if for every $mN equiv mM$ with $||mN|| <= kappa$ there exists an elementary embedding $f : mN into mM$.
 
   $mM$ is called _universal_ if it is $||mM||$-universal.
 
@@ -1843,7 +1854,7 @@ It turns out that we can think of homogeneity and universality as the two halves
   If $mM$ is $kappa$-saturated then $mM$ is $kappa$-homogeneous and $kappa$-universal.
 ]
 #proof[
-  For $kappa$-homogeneity if we have $|A| < kappa$ and an embedding $f : A -> mM$, then pick any $a in mM$. We can take the type $p = tp(a quo A)$ and map it to $q = f(p)$ and define $f(a)$ to be the element that realizes this type in $mM$, which always exists by saturation.
+  For $kappa$-homogeneity if we have $|A| < kappa$ and an elementary embedding $f : A into mM$, then pick any $a in mM$. We can take the type $p = tp(a quo A)$ and map it to $q = f(p)$ and define $f(a)$ to be the element that realizes this type in $mM$, which always exists by saturation.
 
   For $kappa$-universality we let $mN equiv mM$, and $||mN|| <= kappa$. Then we enumerate $mN = {a_alpha : alpha < kappa}$, and we construct $f(a_alpha)$ by induction. We set $p = tp(a_alpha quo { a_beta : beta < alpha })$ and then $q = f(p)$ and so again we just set $f(a_alpha)$ to be any element which realizes $q$.
 ]
@@ -1854,7 +1865,7 @@ It turns out that we can think of homogeneity and universality as the two halves
 #proof[
   Let $A seq mM$ with $|A| < kappa$, let $p in S(A)$, we want to show that $p(M) != nothing$, we prove this by induction on $|A|$.
 
-  First assume that $|A|$ is finite, then let $mN$ be an extension $mM elm mN$ which realizes the type $p$ through some element $c$. Then consider the type $q = tp^mN (A c)$, by $< aleph_0$ universality we get that $mM$ realizes $q$ through some set $A'$ and element $b'$. But then by homogeneity since $A$ and $A'$ have the same type, $f : A' -> mM$ defined by $f(A') = A$ is an elementary embedding in $mM$. Then homogeneity gives us that we can extend this to an elementary embedding $g : A' union {b'} -> mM$, then the image of $b'$ under this map must have $tp(g(b') quo A) = tp(b' quo A') = p$.
+  First assume that $|A|$ is finite, then let $mN$ be an extension $mM elm mN$ which realizes the type $p$ through some element $c$. Then consider the type $q = tp^mN (A c)$, by $< aleph_0$ universality we get that $mM$ realizes $q$ through some set $A'$ and element $b'$. But then by homogeneity since $A$ and $A'$ have the same type, $f : A' into mM$ defined by $f(A') = A$ is an elementary embedding in $mM$. Then homogeneity gives us that we can extend this to an elementary embedding $g : A' union {b'} into mM$, then the image of $b'$ under this map must have $tp(g(b') quo A) = tp(b' quo A') = p$.
 
   Next for $|A|$ infinite we use induction, assume that the statement holds for all $A'$ with $|A'| < mu$ for some cardinal $mu$, we want to show it holds for $|A| = mu$. Enumerate ${ a_alpha : alpha < mu}$, then let $p_0$ be all the formulas in $p$ that do not use any of the constants in $A$. Since $mM$ realizes $p_0$ let $b'$ be a witness of $p_0$, let $mN$ again be an extension of $mM$ which realizes $p$ with $c$ as a witness.
 
@@ -2012,15 +2023,14 @@ Before we prove this we will need a tiny lemma.
 #lemma[
   For all $mN sat T$ there exists an elementary extension $mN elm mN'$, such that
   - For all $A seq mN$ with $|A| < kappa$ all of $S(A)$ are realized in $mN'$
-  - For all $f : A -> B$ elementary embedding between two $A,B seq mN$ with $|A|,|B| < ||mN||$, $f$ can be extended to $f' : A' -> B'$ also an elementary embedding with $A union mN seq A'$ and $B union mN seq B'$.
-// TODO: ADD EMBEDDING SYMBOL
+  - For all $f : A into B$ elementary embedding between two subsets $A,B seq mN$ with $|A|,|B| < ||mN||$, $f$ can be extended to $f' : A' into B'$ also an elementary embedding with $A union mN seq A'$ and $B union mN seq B'$.
 ]<lem-monster_extension>
 #proof[
   Let $mu = ||mN||$, then for the first condition we simply pick $mN'$ which is $mu^+$-saturated through @thrm-saturation.
 
-  Now assume that we have an embedding $f : A -> B$, since $mN'$ is $mu$-saturated we can, by a simple inductive argument, construct an extension $g : mN -> mN'$. Now the issue here is that $g(mN)$ might contain $mN$ which is required by the lemma.
+  Now assume that we have an embedding $f : A into B$, since $mN'$ is $mu$-saturated we can, by a simple inductive argument, construct an extension $g : mN into mN'$. Now the issue here is that $g(mN)$ might contain $mN$ which is required by the lemma.
 
-  To fix this set $mN_0 = g(mN)$, and construct $h : mN_0 union mN -> mN'$ extending $g^(-1)$. We then can set $A' = h(mN_0 union mN)$ and $B' = mN_0 union mN$. Then $h^(-1) : A' -> B'$ is an extension of $f$ as desired.
+  To fix this set $mN_0 = g(mN)$, and construct $h : mN_0 union mN into mN'$ extending $g^(-1)$. We then can set $A' = h(mN_0 union mN)$ and $B' = mN_0 union mN$. Then $h^(-1) : A' into B'$ is an extension of $f$ as desired.
 ]
 
 #proof([of @thrm-monster])[
@@ -2033,7 +2043,7 @@ Before we prove this we will need a tiny lemma.
 
   Now we check $kappa$-saturation, if $A seq mM$, $|A| < kappa$, $p in S(A)$, we know that $A seq mN_alpha$ for some $alpha$ by regularity of $kappa$. So we also know that $p$ is realized in $mN_(alpha+1)$ and thus since this is an elementary chain $p$ is realized through the same element in $frak(C)$.
 
-  Next we check $kappa$-homogeneity, if $A,B in frak(C)$, $|A|,|B| < kappa$, $f : A -> B$, there is $alpha$ such that $A,B seq mN_alpha$ again by regularity. We then fix $f = f_alpha$ use @lem-monster_extension to extend $f_alpha$ to $f_(alpha+1)$, we repeat this for successor steps and for limit steps we union. We can continue doing this for all $alpha$ to extend $f$ to an automorphism $g : frak(C) -> frak(C)$.
+  Next we check $kappa$-homogeneity, if $A,B in frak(C)$, $|A|,|B| < kappa$, $f : A into B$, there is $alpha$ such that $A,B seq mN_alpha$ again by regularity. We then fix $f = f_alpha$ and use @lem-monster_extension to extend $f_alpha$ to $f_(alpha+1)$, we repeat this for successor steps and for limit steps we union. We can continue doing this for all $alpha$ to extend $f$ to an automorphism $g : frak(C) into frak(C)$.
 ]
 
 #remark[
@@ -2043,6 +2053,7 @@ Before we prove this we will need a tiny lemma.
   So orbits of $Aut(frak(C) quo A)$ are equivalent to realizations of $S(A)$.
 ]
 
+#pagebreak(weak: true)
 = Indiscernibles
 #definition[
   Let $(I, <=)$ be a linear order, a set $A = { a_i : i seq I } seq mM$ is called _order-indiscernible_ if for all formulas $ phi (x_1,...,x_n)$ and linear suborders $forall i_i < ... < i_n, j_1 < ... < j_n in I$ we have
@@ -2050,6 +2061,7 @@ Before we prove this we will need a tiny lemma.
     mM sat phi(a_(i_1),...,a_(i_n)) <=> mM sat phi(a_(j_1),...,a_(j_n))
   $
 ]
+In other words, the type of a finite subtuple of elements $a_k$ depends only on their order.
 #example[
   $DLO_0$ with $A = mM = I = QQ$ is order indiscernible.
 
@@ -3144,3 +3156,4 @@ It turns out that the continuum hypothesis is independent of $ZFC$.
   For a cardinal $gamma$, $cf(2^gamma) > gamma$.
 ]<thrm-Konig>
 
+// TODO: ADD EMBEDDING SYMBOL
