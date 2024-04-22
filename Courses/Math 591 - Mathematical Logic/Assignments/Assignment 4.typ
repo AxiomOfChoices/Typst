@@ -130,7 +130,7 @@ and so since this is true for all $alpha$ it also holds for their conjunction an
 = Question
 == Statement
 Let $mM$ and $mN$ be countable structures and of the same Scott rank $alpha$.
-Show that if $mN equiv_(alpha+omega) mM$, then $mN$ is isomorphic $mM$. 
+Show that if $mN equiv_(alpha+omega) mM$, then $mN$ is isomorphic $mM$.
 == Solution
 We construct the isomorphism by back and forth, by induction we will construct maps $f_n : A_n -> B_n$ such that $(mM, A_n) equiv_(alpha+1) (mN, B_n)$. For the base case this is trivial, so assume for the induction step that we have the map $f_n$.
 

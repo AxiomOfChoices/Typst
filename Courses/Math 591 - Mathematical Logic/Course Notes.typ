@@ -19,8 +19,8 @@ doc)
 #set page(margin: (x: 2cm, top: 2cm, bottom: 2cm), numbering: "1")
 #set enum(numbering: "(1)", indent: 1em)
 #outline()
-#pagebreak()
 
+#pagebreak(weak: true)
 = Models and Languages
 #definition[
   A _model_ or _structure_ is a tuple $ mM = (M, (f_i)_(i in I), (R_j)_(j in J), (c_k)_(k in K)) $
@@ -65,14 +65,15 @@ All of this is very semantic encoding of a mathematical structure, but we will a
     L = ((underline(f_i))_(i in I'),(underline(R_j))_(j in J'), (underline(c_k))_(k in K'))
   $
   where now the $f_i$ are function _symbols_ with arity $a'_i in NN$, each $R_j$ are relation _symbols_ with arity $a'_j in NN$, and $c_j$ are constant _symbols_.
-
-  A model $mM$ is an $L$-structure if 
+]
+#definition[
+  A model $mM$ is an _$L$-structure_ if
   $
     I = I',
     J = J',
     K = K',
     a_i = a'_i,
-    a_j = a'_j
+    a_j = a'_j.
   $
   If $mM$ is an $L$-structure then the _interpretations_ of the symbols of the language are defined as
   $
@@ -206,7 +207,8 @@ We extend our definition of interpretation of terms to terms of $L(mM)$ by setti
 Note that while the first step may look circular, the first equality is in the space of _terms_ while the second is in the universe $|mM|$.
 
 An important consequence of this definition is that every sentence of $L(mM)$ is either true or false in $mM$, hence either it or its negation are true in $mM$. We will formalize this very soon.
-#pagebreak(weak: true)
+
+// #pagebreak(weak: true)
 = Model equivalences
 #definition[
   Let $mM$ be a model in the language $L$. The _theory_ of $mM$ is defined as
@@ -237,7 +239,6 @@ Elementarily equivalence means that the two models agree on all $L$-sentences, w
   intuitively this means that the structure of $mM$ is induced from that of $mN$.
 ]
 
-#v(-2%)
 #definition[
   We write $mM elm mN$ to mean $mM$ is an _elementary substructure_ of $mN$ which we define to mean $mM seq mN$ and for every formula $phi(ov(x))$ and for every $ov(a) seq |mM|$ we have
   $
@@ -281,7 +282,7 @@ However, an _elementary substructure_ must agree with its superstructure on _all
 ]
 
 
-#theorem("Lowenheim-Skolem downwards Theorem")[
+#theorem("Löwenheim-Skolem-Skolem downwards Theorem")[
   Let $L$ be a language, for any $L$-structure $mM$ and every $A seq |mM|$, there exists an elementary substructure $mN elm mM$ with $A seq |mN|$
   $
     ||mN|| = |A| + |L| + aleph_0
@@ -343,7 +344,7 @@ We will not prove this theorem in this class but we will use an important coroll
 
 As an example use we have the following theorem.
 
-#theorem("Lowenheim-Skolem upwards Theorem")[
+#theorem("Löwenheim-Skolem upwards Theorem")[
   If $mM$ is an infinite $L$-structure where $L$ is countably infinite then $forall k > ||mM||$ there exists a model $mN$ such that $mM elm mN$ and $||mN|| = k$
 ]
 #proof[
@@ -362,11 +363,9 @@ As an example use we have the following theorem.
   Now we have by @thrm-completeness that there exists a model $mN$ such that $mN sat Gamma$, then by construction we have $mM elm mN$ and $||mN|| >= kappa$ and so by #link(<thrm-downwards>)[downwards theorem] we can now decrease the cardinality until we reach $kappa$.
 ]
 
-
-
 #corollary[
   If $mM$ is infinite then there exists $mN$ such that $mM equiv mN$ but $mM tilde.equiv.not mN$.
-]
+]<cor-inequivalent_models>
 #proof[
   We simply pick some $kappa > ||mM||$ and then use the upwards theorem to get a model $mN$ with $mM elm mN$ with $||mN|| = kappa$, now there can't exist a bijection between the two since they have different cardinalities.
 ]
@@ -381,6 +380,11 @@ As an example use we have the following theorem.
 ]
 
 = Categoricity
+
+One can consider a theory $T$ to be the 'resolution' of mathematical subject, the set of statement which it can prove entirely within itself. From that point of view, it is a natural question to ask, exactly how high is this resolution. That is, to what degree does a theory *uniquely determine a model*.
+
+Now @cor-inequivalent_models unfortunately disallows a theory to directly determine a model, its cardinality will always be a free variable we can tune. But this allows us to ask a more specific question, if we fix the cardinality, can we then uniquely determine a model?
+
 #definition[
   Let $kappa$ be an infinite cardinal, a theory $T$ is $kappa$-categorical if it has infinitely many models but exactly one model (up to isomorphism) of size $kappa$.
 ]
@@ -415,7 +419,7 @@ In order to prove this result we will need to use a specific technique, since it
   Our goal will be to construct a sequence of functions $f_n : A_n -> B_n$, where $A_n$ and $B_n$ are substructures of $mM$ and $mN$ respectively, $f_n$ is an isomorphism between said substructures, and $f_(n+1)$ is an extension of $f_n$. Additionally we will construct $f_n$'s such that every $a_i$ and $b_i$ will eventually appear in the domain / codomain of some $f_n$.
   Our goal then is to take the function
   $
-    f := union_(n in NN) f_n,
+    f := union.big_(n in NN) f_n,
   $
   one can easily check that this will be an isomorphism if we indeed have such a sequence.
 
@@ -432,7 +436,7 @@ Lets see an example of this.
   Let $mM = (M,<)$ and $mN = (N,<)$ be two countable models of $DLO_0$, we enumerate them $M = {a_0, a_1,...}$ and $N = {b_0, b_1, ...}$.
 
   We use @tech-back_and_forth to construct an isomorphism, we start by with $f_0 : {a_0} -> {b_0}$. As explained above we now only need to describe how we add one element from $mM$ and $mN$.
-  Assume then that $f_n : A -> B$ is an isomorphism, then assume that we are on an even step and so we are adding some element $a_i$, then $a_i$ has some ordering compared to $A$. If $a_i$ is less than every element in $A$, then since $mN$ has no end points there is a $b_j in mN backslash B$ which is smaller than every element in $B$. Similarly if $a_i$ is larger than every element in $A$ then there exists a $b_j$ larger than every element of $B$. If $a_i$ is in between elements $x,y in B$, then because of density know that there is an element $b_j$ which is between $f(x),f(y)$. 
+  Assume then that $f_n : A -> B$ is an isomorphism, then assume that we are on an even step and so we are adding some element $a_i$, then $a_i$ has some ordering compared to $A$. If $a_i$ is less than every element in $A$, then since $mN$ has no end points there is a $b_j in mN backslash B$ which is smaller than every element in $B$. Similarly if $a_i$ is larger than every element in $A$ then there exists a $b_j$ larger than every element of $B$. If $a_i$ is in between elements $x,y in B$, then because of density know that there is an element $b_j$ which is between $f(x),f(y)$.
 
   In all 3 cases we will map $a_i$ to $b_j$ and take that to be $f_(n+1)$. One can easily check that $f_(n+1)$ remains an isomorphism and thus the back and forth method gives us an isomorphism between $mM$ and $mN$.
 ]
@@ -466,7 +470,7 @@ We now want to discuss how to check that two models are elementarily equivalent.
   - If $phi$ is a formula of the form $phi_1 or phi_2$ then $qd(phi) = max(qd(phi_1),qd(phi_2))$
   - If $phi$ is a formula of the form $exists x thin phi'$ then $qd(phi) = qd(phi') + 1$, similarly for $forall$.
 
-  We write $mM equiv_n mN$ to mean "$mM$ is equivalent to $mN$ up to order $n$" if for every sentence $sigma$ of quantifier depth less than $n$ we have $mM sat sigma <=> mN sat sigma$.
+  We write $mM equiv_n mN$ to mean "$mM$ is equivalent to $mN$ up to order $n$" if for every sentence $sigma$ with $qd(sigma) <= n$ we have $mM sat sigma <=> mN sat sigma$.
 ]
 
 We now define a tool for proving such partial equivalences.
@@ -498,7 +502,7 @@ To prove this we will need a lemma first.
   $
     or.big_(X in S) (and.big_(i in X) sigma_i and.big_(i in.not X) (not sigma_i))
   $
-  where $S$ is a collection of subsets of ${1,...,m}$, this case then follows from the fact that $S$ is finite. 
+  where $S$ is a collection of subsets of ${1,...,m}$, this case then follows from the fact that $S$ is finite.
   Now assume this holds for quantifier depth at most $n$, if $phi$ is of quantifier depth at most $n + 1$, then $phi$ is equivalent to a disjunction of conjunctions of formulas of the form $exists x thin phi'$ or $forall x thin phi'$, where $qd(phi') <= n$. By inductive hypothesis we then have $phi'$ is equivalent to one of finitely many formulas $Phi'_k$, then $exists x thin phi'$ is equivalent to $exists x thin Phi'_k$ and similarly for $forall$.
 ]
 
@@ -529,7 +533,7 @@ We will now use this lemma to prove a slightly weaker statement that will then u
   $
 ]
 #proof[
-  Assume $mM tilde.eq mN$, then the Prover wins trivially by just following the isomorphism.
+  Assume $mM tilde.equiv mN$, then the Prover wins trivially by just following the isomorphism.
 
   On the other hand assume Prover has a winning strategy, then we can play the role of the Spoiler to force Prover to construct an isomorphism. First enumerate the models 
   $
@@ -539,8 +543,8 @@ We will now use this lemma to prove a slightly weaker statement that will then u
   on the first turn we pick $m_0$ and let Prover map it to some element of $|mN|$. On the second turn we pick the smallest index element of $|mN|$ that has not been picked before and force Prover to map it. We continue this, on odd turns we pick the smallest index element of $|mM|$ that has not been picked before, and on even turns we pick the smallest index element of $|mN|$ that has not been picked before. This essentially forces Prover to use the back-and-forth method. Since every element of both models will eventually be mapped and since Prover has to win this game, the resulting map $union.big_i f_i$ will be an isomorphism between $mM$ and $mN$.
 ]
 
+#pagebreak(weak: true)
 = Ultrafilters and Ultraproducts
-
 #definition[
   A family $cal(F) seq cal(P)(I)$ is called a filter if it is non empty, does not contain the empty set and satisfies the two conditions 
   - $A in cal(F), B in cal(F) => A sect B in cal(F)$
@@ -559,10 +563,12 @@ We will now use this lemma to prove a slightly weaker statement that will then u
   A filter is called an _ultrafilter_ if it is not strictly contained in any other filter.
 ]
 
+#v(-1%)
 #remark[
   By Zorn's lemma every filter is contained in at least one ultrafilter. Since the collection of cofinite subsets is not contained in the principal filter this proves that every infinite set admits a non-principal ultrafilter (assuming ZFC).
 ]
 
+#v(-1%)
 #proposition[
   Let $cal(U)$ be a filter over $I$. TFAE
   - $cal(U)$ is an ultrafilter
@@ -625,10 +631,9 @@ This definition is not really satisfying from the point of view of model theory 
 #remark[
   One needs to check that the last two interpretations are well defined, but this is easy to do by the definition of an ultrafilter.
 ]
-#v(-2%);
 #remark[
   If $cal(U)$ is the principal ultrafilter generated by $i_0 in I$ then 
-  $ product_(i in I) mM_i slash.big cal(U) tilde.eq mM_(i_0) $
+  $ product_(i in I) mM_i slash.big cal(U) tilde.equiv mM_(i_0) $
 ]
 #theorem("Łoś's theorem")[
   Let $product mM_i slash.big cal(U)$ be an ultraproduct, fix any formula $phi(x_1,...,x_n)$ and $(a^1_i),...,(a^n_i) in product mM_i$ we have 
@@ -641,14 +646,14 @@ This definition is not really satisfying from the point of view of model theory 
 #proof[
   The atomic case is covered by the definition of an ultraproduct.
 
-  We now induce on the complexity of $phi$, 
+  We now induce on the complexity of $phi$,
   - For $phi = phi_1 and phi_2$ we have by definition
   $
-    product mM_i slash.big cal(U) sat phi <=> 
-    product mM_i slash.big cal(U) sat phi_1 "and" 
+    product mM_i slash.big cal(U) sat phi <=>
+    product mM_i slash.big cal(U) sat phi_1 "and"
     product mM_i slash.big cal(U) sat phi_2
   $
-  now set 
+  now set
   $
     A = { i in I : mM_i sat phi_1 } quad 
     B = { i in I : mM_i sat phi_2 }
@@ -694,7 +699,7 @@ This definition is not really satisfying from the point of view of model theory 
 ]
 
 #corollary[
-  Let $T$ be a set of sentences $T$ has a model iff every finite subset of $T$ has a model.
+  Let $T$ be a set of sentences, $T$ has a model iff every finite subset of $T$ has a model.
 ]
 #proof[
   Assume that $L$ is countable and $T$ is countable and enumerate $T = { sigma_1, sigma_2, ... } $. Then set $T_n$ to be the truncation of $T$, that is $T_n = { sigma_1, ..., sigma_n }$. By assumption we have the existence of some models $mM_n$ with $mM_n sat T_n$. Let $cal(U)$ be a non-principal ultrafilter on $NN$.
@@ -1284,7 +1289,21 @@ We can see that this definition in fact generalizes @def-scott_equiv.
 #proposition[
   $ov(a) sequiv_alpha ov(b)$ if and only if $(mM,ov(a)) sequiv_alpha (mM,ov(b))$.
 ]
-// TODO: COMPLETE PROOF
+#proof[
+  We prove by induction on $alpha$, for $alpha = 0$ we know that $ov(a) sequiv_0 ov(b)$ if and only if they have the same type. But notice that the types of $ov(a)$ and of $ov(b)$ are exactly the theories of $(mM, ov(a))$ and $(mM, ov(b))$ respectively. Then since $(mM, ov(a)) sequiv_0 (mM, ov(b))$ if and only if the two theories are equal we see that the relations are equivalent.
+
+  In the case of limit $alpha$ this is trivial, so we consider the successor case. Assume that this is the case for $alpha$, then we have
+  $
+    ov(a) sequiv_(alpha + 1) ov(b) quad "if" quad & forall c in mM, exists d in mM med (ov(a),c) sequiv_(alpha) (ov(b), d)\
+    "and" quad & forall d in mM, exists c in mM med (ov(a),c) sequiv_(alpha) (ov(b), d).
+  $
+  But by induction we know that this is equivalent to
+  $
+    ov(a) sequiv_(alpha + 1) ov(b) quad "if" quad & forall c in mM, exists d in mM med (mM, ov(a),c) sequiv_(alpha) (mM, ov(b), d)\
+    "and" quad & forall d in mM, exists c in mM med (mM, ov(a),c) sequiv_(alpha) (mM, ov(b), d).
+  $
+  which is exactly the definition of $(mM, ov(a)) sequiv_(alpha + 1) (mM, ov(b))$.
+]
 
 Now with this definition we can start to construct some characterizing sentences.
 #lemma[
@@ -1320,10 +1339,25 @@ Unfortunately, the sentences are not exactly what we want, they only guarantee i
   if $mM sequiv_(alpha+omega) mN$, then $mM tilde.equiv mN$.
 ]
 #proof[
-  Our proof will employ a back and fourth method, assume that at the step $n$ we have $(mM, a_1, ..., a_n) sequiv_(alpha + 1) (mN, b_1,...,b_n)$.
-  Assume then that we are on an even step and want to add an element $a_(n+1)$ to this equivalence, we leave this induction step as an exercise.
+  We construct the isomorphism by back and forth, by induction we will construct maps $f_n : A_n -> B_n$ such that $(mM, A_n) sequiv_(alpha+1) (mN, B_n)$. For the case $n = 0$ we set $A_0 = B_0 = nothing$ and indeed $mM sequiv_(alpha + 1) mN$, so assume for the induction step that we have the map $f_n$.
 
-  // TODO: COMPLETE EXERCISE
+  Now we want to add a specific element $a in mM$ to $A_n$, so by definition of $sequiv_(alpha+1)$ there is some element $b in mN$ such that $(mM, A_n, a) sequiv_(alpha) (mN, B_n, b)$. Now we also know that $mM sequiv_(alpha + n + 2) mN$ so again by definition we can pick elements $c_i in mN$ such that, if we define $C_n = { c_i : i <= n }$ then we have
+  $
+    (mM, A_n, a) sequiv_(alpha+1) (mN, C_n, c_(n+1)).
+  $
+
+  Now notice that
+  $
+    (mN, B_n, b) sequiv_(alpha) (mM, A_n, a) sequiv_alpha (mN, C_n, c_(n+1)),
+  $
+  so we have that $(mN, B_n, b) sequiv_alpha (mN, C_n, c_(n+1))$.
+  But since the Scott rank of $mN$ is $alpha$ then that also means that $(mN, B_n, b) sequiv_(alpha+1) (mN, C_n, c_(n+1))$.
+
+  We thus have
+  $
+    (mN, B_n, b) sequiv_(alpha+1) (mN, C_n, c_(n+1)) sequiv_(alpha+1) (mM, A_n, a)
+  $
+  so $(mN, B_n, b) sequiv_(alpha+1) (mM, A_n, a)$ and thus we have constructed $f_(n+1)$ with the desired property by setting $f_(n+1) (a) = b$. Then taking $f = union.big_(n in NN) f_n$ gives us an isomorphism.
 ]
 
 
@@ -1348,18 +1382,16 @@ We also have a partial converse to this result.
 #corollary[
   Let $mM$ be a countable structure, there exists $alpha < omega_1$ such that for every countable structure $mN$
   $
-    mN tilde.eq mM <=> mN sequiv_alpha mM
+    mN tilde.equiv mM <=> mN sequiv_alpha mM
   $
 ]
-// TODO: FIX CHAPTERS
-// TODO: FIX Lowenheim-Skolem NAME
 
 However, with a bit of trickery, we can define a sentence which does uniquely classify our countable model.
 #definition[
   Let $mM$ be an $L$ structure, $alpha = SH(mM)$.
   We define the _Scott Sentence_ of $mM$ as
   $
-    phi.alt = phi^(mM, nothing)_alpha and and.big_(n=0)^infinity and.big_(ov(a) in mM) [ forall ov(x) (phi^(mM, nothing)_alpha (ov(x)) -> phi_(alpha+1)^(mM,ov(a)) (ov(x)))]
+    phi.alt = phi^(mM, nothing)_alpha and and.big_(n=0)^infinity and.big_(ov(a) in mM) [ forall ov(x) (phi^(mM, ov(a))_alpha (ov(x)) => phi_(alpha+1)^(mM,ov(a)) (ov(x)))]
   $
 ]
 
@@ -1374,7 +1406,7 @@ However, with a bit of trickery, we can define a sentence which does uniquely cl
 
   For the backwards direction we want to use back and forth, we will use induction and assume we have some tuple $ov(a)$ and a partial isomorphism $f_n : mM -> mN$, in the sense that $(mM,ov(a)) sequiv_alpha (mN, f_n (ov(a)))$.
 
-  For $n = 0$ we have $mM sequiv_alpha mN$ since $mN sat phi_alpha^(mM,nothing)$. Now assume that we have constructed the map for $n$, then we have $(mM,ov(a)) sequiv_alpha (mN, f_n(ov(a)))$, then since $mN sat phi^mM$ then we get
+  For $n = 0$ we have $mM sequiv_alpha mN$ since $mN sat phi_alpha^(mM,nothing)$. Now assume that we have constructed the map for $n$, then we have $(mM,ov(a)) sequiv_alpha (mN, f_n (ov(a)))$, then since $mN sat phi^mM$ then we get
   $
     mN sat phi_alpha^(mM, ov(a)) (f_n (ov(a))) => mN sat phi_(alpha+1)^(mM, ov(a)) (f_n (ov(a)))
   $
@@ -1395,19 +1427,20 @@ However, with a bit of trickery, we can define a sentence which does uniquely cl
   This describes how we do the odd steps, on even steps we just swap $mN$ and $mM$.
 ]
 
+#pagebreak(weak: true)
 = Quantifier Elimination
 #definition[
   A theory $T$ has _quantifier elimination_, if for every formula $phi(ov(x))$ there exists a quantifier free formula $psi(ov(x))$ such that
   $
-    T proves forall (ov(x)) (phi(ov(x)) <-> psi(ov(x)))
+    T proves forall ov(x) med (phi(ov(x)) <-> psi(ov(x)))
   $
 ]
-At face value this seems like a hopelessly strong property, but in fact we can make any theory have quantifier elimination if we expand our language. This is called _Skolemization_.
+At face value this seems like a hopelessly strong property and almost no models should satisfy it, but in fact we can make any theory have quantifier elimination if we expand our language. This is called _Skolemization_.
 
 #definition[
   A theory $T$ has _Skolem functions_, if for every formula $phi(ov(x), y)$ there exists a term $t_phi (ov(x))$ such that
   $
-    T proves [ (exists y (phi(ov(x),y))) -> phi(ov(x), t_phi (ov(x)))]
+    T proves [ exists y (phi(ov(x),y)) => phi(ov(x), t_phi (ov(x)))]
   $
 ]
 
@@ -1415,8 +1448,23 @@ At face value this seems like a hopelessly strong property, but in fact we can m
   If $T$ has Skolem functions then it has quantifier elimination.
 ]
 #proof[
-  We prove by induction on the complexity of a formula $phi(ov(x))$, for atomic formulas this is trivial. For conjunctions, disjunctions and negations this is also trivial. Now if $phi(ov(x)) = exists y (psi(ov(x), y))$ then through Skolem functions we get
-  // TODO: FINISH PROOF
+  We prove by induction on the complexity of a formula $phi(ov(x))$, for atomic formulas this is trivial. For conjunctions, disjunctions and negations this is also trivial. Now if $phi(ov(x)) = exists y (psi(ov(x), y))$ then through Skolem functions we get a term $t_psi$, such that
+  $
+    T proves exists y med psi(ov(x), y) => psi(ov(x), t_psi (ov(x))).
+  $
+  Then we clearly also have that
+  $
+    T proves psi(ov(x), t_psi (ov(x))) => exists y med psi(ov(x), y),
+  $
+  since $t_psi (ov(x))$ is exactly a witness of $psi(ov(x), y)$. So we get
+  $
+    T proves exists y med psi(ov(x), y) <=> psi(ov(x), t_psi (ov(x))).
+  $
+  But now by induction we can assume that $psi$ is equivalent to a quantifier free formula $phi.alt$. This means that
+  $
+    T proves phi(ov(x)) <=> exists y med psi(ov(x), y) <=> psi(ov(x), t_psi (ov(x))) <=> phi.alt(ov(x), t_psi (ov(x)))
+  $
+  and so $phi$ is equivalent to a quantifier free formula and so by induction $T$ has quantifier elimination.
 ]
 
 If $T$ has Skolem functions and $mM sat T$ with $A seq mM$, we can define $Sc(A)$ to be the closure of $A$ under all Skolem functions, sometimes called the Skolem hull of $A$.
@@ -1428,20 +1476,20 @@ If $T$ has Skolem functions and $mM sat T$ with $A seq mM$, we can define $Sc(A)
   Proof is trivial by @thrm-tv_test.
 ]
 
-Let $T$ be a theory in $L$, we can add enough Skolem functions as follows.
+Let $T$ be a theory in $L$, we can add enough Skolem functions in steps. In a single step, we do as follows:
 
 - We replace $L$ with $L'$ with new added function symbols.
 - We replace $T$ with $T' = T union { exists y (phi(ov(x), y)) -> phi(ov(x), f_phi (ov(x))) : phi }$
 - We replace $mM$ with $mM'$ where we interpret the functions using the witnesses we know exist.
 
-We now use induction, we set
+We now use induction to iterate this process, we set
 - $L^(n+1) = (L^n)'$
 - $T^(n+1) = (T^n)'$
 - $mM^(n+1) = (mM^n)'$
 then in the limit we have
-- $L^s = union_(n < omega) L^n$
-- $T^s = union_(n < omega) T^n$
-- $M^s = union_(n < omega) M^n$
+- $L^s = union.big_(n < omega) L^n$
+- $T^s = union.big_(n < omega) T^n$
+- $M^s = union.big_(n < omega) M^n$
 
 #proposition[
   - $mM^s sat T^s$, and $T^s$ has Skolem function.
@@ -1454,6 +1502,7 @@ then in the limit we have
   Exercise.
 ]
 
+Now using Skolem functions is a very crude way to add quantifier elimination, and its main issue is that it forces us to add functions to our language. Very often we want to keep our language as is, so we need other ways to prove quantifier elimination. Luckily, this is often possible.
 #proposition[
   $DLO_0$ has quantifier elimination.
 ]
@@ -1463,25 +1512,26 @@ then in the limit we have
     DLO_0 proves forall ov(x) (phi(ov(x)) <-> psi(ov(x))).
   $
 
-  For atomic formulas this is trivial, for logical connectives this is also trivial, now assume that $phi = exists x (phi'(ov(x)))$.
-  Since $exists x (alpha or beta) <-> exists x (alpha) or exists x beta$, we can assume that $phi'$ is in Normal Form, that is
+  For atomic formulas this is trivial, for logical connectives this is also trivial, now assume that $phi(ov(y)) = exists x thin phi'(x, ov(y))$. Using induction we know that $phi'(x, ov(y))$ is equivalent to a quantifier free formula so we can WLOG assume it is quantifier free.
+  Next since $exists x (alpha or beta) <-> exists x (alpha) or exists x beta$, we can assume that $phi'$ is in normal form, that is
   $
-    phi' <-> or.big_i exists x and.big_j a^i_j
+    phi' <-> or.big_i exists x med and.big_j a^i_j
   $
-  then WLOG $phi' = alpha_1 and ... and alpha_n$ with $alpha_i$ atomic or a negation of an atomic formula.
+  where $a^i_j$ are atomic or negations of atomic formulas.
+  Then WLOG $phi' = alpha_1 and ... and alpha_n$ with $alpha_i$ atomic or a negation of an atomic formula.
 
-  Now write $c_1(ov(y)), ..., c_m (ov(y))$ to be the quantifier free formulas which describe a total order on $y_1,...,y_n$ which possibly identifies some of them.
+  Now write $c_1(ov(y)), ..., c_m (ov(y))$ to be all of the quantifier free formulas which describe a total order on $y_1,...,y_n$ which possibly identifies some of them.
   Now for each $i <= m$ if
   $
     QQ sat c_i (ov(b)) and c_i (ov(b)'),
   $
   then there exists an automorphism of $(QQ,<=)$ mapping $ov(b)$ to $ov(b)'$. For each $i <=m$ let $ov(b)_i$ such that $QQ sat c_i (ov(b)_i)$, then consider the index set
   $
-    I = {i <= m : QQ sat exists ov(x) phi'(x,ov(b)_i)}
+    I = {i <= m : QQ sat exists ov(x) thin phi'(x,ov(b)_i)}
   $
   then we have
   $
-    QQ sat (exists x phi(x,ov(y)) <-> forall_(j in I) c_j (ov(y)))
+    QQ sat (exists x thin phi(x,ov(y)) <-> and.big_(j in I) c_j (ov(y)))
   $
   because if $ov(y)$ satisfies the left formula then it has some ordering and so we can use the automorphisms to map $ov(y)$ to some $ov(b)_i$ and then $i in I$ and thus the right side also holds. Similarly we can go the other way.
 
@@ -1499,30 +1549,29 @@ What we see in this proof is that quantifier elimination is intimately related t
   $<eq-quant_elimination>
 ]
 #proof[
-  The forward direction is trivial, we just take any $phi in p$ and use quantifier elimination to get an equivalent quantifier free version which must also lie in $p$ and thus lie in $p_0$, then by equivalence we get the result.
+  The forward direction is trivial, we just take any $phi(ov(x)) in p$ and use quantifier elimination to get an equivalent quantifier free version which must also lie in $p$ and thus lie in $p_0$, then by equivalence we get the result.
 
-  // TODO: fix this reference
-  For the backwards direction assume the condition above holds, then let $phi$ be a formula, then $[phi] seq S_n (nothing)$ be the corresponding open set.
-  Then for every $p in [phi]$ we have $T union p_0 proves phi$ so by compactness for some finite collection $psi_i^p$ of quantifier free formulas we have $T union { phi_i^p : i <= n } proves phi$. Then set
+  For the backwards direction assume the condition above holds, then let $phi(ov(x))$ be a formula and $[phi] seq S_n (nothing)$ be the corresponding open set.
+  For every $p in [phi]$ we have $T union p_0 proves phi$ so by compactness, for some finite collection $psi_i^p (ov(x))$ of quantifier free formulas we have $T union { phi_i^p (ov(x)) : i <= n } proves phi(ov(x))$. Then set
   $
-    psi^p = and.big_i psi_i^p
+    psi^p (ov(x)) = and.big_i psi_i^p (ov(x))
   $
   and note that $[psi^p] seq [phi]$. Now since open sets of the form $[psi^p]$ cover $[phi]$ which is compact, we can take a finite subcollection $p_j$ such that $[psi^(p_j)]$ cover $[phi]$, then $[phi] = union.big_j^k [psi^(p_j)]$ and then
   $
-    T proves phi <-> or.big_(j=1)^k psi^(p_j)
+    T proves phi(ov(x)) <-> or.big_(j=1)^k psi^(p_j) (ov(x))
   $
-  // TODO: Add proper variables here
 ]
 
+#pagebreak(weak: true)
 #proposition[
   $A C F_p$ has quantifier elimination.
 ]<prop_acf_qe>
 #proof[
   Let $p in S_n (nothing)$, we need $T union p_0 proves p$. Choose a large algebraically closed field $K$ and let $ov(a),ov(b) in K$ such that both realize $p_0$.
-  We will show that there exists $phi in Aut(K)$ such that $phi(ov(a)) = ov(b)$, this will then imply that $tp(ov(a)) = tp(ov(b))$ which proves what we want. 
+  We will show that there exists $phi in Aut(K)$ such that $phi(ov(a)) = ov(b)$, this will then imply that $tp(ov(a)) = tp(ov(b))$ which proves what we want since that would imply any realization of $p_0$ has the same type $p$.
 
   Recall that $gen(ov(a)),gen(ov(b))$ are the subrings generated by $ov(a)$ and $ov(b)$ respectively.
-  Now map $a_i |-> b_i$, we want to extend this map to $gen(ov(a)) -> gen(ov(b))$, recall that elements of $gen(ov(a))$ are are of the form $P(ov(a))$ where $P in ZZ[ov(x)]$, which we can also write as $tau_1(ov(a)) - tau_2(ov(a))$ where $tau_1,tau_2$ are two terms. We now map 
+  Now map $a_i |-> b_i$, we want to extend this map to $gen(ov(a)) -> gen(ov(b))$. Recall that elements of $gen(ov(a))$ are are of the form $P(ov(a))$ where $P in ZZ[ov(x)]$, which we can also write as $tau_1(ov(a)) - tau_2(ov(a))$ where $tau_1,tau_2$ are two terms. We now map 
   $
     tau_1(ov(a)) - tau_2(ov(a)) -> tau_1(ov(b)) - tau_2(ov(b))
   $
@@ -1539,11 +1588,11 @@ What we see in this proof is that quantifier elimination is intimately related t
 
 #pagebreak(weak: true)
 = Algebraic Geometry
-Now that we have quantifier elimination of $A C F_p$ we can use that to very quickly prove the foundations of algebraic geometry
+Now that we have quantifier elimination of $A C F_p$ we can use it to very quickly prove the foundations of algebraic geometry
 #theorem("Lefchetz's principle")[
   Let $sigma$ be a sentence in the language of fields. TFAE
   + $sigma$ is true in every algebraically closed field of characteristic $0$.
-  + $sigma$ is true in every algebraically closed field of characteristic $p$ for all but finitely many $p$. 
+  + $sigma$ is true in every algebraically closed field of characteristic $p$ for all but finitely many $p$.
   + $sigma$ is true in every algebraically closed field of characteristic $p$ for infinitely many $p$
 ]<thrm-lef_principle>
 #proof[
@@ -1564,7 +1613,7 @@ Now that we have quantifier elimination of $A C F_p$ we can use that to very qui
   $
   so we are done.
 
-  For $(3) => (1)$, suppose that $A C F_0 tack.not sigma$ and $A C F_p proves sigma$ for infinitely many $p$. Then by completeness $A C F_0 tack.not not sigma$ so by $(1) => (2)$ there exists a prime $p_0$ such that for all prime numbers $p >= p_0$ we have $A C F_p proves not sigma$ and so we get a contradiction.
+  For $(3) => (1)$, suppose that $A C F_0 tack.not sigma$ and $A C F_p proves sigma$ for infinitely many $p$. Then by completeness $A C F_0 proves not sigma$ so by $(1) => (2)$ there exists a prime $p_0$ such that for all prime numbers $p >= p_0$ we have $A C F_p proves not sigma$ and so we get a contradiction.
 ]
 There are some fun consequences of this theorem.
 #theorem("Ax")[
@@ -1586,7 +1635,7 @@ There are some fun consequences of this theorem.
   this sentence encodes exactly the statement of the theorem for polynomials of degree $<= d$. Hence by @thrm-lef_principle since these sentences are true in $hat(FF)_p$ then they are also true in $CC$.
 ]
 
-Coming back to quantifier elimination, we have an assortment of corollaries stemming from @prop_acf_qe 
+Coming back to quantifier elimination, we have an assortment of corollaries stemming from @prop_acf_qe.
 #corollary(base: "heading")[
   Let $K < L$ both be algebraically closed fields, if $F(ov(x))$ is a system of polynomial equations and inequalities with coefficients from $K$ with a solution in $L$, then the system also has a solution in $K$.
 ]<cor-pol_equal>
@@ -1600,15 +1649,13 @@ Coming back to quantifier elimination, we have an assortment of corollaries stem
   Let $K$ be an algebraically closed field, $f_1,...,f_n in K[ov(x)]$. $f_i$ have a common zero in $K^n$ if and only if $1 in.not (f_1,...,f_n)$.
 ]<cor-weak_null>
 #proof[
-  The forward direction is very easy, if they have a common zero then everything in the ideal has that same common zero.
+  The forward direction is very easy, if they have a common zero then everything in the ideal has that same common zero, so $1 in.not (f_1,...,f_n)$.
 
   On the other hand if $1$ is not in the ideal, let $I$ be a maximal ideal containing $(f_1,...,f_n)$ then set
   $
-    L = hat(K[ov(x)] quo I)
+    Z = K[ov(x)] quo I quad quad L = hat(Z).
   $
-  which is clearly an algebraically closed field containing $K$. Now in $L$ there are common roots, they are the variables $x_1,...,x_n$. Hence by the 
-  // @cor-pol_equal 
-  we get the desired result.
+  Clearly $L$ is an algebraically closed field containing $K$. Now in $L$ there are common roots, they are the variables $x_1,...,x_n$. Hence by @cor-pol_equal we get the desired result.
 ]
 
 We can now apply this to some basic algebraic geometry.
@@ -1622,9 +1669,7 @@ We can now apply this to some basic algebraic geometry.
       I(Y) = { f in K[ov(x)] : f(ov(a)), forall ov(a) in Y}
     $
 
-    We call a subset $V$ of $K^n$ _Zariski-closed_ if $V = V(S)$ for some $S in K[ov(x)]$.
-    
-    An ideal is _radical_ if it is closed under taking roots.
+  We call a subset $V$ of $K^n$ _Zariski-closed_ if $V = V(S)$ for some $S in K[ov(x)]$. An ideal is _radical_ if it is closed under taking roots.
 ]
 #proposition[
   For all $X,Y seq K^n$
@@ -1634,25 +1679,25 @@ We can now apply this to some basic algebraic geometry.
   + The Zariski-closed sets form a topology, that is they are closed under finite unions and arbitrary intersections. In particular if $X,Y$ are Zariski-closed then 
     $
       X union Y = V(I(X) sect I(Y))
-    $ 
-    and 
+    $
+    and
     $
       X sect Y = V(I(X) + I(Y)).
     $
-]
+]<prop-zariski_props>
 #proof[
   Exercise.
 ]
 
 #theorem("Hilbert basis theorem")[
   If $K$ is a field, then $K[ov(x)]$ is a Noetherian ring. That is, there is no infinite increasing chain of ideals. In particular, every ideal is finitely generated.
-]
+]<thrm-hilbret_basis_theorem>
 
 #corollary[
   If $K$ is a field, then there is no infinite decreasing sequence of Zariski-closed sets.
 ]
 #proof[
-  We apply Hilbert's Basis theorem along with the third proposition.
+  We apply @thrm-hilbret_basis_theorem along with $(3)$ of @prop-zariski_props.
 ]
 
 #definition[
@@ -1661,7 +1706,7 @@ We can now apply this to some basic algebraic geometry.
     a dot b in I => a in I "or" b in I
   $
 ]
-Clearly every prime ideal is radical.
+Clearly every prime ideal is radical, and we have a sort of converse.
 
 #theorem("Primary decomposition")[
   If $I seq K[ov(x)]$ is a radical ideal, then there are prime ideals $J_1,...,J_n$ such that
@@ -1670,7 +1715,7 @@ Clearly every prime ideal is radical.
   $
 ]
 
-We can now prove the strong form of @cor-weak_null
+We can now prove the strong form of @cor-weak_null.
 #theorem("Hilbert Nullstellensatz strong form")[
   Let $K$ be algebraically closed, if $I subset.neq J$ and both are radical in $K[ov(x)]$, then
   $
@@ -1678,22 +1723,19 @@ We can now prove the strong form of @cor-weak_null
   $
 ]<thrm-strong_null>
 #proof[
-  Note that the non-strict inclusion is trivial, the hard part is to prove the non-strict inclusion. That is, we want to find a common root of $I$ which is not a common root of $J$. Let $p in J backslash I$, we want want to find a point $ov(b)$ which is a common root of $I$ but $p(ov(b)) != 0$.
+  Note that the non-strict inclusion is trivial, the hard part is to prove the strict inclusion. That is, we want to find a common root of $I$ which is not a common root of $J$. Let $p in J backslash I$, we want want to find a point $ov(b)$ which is a common root of $I$ but $p(ov(b)) != 0$.
 
-  We decompose $I = I_1 sect ... I_n$ into prime ideals and let $i$ be such that $p in.not I_i$.
-
-  By Hilbert basis theorem we have $I_i = (f_1,...,f_n)$ so we want to find a root of $f_1,...,f_n$ which is not a root of $p$. Let $R = K[ov(x)]/I_i$ then $R$ is an integral domain since $I_i$ is prime, let $R_0$ be the field of fractions of $R$ and $L = hat(R_0)$.
+  We decompose $I = I_1 sect ... sect I_n$ into prime ideals and let $i$ be such that $p in.not I_i$.
+  By @thrm-hilbret_basis_theorem we have $I_i = (f_1,...,f_n)$ so we want to find a root of $f_1,...,f_n$ which is not a root of $p$. Let $R = K[ov(x)] quo I_i$ then $R$ is an integral domain since $I_i$ is prime, let $R_0$ be the field of fractions of $R$ and $L = hat(R_0)$.
 
   In $L$ consider the system
   $
     cases( f_i = 0 : 1 <= i <= m, p eq.not 0)
   $
-  it has a solution in $L$ and thus by 
-  // @cor-pol_equal 
-  it also has a solution in $K$ and so we are done.
+  it has a solution in $L$ since $p != 0$ in $L$, and thus by @cor-pol_equal it also has a solution in $K$ and so we are done.
 ]
 #corollary[
-  If $I$ is a radical ideal then $I = I(V(I))$
+  If $I$ is a radical ideal then $I = I(V(I))$.
 ]
 #proof[
   Apply @thrm-strong_null to $J = I(V(I))$.
@@ -1709,12 +1751,10 @@ We can now prove the strong form of @cor-weak_null
 
   For the backward direction of (2), assume that $X$ is a Boolean combination of $Z_i$ for some Zariski-closed family $Z_i$, then by definition we have 
   $
-    Z_i = V(p^i_1) sect ... sect V(p^i_(n_i)
-  $ 
+    Z_i = V(p^i_1) sect ... sect V(p^i_(n_i))
+  $
   then immediately we have that $X$ is a boolean combination of
-  $
-    V(p^i_j)
-  $
+  $V(p^i_j)$, which are all Zariski closed sets.
 ]
 
 #definition[
@@ -1725,23 +1765,23 @@ We can now prove the strong form of @cor-weak_null
   Let $K$ be algebraically closed, the images of constructible sets by polynomial maps are constructible.
 ]
 #proof[
-  Let $X seq K^n$ be constructible, $p : K^n -> K^m$ be a polynomial map
+  Let $X seq K^n$ be constructible, $p : K^n -> K^m$ be a polynomial map, its image is given by
   $
-    p(X) = {ov(y) in K^n : exists ov(x) (ov(x) in X and ov(y) = p(ov(x)))}
+    p(X) = {ov(y) in K^n : q(ov(y)) = exists ov(x) (ov(x) in X and ov(y) = p(ov(x)))}.
   $
-  then since $p(ov(x))$ is definable over $K$ subset of $K^m$. Since the theory of $K$ has quantifier elimination, $p(ov(x))$ is definable by a quantifier free formula and thus is constructible.
+  Then since $q(ov(x))$ is a formula this image is a definable subset of $K^m$. Since the theory of $K$ has quantifier elimination, $p(ov(x))$ is definable by a quantifier free formula and thus is constructible.
 ]
 
 = Homogeneous Structures
 #definition[
   $mM$ is $kappa$-_homogeneous_ if for every subset $A seq mM$ with $|A| < kappa$, every elementary embedding $f : A -> mM$ and every element $a in mM$ there is an extension $g : A union {a} -> mM$ which is also an elementary embedding.
 
-  $mM$ is called _homogeneous_ if it is $|mM|$-homogeneous. $mM$ is _strongly_ $kappa$-_homogeneous_ if we have an extension $g : mM -> mM$ of $f$ instead.
+  $mM$ is called _homogeneous_ if it is $||mM||$-homogeneous. $mM$ is _strongly_ $kappa$-_homogeneous_ if we have an extension $g : mM -> mM$ of $f$ instead.
 ]
 
-One might wonder why we do not similarly define $mM$ to be strongly homogeneous if it is strongly $|mM|$-homogeneous. This is explained by the following proposition.
+One might wonder why we do not similarly define $mM$ to be strongly homogeneous if it is strongly $||mM||$-homogeneous. This is explained by the following proposition.
 #proposition[
-  $mM$ is homogeneous if and only if it is strongly $|mM|$-homogeneous.
+  $mM$ is homogeneous if and only if it is strongly $||mM||$-homogeneous.
 ]
 #proof[
   Exercise, quite simple using back and forth.
@@ -1751,7 +1791,7 @@ One might wonder why we do not similarly define $mM$ to be strongly homogeneous 
   If $mM equiv mN$ are saturated and are of the same cardinality then $mM tilde.equiv mN$.
 ]
 #proof[
-  We prove, as expected, by back and forth. Set $kappa = ||mM|| = ||mN|$ and numerate both models as 
+  We prove, as expected, by back and forth. Set $kappa = ||mM|| = ||mN||$ and enumerate both models as 
   $
     mM = {a_alpha : alpha < kappa } "and"
     mN = {b_alpha : alpha < kappa }.
