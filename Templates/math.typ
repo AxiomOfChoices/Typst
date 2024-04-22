@@ -1,13 +1,14 @@
 #import "@preview/ctheorems:1.1.1": *
 
-
 // Various symbols
 #let ve = $epsilon$
 #let seq = $subset.eq$
 #let Mink = math.op("Mink")
 #let qd = math.op("qd")
 #let fu = $frak(U)$
-#let pb() = {pagebreak(weak: true)}
+#let pb() = {
+  pagebreak(weak: true)
+}
 #let sat = $tack.r.double$
 #let satn = $tack.r.double.not$
 #let proves = $tack.r$
@@ -22,7 +23,7 @@
 #let Def = math.op("Def")
 #let cf = math.op("cf")
 #let Cn = math.op("Cn")
-#let ip(x,y) = $lr(angle.l #x, #y angle.r)$
+#let ip(x, y) = $lr(angle.l #x, #y angle.r)$
 #let suc = math.op("suc")
 #let Area = math.op("Area")
 #let Volume = math.op("Volume")
@@ -55,9 +56,9 @@
 #let ACF = math.op("ACF")
 #let flat = $♭$
 #let gen(x) = $lr(angle.l #x angle.r)$
+#let into = $arrow.hook$
 
-
-#let symbol_replacing(doc) ={
+#let symbol_replacing(doc) = {
   show math.equation: set text(features: ("cv01",))
   doc
 }
@@ -65,7 +66,7 @@
   "theorem",
   "Theorem",
   padding: (top: 0em, bottom: 0em),
-  fill: rgb("#e8e8f8")
+  fill: rgb("#e8e8f8"),
 )
 
 #let lemma = thmbox(
@@ -118,15 +119,19 @@
   padding: (top: 0em, bottom: 0em),
   stroke: rgb("#ffaaaa") + 1pt,
   base: none,           // Unattached: count globally
-).with(numbering: "I")  // Use Roman numerals
+).with(numbering: "I") // Use Roman numerals
 
 // Examples and remarks are not numbered
-#let example = thmplain("example", "Example",   inset: (x: 0.0em),
+#let example = thmplain(
+  "example",
+  "Example",
+  inset: (x: 0.0em),
 ).with(numbering: none)
 #let remark = thmbox(
   "remark",
-  "Remark",padding: (top: 0em, bottom: 0em),
-  stroke: rgb("#ffaaaa") + 1pt
+  "Remark",
+  padding: (top: 0em, bottom: 0em),
+  stroke: rgb("#ffaaaa") + 1pt,
 ).with(numbering: none)
 
 // Proofs are attached to theorems, although they are not numbered
@@ -135,8 +140,8 @@
   "Proof",
   base: "theorem",
   bodyfmt: body => [
-    #body #h(1fr) $square$    // Insert QED symbol
-  ]
+    #body #h(1fr) $square$ // Insert QED symbol
+  ],
 ).with(numbering: none)
 
 #let solution = thmplain(
@@ -176,10 +181,13 @@
   show ref: it => {
     let el = it.element
     if el != none and el.func() == math.equation {
-      link(el.location(), numbering(
-        section_based_equation_numbering,
-        counter(math.equation).at(el.location()).at(0) + 1
-      ))
+      link(
+        el.location(),
+        numbering(
+          section_based_equation_numbering,
+          counter(math.equation).at(el.location()).at(0) + 1,
+        ),
+      )
     } else {
       it
     }
@@ -189,20 +197,23 @@
 
 #let section_based_equation_numbering(number, el) = {
   locate(loc => {
-    let count = counter(heading.where(level:1)).at(loc).last()
+    let count = counter(heading.where(level: 1)).at(loc).last()
     numbering("(1.1)", count, number)
-    }
-  )
+  })
 }
 
 #let equation_numbering(doc) = {
-  show heading.where(level:1): it => {
+  show heading.where(level: 1): it => {
     counter(math.equation).update(0)
     it
   }
   show math.equation: it => {
-    if it.has("label"){
-      math.equation(block: true, numbering: section_based_equation_numbering, it)
+    if it.has("label") {
+      math.equation(
+        block: true,
+        numbering: section_based_equation_numbering,
+        it,
+      )
     } else {
       it
     }
