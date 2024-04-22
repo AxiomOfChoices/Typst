@@ -1784,20 +1784,20 @@ One might wonder why we do not similarly define $mM$ to be strongly homogeneous 
   $mM$ is homogeneous if and only if it is strongly $||mM||$-homogeneous.
 ]
 #proof[
-  Exercise, quite simple using back and forth.
+  The backwards direction is immediate, so we prove the forward direction. Assume $f : A -> mM$ is an elementary embedding, then we construct a sequence of maps $f_alpha : A_alpha -> mM$. We do this by setting $f_0 = f$ and then taking unions in the limit step and adding the elements of $mM backslash A$ one by one using homogeneity in the successor step. Then $g := union.big_(alpha) f_alpha$ will be a map $g : mM -> mM$ as desired.
 ]
 
 #proposition[
   If $mM equiv mN$ are saturated and are of the same cardinality then $mM tilde.equiv mN$.
 ]
 #proof[
-  We prove, as expected, by back and forth. Set $kappa = ||mM|| = ||mN||$ and enumerate both models as 
+  We prove, as expected, by back and forth. Set $kappa = ||mM|| = ||mN||$ and enumerate both models as
   $
     mM = {a_alpha : alpha < kappa } "and"
     mN = {b_alpha : alpha < kappa }.
   $
 
-  We will construct a partial map $f_alpha : A_alpha -> B_alpha$ with $|f| <= 2 |alpha|$ such that $f_alpha seq f_(alpha + 1)$ and $a_alpha in A_alpha, b_alpha in B_alpha$.
+  We will construct a partial map $f_alpha : A_alpha -> B_alpha$ with $|f| <= 2|alpha|$ such that $f_alpha seq f_(alpha + 1)$ and $a_alpha in A_alpha, b_alpha in B_alpha$.
 
   We start with the base case of $alpha = 0$ where $f_alpha = nothing$.
   For the limit case suppose that $f_beta$ is constructed for $beta < alpha$, we write
@@ -1810,42 +1810,42 @@ One might wonder why we do not similarly define $mM$ to be strongly homogeneous 
 
 #theorem[
   Suppose $mM equiv mN$ are homogeneous of the same cardinality, then if $mM,mN$ realize the same complete $n$-types over the empty set for each $n$, then $mM tilde.equiv mN$.
-]
+]<thrm-homogeneity_isomorphism>
 Before we prove this we need a small lemma
 #lemma[
-  For any $A seq mM$ there is some embedding $A -> mN$.
+  Under the same conditions as @thrm-homogeneity_isomorphism, for any $A seq mM$, there is some embedding $A -> mN$.
 ]
 #proof[
   Induction on $|A|$.
-  + If $A$ is finite then since $mM$ and $mN$ realize the same types this is immediate.
-  + If $|A| = mu >= aleph_0$ then we can enumerate $A = {a_alpha : alpha < mu}$ and so by a sub induction on $alpha$ we construct $f(a_alpha)$. 
-    Suppose that for some fixed $alpha$ we have constructed $f(a_beta)$ for $beta < alpha$. Then let $A_alpha = {a_beta : beta <= alpha }$ then by our outer induction hypothesis there exists an embedding $g : A_alpha -> mN$. Note that we are not done since the $g$ could be incompatible with $f$, but notice that that $f compose g^(-1)$ is a map $g(A_alpha backslash {a_alpha}) -> mN$ then by homogeneity we can extend this to an elementary embedding $h : g(A_alpha) -> mN$ and then we set $f(a_alpha) = h(g(a_alpha))$.
+  If $A$ is finite then since $mM$ and $mN$ realize the same types this is immediate.
+
+  If $|A| = mu >= aleph_0$, then we can enumerate $A = {a_alpha : alpha < mu}$ and so by a sub-induction on $alpha$ we construct $f(a_alpha)$.
+  Suppose that for some fixed $alpha$ we have constructed $f(a_beta)$ for $beta < alpha$. Then let $A_alpha = {a_beta : beta <= alpha }$ then by our outer induction hypothesis there exists an embedding $g : A_alpha -> mN$. Note that we are not done since the $g$ could be incompatible with $f$, but notice that that $f compose g^(-1)$ is an embedding $g(A_alpha backslash {a_alpha}) -> mN$, so then by homogeneity we can extend this to an elementary embedding $h : g(A_alpha) -> mN$ and then we set $f(a_alpha) = h(g(a_alpha))$. This is the desired extension of $f$ to $a_alpha$.
 ]
 
-The intuitive explanation for this proof is that by induction we get a sequence of maps $f_alpha$ and then by homogeneity we can arrange the images of the maps so that they sit on top of each other for increasing $alpha$ which is enough to construct a limit map.
+The intuitive explanation for this proof is that by induction we get a sequence of maps $f_alpha$, and then by homogeneity we can arrange the images of the maps so that they sit on top of each other for increasing $alpha$, which is enough to construct a limit map.
 
 Now to prove the theorem.
-#proof[
+#proof([of @thrm-homogeneity_isomorphism])[
   We now use a back and forth argument to prove the theorem. We will not delve into the full details here but simply mention that when we want to add an element to the partial isomorphism $f_alpha$, we use the above lemma to get a new map $g$ with an extended domain. But then to make that map compatible with the previous maps we can use homogeneity again to align the images so that the image of $g$ sits on top of the images of $f_alpha$, then we use that as our extension.
 ]
 
 #definition[
   A model $mM$ is called $kappa$-_universal_ if for every $mN equiv mM$ with $||mN|| <= kappa$ there exists an elementary embedding $f : mN -> mM$.
 
-  $mM$ is called _universal_ if it is $|mM|$-universal.
+  $mM$ is called _universal_ if it is $||mM||$-universal.
 
   $mM$ is $< aleph_0$-universal if for every $n$, $mM$ realizes all types in $S_n^(Th(mM)) (nothing)$.
 ]
-// TODO: ADD CLARIFICATION HERE
+It turns out that we can think of homogeneity and universality as the two halves that together form saturatedness.
 #theorem[
   If $mM$ is $kappa$-saturated then $mM$ is $kappa$-homogeneous and $kappa$-universal.
 ]
 #proof[
-  For $kappa$-homogeneity if we have $|A| < kappa$ and an embedding $f : A -> mM$, then pick any $a in mM$. We can take the type $p = tp(a quo A)$ and map it to $q = f(p)$ and define $f(a)$ to be the element that realizes this type.
+  For $kappa$-homogeneity if we have $|A| < kappa$ and an embedding $f : A -> mM$, then pick any $a in mM$. We can take the type $p = tp(a quo A)$ and map it to $q = f(p)$ and define $f(a)$ to be the element that realizes this type in $mM$, which always exists by saturation.
 
-  For $kappa$-universality we let $mN equiv mM$, and $||mN|| <= kappa$. \ Then we enumerate $mN = {a_alpha : alpha < kappa}$, and we construct $f(a_alpha)$ by induction. We set $p = tp(a_alpha quo { a_beta : beta < alpha })$ and then $q = f(p)$ and so we just set $f(a_alpha)$ to be any element which realizes $q$.
+  For $kappa$-universality we let $mN equiv mM$, and $||mN|| <= kappa$. Then we enumerate $mN = {a_alpha : alpha < kappa}$, and we construct $f(a_alpha)$ by induction. We set $p = tp(a_alpha quo { a_beta : beta < alpha })$ and then $q = f(p)$ and so again we just set $f(a_alpha)$ to be any element which realizes $q$.
 ]
-// TODO: MAKE ALL THESE PROOFS CLEARER
 
 #theorem[
   If $mM$ is $kappa$-homogeneous and $< aleph_0$-universal then $mM$ is $kappa$-saturated.
@@ -1853,15 +1853,13 @@ Now to prove the theorem.
 #proof[
   Let $A seq mM$ with $|A| < kappa$, let $p in S(A)$, we want to show that $p(M) != nothing$, we prove this by induction on $|A|$.
 
-  // TODO: ADD REFERENCE TO EXTENSION
-  First assume that $|A|$ is finite, then let $mN$ be an extension $mM elm mN$ which realizes the type $p$ through some element $b$. Then consider the type $q = tp^mN (A union b)$, by $< aleph_0$ universality we get that $mM$ realizes $q$ through some set $A'$ and element $b'$. But then by homogeneity since $A$ and $A'$ have the same type we can map $A',b'$ to inside $mM$ so that the image of $A'$ is $A$. But then the image of $b'$ realizes $p$ so we are done. 
+  First assume that $|A|$ is finite, then let $mN$ be an extension $mM elm mN$ which realizes the type $p$ through some element $c$. Then consider the type $q = tp^mN (A c)$, by $< aleph_0$ universality we get that $mM$ realizes $q$ through some set $A'$ and element $b'$. But then by homogeneity since $A$ and $A'$ have the same type, $f : A' -> mM$ defined by $f(A') = A$ is an elementary embedding in $mM$. Then homogeneity gives us that we can extend this to an elementary embedding $g : A' union {b'} -> mM$, then the image of $b'$ under this map must have $tp(g(b') quo A) = tp(b' quo A') = p$.
 
-  Next we use induction, assume that the statement holds for all $A'$ with $|A'| < mu$, we want to show it holds for $|A| = mu$. Enumerate ${ a_alpha : alpha < mu}$, then let $p_0$ be all the formulas in $p$ that do not use any of the constants in $A$. Since $mM$ realizes $p_0$ let $b$ be a witness $p_0$, let $mN$ again be an extension of $mM$ which realizes $p$ with $b'$ as a witness.
+  Next for $|A|$ infinite we use induction, assume that the statement holds for all $A'$ with $|A'| < mu$ for some cardinal $mu$, we want to show it holds for $|A| = mu$. Enumerate ${ a_alpha : alpha < mu}$, then let $p_0$ be all the formulas in $p$ that do not use any of the constants in $A$. Since $mM$ realizes $p_0$ let $b'$ be a witness of $p_0$, let $mN$ again be an extension of $mM$ which realizes $p$ with $c$ as a witness.
 
-// TODO: FIX B AND B' IN THIS PROOF.
-  Now $b$ and $b'$ have the same type, so if we consider $tp^mN(a_0 quo b')$ we can replace $b'$ by $b$ in every formula and obtain a type over $b$ in $mM$, by inductive hypothesis this type will be witnessed by an element $a'_0$ in $mM$. We then repeat this by induction, assuming we found $a'_beta$ for $beta < alpha$, then we can consider the type $tp^mN (a_alpha quo a_(< alpha) b')$, we again replace $a_(< alpha) b'$ in the parameters by $a'_(< alpha) b$ and then we get the element $a'_alpha$ in $mM$.
+  Now $b'$ and $c$ have the same type over the empty set, so if we consider $tp^mN (a_0 quo c)$ we can replace $c$ by $b'$ in every formula and obtain a type over $b'$ in $mM$. By inductive hypothesis this type will be witnessed by an element $a'_0$ in $mM$. We then repeat this by induction, assuming we found $a'_beta$ for $beta < alpha$, then we can consider the type $tp^mN (a_alpha quo a_(< alpha) c)$, we again replace $a_(< alpha) c$ in the parameters by $a'_(< alpha) b'$ and then we get the element $a'_alpha$ in $mM$.
 
-  We thus obtain $A' = {a'_alpha : alpha < mu}$ such that $b$ satisfies the same formula over $A'$ as $b'$ satisfies over $A$. We then can use homogeneity to map $A',b$ into $mM$ so that the image of $A$ is $A'$, then the image of $b$ is a witness to type $p$. 
+  We thus obtain $A' = {a'_alpha : alpha < mu}$ such that $b'$ satisfies the same formula over $A'$ as $c$ satisfies over $A$. We then can use homogeneity to map $A',b'$ into $mM$ so that the image of $A'$ is $A$, then the image of $b'$ is an element $b$ which is a witness to the type $p$.
 ]
 
 = Fraïssé Theory
