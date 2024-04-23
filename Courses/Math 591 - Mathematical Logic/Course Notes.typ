@@ -4,6 +4,7 @@
 #import "@preview/commute:0.2.0": node, arr, commutative-diagram
 #import "/Templates/math.typ": *
 #import "/Templates/monograph.typ": frontpage
+#import "@preview/cetz:0.2.2": canvas, draw, tree
 #show: latex
 #show: chapter_heading
 #show: thmrules
@@ -2211,12 +2212,9 @@ In other words, the type of a finite subtuple of elements $a_k$ depends only on 
     $
     and so since this is a union of countable subsets each of cardinality at most $kappa$, then $[phi]$ has size $kappa$, which is a contradiction since we assumed that $phi$ is big.
   ]
-  Now using this lemma we can keep splitting $S_1 (A)$ into a tree of formulas $phi_s$ such that at each level all the subsets $[phi_s]$ are big.
+  Now using this lemma we can keep splitting $S_1 (A)$ into a tree of formulas $phi_s$ such that at each level all the formulas $phi_s$ are big (see @prop-big_tree for detail).
 
-  Now let $A_0$ be the set of parameters in the formulas $phi_s$, this set is countable since there are countably many formulas.
-
-  For every branch $x in 2^omega$ the set of we get by following a branch down the tree gives a type which we can complete to a type in $S_1 (A_0)$. These types are not equal for different branches, and there are $2^(aleph_0)$ many branches so $S_1 (A_0)$ has cardinality at least $2^(aleph_0)$.
-  // TODO: ADD DIAGRAM
+  Now let $A_0$ be the set of parameters in the formulas $phi_s$, this set is countable since there are countably many formulas. For every branch $x in 2^omega$ the set of we get by following a branch down the tree gives a type which we can complete to a type in $S_1 (A_0)$. These types are not equal for different branches, and there are $2^(aleph_0)$ many branches so $S_1 (A_0)$ has cardinality at least $2^(aleph_0)$.
 ]
 
 = Ranks in Topological Spaces
@@ -3169,5 +3167,74 @@ It turns out that the continuum hypothesis is independent of $ZFC$.
 #theorem("König's theorem")[
   For a cardinal $gamma$, $cf(2^gamma) > gamma$.
 ]<thrm-Konig>
+
+#pagebreak(weak: true)
+= Infinite Trees
+Near the end of this course we will deal a lot with infinite binary trees so we describe their basic properties and notation here.
+
+We use $2^omega$ to denote the set of countable sequences of ${0,1}$, we use $2^(< omega)$ to denote the set of finite sequences of ${0,1}$, including the empty sequence $e$. For any element $sigma in 2^omega$, its truncation $sigma|_(n)$ is the finite sequence we get by only considering the sequence for indices $1 <= i <= n$. For any finite sequence $delta in 2^(< omega)$ with length $n$, we use $[delta]$ to denote the set of countable sequences who's $n$'th truncation is $delta$, that is
+$
+  [delta] = {sigma in 2^omega : sigma|_n = delta}.
+$
+
+Conceptually, we will think of elements of $2^omega$ as infinite *branches* in an infinite tree where elements of $2^(< omega)$ are the nodes. The mental picture we will looks something like this.
+#let data = (
+  [$e$], ([$0$],([$00$], [$dots.v$], [$dots.v$]), ([$01$], [$dots.v$], [$dots.v$])), ([$1$], ([$10$], [$dots.v$], [$dots.v$]), ([$11$], [$dots.v$], [$dots.v$]))
+)
+#align(center)[
+#canvas(length: 1cm, {
+  import draw: *
+
+  set-style(content: (padding: 0),
+    fill: gray.lighten(70%),
+    stroke: gray.lighten(70%))
+
+  tree.tree(data, spread: 1.5, grow: 1.5, draw-node: (node, ..) => {
+    content((), node.content)
+  }, draw-edge: (from, to, ..) => {
+    if (to.len() <= 6) {
+    line((a: from, number: .5, b: to),
+         (a: to, number: .4, b: from), mark: (end: ">"), )
+    }
+    else {
+      set-style(content: (padding: 0),
+      fill: none,
+      stroke: gray.lighten(70%))
+    let corner = (vertical: from, horizontal: to);
+    let from_corner = (a: from, number: 0.4, b: (a: corner, number: 0.6, b: to))
+    bezier(from_corner,
+         (a: to, number: 0.2, b: corner), (a: from_corner, number: 0.63, b: (a: corner, number: 0.6, b: to)), mark: (end: ">"))
+    }
+  }, name: "tree")
+})
+]
+Here an element of $2^omega$ corresponds to an infinite path down this tree.
+
+Now in practice, trees like these come up naturally when we want to split up sets while preserving a sense of mass. Let us try to formalize this.
+#definition[
+  Let $X$ be any set and $cal(F) seq cal(P)(X)$ be any family of sets. We will call the family $cal(F)$ and its elements _big_ if
+  - $X in cal(F)$.
+  - For any $Y in cal(F)$ there exist non-empty disjoint subsets $W,W' seq Y$ such that $W, W' in Y$.
+]
+#proposition[
+  If $X$ is a set and $cal(F)$ is a family of big subsets then there exists a function $2^(< omega) -> cal(F)$ such that
+  - The image of $e$ is $X$.
+  - If $Y$ is the image of a finite sequence $delta$, then the images of $delta 0$ and $delta 1$ (concatenation) are disjoint and subsets of $Y$.
+]<prop-big_tree>
+#proof[
+  Proof is nearly immediate since the definition of a big family is tailor made for this result. We define the map inductively, we set $X_e = X$ and then for each $delta$ we set $X_(delta 0)$ and $X_(delta 1)$ to be the big subsets given to us by the definition.
+]
+
+Lets see a classic result that follows almost immediately from this construction.
+#theorem[
+  Let $X$ be a 0-dimensional, compact, Hausdorff topological space with no isolated points, then $X$ has cardinality at least $2^(|aleph_0|)$.
+]
+#proof[
+  First we demonstrate that it is enough to show that any clopen basis of $X$ forms a big family. If this is the case then by @prop-big_tree we get a tree $X_delta$ of clopen sets, then every branch $sigma$ corresponds to a decreasing sequence of non-empty closed subsets of $X$. But then by compactness the intersection of this sequence is non-empty and thus contains at least one point $p_sigma$.
+
+  This defines a map $f : 2^omega -> X$ which must be injective since any two different branches $sigma$ and $sigma'$ will eventually diverge from each other down the tree, which corresponds to $p_sigma$ and $p_sigma'$ being contained in disjoint open sets. Thus $|X| >= |2^omega| = 2^(|aleph_0|)$.
+
+  We now show the clopen basis does indeed form a big family. Clearly $X$ is a clopen basis element so then it is enough to show that any clopen basis set $Y$ contains 2 disjoint clopen basis sets. To see this note that again $Y$ cannot be finite so it contains at least $2$ points, name them $x,y$. Then since $X$ is Hausdorff we can pick open sets $Z_0, Z_1$ that are disjoint and contain $x$ and $y$ respectively. Then $Z_0 sect Y, Z_1 sect Y$ are disjoint open subsets of $Y$ so $Z_0 sect Y$ is a superset of a basis element $W$ and $Z_1 sect Y$ is a superset of a basis element $W'$. Then $W,W'$ are clopen basis elements which are disjoint and subsets of $Y$, which proves that this is indeed a big family.
+]
 
 // TODO: ADD EMBEDDING SYMBOL
