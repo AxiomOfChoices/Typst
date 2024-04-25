@@ -2279,6 +2279,7 @@ In the special setting of a $0$-dimensional space, we also have ranks given to c
   then $CB(alpha+1) = alpha_0$.
 ]
 
+#v(-1%)
 #proposition[
   For $X$ being $0$-dimensional, Hausdorff, compact space and $U,V$ clopen subsets.
   #set enum(indent: 0em);
@@ -2289,6 +2290,7 @@ In the special setting of a $0$-dimensional space, we also have ranks given to c
   + If $p in X$ then $CB(p) = min { CB(U) : p in U "with" U "clopen"}$.
   + $CB(U) = max { CB(p) : p in U }$.
 ]<prop-cb_rank_properties>
+#v(-1%)
 #proof[
   #set enum(indent: 0em);
   + If $U$ is finite non-empty then clearly we cannot split it into infinitely many disjoint subsets and thus $CB(U) <= 0$ so since it is non-empty $CB(U) = 0$. On the other hand assume $U$ is infinite, then since it is open infinite we can use the fact that $X$ is Hausdorff to split it into two non-empty disjoint clopen subsets $W,U backslash W$. One of these sets must be infinite so we can splitting it to get an infinite family of disjoint non-empty clopen subsets. Each of these subsets has rank at least $0$ so the rank of $U$ is at least $1$.
@@ -2305,11 +2307,11 @@ Let $T$ be a complete theory and $mM sat T$ an $aleph_0$-saturated model.
 #definition[
   We define the _Morley Rank_ as a function
   $
-    RM : Def_mM(mM) -> Ord union {infinity}
+    RM : Def_mM (mM^n) -> Ord union {infinity}
   $ 
-  where $Def_mM(mM)$ are the definable sets with $mM$ as parameters, we define it through
+  where $Def_mM (mM^n)$ are the definable sets with $mM$ as parameters, we define it through
   $
-    RM(phi) = CB([phi] sect S_1 (mM))
+    RM(phi) = CB([phi])
   $
 ]
 #proposition[
@@ -2332,7 +2334,7 @@ Let $T$ be a complete theory and $mM sat T$ an $aleph_0$-saturated model.
   $RM(p) = CB(p)$ where we see $p$ as a point in $S_1(mM)$.
 ]
 #proof[
-  Directly from @prop-cb_rank_properties point 5.
+  Directly from @prop-cb_rank_properties point $(5)$.
 ]
 
 Since the definitions heavily depend on $mM$ it is natural to ask whether we can say anything about how these properties change when we change the model. In fact we can, and this is formalized in the following proposition.
