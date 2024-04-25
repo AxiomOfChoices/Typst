@@ -2217,7 +2217,9 @@ In other words, the type of a finite subtuple of elements $a_k$ depends only on 
   Now let $A_0$ be the set of parameters in the formulas $phi_s$, this set is countable since there are countably many formulas. For every branch $x in 2^omega$ the set of we get by following a branch down the tree gives a type which we can complete to a type in $S_1 (A_0)$. These types are not equal for different branches, and there are $2^(aleph_0)$ many branches so $S_1 (A_0)$ has cardinality at least $2^(aleph_0)$.
 ]
 
+#pagebreak(weak: true)
 = Ranks in Topological Spaces
+We now continue our study of type spaces by borrowing a useful tool from descriptive set theory for analysing topological spaces.
 #definition[
   We define the _Cantor-Bendixson derivative_ as $ X' = X backslash { "isolated points of" X }. $
   We then define $X^(alpha)$ by induction on $alpha$, 
@@ -2227,7 +2229,7 @@ In other words, the type of a finite subtuple of elements $a_k$ depends only on 
 // TODO: FIX LONG DEFINITIONS
 #definition[
   If $X$ is separable then $exists alpha < omega_1$ such that $X^(alpha) = X^(alpha + 1)$.
-  The minimal $alpha$ at which this stabilizes is called the _Cantor-Bendixson rank_, often written as
+  The minimal $alpha$ for which this occurs is called the _Cantor-Bendixson rank_, often written as
   $
     CB(X) = min {alpha : X^(alpha) = X^(alpha+1)}.
   $
@@ -2237,6 +2239,7 @@ In other words, the type of a finite subtuple of elements $a_k$ depends only on 
   $
   and it is, as the name suggests, perfect, as in it does not have any isolated points.
 ]
+
 #definition[
   As a bit of abuse of notation we also define the function
   $
@@ -2246,7 +2249,12 @@ In other words, the type of a finite subtuple of elements $a_k$ depends only on 
   $
     CB(p) = cases(min(alpha : p in.not X^alpha) &: p in.not X^infinity, infinity &: p in X^infinity)
   $
+  which we call the _Cantor-Bendixson rank of $p$_.
 ]
+
+Intuitively the rank of a point $p$ measures how 'far' it is from being isolated. There is then is reason to believe that these could be useful in the setting of types since we know isolated types carry model-theoretic information.
+
+In the special setting of a $0$-dimensional space, we also have ranks given to clopen subsets of our topological space. Since in $S_n (A)$ we have a clopen basis induced by formulas, these will come in handy as well.
 
 #definition[
   Assume that $X$ is a $0$ dimensional space, that is
@@ -2257,7 +2265,7 @@ In other words, the type of a finite subtuple of elements $a_k$ depends only on 
 
   We define (again with abuse of notation) $CB : Clop(X) -> Ord union {infinity}$, by induction
   - $CB(U) >= 0$ if $U != nothing$ and $CB(nothing) = -1$.
-  - $CB(U) >= alpha + 1$ if $forall n$ we can find $V_1,...,V_n$ disjoint clopen subsets of of $U$ with $CB (V_i) >= alpha$.
+  - $CB(U) >= alpha + 1$ if $forall n in NN$ we can find $V_1,...,V_n$ disjoint clopen subsets of of $U$ with $CB (V_i) >= alpha$.
   - $CB(U) >= gamma$ if $forall beta < gamma$ we have $CB (U) >= beta$. 
 ]
 
@@ -2272,9 +2280,9 @@ In other words, the type of a finite subtuple of elements $a_k$ depends only on 
 ]
 
 #proposition[
-  For $X$ being $0$-dimensional compact space and $U,V$ clopen subsets.
-
-  + $CB(U) = 0$ if and only if $U$ is finite.
+  For $X$ being $0$-dimensional, Hausdorff, compact space and $U,V$ clopen subsets.
+  #set enum(indent: 0em);
+  + $CB(U) = 0$ if and only if $U$ is finite non-empty.
   + If $U seq V$ then $CB(U) <= CB(V)$.
   + $CB(U union V) = max { CB(U), CB(V) }$.
   + $CB (U >= alpha + 1)$ if and only if there is an infinite sequence $V_n seq U$ which is open and disjoint with $CB(V_i) >= alpha$.
@@ -2282,15 +2290,15 @@ In other words, the type of a finite subtuple of elements $a_k$ depends only on 
   + $CB(U) = max { CB(p) : p in U }$.
 ]<prop-cb_rank_properties>
 #proof[
-  + Exercise.
-  + Exercise.
+  #set enum(indent: 0em);
+  + If $U$ is finite non-empty then clearly we cannot split it into infinitely many disjoint subsets and thus $CB(U) <= 0$ so since it is non-empty $CB(U) = 0$. On the other hand assume $U$ is infinite, then since it is open infinite we can use the fact that $X$ is Hausdorff to split it into two non-empty disjoint clopen subsets $W,U backslash W$. One of these sets must be infinite so we can splitting it to get an infinite family of disjoint non-empty clopen subsets. Each of these subsets has rank at least $0$ so the rank of $U$ is at least $1$.
+  + Any family of subsets of $U$ is also a family of subsets of $V$ so if $CB(U) >= alpha$ then $CB(V) >= alpha$.
   + One direction is clear by 2, for the other we prove by induction that if $CB (U union V) >= alpha$ then either $CB(U) >= alpha$ or $CB(V) >= alpha$, we leave induction step as exercise.
   + One direction is again clear, for the other we assume that $CB(U) >= alpha + 1$ then we can find two disjoint $U_1, U_2$ clopen subsets of $U$ with $CB(U_1),CB(U_2) >= alpha$. We can then enlarge $U_2$ to $U backslash U_1$ and then by $3$ we know that one of $U_1,U_2$ has $CB(U_i) = alpha + 1$ so we can repeat this splitting again on that $U_i$. Doing this by induction we get a sequence of $U_i$ with $CB(U_i) >= alpha$ as desired.
   + Exercise.
   + Exercise.
 ]
 
-With these topological preliminaries out of the way we can apply them to Model Theory, namely noticing that $S_n (A)$ for any $A$ is always a $0$-dimensional compact Hausdorff space.
 
 = Morley Rank
 Let $T$ be a complete theory and $mM sat T$ an $aleph_0$-saturated model.
