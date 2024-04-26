@@ -291,7 +291,7 @@ However, an _elementary substructure_ must agree with its superstructure on _all
 ]
 
 
-#theorem("Löwenheim-Skolem-Skolem downwards Theorem")[
+#theorem("Löwenheim-Skolem downwards Theorem")[
   Let $L$ be a language, for any $L$-structure $mM$ and every $A seq |mM|$, there exists an elementary substructure $mN elm mM$ with $A seq |mN|$
   $
     ||mN|| = |A| + |L| + aleph_0
@@ -915,7 +915,7 @@ Next we will need will need some more notation.
 ]
 
 #theorem("Stone's Theorem")[
-  For every Boolean algebra $BB$ there exists a set $I$ with $BB seq cal(P)$
+  For every Boolean algebra $BB$ there exists a set $I$ with $BB seq cal(P)(I)$
 ]
 #proof[
   Set $I = S(BB)$, then the map $a |-> [a]$ is clearly a homomorphism by the above proposition, to see it is 1 to 1 we use the proof for Hausdorffness above to see that $[a] eq.not [b]$ if $[a] != [b]$.
@@ -1320,9 +1320,9 @@ We can see that this definition in fact generalizes @def-scott_equiv.
 
 Now with this definition we can start to construct some characterizing sentences.
 #lemma[
-  $forall alpha < omega_1$, $forall ov(alpha) in mM, exists phi_alpha^(mM,ov(a)) (x) in cal(L)_(omega_1,omega)$, such that $forall mN, forall ov(b) in mN$,
+  For any countable ordinal $alpha$ and any element $ov(a)$ of a model $mM$, there exists a formula $phi_alpha^(mM,ov(a)) (x) in cal(L)_(omega_1,omega)$, such that for any model $mN$ and any element $ov(b)$ of $mN$ we have,
   $
-    (mM, ov(a)) sequiv_alpha (mN, ov(b)) <=> mN sat phi_alpha^(mM,ov(a)) (ov(b))
+    (mM, ov(a)) sequiv_alpha (mN, ov(b)) <=> mN sat phi_alpha^(mM,ov(a)) (ov(b)).
   $
 ]
 #proof[
@@ -1409,7 +1409,7 @@ However, with a bit of trickery, we can define a sentence which does uniquely cl
 ]
 
 #theorem("Scott Isomorphism Theorem")[
-  Let $mM$ be a countable structure for every countable structure $mN$,
+  Let $mM$ be a countable structure, then for every countable structure $mN$ we have
   $
     mN tilde.equiv mM <=> mN sat phi.alt^mM
   $
@@ -2226,7 +2226,6 @@ We now continue our study of type spaces by borrowing a useful tool from descrip
   - $X^(alpha + 1) = (X^alpha)'$.
   - $X^gamma = sect.big_(beta < gamma) X^(beta)$.
 ]
-// TODO: FIX LONG DEFINITIONS
 #definition[
   If $X$ is separable then $exists alpha < omega_1$ such that $X^(alpha) = X^(alpha + 1)$.
   The minimal $alpha$ for which this occurs is called the _Cantor-Bendixson rank_, often written as
@@ -2299,17 +2298,27 @@ In the special setting of a $0$-dimensional space, we also have ranks given to c
   + Exercise.
 ]
 
+#proposition[
+  If $X$ is a compact space and $U seq X$ with $CB(U) = alpha$, then there exists $n$ such that if $U_1,...,U_k seq U$ which are disjoint with $CB(U_i) >= alpha$ then $k <= n$.
+]<prop-CB_degree>
+#proof[
+  Directly by definition.
+]
+
+#definition[
+  We call the minimal such $n$ in @prop-CB_degree the $CB$-degree of $U$.
+]
 
 = Morley Rank
 Let $T$ be a complete theory and $mM sat T$ an $aleph_0$-saturated model.
 #definition[
   We define the _Morley Rank_ as a function
   $
-    RM : Def_mM(mM) -> Ord union {infinity}
+    RM : Def_mM (mM^n) -> Ord union {infinity}
   $ 
-  where $Def_mM(mM)$ are the definable sets with $mM$ as parameters, we define it through
+  where $Def_mM (mM^n)$ are the definable sets with $mM$ as parameters, we define it through
   $
-    RM(phi) = CB([phi] sect S_1 (mM))
+    RM(phi) = CB([phi])
   $
 ]
 #proposition[
@@ -2332,23 +2341,63 @@ Let $T$ be a complete theory and $mM sat T$ an $aleph_0$-saturated model.
   $RM(p) = CB(p)$ where we see $p$ as a point in $S_1(mM)$.
 ]
 #proof[
-  Directly from @prop-cb_rank_properties point 5.
+  Directly from @prop-cb_rank_properties point $(5)$.
 ]
 
 Since the definitions heavily depend on $mM$ it is natural to ask whether we can say anything about how these properties change when we change the model. In fact we can, and this is formalized in the following proposition.
 #proposition[
-  If $phi$ is a formula with parameters in $mM$, $mM$ is $aleph_0$ saturated and $mM elm mN$ is an $aleph_0$-saturated extension then
+  If $phi$ is a formula with parameters in $mM$, $mM$ is $aleph_0$-saturated and $mM elm mN$ is an $aleph_0$-saturated extension then
   $
     RM^mM (phi) = RM^mN (phi)
   $
 ]
 #proof[
-  Exercise on assignment, will add when due date is passed.
+  First note that we may assume that $mN$ is the monster model, since every model embeds in the monster model and so we get
+  $
+  RM_mM (phi) = RM_frak(C) (phi) = RM_mN (phi).
+  $
+
+  We now prove
+  $
+  RM_mM (phi) >= alpha <=> RM_mN (phi) >= alpha
+  $
+  through induction on $alpha$.
+
+  The base case, $alpha = 0$, is trivial since
+  $
+  RM_mM (phi) >= 0 <=> phi(mM) != nothing
+  $
+  and since $phi(mM)$ being empty can be written as an $L$-sentence we have
+  $
+  RM_mM (phi) >= 0 <=> phi(mM) != nothing
+  <=>
+  phi(mN) != nothing <=> RM_mN (phi) >= 0.
+  $
+  The limit case is also trivial by inductive hypothesis.
+
+  For the successor case assume that $RM_mM (phi) >= alpha + 1$, then there is an infinite sequence of $L(mM)$ formulas $phi_i$ that are pairwise inconsistent, imply $phi$, and have $RM_mM (phi_i) >= alpha$. The $phi_i$ are also $L(mN)$ formulas and hence by inductive hypothesis we have $RM_mN (phi_i) >= alpha$, so we also have $RM_mN (phi) >= alpha + 1$.
+
+  On the other hand assume that $RM_mN (phi) >= alpha + 1$, then for any $n$ there are $L$-formulas $phi_i (ov(x), ov(y))$ and parameters $ov(a)_i$ for $1 <= i <= n$ such that $phi_i (ov(x), ov(a)_i)$ are pairwise inconsistent, imply $phi(ov(x))$, and have $RM_mN (phi_i (ov(x), ov(a)_i)) >= alpha$. Now let $ov(c)$ be the parameters of $phi$ in $mM$ and consider
+  $
+  tp_mN (ov(a)_1 ... ov(a)_n quo ov(c))
+  $
+  since this is a type over $ov(c)$ and since $mM$ is $aleph_0$-saturated we get that there is a realization of this type in $mM$. That is there are tuples $ov(b)_i in mM$ with
+  $
+  tp_mN (ov(a)_1 ... ov(a)_n quo ov(c))
+  = tp_mM (ov(b)_1 ... ov(b)_n quo ov(c))
+  = tp_mN (ov(b)_1 ... ov(b)_n quo ov(c)).
+  $
+  Next consider the $L(mM)$-formulas $psi_i (ov(x)) := phi_i (ov(x), ov(b)_i)$, since $mN$ is $aleph_0$-strongly homogeneous there is an automorphism $f$ of $mN$ that fixes $ov(c)$ and such that $f(ov(a)_i) = ov(b)_i$. Under this automorphism the formulas $phi_i (ov(x), ov(a)_i)$ map to $phi_i (ov(x), ov(b)_i) = psi_i$. Using this we get that since $phi_i (ov(x), ov(a)_i)$ are pairwise inconsistent so are $psi_i$, since this automorphism fixes $ov(c)$ it also fixes $phi$, so since $phi_i (ov(x), ov(a)_i)$ imply $phi$ so do $psi_i$. Since we have this decomposition of $phi$ into $psi_i$'s it is enough to show that $psi_i$'s have $RM_mM (psi_i) >= alpha$.
+  But now Morley rank is a model theoretic property and so it is preserved under automorphisms and thus
+  $
+  RM_(mN) (psi_i) = RM_(mN) (phi_i (ov(x), ov(a)_i)) >= alpha,
+  $
+which finishes the proof.
 ]
 
-By convention we usually define $RM$ inside the Monster Model, since we can easily embed other models into it.
+Due to this result we will implicitly always be working in the Monster model.
 
-Notice that we can extend this definition to not complete types, we do this through
+Notice that we can extend the definition of the Morley rank to incomplete types, we do this through
 $
   RM(p) = min {RM(phi) : phi in p}.
 $
@@ -2362,11 +2411,19 @@ $
 #proof[
   We know that $p$ corresponds to a closed set of $S_1(A)$, we then consider the collection of formulas
   $
-    q_0 = { not phi : RM(p union {phi}) < RM(p)}
+    q_0 = { not phi : RM(p union {phi}) < RM(p)}.
   $
-  one can check that $q_0$ is also a type which extend $p$. //TODO: COMPLETE PROOF THAT IT IS A TYPE.
+  Let $not phi_i$ for $i <= k$ be a finite collection of formulas in $q_0$, then we have
+  $
+    RM(p union {phi_i}) < RM(p)
+  $
+  and so $RM(phi_i) < RM(p)$ for each $i$. Now this means that
+  $
+    RM(or.big_i phi_i) < RM(p)
+  $
+  and so $RM(and.big_i phi_i) >= RM(p)$ and so is not empty and thus consistent.
 
-  Any $q$ completing $q_0$ is an extension of $p$ with correct rank. //TODO: ADD INTUITION HERE.
+  Any $q$ completing $q_0$ is an extension of $p$ with correct rank.
 ]
 
 #theorem[
@@ -2377,16 +2434,17 @@ $
   This is actually equivalent to $RM(x = x) < omega_1$, this is left as an exercise.
 ]
 #proof([of @thrm-rank_well_defined])[
-  Suppose that $RM(x = x) = infinity$, then there is some ordinal $beta$ such if $RM(phi) > beta$ then $RM(phi) = infinity$ (since we can never have arbitrarily large ranks). // TODO: ADD MORE EXPLANATION HERE.
+  Suppose that $RM(x = x) = infinity$, then there is some ordinal $beta$ such if $RM(phi) >= beta$ then $RM(phi) = infinity$ (since we can never have arbitrarily large ranks). 
 
-  We will now construct a tree of formulas $phi_n$ indexed by $n in 2^(< omega)$, we start with $phi_nothing = (x = x)$ and continue by noticing that $RM(phi_nothing) > beta + 1$ implies that we can find two formulas $phi_0$and $phi_1$ with $RM(phi_0),RM(phi_1) > beta$ and hence we also have $RM(phi_0) = RM(phi_1) = infinity$. We then continue this and keep splitting formulas $phi_n$ to get a tree of non empty formulas. 
-
-  Morally the construct of this tree is using the fact that Moraly rank 'stabilizes' in a very similar way as Scott rank.
+  Now for any formula $phi$ with $RM(phi) = infinity$ we know that $RM(phi_nothing) > beta + 1$ and so implies that we can find two formulas $phi_0$ and $phi_1$ that imply $phi$, with $RM(phi_0),RM(phi_1) > beta$ and hence we also have $RM(phi_0) = RM(phi_1) = infinity$.
+  
+  Thus formulas $phi$ with $RM(phi) = infinity$ form a 'big' family (see @prop-big_tree) when we think of them as the subsets $[phi]$ of $S_n (mM)$. Hence we know that there is a tree of formulas $phi_sigma$ which all have $RM(phi_sigma) = infinity$.
 
   There are then at least $2^(aleph_0)$ leaves in this tree which correspond to at least $2^(aleph_0)$ types over the set of parameters of all $phi_n$ which is a countable set.
 
   For the other direction assume that $T$ is not transcendental and that $RM(x = x) < infinity$, then we can construct a similar tree as in the proof of @thrm-stable. Let $alpha = inf (RM(phi_n) : 2^(< omega))$, then if $RM(phi_(n)) = alpha$ then we can expand the tree starting from $phi_n$ to get arbitrarily large collections of disjoint formulas $phi_i$ that each have rank at least $alpha$, this then implies that $RM(phi_n) = alpha + 1$, and so the infimum is actually at least $alpha+1$, which is a contradiction.
 ]
+Morally the construction of this tree is using the fact that Morley rank 'stabilizes' in a very similar way as Scott rank.
 
 #definition[
   ${ov(a)_i : i in I} seq mM$ is called _indiscernible_, if for any two sequences of tuples $i_1 != ... != i_n seq I$ and $j_1 != ... != j_n seq I$ we have
@@ -2395,27 +2453,45 @@ $
   $
 ]
 
+#lemma[
+  For each cardinal $kappa$ there exists a linear order $(A, <)$ which has a dense set of size $kappa$ and every interval has size at least $kappa$.
+]<lem-nice_orders>
+
+#proposition[
+  Suppose that $(ov(a)_i : i in I)$ is an infinite order-indiscernible sequence in a model of a theory $T$. Then for any linear order $J$ there is an order-indiscernible $(ov(b)_j : j in J)$ in a model of $T$ such that for any $i_1 < ... < i_n$ and any $j_1 < ... < j_n$ we have
+  $
+    tp(ov(a)_i_1,...,ov(a)_i_n) = tp(ov(b)_i_1,...,ov(b)_i_n).
+  $
+]<prop-order_equiv>
+#proof[
+  Let $mM$ be the model containing the sequence $(ov(a)_i : i in I)$, and consider adding the constants $(ov(c)_j : j in J)$ to our language and considering the theory
+  $
+    T' = T union { phi(ov(c)_j_1,...,ov(c)_j_n) : phi in tp(ov(a)_i_1,...,ov(a)_i_n), i_1 < ... < i_n in I, j_1 < ... < j_n in J }.
+  $
+  It is enough to show that this theory is consistent, to see this note that any finite fragment of this theory is satisfied by $mM$, this is because any finite fragment only contains finitely many formulas in the set above and thus by choosing sequences $i_1^(1),...,i^1_n_1$, $i_1^2,..,i^2_n_2$,... far enough apart from each other, we can satisfy any finite number of these formulas. Hence by compactness this theory is consistent.
+]
+
 #theorem[
   If $T$ is stable then every order indiscernible sequence is indiscernible.
 ]
 #proof[
-  Let $kappa$ be such that $T$ is $kappa$-stable, then assuming, aiming for a contradiction, that $(a_i : i in I)$ is order indiscernible but not indiscernible. WLOG we may assume that $I$ has a dense subset $J$ of size $<= kappa$ and that every non-empty interval has size at least $kappa$. // TODO: JUSTIFY THIS THROUGH STRETCHING.
+  Let $kappa$ be such that $T$ is $kappa$-stable, then assuming, aiming for a contradiction, that $(a_i : i in I)$ is order indiscernible but not indiscernible. By @prop-order_equiv we may replace $I$ with any other order, so by @lem-nice_orders we may assume that $I$ has a dense subset $J$ of size $<= kappa$ and that every non-empty interval has size at least $kappa$.
 
-  By assumption we have a finite sequence $1,...,n in I$ (we will write them as integer for simplicity) and a permutation $sigma$ such that
+  By assumption we have a finite sequence $1,...,n in I$ (we will write them as integers for simplicity) and a permutation $sigma$ such that
   $
     tp(a_1,...,a_n) != tp(a_sigma(1),...,a_sigma(n)),
   $
   namely for some formula $phi$ we have
   $
-    sat phi(a_1,...,a_n) "and" sat not phi(a_sigma(1),...,a_sigma(n))
+    frak(C) sat phi(a_1,...,a_n) "and" sat not phi(a_sigma(1),...,a_sigma(n))
   $
-  then by writing $sigma = tau_1 ... tau_m$ where $tau_i$ are each transpositions of consecutive integers, we notice that by considering the partial products $tau_1...tau_j$ we know that at some $j$ $phi$ flips from being true to not true and hence we can reduce this to the case of one such transposition. That is
+  then by writing $sigma = tau_1 ... tau_m$ where $tau_i$ are each transpositions of consecutive integers, we notice that by considering the partial products $tau_1...tau_j$ we know that at some $j$, $phi$ flips from being true to not true and hence we can reduce this to the case of one such transposition. That is
   $
-    sat phi(a_1,...,a_(i-1),a_i,a_(i+1),a_(i+2)...,a_n)
+    frak(C) sat phi(a_1,...,a_(i-1),a_i,a_(i+1),a_(i+2)...,a_n)
   $
   and
   $
-    sat not phi(a_1,...,a_(i-1),a_(i+1),a_(i),a_(i+2)...,a_n).
+    frak(C) sat not phi(a_1,...,a_(i-1),a_(i+1),a_(i),a_(i+2)...,a_n).
   $
 
   Now let $A = {a_j : j in J} union {a_1,...,a_(i-1),a_(i+2),...,a_n}$, we can now show that for any $i' < i'' in (i, i+1)$ (interval inside the ordering of $I$ not in the integers) we have
@@ -2427,27 +2503,11 @@ $
   $
     chi(x,y) = phi(a_1,...,a_(i-1),x,y,a_(i+2),...,a_n)
   $
-  then we have by assumption $sat chi(a_i,a_(i+1))$ and $sat not chi(a_(i+1), a_i)$ so by order indiscernibility we have
+  then we have by assumption $frak(C) sat chi(a_i,a_(i+1))$ and $frak(C) sat not chi(a_(i+1), a_i)$ so by order indiscernibility we have
   $
-    sat chi(i',j),  sat not chi(i'',j)
+    frak(C) sat chi(a_i',a_j) "and" frak(C) sat not chi(a_i'',a_j)
   $
-  // TODO: ADD INTUITION
-]
-
-// TODO: ADD MONSTER MODEL NOTATION.
-
-#proposition[
-  If $X$ is a compact space and $U seq X$ with $CB(U) = alpha$, then there exists $n$ such that if $U_1,...,U_k seq U$ which are disjoint with $CB(U_i) >= alpha$ then $k <= n$.
-]<prop-CB_degree>
-#proof[
-  Directly by definition.
-]
-// TODO: MOVE PROPOSITION.
-//
-
-
-#definition[
-  We call the minimal such $n$ in @prop-CB_degree the $CB$-degree of $U$.
+  and thus $a_i$ and $a_i''$ have differing types.
 ]
 
 #definition[
@@ -2463,8 +2523,9 @@ $
 #proposition[
   If $phi$ has Morley degree $n$, then there exists formulas $phi_1,...,phi_n$ all with $deg(phi) = 1$ such that
   $
-    [phi] = [phi_1] union ... union [phi_n]
+    [phi] = [phi_1] union ... union [phi_n].
   $
+  Each $phi_i$ is unique up to a subset of rank $< RM(phi)$.
 ]
 #proposition[
   - If $RM(phi_1) = RM(phi_2) < infinity$ and $phi_1 (mM) sect phi_2 (mM) = nothing$ then #h(1fr)
@@ -2475,9 +2536,6 @@ $
     $
       deg(phi_1 or phi_2) = deg(phi_2)
     $
-]
-#proof[
-  Exercise.
 ]
 
 As usual we extend these definitions to types
@@ -2518,17 +2576,17 @@ As usual we extend these definitions to types
   $
     { ov(x)_1 != ov(x)_2 : m != n} union union.big_(n=1)^infinity {phi(ov(x)_n) : phi in p}.
   $
-  is not realizable, since that would contradict the fact that it is algebraic. Hence by compactness some finite subcollection of these formulas is also not realizable. But then we have some formulas $phi_1,...,phi_n$ which are not consistent with ${ ov(x)_1 != ov(x)_2 : m != n }$, we then have 
+  is not realizable, since that would contradict the fact that it is algebraic. Hence by compactness some finite subcollection of these formulas is also not realizable. But then we have some formulas $phi_1,...,phi_n$ which are not consistent with the formulas ${ ov(x)_1 != ov(x)_2 : m != n }$, we then have 
   $
     Phi := phi_1(ov(x)) and ... and phi_n (ov(x))
   $
-  is also not consistent with ${ ov(x)_1 != ov(x)_2 : m != n }$ and so $Phi$ is formula implied by $p$ which has finitely many realizations.
+  is also not consistent with the formulas ${ ov(x)_1 != ov(x)_2 : m != n }$ and so $Phi$ is formula implied by $p$ which has finitely many realizations.
 
   For 2 we do the exact same thing.
 ]
 
 #proposition[
-  If $mM elm frak(C)$ arbitrary with $phi(ov(x))$ a formula over $mM$. $phi$ is algebraic if and only if $phi(mM)$ is finite.
+  If $mM elm frak(C)$ arbitrary with $phi(ov(x))$ a formula over $mM$, then $phi$ is algebraic if and only if $phi(mM)$ is finite.
 ]
 #proof[
   Forward direction is obvious.
@@ -2552,13 +2610,13 @@ As usual we extend these definitions to types
   
   On the other hand assume that $q, p_a$ are algebraic, then by homogeneity we know that $|p_(a') (frak(C))|= |p_a (frak(C))|$ and so since
   $
-    p(frak(C)) = union_(a' in q(frak(C))) {a'} times p_(a') (frak(C))
+    p(frak(C)) = union.big_(a' in q(frak(C))) {a'} times p_(a') (frak(C))
   $
   we get that $p(frak(C))$ is finite.
 ]
 
 #proposition[
-  + $A seq seq acl(A)$.
+  + $A seq acl(A)$.
   + If $A subset B$ then $acl(A) seq acl(B)$.
   + $acl(acl(A)) = acl(A)$.
   + $acl(A) = display(union.big_(A_0 seq A\ A_0 "finite") acl(A_0))$.
@@ -2570,11 +2628,13 @@ As usual we extend these definitions to types
   Properties 1,2,3 and 5,6,7 are sometimes shortened to "$acl$/$dcl$ is a monotone idempotent operator".
 ]
 #proof[
-  All are trivial apart from 3,7.
+  All are trivial apart from $(3)$ and $(7)$.
 
-  For 3 first let $a in acl(acl(A))$, by @prop-algebraic_passing_to_formulas we get that there is a formula $phi(ov(x), ov(b))$ with parameters $ov(b) in acl(A)$ such that $|phi(x,ov(b)) < infinity$ and so that $sat phi(a,ov(b))$.
+  For $(3)$ first let $a in acl(acl(A))$, by @prop-algebraic_passing_to_formulas we get that there is a formula $phi(ov(x), ov(b))$ with parameters $ov(b) in acl(A)$ such that $|phi(x,ov(b))| < infinity$ and so that $frak(C) sat phi(a,ov(b))$.
 
-  $tp(a quo A ov(b))$ is algebraic and $tp(ov(b) quo A)$ is algebraic so by @prop-algebraic_decomposition we get that $tp(a ov(b) quo A)$ is algebraic so by @prop-algebraic_decomposition again $tp(a quo A)$ is algebraic.
+  Now $tp(a quo A ov(b))$ is algebraic and $tp(ov(b) quo A)$ is algebraic so by @prop-algebraic_decomposition we get that $tp(a ov(b) quo A)$ is algebraic so by @prop-algebraic_decomposition again $tp(a quo A)$ is algebraic.
+
+  For $(7)$ the argument is almost the same just a little simpler.
 ]
 
 #example[
@@ -2589,7 +2649,7 @@ As usual we extend these definitions to types
   $
     dcl(A) = cases((A) "if" p = 0, hat((A))^(rad) "if" p > 0)
   $
-  one would expect it to always be $(A)$ but in positive characteristic we can also take $p$-th roots because of the properties of the Frobenious map. //TODO: ADD PROPERTIES
+  one would expect it to always be $(A)$ but in positive characteristic we can also take $p$-th roots because of the properties of the Frobenious map.
 ]
 
 Often in math, a closure operator has another interesting property which we have not talked about before, called the exchange property. A familiar example of this are vector spaces, where two basis for the same subset must have the same cardinality. We now start exploring how we can extend this to our model theoretic setting.
@@ -2622,6 +2682,7 @@ Often in math, a closure operator has another interesting property which we have
   We know from @thrm-rank_well_defined that $RM(x = x) < infinity$ and since $x = x$ has infinitely many realizations we have $RM(x = x) > 0$, so we can find a formula $phi$ with $RM(phi) = 1$.
 
   We can then pick a formula $psi$ with $[psi] seq [phi]$, $RM(psi) = 1$ and $deg(psi) = 1$. One can then check that the formula $psi$ is strongly-minimal. // TODO: ADD CHECK
+  To do this check, assume that $sigma$ is a formula splitting $psi(frak(C))$ into the sets $sigma and psi (frak(C))$ and $not sigma and psi (frak(C))$. Since $psi$ is of degree 1 and rank 1, one of the sub formulas has rank $0$, and thus is finite, making the other co-finite.
 ]
 
 #theorem("Exchange Property")[
