@@ -303,7 +303,7 @@ First recall that by @question-5 since $b$ is algebraic over $A ov(a)$ it is als
 
 We now show that $RM(ov(a) quo A) <= RM(ov(a) b quo A)$, to see this, for any formula $psi(ov(y), ov(x))$ we define the following operation
 $
-  pi(psi)(ov(y)) = exists x (phi(x, ov(y), ov(c)) and psi(ov(y), x)).
+pi(psi)(ov(y)) = exists x (phi(x, ov(y), ov(c)) and psi(ov(y), x)).
 $
 #claim[
   As long as $psi_i$ each imply $exists x phi(x, ov(y), ov(c))$, $pi$ does not increase $RM$.
@@ -311,49 +311,53 @@ $
 #proof[
   We prove by induction that
   $
-    RM(pi(psi)) >= alpha => RM(psi) >= alpha,
+  RM(pi(psi)) >= alpha => RM(psi) >= alpha,
   $
   this is clear for when $alpha = 0$, if $pi(psi)(ov(a)')$ for some $ov(a)'$ then there exists an $x$ such that $psi(ov(y), x)$. The limit step is also clear.
-
+  
   Now assume that $RM(pi(psi)) >= alpha + 1$, then there are formulas $psi_i$ that are pairwise inconsistent, all imply $pi(psi)$, and have $RM(psi_i) >= alpha$. Then consider the formulas $psi_i'$ defined by
   $
-    psi_i' (ov(y), x) = phi(x, ov(y), ov(c)) and psi_i (ov(y)),
+  psi_i' (ov(y), x) = phi(x, ov(y), ov(c)) and psi_i (ov(y)),
   $
   these are clearly also pairwise inconsistent and imply $psi$. Furthermore we have
   $
-    pi(psi_i') (ov(y))
-    &= exists x (phi(x, ov(y), ov(c)) and psi_i'(ov(y), x))
-    = exists x (phi(x, ov(y), ov(c)) and phi(x, ov(y), ov(c)) and psi_i (ov(y)))
-    \ &<=> psi_i (ov(y)) and (exists x phi(x, ov(y), ov(c)))
-    => psi_i (ov(y))
+  pi(psi_i') (ov(y))
+  &= exists x (phi(x, ov(y), ov(c)) and psi_i'(ov(y), x))
+  = exists x (phi(x, ov(y), ov(c)) and phi(x, ov(y), ov(c)) and psi_i (ov(y)))
+  \ &<=> psi_i (ov(y)) and (exists x phi(x, ov(y), ov(c)))
+  => psi_i (ov(y))
   $
   and thus by inductive hypothesis we have that $alpha <= RM(psi_i) <= RM(psi_i')$ and thus we get $RM(psi) >= alpha + 1$.
 ]
 Now from class we know that there is a formula $psi(x, ov(y), ov(c))$ such that $RM(psi) = RM(ov(a) b quo A)$. Since $exists x phi(x, ov(y), ov(c))$ is true for $ov(a)b$ we can replace $psi$ with $psi and (exists x phi(x, ov(y), ov(c)))$ and thus assume WLOG that $psi => exists x phi(x, ov(y), ov(c))$. Then applying the above claim to it we get that
 $
-  RM(pi(psi)) <= RM(ov(a) b quo A),
+RM(pi(psi)) <= RM(ov(a) b quo A),
 $
 but now $pi(psi)$ is in $tp(ov(a) quo A)$ almost directly by definition, so we get
 $
-  RM(ov(a) quo A) = min { RM(sigma) : sigma in tp (ov(a) quo A) } <= RM(pi(psi)) <= RM(ov(a) b quo A).
+RM(ov(a) quo A) = min {
+  RM(sigma) : sigma in tp (ov(a) quo A)
+} <= RM(pi(psi)) <= RM(ov(a) b quo A).
 $
 
 Next we need to show that $RM(ov(a) b quo A) <= RM(ov(a) quo A)$. By an inductive argument similar to the above we may assume that $RM(ov(a) quo A) = alpha$ and $RM(ov(a) b quo A) >= alpha + 1$. Now let us pick a formula $theta$ which matches the rank of $ov(a)$, and we then work with the formula
 $
-  psi(ov(y), x) := theta(ov(y)) and phi(x, ov(y), ov(c)) and |{ x : phi(x, ov(y), ov(c))}| = n.
+psi(ov(y), x) := theta(ov(y)) and phi(x, ov(y), ov(c)) and |{
+  x : phi(x, ov(y), ov(c))
+}| = n.
 $
 Since $psi in tp(ov(a) b quo A)$ we have that $RM(psi) >= RM(ov(a) b quo A)$ so we let $psi_i$ be formulas that are pairwise inconsistent, imply $psi$ and have $RM(psi_i) >= alpha$.
 
 Now from class we know that there exist elements $ov(a)_i b_i$ such that $RM(psi_i) = RM(ov(a)_i b_i quo A)$, then by induction we know that $RM(ov(a)_i b_i) = RM(ov(a)_i)$ and so since $pi(psi_i)$ is satisfied by $ov(a)_i$ then
 $
-  RM(pi(psi_i)) >= RM(psi_i) >= alpha
+RM(pi(psi_i)) >= RM(psi_i) >= alpha
 $
 #claim[
   There is a sequence $psi_n_i$ such that $and.big_(i <= m) pi(psi_n_i)$ is non empty in $S_n (A)$ for all $m in NN$.
 ]
 #proof[
   Assume this is not the case, then form a graph $G$ with vertices $psi_i$ and an edge between $psi_i$ and $psi_j$ if their images under $pi$ intersect. By Ramsey's theorem for infinite graphs this graph either contains an infinite clique or an infinite independent set. An infinite clique corresponds to exactly the sequence we want so assume for a contradiction that we have an infinite independent set.
-
+  
   Such an infinite independent set then corresponds to pairwise inconsistent formulas $pi(psi_n_j)$ that imply $theta(ov(y))$. Then since $RM(pi(psi_n_i)) >= alpha$ we have $RM(theta) >= alpha + 1$ which contradicts our assumption that $RM(theta) = alpha$.
 ]
 Since $S_n (A)$ is compact this intersection of closed sets is non-empty and thus there is a type $p$ with $pi(psi_n_i) in p$ for all $i$. But then we are working in the Monster model so this type is realized by an element $ov(g)$. Then by construction there are elements $d_i$ such that $psi_n_i (ov(g), d_i)$ is satisfied for all $i$, but since $psi_n_i$ are pairwise inconsistent the $d_i$ are all distinct, but since $psi_n_i (ov(g), d_i)$ all imply $|{ x : phi(x, ov(g), ov(c))}| = n$ this is a contradiction, which proves that $RM(theta) >= alpha + 1$.
@@ -364,7 +368,7 @@ Show that in strongly minimal structures we have $dim(ov(a) quo A) = RM(ov(a) qu
 == Solution
 We prove by induction that
 $
-  dim(ov(a) quo A) = n <=> RM(ov(a) quo A) = n
+dim(ov(a) quo A) = n <=> RM(ov(a) quo A) = n
 $
 for all ordinals $n$.
 
@@ -374,7 +378,7 @@ We now prove this for $n$ assuming it holds for $n-1$, by @question-7 we may WLO
 
 We now prove that $RM(ov(a) quo A) >= n$, then let $phi(ov(x))$ be a formula that matches this rank, set $ov(a)'$ to be all the elements of $ov(a)$ besides the first one, and let $b_i$ such that $tp(b_i quo ov(a)' A) = tp(ov(a) quo A)$, then consider the formulas $psi_i = phi(ov(x)) and x_1 = b_i$, then by @question-2 we know that
 $
-  RM(psi_i) >= RM(b_i, ov(a)' quo A) = RM(ov(a)' quo A).
+RM(psi_i) >= RM(b_i, ov(a)' quo A) = RM(ov(a)' quo A).
 $
 Now $RM(ov(a)' quo A)$ is $n - 1$ by induction and clearly $psi_i$ are pairwise inconsistent and imply $phi$ so $RM(phi)>= n$.
 
