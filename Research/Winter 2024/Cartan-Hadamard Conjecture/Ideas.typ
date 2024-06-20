@@ -16,11 +16,11 @@ What we want to show is the following
   Let $N$ be a hypersurface in a Cartan-Hadamard manifold $M$.
   We have
   $
-    Area_M (N) >= Area_(RR^n)(B)
+  Area_M (N) >= Area_(RR^n)(B)
   $
   where $B$ is the ball in $RR^n$ with
   $
-    Volume_M (N) = Volume_(RR^n) (B)
+  Volume_M (N) = Volume_(RR^n) (B)
   $
 ]<conj-cartan_hadamard>
 
@@ -28,9 +28,9 @@ We can make a series of simplifications due to @ghomiTotalCurvatureIsoperimetric
 #lemma[
   If it is known that
   $
-    cal(G)(N) := integral_N sigma_n dif S >= Area_(RR^n) (S^(n-1)) = n omega_n
+  cal(G)(N) := integral_N sigma_n dif S >= Area_(RR^n) (S^(n-1)) = n omega_n
   $
-  where $S^(n-1)$ is the unit sphere for all hypersurfaces surfaces $N$ encompassing an Isoperimetric region, then @conj-cartan_hadamard is true.
+  for all hypersurfaces surfaces $N$ encompassing an Isoperimetric region, then @conj-cartan_hadamard is true.
 ]<lem-topological_sigma_n>
 #proof[
   @ghomiTotalCurvatureIsoperimetric2021[Page 36].
@@ -51,21 +51,9 @@ We now introduce new simplifications.
 #lemma[
   For surfaces $N seq B_r (p)$ for some point $p in M$ we have
   $
-    cal(G)(N) >= n omega_n + O(r)
+  cal(G)(N) >= n omega_n + O(r^2)
   $
 ]<lem-blowup_behaviour>
-
-Fix precompact $U seq M$ and $epsilon > 0$ and set $r(epsilon)$ be such that $cal(G)(N) >= n omega_n - epsilon$ for all $N seq B_r(epsilon) (p)$ for all $p in U$, this is easy by @lem-blowup_behaviour.
-
-Define
-$
-  R := inf_(N in frak(X)) { Rad(N) : cal(G)(N) < n omega_n - epsilon }
-$
-
-#proposition[
-  Assume that for every Isoperimetric region $Omega$ with $Omega seq B_(R + delta)(p)$
-]
-
 
 #pagebreak(weak: true)
 #bibliography("refrences.bib")
