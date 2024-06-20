@@ -54,6 +54,7 @@
 #let ZFC = math.op("ZFC")
 #let DLO = math.op("DLO")
 #let ACF = math.op("ACF")
+#let GaussArea = math.op("GaussArea")
 #let flat = $♭$
 #let gen(x) = $lr(angle.l #x angle.r)$
 #let into = $arrow.hook$
@@ -118,8 +119,7 @@
   "Exercise",
   padding: (top: 0em, bottom: 0em),
   stroke: rgb("#ffaaaa") + 1pt,
-  base: none,           // Unattached: count globally
-).with(numbering: "I") // Use Roman numerals
+)
 
 // Examples and remarks are not numbered
 #let example = thmplain(
@@ -127,11 +127,11 @@
   "Example",
   inset: (x: 0.0em),
 ).with(numbering: none)
-#let remark = thmbox(
+#let remark = thmplain(
   "remark",
   "Remark",
   padding: (top: 0em, bottom: 0em),
-  stroke: rgb("#ffaaaa") + 1pt,
+  //stroke: rgb("#ffaaaa") + 1pt,
 ).with(numbering: none)
 
 // Proofs are attached to theorems, although they are not numbered

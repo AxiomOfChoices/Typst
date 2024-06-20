@@ -2702,7 +2702,7 @@ Often in math, a closure operator has another interesting property which we have
   $
   Now $psi(y)$ is either finite or co-finite in $D$ by assumption of strong minimality. If $psi(D)$ is finite then $b in acl(A)$ so $a in acl(acl(A)) = acl(A)$ which contradicts our assumption.
 
-  Hence $phi(D)$ is co-finite and so the complement is finite, we now let
+
   $
     E = D sect {y : phi(a,y) and psi(y)},
   $
