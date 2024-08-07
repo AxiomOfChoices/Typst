@@ -43,7 +43,7 @@
 This thesis aims to loosely cover the subject of geometric flows, and more specifically a variant of the mean curvature flow.
 The subject of geometric flows uses results in PDE theory theory, more specifically parabolic PDEs, to gain new insight about Riemannian geometry.
 
-One of the biggest problems often tackled by mean curvature flows is the Isoperimetric problem. The Isoperimetric problem asks us to classify the spaces that minimize perimeter for a given volume (hence the name), the first use of mean curvature flows to attack this problem was due to Huisken in 1984 @huiskenFlowMeanCurvature1984 who proved it in case of boundaries of convex domains in Euclidean space, and since then there have been attempts to push his methods further. More recently, in 2013, Guan and Li @guanMeanCurvatureType2013 constructed a new normalized flow which allows them to prove the inequality in the case of boundaries of star-shaped domains in Space forms. Shortly after, in 2018, Guan, Li and Wang pushed this flow even further which allowed them to prove the result in a certain class of warped product spaces @guanVolumePreservingFlow2018.
+One of the biggest problems often tackled by mean curvature flows is the Isoperimetric problem. The Isoperimetric problem asks us to classify the spaces that minimize perimeter for a given volume (hence the name), the first use of mean curvature flows to attack this problem was due to Huisken in 1984 @huisken_flow_1984 who proved it in case of boundaries of convex domains in Euclidean space, and since then there have been attempts to push his methods further. More recently, in 2013, Guan and Li @guanMeanCurvatureType2013 constructed a new normalized flow which allows them to prove the inequality in the case of boundaries of star-shaped domains in Space forms. Shortly after, in 2018, Guan, Li and Wang pushed this flow even further which allowed them to prove the result in a certain class of warped product spaces @guanVolumePreservingFlow2018.
 
 Then, concurrently with the writing of this thesis, Li and Pan reframed the technique in terms of conformal vector fields, allowing them to weaken the assumptions on the ambient space @jiayuIsoperimetricProblemRiemannian2023.
 
@@ -54,7 +54,7 @@ This thesis continues the effort to use such flows, together with my collaborato
 = Abrégé
 Cette thèse vise à couvrir de manière générale le sujet des flots géométriques, et plus spécifiquement une variante du flot de courbure moyenne. Le domaine des flots géométriques utilise des résultats de la théorie des équations aux dérivées partielles (EDP), plus précisément des EDP paraboliques, pour obtenir de nouvelles perspectives sur la géométrie riemannienne.
 
-L'un des plus grands défis souvent abordés par les flots de courbures moyennes est le problème isopérimétrique. Ce problème demande de classer les espaces qui minimisent le périmètre pour un volume donné (d'où le nom). La première utilisation des flots de courbures moyennes pour attaquer ce problème remonte à Huisken en 1984 @huiskenFlowMeanCurvature1984, qui l'a prouvé dans le cas des frontières de domaines convexes dans l'espace euclidien. Depuis lors, des tentatives ont été faites pour pousser ses méthodes plus loin. Plus récemment, en 2013, Guan et Li @guanMeanCurvatureType2013 ont construit un nouveau flot normalisé qui leur a permis de prouver l'inégalité dans le cas de frontières de domaines en forme d'étoile dans les formes spatiales. Peu de temps après, en 2018, Guan, Li et Wang ont poussé ce flot encore plus loin, ce qui leur a permis de prouver le résultat dans une certaine classe d'espaces de produits déformés @guanVolumePreservingFlow2018.
+L'un des plus grands défis souvent abordés par les flots de courbures moyennes est le problème isopérimétrique. Ce problème demande de classer les espaces qui minimisent le périmètre pour un volume donné (d'où le nom). La première utilisation des flots de courbures moyennes pour attaquer ce problème remonte à Huisken en 1984 @huisken_flow_1984, qui l'a prouvé dans le cas des frontières de domaines convexes dans l'espace euclidien. Depuis lors, des tentatives ont été faites pour pousser ses méthodes plus loin. Plus récemment, en 2013, Guan et Li @guanMeanCurvatureType2013 ont construit un nouveau flot normalisé qui leur a permis de prouver l'inégalité dans le cas de frontières de domaines en forme d'étoile dans les formes spatiales. Peu de temps après, en 2018, Guan, Li et Wang ont poussé ce flot encore plus loin, ce qui leur a permis de prouver le résultat dans une certaine classe d'espaces de produits déformés @guanVolumePreservingFlow2018.
 
 Puis, simultanément à la rédaction de cette thèse, Li et Pan ont reformulé la technique en termes de champs vectoriels conformes, ce qui leur a permis de relâcher les hypothèses sur l'espace ambiant @jiayuIsoperimetricProblemRiemannian2023.
 
@@ -81,7 +81,7 @@ The body of the thesis is largely taken from the paper co-authored by myself and
 
 The Isoperimetric Problem asks a seemingly simple question:\ Among all regions occupying a given volume which has the least perimeter?
 
-In the simple case of 2 and 3 dimensions we all know that the answer is a circle and a sphere respectively, and when we extend it to $n$ dimensions in Euclidean space, the answer remains the $n-1$ dimensional hypersphere, for a large variety of various proofs in this simple case see @buragoGeometricInequalities1988.
+In the simple case of 2 and 3 dimensions we all know that the answer is a circle and a sphere respectively, and when we extend it to $n$ dimensions in Euclidean space, the answer remains the $n-1$ dimensional hypersphere, for a large variety of various proofs in this simple case see @burago_geometric_1988.
 However, if we try to generalize this question to a more general ambient domain, the problem very quickly becomes intractable.
 
 One of the ways to answer such a question is with the method of geometric flows, we will start with a shape which will likely not be optimal, and then we will morph it over time to make it optimal.
@@ -97,7 +97,7 @@ This will all lead to the proof of the following theorem.
 ]<thrm-conclusion>
 
 == Concepts and Notation
-This document assumes general knowledge of differential and Riemannian geometry, see @leeIntroductionSmoothManifolds2012 and @leeIntroductionRiemannianManifolds2018 for great introductions, respectively.
+This document assumes general knowledge of differential and Riemannian geometry, see @lee_introduction_2012 and @leeIntroductionRiemannianManifolds2018 for great introductions, respectively.
 
 For the rest of this document we will use the following notation, $N$ is an $n+1$ dimensional Riemannian manifold with metric $ov(g)$ within which we have a compact domain $Omega$ with boundary $diff Omega = M$ such that $F : M -> N$ is an embedding making $M$ a Riemannian hypersurface. We then set $g := F^* ov(g)$ to be the induced metric on $M$. We will in general identify $M$ with its image $F(M)$ and use the two interchangeably. We will write $frak(X)(N)$ to the set of surfaces that can be defined as above and call any such surface any such surface an _admissible_ hypersurface.
 
@@ -189,7 +189,7 @@ $
 $
 proving the claim.
 
-Now for #link(<prop-h_neg>)[(c)] we note first that $nabla_X Y = pi( ov(nabla)_Y X)$ for $X,Y in T_p M$ where $pi$ is the orthogonal projection to $T_p M$, see, for instance, @jostRiemannianGeometryGeometric2011[p.~223]. This will mean that since $e_i$ are orthonormal then
+Now for #link(<prop-h_neg>)[(c)] we note first that $nabla_X Y = pi( ov(nabla)_Y X)$ for $X,Y in T_p M$ where $pi$ is the orthogonal projection to $T_p M$, see, for instance, @jost_riemannian_2011[p.~223]. This will mean that since $e_i$ are orthonormal then
 $
   pi(ov(nabla)_i e_j) = nabla_i e_j = 0
 $
@@ -230,11 +230,11 @@ We will also need another well known geometric identity,
   $
 ]<lemma-codazzi>
 #proof[
-  See @petersenRiemannianGeometry2016[p.~93], note that some references have a similar equation of opposite sign due to a difference in defining the second fundamental form.
+  See @petersen_riemannian_2016[p.~93], note that some references have a similar equation of opposite sign due to a difference in defining the second fundamental form.
 ]
 
 == Conformal Vector Fields
-A conformal vector field is a vector field $X$ with the property that $lie_X ov(g) = 2 phi g$, where $phi$ is any smooth function called the _conformal factor_ of $X$. The Lie derivative is a little hard to work with for our purposes so we will follow the calculations of @deshmukhGeometryConformalVector2017 to obtain better formulations for the properties of conformal vector fields
+A conformal vector field is a vector field $X$ with the property that $lie_X ov(g) = 2 phi g$, where $phi$ is any smooth function called the _conformal factor_ of $X$. The Lie derivative is a little hard to work with for our purposes so we will follow the calculations of @deshmukh_geometry_2017 to obtain better formulations for the properties of conformal vector fields
 
 #proposition[
   Let $X$ be a vector field on $N$, then for any $Y,Z in T_p N$ we have
@@ -253,7 +253,7 @@ A conformal vector field is a vector field $X$ with the property that $lie_X ov(
     \ =& (lie_X ov(g)) (Y,Z) + lie_Y (eta(Z)) - lie_Z (eta(Y)) - eta(lie_Y Z)
     \ =& (lie_X ov(g)) (Y,Z) + (lie_Y eta)(Z) - lie_Z (eta(Y))
   $
-  Now we can use Cartan's magic formula (@leeIntroductionSmoothManifolds2012[p.~372]) applied to the second term to get
+  Now we can use Cartan's magic formula (@lee_introduction_2012[p.~372]) applied to the second term to get
   $
     2 ip(ov(nabla)_Y X, Z) &= (lie_X ov(g)) (Y,Z) + dif eta(Y,Z) + dif (eta(Y))(Z) - lie_Z (eta(Y))
     \ & = (lie_X ov(g)) (Y,Z) + dif eta(Y,Z)
@@ -418,10 +418,10 @@ The second most important tool is short-time existence, it will be extremely imp
   where $B$ is some constant depending on $K$.
 ]<thrm-pde_short_time>
 #proof[
-  Proposition 8.2 in @taylorPartialDifferentialEquations2023[p.~411] for the first statement, and Theorem 4.28 in @liebermanSecondOrderParabolic1996[p.~77] for the second statement.
+  Proposition 8.2 in @taylor_partial_2023[p.~411] for the first statement, and Theorem 4.28 in @lieberman_second_1996[p.~77] for the second statement.
 ]
 
-The last PDE results which we will need are the famous Nash-Moser estimates, for full details see @taylorPartialDifferentialEquations2023 @ladyzenskajaLinearQuasilinearEquations1968.
+The last PDE results which we will need are the famous Nash-Moser estimates, for full details see @taylor_partial_2023 @ladyzenskajaLinearQuasilinearEquations1968
 #theorem("Nash-Moser estimates")[
   Let $u$ be a solution to uniformly parabolic @eqn-parabolic_pde on $[0,T)$ with smooth initial condition, if we know that
   $
@@ -561,7 +561,7 @@ Now that we have evolution equation for some local properties, we can extend tho
   $
 ]<prop-vol_area_variation>
 #proof[
-  First for the volume, extend the vector field $f nu$ to a global vector $Y$ field on $N$. Now by classic geometry theorems @leeIntroductionSmoothManifolds2012[p.~425] we get that the change in volume for a domain evolving under a global vector field is
+  First for the volume, extend the vector field $f nu$ to a global vector $Y$ field on $N$. Now by classic geometry theorems @lee_introduction_2012[p.~425] we get that the change in volume for a domain evolving under a global vector field is
   $
     diff_t V(M_t) = integral_Omega div Y dif V.
   $
@@ -684,7 +684,7 @@ We have one final evolution equation to find, and that is the one for the second
 
 With the preliminaries out of the way we can begin to discuss how we can attempt to attack the Isoperimetric problem. This is formalized in the *flow method*.
 
-This method was first used by Gage and Hamilton in their curve shortening flow in $RR^2$ @Gage1986. Then in 1984 Huisken extended these methods to the case of convex hypersurfaces in $RR^n$ @huiskenFlowMeanCurvature1984.
+This method was first used by Gage and Hamilton in their curve shortening flow in $RR^2$ @gage_heat_1986. Then in 1984 Huisken extended these methods to the case of convex hypersurfaces in $RR^n$ @huisken_flow_1984.
 
 Most recently Guan-Li used instead the *constrained flow method* to relax the convexity requirement to star-shapedness @guanMeanCurvatureType2013.
 
@@ -781,7 +781,7 @@ Using the geometric properties of warped product spaces and the vector field $X$
 The proof is detailed in @guanVolumePreservingFlow2018, we will not consider these details too much as they will quickly get generalized by the next work.
 
 == Manifolds Admitting Compatible Conformal Vector Fields
-Now it turns out that these closed conformal vector fields characterize warped products of the form we saw in the previous section, namely, if a manifold admits a closed conformal vector field then it can locally be written in the form $RR_+ times_f N$ for some manifolds $N$ and function $f$, see @tashiroCompleteRiemannianManifolds1965[Lemma 1.2]. This suggests that if we want to weaken the conditions of Guan, Li and Wang we should perhaps consider the case of non-closed conformal vector fields.
+Now it turns out that these closed conformal vector fields characterize warped products of the form we saw in the previous section, namely, if a manifold admits a closed conformal vector field then it can locally be written in the form $RR_+ times_f N$ for some manifolds $N$ and function $f$, see @tashiro_complete_1965[Lemma 1.2]. This suggests that if we want to weaken the conditions of Guan, Li and Wang we should perhaps consider the case of non-closed conformal vector fields.
 
 This idea was first explored by Li and Pan @jiayuIsoperimetricProblemRiemannian2023, where they formalized the necessary conditions on the ambient manifold in terms of a conformal vector field, and used this to weaken the assumptions on the vector field. They also derive a number of key properties for a conformal vector field satisfying their conditions.
 
@@ -825,7 +825,7 @@ We will start with the #link(<cond-pan_li>)[first condition].
   $
 ]<prop-psi_vanish>
 #proof[
-  By definition the one form defined by $omega(v) = ip(X,v)$ annihilates $cal(D)(X)$, then by the one form condition for integrability @leeIntroductionSmoothManifolds2012[p.~495] we get that $dif omega$ also annihilates $cal(D)(X)$, that is $dif omega$ restricts to zero on $cal(D)(X)$, hence by definition of the associated tensor field, we get the result above.
+  By definition the one form defined by $omega(v) = ip(X,v)$ annihilates $cal(D)(X)$, then by the one form condition for integrability @lee_introduction_2012[p.~495] we get that $dif omega$ also annihilates $cal(D)(X)$, that is $dif omega$ restricts to zero on $cal(D)(X)$, hence by definition of the associated tensor field, we get the result above.
 ]
 We see then that such a conformal vector field is 'almost' closed since its associated tensor field 'almost' vanishes.
 #definition[

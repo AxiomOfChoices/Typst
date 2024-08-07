@@ -40,7 +40,7 @@ We fix a CKV $X$ induced by the warped product structure $g = d r^2 + sinh(r)^2 
 #proposition[
   + $nabla phi = 2 X$.
   + $laplace phi = (n+1) phi$.
-]
+]<prop-phi_identities>
 
 We will follow the evolution of a hyper-surface $M$ which is 1-convex as well as star-shaped with respect to $X$, that is the support function $u := ip(X,nu)$ is positive everywhere on $M$. It will evolve under the speed function
 $
@@ -49,7 +49,7 @@ $
 
 We will hence forth refer to all geometric quantities on $N$ with an overline to distinguish them from their counterparts on $M$. We will also use $pi$ to refer to the projection map onto the tangent plane of $M$.
 
-We recall known identities
+We recall the known identity
 #lemma("Codazzi equations")[
   Let $h$ be the second fundamental form of $M$ then
   $
@@ -72,7 +72,7 @@ We can check by manual calculations that
 We then compute
 #proposition[
   $
-  diff_t u = phi^2/H - (u phi)/n - 2 (||pi(X)||^2)/H + (phi ip(X, nabla H))/H^2 + h_(i j) pi(X)^i pi(X)^j
+  diff_t u = phi^2/H - (u phi)/n - 2 norm(pi(X))^2/H + (phi ip(X, nabla H))/H^2 + h_(i j) pi(X)^i pi(X)^j
   $
 ]
 #proof[
@@ -108,7 +108,7 @@ $
 $
 Now combining the first and last term we get using @prop-eigenvalue_identity
 $
-  phi u ((|A|^2)/(H^2) - 1/n) = phi u(sum_(i < j)(kappa_i - kappa_j)^2)/(H^2 n),
+  phi u ((|A|^2)/(H^2) - 1/n) = (phi u(sum_(i < j)(kappa_i - kappa_j)^2))/(H^2 n),
 $
 we will drop the sum for clarity.
 We now keep computing
@@ -117,22 +117,52 @@ $
 $
 We will now define the auxiliary function $Theta := 1 - u^2/(||X||^2)$, note that $Theta = 0$ when $X$ is parallel to $nu$ or equivalently $pi(X) = 0$. Then we further simplify the above to get
 $
-  L u &= (phi u(kappa_i - kappa_j)^2)/(H^2 n) - (u phi)/n - (2 Theta)/(||X||^2H) + h_(i j) pi(X)^i pi(X)^j + (phi n ip(nu, ov(nabla) phi))/H^2 - (phi u n)/(H^2)
-  \ & = (phi u(kappa_i - kappa_j)^2)/(H^2 n) - (u phi)/n - (2 Theta)/(sinh^2(r) H) + h_(i j) pi(X)^i pi(X)^j + (phi n ip(nu, 2 X)/H^2 - (phi u n)/(H^2))
-  \ & = (phi u(kappa_i - kappa_j)^2)/(H^2 n) - (u phi)/n - (2 Theta)/(sinh^2(r) H) + h_(i j) pi(X)^i pi(X)^j + (phi n u)/H^2.
+  L u &= (phi u(kappa_i - kappa_j)^2)/(H^2 n) - (u phi)/n - (2 Theta norm(X)^2)/(H) + h_(i j) pi(X)^i pi(X)^j + (phi n ip(nu, ov(nabla) phi))/H^2 - (phi u n)/(H^2)
+  \ & = (phi u(kappa_i - kappa_j)^2)/(H^2 n) - (u phi)/n - (2 Theta sinh^2(r))/(H) + h_(i j) pi(X)^i pi(X)^j + (phi n ip(nu, 2 X)/H^2 - (phi u n)/(H^2))
+  \ & = (phi u(kappa_i - kappa_j)^2)/(H^2 n) - (u phi)/n - (2 Theta sinh^2(r))/(H) + h_(i j) pi(X)^i pi(X)^j + (phi n u)/H^2.
 $
 Now assume that we are at a minimum point of $u$, then $nabla u = h^i_j pi(X)^j = 0$ and so we have two cases.
 + $pi(X)$ is zero, then $Theta = 0$ and so we are left with #h(1fr)
   $
     L u = phi u (((kappa_i - kappa_j)^2)/(H^2 n) - 1/n + (n)/H^2)
+    = (phi u)/(H^2 n) ((kappa_i - kappa_j)^2 + n^2 - H^2)
   $ 
   Here in order for $u$ to decrease we must have $H$ be quite larger (at least larger than $n$) but also $(kappa_i - kappa_j)^2$ should remain quite small compared to $H$. I feel like this should be impossible due but cannot find a contradiction just yet.
 + $pi(X)$ is not zero but it is in the nullspace of $h^i_j$, this means that $h^i_j$ has at least one zero eigenvalue, hence we can estimate the first term. Since $(lambda_i - lambda_j)^2 >= (H/n - lambda_1)^2$ where $lambda_1$ is the smallest eigenvalue, then we have $(lambda_i - lambda_j)^2 >= (H/n)^2$. This then gives us
   $
-    L u >= phi u /n^3 - u phi/n - (2 Theta)/(sinh^2(r) H) + (phi n u)/(H^2)
+    L u >= phi u /n^3 - u phi/n - (2 Theta sinh^2(r))/(H) + (phi n u)/(H^2)
   $
   so we are actually even in worse shape than the first case. We have an extra negative term to deal with which doesn't even include $u$.
 
+
+Next let us check the evolution equation for $H$.
+Recall the known evolution equation for $H$
+#proposition[
+  The evolution equation for $H$ under flow with velocity $f$ is 
+  $
+    diff_t H = - Delta f - f (abs(A)^2 + ov(Ric)(nu,nu))
+  $
+]
+Plugging in our speed function and Ricci curvature we get
+#proposition[
+  The evolution equation for $H$ is
+]
+#proof[
+  $
+    diff_t H &= - Delta (phi/H - u/n) - (phi/H - u/n) (abs(A)^2 + ov(Ric)(nu,nu))
+    \ & = - nabla_i nabla_i (phi/H - u/n) - (phi/H - u/n) (abs(A)^2 - n)
+    \ & = - nabla_i ((nabla_i phi)/H - phi/H^2 nabla_i H - (nabla_i u)/n) - phi/H (abs(A)^2 - n) + u/n (abs(A)^2 - n)
+    \ & = - ((Delta phi)/H - 2 ip(nabla phi, nabla H)/H^2 + 2 phi/H^3 abs(nabla H)^2 - phi/H^2 Delta H - (Delta u)/n) 
+    \ & - phi/H abs(A)^2 + (phi n)/H + (u abs(A)^2)/n - u
+  $
+  Now due to @prop-phi_identities can simplify the first term and using @prop-u_laplace we can simplify the fifth term, this gives us
+  $
+    diff_t H & = - col(((n+1) phi)/H,#green) + 4 ip(X, nabla H)/H^2 - 2 phi/H^3 abs(nabla H)^2 + phi/H^2 Delta H
+    \ & + (- n nu(phi) + col(u n, #red) + ip(nabla H, X) + phi H - col(abs(A)^2u, #yellow))/n - phi/H abs(A)^2 + col((phi n)/H,#green) + col((u abs(A)^2)/n,#yellow) - col(u, #red)
+    \ diff_t H - phi/H^2 Delta H & = (phi H)/n - phi/H + 4 ip(X, nabla H)/H^2 + ip(nabla H, X)/n - 2 phi/H^3 abs(nabla H)^2 - 2u - phi/H abs(A)^2
+    \ L H & = phi /(H n) (H^2 - n abs(A)^2 - n) + 4 ip(X, nabla H)/H^2 + ip(nabla H, X)/n - 2 phi/H^3 abs(nabla H)^2 - 2u
+  $
+]
 
 = Appendix
 == Eigenvalues
