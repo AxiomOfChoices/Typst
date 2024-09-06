@@ -684,7 +684,7 @@ We have one final evolution equation to find, and that is the one for the second
 
 With the preliminaries out of the way we can begin to discuss how we can attempt to attack the Isoperimetric problem. This is formalized in the *flow method*.
 
-This method was first used by Gage and Hamilton in their curve shortening flow in $RR^2$ @Gage1986. Then in 1984 Huisken extended these methods to the case of convex hypersurfaces in $RR^n$ @huiskenFlowMeanCurvature1984.
+This method was first used by Gage and Hamilton in their curve shortening flow in $RR^2$. Then in 1984 Huisken extended these methods to the case of convex hypersurfaces in $RR^n$ @huiskenFlowMeanCurvature1984.
 
 Most recently Guan-Li used instead the *constrained flow method* to relax the convexity requirement to star-shapedness @guanMeanCurvatureType2013.
 
