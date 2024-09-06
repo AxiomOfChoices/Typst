@@ -162,7 +162,20 @@ Plugging in our speed function and Ricci curvature we get
     \ diff_t H - phi/H^2 Delta H & = (phi H)/n - phi/H + 4 ip(X, nabla H)/H^2 + ip(nabla H, X)/n - 2 phi/H^3 abs(nabla H)^2 - 2u - phi/H abs(A)^2
     \ L H & = phi /(H n) (H^2 - n abs(A)^2 - n) + 4 ip(X, nabla H)/H^2 + ip(nabla H, X)/n - 2 phi/H^3 abs(nabla H)^2 - 2u
   $
+  Hence at a minimum point we have
+  $
+    L H = phi/(H n) (H^2 - n abs(A)^2 - n) - 2u
+  $
 ]
+
+Let us also find the evolution equation for the Auxiliary function $Theta$, we recall that $ Theta = 1 - u^2/norm(X)^2. $
+We now compute
+$
+  diff_t Theta &= - diff_t (u^2)/norm(X)^2 = - (2 u)/norm(X)^2 diff_t u + u^2/norm(X)^4 diff_t ip(X,X)
+  \ & = - (2 u)/norm(X)^2 (phi^2/H - (u phi)/n - 2 (||pi(X)||^2)/H + (phi ip(X, nabla H))/H^2 + h_(i j) pi(X)^i pi(X)^j) \ & + u^2/norm(X)^4 (phi/H - u/n) ip(nabla_nu X,X)
+  \ & = - (2 u phi^2)/(H norm(X)^2) + (2 u^2 phi)/(n norm(X)^2) + (4 u norm(pi(X))^2)/(H norm(X)^2) -  (2 u phi ip(X, nabla H))/(H^2 norm(X)^2) - (2 u h_(i j) pi(X)^i pi(X)^j)/(norm(X)^2)  \ & + (phi^2 u^3)/(H norm(X)^4) - (phi u^4)/(norm(X)^4 n) 
+$
+We also compute
 
 = Appendix
 == Eigenvalues
