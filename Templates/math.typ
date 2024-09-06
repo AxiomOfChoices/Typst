@@ -59,6 +59,10 @@
 #let gen(x) = $lr(angle.l #x angle.r)$
 #let into = $arrow.hook$
 
+
+#let col(x, color) = text(fill: color, $#x$)
+#let col(x, color) = text(fill: color, $#x$)
+
 #let symbol_replacing(doc) = {
   show math.equation: set text(features: ("cv01",))
   doc
