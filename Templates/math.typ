@@ -1,6 +1,11 @@
 #import "@preview/ctheorems:1.1.1": *
 
 // Various symbols
+#let Mat = $op("Mat")$
+#let sl = $frak(op("sl"))$
+#let Sl = $op("SL"))$
+#let gl = $frak(op("gl"))$
+#let Gl = $op("GL"))$
 #let ve = $epsilon$
 #let seq = $subset.eq$
 #let Mink = math.op("Mink")
@@ -58,7 +63,6 @@
 #let flat = $♭$
 #let gen(x) = $lr(angle.l #x angle.r)$
 #let into = $arrow.hook$
-
 
 #let col(x, color) = text(fill: color, $#x$)
 #let col(x, color) = text(fill: color, $#x$)
