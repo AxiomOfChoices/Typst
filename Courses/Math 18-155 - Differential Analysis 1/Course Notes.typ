@@ -10,7 +10,6 @@
 #show: thmrules
 #show: symbol_replacing
 #show: equation_references
-#let pair(x, y) = $lr(angle.l #x mid(|) #y angle.r)$
 #set pagebreak(weak: true)
 
 #show: doc => frontpage(

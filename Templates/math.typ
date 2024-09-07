@@ -1,7 +1,9 @@
 #import "@preview/ctheorems:1.1.1": *
 
 // Various symbols
+#let supp = $op("supp")$
 #let Mat = $op("Mat")$
+#let pair(x, y) = $lr(angle.l #x mid(|) #y angle.r)$
 #let sl = $frak(op("sl"))$
 #let Sl = $op("SL"))$
 #let gl = $frak(op("gl"))$
