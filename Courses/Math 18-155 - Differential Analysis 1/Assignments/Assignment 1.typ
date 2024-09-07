@@ -324,14 +324,103 @@ If we iterate the lemma above $N + 2$ times we get
 $
 integral_(RR) sum_(k=1)^M a_k e^(i k x) f(x)
 =
-integral_RR sum_(k=1)^M i^(N+2)/(k^(N+2)) a_k e^(i k x) f^((n+2))(x)
+integral_RR sum_(k=1)^M i^(N+2) / (k^(N+2)) a_k e^(i k x) f^((n+2))(x)
 $
 so since $|a_k| <= C k^N$ we get
 $
-abs(integral_(RR) sum_(k=1)^M a_k e^(i k x) f(x)) &<= sum_(k=1)^M abs(i^(N+2)/(k^(N+2)) a_k)  integral_RR abs(e^(i k x) f^((n+2))(x))
-\ &<= sum_(k=1)^M C/(k^2) integral_RR abs(f^((n+2))(x)) <= pi^2/6 norm(f)_(C^(n+2) (RR))
+abs(integral_RR sum_(k=1)^M i^(N+2)/(k^(N+2)) a_k e^(i k x) f^((n+2))(x)) &<= sum_(k=1)^M abs(i^(N+2)/(k^(N+2)) a_k) integral_RR abs(e^(i k x) f^((n+2))(x))
+\ &<= sum_(k=1)^M C / (k^2) integral_RR abs(f^((n+2))(x)) <= pi^2 / 6 norm(f)_(C^(n+2) (
+  RR
+))
 $
-Now because the absolute values converge the sequence itself also converges so we get that these sums do indeed converge in distribution.
+Now it is well known that if the absolute value of a series converges then the series itself also converges, so we have proven that
+$
+sum_(k=1)^infinity a_k e^(i k x)
+$
+converges in the sense of distributions.
 
 = Question
+== Statement
+The principal value functional is defined by
+$
+pair(u,f) := lim_(epsilon -> 0) integral_(abs(x) > epsilon) f(x) / x d x,
+$
+for all $f in C_c^infinity (RR)$. It is often denoted by $P. V. integral f(x)/x d x$.
 
+Show that $pair(u,f)$ exists and defines a distribution.
+== Solution
+Let us first manipulate the integral into a nicer form using change of variables.
+$
+integral_(abs(x) > epsilon) f(x) / x d x
+&=
+integral_(-infinity)^(-epsilon) f(x) / x d x +
+integral_(epsilon)^(infinity) f(x) / x d x
+\ &=
+integral_(infinity)^(epsilon) f(-u) / (-u) (-d u) +
+integral_(epsilon)^(infinity) f(x) / x d x
+\ &=
+- integral_(epsilon)^(infinity) f(-u) / u d u +
+integral_(epsilon)^(infinity) f(x) / x d x
+\ &=
+integral_(epsilon)^(infinity) (f(x) - f(-x)) / x d x
+\ &=
+integral_(epsilon)^(1) (f(x) - f(-x)) / x d x
++
+integral_(1)^(infinity) (f(x) - f(-x)) / x d x
+$
+Now that the integral is in this form we can bound it using the differentiability of $f$ for the first integral and its compact support on the right term. Let $K$ be a compact set containing $supp f$ and compute
+$
+integral_(epsilon)^(1) abs(f(x) - f(-x)) / x d x
++
+integral_(1)^(infinity) abs(f(x) - f(-x)) / x d x
+& <=
+integral_(epsilon)^(1) 2 norm(f')_(C^0 (RR)) d x
++
+integral_(1)^(infinity) 2 abs(f(x)) d x
+\ &<=
+2 norm(f')_(C^0 (RR))
++
+2 abs(K) norm(f)_(C^0 (RR))
+\ &<=
+2 norm(f)_(C^1 (RR))
++
+2 abs(K) norm(f)_(C^1 (RR))
+\ &<=
+(2 + 2 abs(K)) norm(f)_(C^1 (RR))
+$
+Thus up to a constant $C(K)$ depending on the support, we get $pair(u, f) <= C(K) norm(f)_(C^1(RR))$.
+
+= Question
+== Statement
+Consider the space $(C^k [0,1])'$ of bounded linear functionals on $C^k [0,1]$. Show that it can be identified with a set of functionals $pair(u,f) = sum_(j=1)^k integral_0^1 diff^j f d mu_j$ where each $mu_j$ is some finite Borel measure on $[0,1]$.
+== Solution
+Let us define the vector space $V := (C[0,1])^(k+1)$ and identify $C^k [0,1]$ with the subspace $S seq V$ through
+$
+f tilde (f,f',f'',...,f^((k))).
+$
+With this identification we can consider any element $u in (C^k [0,1])'$ as a linear functional on $S$. Now we define the norm on $V$ by
+$
+norm((f_0,f_1,...,f_k)) = sum_(j=1)^k max abs(f_0).
+$
+One can easily check that this is indeed a norm and if we restrict to to $S$, it coincides with the norm on $C^k [0,1]$. Thus we know that $u$, as a functional on $S$, is dominated by $norm(dot)$, so by the Hahn-Banach Theorem we can extend $u$ to a full functional on all of $V$, denoted $ov(u)$.
+
+Now $ov(u)$ is a linear functional over a direct sum of vector spaces, and can thus be decomposed into its components as $ov(u) = ov(u)_0 + ov(u)_1 + ... + ov(u)_k$.
+For each component we have $ov(u)_i : C[0,1] -> RR$ so by the Riesz-Markov-Kokutoni Theorem it can be written as
+$
+pair(ov(u)_i, f) = integral_0^1 f d mu_i
+$
+where $mu_i$ is some (possibly negative) finite Borel measure on $[0,1]$. Thus we get
+$
+pair(ov(u), (f_0,f_1,...,f_k)) = sum_(i=1)^k integral_0^1 f_i mu_i.
+$
+Restricting $ov(u)$ to $S$ then gives us exactly the required result since $f_i$ becomes $f^((i))$.
+
+= Question
+== Statement
+Given a function $f$ on a compact set $K seq RR^n$, satisfying the Lipschitz condition with constant $L$, can we find a Lipschitz extension of $f$ onto the whole $RR^n$.
+== Solution
+So I don't really understand why we need to use the Vitali lemma, but
+$
+ov(f)(x) := min_(a in K) (f(a) + L d(a,x))
+$
+is a Lipschitz extension. The Vitali lemma seems to have several errors and seems completely useless in trying to construct such an extension, but maybe I am missing something.
