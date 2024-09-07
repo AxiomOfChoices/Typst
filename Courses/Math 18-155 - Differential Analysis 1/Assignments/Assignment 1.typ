@@ -320,8 +320,18 @@ Now consider the expression
 $
 integral_(RR) sum_(k=1)^M a_k e^(i k x) f(x).
 $
-If we iterate the lemma above $N + 1$ times we get
+If we iterate the lemma above $N + 2$ times we get
 $
-sum_(k=1)^M i^(N) a_k e^(i k x) f(x).
+integral_(RR) sum_(k=1)^M a_k e^(i k x) f(x)
+=
+integral_RR sum_(k=1)^M i^(N+2)/(k^(N+2)) a_k e^(i k x) f^((n+2))(x)
 $
+so since $|a_k| <= C k^N$ we get
+$
+abs(integral_(RR) sum_(k=1)^M a_k e^(i k x) f(x)) &<= sum_(k=1)^M abs(i^(N+2)/(k^(N+2)) a_k)  integral_RR abs(e^(i k x) f^((n+2))(x))
+\ &<= sum_(k=1)^M C/(k^2) integral_RR abs(f^((n+2))(x)) <= pi^2/6 norm(f)_(C^(n+2) (RR))
+$
+Now because the absolute values converge the sequence itself also converges so we get that these sums do indeed converge in distribution.
+
+= Question
 
