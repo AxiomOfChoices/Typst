@@ -51,7 +51,7 @@ We will use the outline given in the question
 #proof[
   First check $n = 2$, take any $x != 0$ and after throwing away constants compute
   $
-  nabla ln(norm(x))
+  nabla (ln norm(x))
   =
   (nabla norm(x)) / norm(x)
   =
@@ -418,9 +418,75 @@ Restricting $ov(u)$ to $S$ then gives us exactly the required result since $f_i$
 = Question
 == Statement
 Given a function $f$ on a compact set $K seq RR^n$, satisfying the Lipschitz condition with constant $L$, can we find a Lipschitz extension of $f$ onto the whole $RR^n$.
+You are allowed to use the following lemma (I slightly modified the lemma to make it solvable).
+
+#lemma[
+  Given an open set $Omega seq RR^n$ there exists a collection of balls $B_i$, a collection of smooth compactly supported functions $phi_i$ and a constant $C_n$ such that
+  + For each point $x in Omega$, $1 <= \# {B_i : x in B_i } <= C_n$.
+  + $2 B_i seq Omega$ and $4 B_i sect diff Omega != nothing$ for all $i$.
+  + $supp phi_i seq B_i$ for all $i$.
+  + $sum_i phi_i = 1$ on $Omega$.
+  + $norm(phi_i)_(Lip (RR^n)) <= C_n$ for all $i$.
+]
 == Solution
-So I don't really understand why we need to use the Vitali lemma, but
+Using this lemma we can construct a Lipschitz extension, first we apply the lemma to $K^c$. Now for each ball $B_i$, we identify its center $c_i$ as well as the point $s_i$ of $K$ closest to it, which always exists because $K$ is compact. We now define
 $
-ov(f)(x) := min_(a in K) (f(a) + L d(a,x))
+tilde(f)(x) = cases(sum_i f(s_i) phi_i (x) : x in K^c, f(x) : x in K)
 $
-is a Lipschitz extension. The Vitali lemma seems to have several errors and seems completely useless in trying to construct such an extension, but maybe I am missing something.
+This is well defined because at any point only finitely many of the $phi_i (x)$ are non-zero by property 1 of the lemma.
+
+Now we check that $tilde(f)$ is Lipschitz, this is immediate for $x,y in K$ so assume that $x in K$ and $y in K^c$. We now compute
+$
+abs(tilde(f)(x) - tilde(f)(y)) &=
+abs(f(x) - sum_(i) f(s_i) phi_i (y)) =
+abs(sum_(i) phi_i (y) (f(x) - f(s_i)))
+\ &<=
+sum_i phi_i (y) abs(f(x) - f(s_i))
+<=
+sum_i phi_i (y) norm(f)_(Lip (K)) norm(x-s_i)
+$
+Now we just need to estimate $norm(x - s_i)$, we first use triangle inequality to get
+$
+norm(x - s_i) <= norm(x - y) + norm(y - s_i) <= norm(x - y) + 2r_i
+$
+where $r_i$ is the radius of $B_i$. Now assuming $phi_i (y)$ is non-zero then we know that $y in B_i$, and yet since $2 B_i seq K^c$ we know that
+$
+2 r_i <= norm(y - c_i) <= norm(y - x) + norm(x - c_i) <= norm(y - x) + r_i
+$
+so we get $r_i <= norm(y-x)$. We thus get
+$
+norm(x-s_i) <= 3norm(x-y).
+$
+Plugging this back into our original sum we have
+$
+abs(tilde(f)(x) - tilde(f)(y)) <=
+sum_i phi_i (y) norm(f)_(Lip (K)) 3norm(x-y)
+=
+3 norm(x-y) norm(f)_(Lip (K))
+$
+thus we get
+$
+abs(tilde(f)(x) - tilde(f)(y)) / (norm(x-y)) <= 3 norm(f)_(Lip (K))
+$
+
+Now we check for $x,y in K^c$, if that is the case then
+$
+abs(tilde(f)(x) - tilde(f)(y)) =
+abs(sum_(i) phi_i (x) f(s_i) - sum_i phi_i (y) f(s_i))
+$
+Now let $A$ be the collection of $i$ for which either $phi_i (x)$ or $phi_i (y)$ is non-zero, then note that since we can add any constant to $f$ without changing the Lipschitz constant we can replace $f(x)$ with $f(x) - f(z)$ for any arbitrary $z in K$. We then write
+$
+abs(sum_(i in A) phi_i (x) (f(s_i) - f(z)) - sum_(i in A) phi_i (x) (f(s_i) - f(z)))
+\ <= sum_(i in A) abs(phi_i (x) - phi_i (y)) abs(f(s_i) - f(z))
+\ <= sum_(i in A) C_n norm(x - y) norm(f)_(Lip (K)) diam (K)
+$
+where we used the fact that $phi$'s have Lipschitz constant at most $C_n$. Now $A$ has cardinality at most $2 C_n$ again by the lemma so we get
+$
+abs(tilde(f)(x) - tilde(f)(y)) / norm(x-y) <= 2 C_n^2 norm(f)_(Lip (K)) diam (K)
+$
+
+Combining these all together we get
+$
+norm(tilde(f))_(Lip (RR^n)) <= (3 + 2 C_n^2 diam(K)) norm(f)_(Lip (K))
+$
+

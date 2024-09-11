@@ -152,7 +152,7 @@ Let $cal(C)$ denote a category and suppose $c_1$ and $c_2$ are two objects of $c
 == Statement
 Write down explicitly what it would mean for the isomorphism you constructed in Problem 3 to be natural. Prove that the isomorphism you constructed is natural (if it is not, modify your solution to the previous problem until it is).
 == Solution
-Note that $H_0 (dot)$ and $ZZ pi_0 (dot)$ are both functors from $Top$ to $Gp$ so a natural isomorphism between them would mean a collection of isomorphisms $h_X : H_0 (X) -> ZZ pi_0 (X)$ such that for every continuous map $f : X -> Y$ the following diagram commutes
+Note that $H_0 (dot)$ and $ZZ pi_0 (dot)$ are both functors from $Top$ to $Ab$ so a natural isomorphism between them would mean a collection of isomorphisms $h_X : H_0 (X) -> ZZ pi_0 (X)$ such that for every continuous map $f : X -> Y$ the following diagram commutes
 #align(center)[#commutative-diagram(
     node((0, 0), $H_0 (X)$),
     node((0, 1), $H_0 (Y)$),

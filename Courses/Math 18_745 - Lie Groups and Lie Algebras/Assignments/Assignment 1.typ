@@ -3,28 +3,42 @@
 #import "/Templates/math.typ": *
 #import "/Templates/assignment.typ": *
 #show: doc => header(title: "Assignment 1", name: "Jacob Reznikov", doc)
+#let lecture = counter("lecture")
+#lecture.step()
+#let update_lecture = () => {
+  lecture.step()
+  counter(heading).update(0)
+}
+#let bonus_problem = {
+  pagebreak()
+  block(text([*Bonus Exercise*], size: 17pt))
+}
 #show: latex
 #let NumberingAfter(doc) = {
-  let level = 2
+  let level = 1
   set heading(
     numbering: (..numbers) => if numbers.pos().len() <= level {
-      return numbering("1.1", ..numbers)
+      return context numbering(
+        "1.1",
+        lecture.get().first(),
+        ..numbers,
+      )
     },
-    supplement: "Question",
+    supplement: "Exercise",
   )
   show heading: it => {
     if (it.numbering == none) {
       return it
     }
-    if (it.level > 2) {
+    if (it.level > 1) {
       return text(it, size: 14pt)
     }
     let numbers = counter(heading).at(it.location())
-    let display-number = numbers.last()
+    let display-number = numbering(it.numbering, ..numbers)
     let body = it.body
-    if (display-number > 1) {
-      pagebreak(weak: true)
-    }
+    // if (numbers.last() > 1) {
+    pagebreak(weak: true)
+    // }
     block(text([*#body #display-number*], size: 17pt))
   }
   doc
@@ -34,15 +48,14 @@
 #let bar(el) = $overline(#el)$
 #show: NumberingAfter
 
-= Lecture
-== Question
-=== Statement
+= Exercise
+== Statement
 Let $A$ be an algebra, and $A\_$ be the algebra with the commutator bracket $[a,b] = a b - b a$. For each of the following conditions on $A$ prove that $A\_$ carries the structure of a Lie Algebra.
 + $A$ satisfies $a(b c) = (a b) c$ for all $a,b,c in A$.
 + $A$ satisfies $a(b c) + b(c a) + c(a b) = (a b)c + (b c)a + (c a)b = 0$ for all $a,b,c in A$.
 + $A$ satisfies $a(b c) - (a b) c = b (a c) - (b a) c = a (c b) - (a c)b$ for all $a,b,c in A$.
 + $A$ satisfies $[a, b c] + [b, c a] + [c, a b] = 0$ for all $a,b,c in A$.
-=== Solution
+== Solution
 First it is clear that $[a,a] = a a - a a = 0$ and thus the bracket is always alternating, it is also easy to see that it is bilinear, it is thus enough to check that it satisfies the Jacobi condition in each case. We can start by simplifying
 $
 &[a,[b,c]] + [b,[c,a]] + [c,[a,b]] \
@@ -108,10 +121,10 @@ We need to prove that this expression is always zero for any $a,b,c in A$ in eac
   $
   and again due to the identity we have the #text(fill: red)[red] and #text(fill: green)[green] terms group up together and vanish.
 
-== Question
-=== Statement
+= Exercise
+== Statement
 Prove that $sl_n$, the subspace of $gl_n$ consisting of matrices with zero trace, is a Lie subalgebra.
-=== Solution
+== Solution
 It is enough to show that for any two matrices $a,b in gl_n$ we have $tr([a,b]) = 0$. To see this we recall the formulas for matrix multiplication and trace.
 $
 (a b)_(i j) = sum_(k=1)^n a_(i k) b_(k j) wide wide tr(a) = sum_(i=1)^n a_(i i).
@@ -124,14 +137,14 @@ tr(a b - b a) = sum_(i = 1)^n (a b - b a)_(i i)
 $
 and since the two sums are the same up to renaming of indices, this expression must be equal to zero.
 
-== Question
-=== Statement
+= Exercise
+== Statement
 Let $B$ be any bilinear form, show that,
 $
 o_(V,B) = {a in gl_V | B(a(v), w) + B(v, a(w)) = 0, forall v,w in V},
 $
 is a Lie subalgebra of $gl_V$.
-=== Solution
+== Solution
 Let us take two matrices $a,b in o_(V,B)$ and consider their commutator $[a,b]$. We can compute
 $
 B([a,b]v, w) + B(v,[a,b]w)
@@ -148,14 +161,14 @@ B([a,b]v,w) + B(v,[a,b]w) = 0
 $
 and so $[a,b] in o_(V,B)$ and so $o_(V,B)$ is closed under the Lie bracket.
 
-== Question
-=== Statement
+= Exercise
+== Statement
 Consider some bilinear form on $FF^n$ represented in the standard basis by the matrix $B$. Show that
 $
 o_(FF^n, B) = {a in gl_n | a^T B + B a = 0},
 $
 where $a^T$ is the transpose of the matrix $a$.
-=== Solution
+== Solution
 First recall that in the standard basis the matrix $B$ is defined by
 $
 B_(i j) = B(e_i, e_j)
@@ -173,10 +186,10 @@ $
 $
 We thus know that the expression $a^T B + B a = 0$ is equivalent to $B(a(e_i), e_j) + B(e_i, a(e_j)) = 0$ for all basis vectors, which is then equivalent to $B(a(v), w) + B(v,a(w)) = 0$ for all vectors in $FF^n$.
 
-== Question
-=== Statement
+= Exercise
+== Statement
 Let $f : Mat_n (FF) -> FF$ be a linear function satisfying $f([a,b]) = 0$ for all $a,b in Mat_n (FF)$. Show that $f = lambda tr$ for some constant $lambda in FF$.
-=== Solution
+== Solution
 Consider a linear basis for $Mat_n (FF)$ consisting of single entry matrices
 $
 e^((ell k))_(i j) = cases(1 : i = ell \, j = k, 0 : "otherwise")
@@ -214,7 +227,36 @@ e^((j i)) e^((i j))
 $
 and thus $f(e^((i i)) - e^((j j))) = 0$ and $f(e^((i i))) = f(e^((j j)))$. Now we fix $lambda = f(e^((1 1)))$ and immediately get $lambda = f(e^((i i)))$ for all $i$ as well as $0 = f(e^((i j)))$ for $i != j$, which finishes the proof.
 
-= Lecture
-== Question
-=== Statement
-Test
+#update_lecture()
+= Exercise
+== Statement
+For any algebra $A$ over a field $FF$, a derivation of $A$ is an $FF$-vector space endomorphism $D$ of $A$ satisfying $D(a b) = D(a) b + a D(b)$. Prove that the space of derivations $op("Der") A$ is a Lie subalgebra of $gl_A$.
+== Solution
+Let $D,F$ be two derivations of $A$, we want to show that $[D,F]$ is also a derivation. There is really only one way to do that, we compute
+$
+[D,F](a b)
+&= D F (a b) - F D (a b)
+= D(F (a) b + a F(b))
++ F(D (a) b + a D(b))
+\ &= D F (a) b + col(F(a) D(b), #red) + col(D (a) F(b), #green) + a D F (b)
+\ &- F D (a) b - col(D(a) F(b), #green) - col(F(a) D(b), #red) - a F D (b)
+\ &= D F (a) b + a D F (b)
+- F D (a) b - a F D (b)
+\ &= (D F - F D) (a) b + a (D F - F D) (b)
+\ [D,F] (a b) &= [D, F] (a) b + a [D, F](b).
+$
+And so we exactly get the definition of a derivation. Hence $op("Der") A$ is closed under the Lie bracket and thus a Lie subalgebra.
+
+#bonus_problem
+== Statement
+Consider the vector space $V$ with basis ${ L_m : m in ZZ } union {C}$ with product given by
+$
+[L_m, L_n] = (m-n) L_(m+n) + (m^3 - m) / 12 delta_(m, -n) C\
+[C,L_m] = 0, m in ZZ.
+$
+Show that the bracket gives a Lie Algebra structure on $V$.
+== Solution
+First let us check anti-commutativity
+$
+[L_m,]
+$
