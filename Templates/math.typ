@@ -3,6 +3,9 @@
 // Various symbols
 #let supp = $op("supp")$
 #let Mat = $op("Mat")$
+#let Top = $bold(op("Top"))$
+#let Ab = $bold(op("Ab"))$
+#let Gp = $bold(op("Gp"))$
 #let pair(x, y) = $lr(angle.l #x mid(|) #y angle.r)$
 #let sl = $frak(op("sl"))$
 #let Sl = $op("SL"))$

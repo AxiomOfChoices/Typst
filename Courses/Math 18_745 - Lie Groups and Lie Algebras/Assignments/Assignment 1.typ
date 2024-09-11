@@ -4,21 +4,45 @@
 #import "/Templates/assignment.typ": *
 #show: doc => header(title: "Assignment 1", name: "Jacob Reznikov", doc)
 #show: latex
-#show: NumberingAfter
+#let NumberingAfter(doc) = {
+  let level = 2
+  set heading(
+    numbering: (..numbers) => if numbers.pos().len() <= level {
+      return numbering("1.1", ..numbers)
+    },
+    supplement: "Question",
+  )
+  show heading: it => {
+    if (it.numbering == none) {
+      return it
+    }
+    if (it.level > 2) {
+      return text(it, size: 14pt)
+    }
+    let numbers = counter(heading).at(it.location())
+    let display-number = numbers.last()
+    let body = it.body
+    if (display-number > 1) {
+      pagebreak(weak: true)
+    }
+    block(text([*#body #display-number*], size: 17pt))
+  }
+  doc
+};
 #show: thmrules
 #let col(x, clr) = text(fill: clr)[$#x$]
-#let pb() = {
-  pagebreak(weak: true)
-}
 #let bar(el) = $overline(#el)$
-= Question
-== Statement
+#show: NumberingAfter
+
+= Lecture
+== Question
+=== Statement
 Let $A$ be an algebra, and $A\_$ be the algebra with the commutator bracket $[a,b] = a b - b a$. For each of the following conditions on $A$ prove that $A\_$ carries the structure of a Lie Algebra.
 + $A$ satisfies $a(b c) = (a b) c$ for all $a,b,c in A$.
 + $A$ satisfies $a(b c) + b(c a) + c(a b) = (a b)c + (b c)a + (c a)b = 0$ for all $a,b,c in A$.
 + $A$ satisfies $a(b c) - (a b) c = b (a c) - (b a) c = a (c b) - (a c)b$ for all $a,b,c in A$.
 + $A$ satisfies $[a, b c] + [b, c a] + [c, a b] = 0$ for all $a,b,c in A$.
-== Solution
+=== Solution
 First it is clear that $[a,a] = a a - a a = 0$ and thus the bracket is always alternating, it is also easy to see that it is bilinear, it is thus enough to check that it satisfies the Jacobi condition in each case. We can start by simplifying
 $
 &[a,[b,c]] + [b,[c,a]] + [c,[a,b]] \
@@ -84,10 +108,10 @@ We need to prove that this expression is always zero for any $a,b,c in A$ in eac
   $
   and again due to the identity we have the #text(fill: red)[red] and #text(fill: green)[green] terms group up together and vanish.
 
-= Question
-== Statement
+== Question
+=== Statement
 Prove that $sl_n$, the subspace of $gl_n$ consisting of matrices with zero trace, is a Lie subalgebra.
-== Solution
+=== Solution
 It is enough to show that for any two matrices $a,b in gl_n$ we have $tr([a,b]) = 0$. To see this we recall the formulas for matrix multiplication and trace.
 $
 (a b)_(i j) = sum_(k=1)^n a_(i k) b_(k j) wide wide tr(a) = sum_(i=1)^n a_(i i).
@@ -100,14 +124,14 @@ tr(a b - b a) = sum_(i = 1)^n (a b - b a)_(i i)
 $
 and since the two sums are the same up to renaming of indices, this expression must be equal to zero.
 
-= Question
-== Statement
+== Question
+=== Statement
 Let $B$ be any bilinear form, show that,
 $
 o_(V,B) = {a in gl_V | B(a(v), w) + B(v, a(w)) = 0, forall v,w in V},
 $
 is a Lie subalgebra of $gl_V$.
-== Solution
+=== Solution
 Let us take two matrices $a,b in o_(V,B)$ and consider their commutator $[a,b]$. We can compute
 $
 B([a,b]v, w) + B(v,[a,b]w)
@@ -124,14 +148,14 @@ B([a,b]v,w) + B(v,[a,b]w) = 0
 $
 and so $[a,b] in o_(V,B)$ and so $o_(V,B)$ is closed under the Lie bracket.
 
-= Question
-== Statement
+== Question
+=== Statement
 Consider some bilinear form on $FF^n$ represented in the standard basis by the matrix $B$. Show that
 $
 o_(FF^n, B) = {a in gl_n | a^T B + B a = 0},
 $
 where $a^T$ is the transpose of the matrix $a$.
-== Solution
+=== Solution
 First recall that in the standard basis the matrix $B$ is defined by
 $
 B_(i j) = B(e_i, e_j)
@@ -149,10 +173,10 @@ $
 $
 We thus know that the expression $a^T B + B a = 0$ is equivalent to $B(a(e_i), e_j) + B(e_i, a(e_j)) = 0$ for all basis vectors, which is then equivalent to $B(a(v), w) + B(v,a(w)) = 0$ for all vectors in $FF^n$.
 
-= Question
-== Statement
+== Question
+=== Statement
 Let $f : Mat_n (FF) -> FF$ be a linear function satisfying $f([a,b]) = 0$ for all $a,b in Mat_n (FF)$. Show that $f = lambda tr$ for some constant $lambda in FF$.
-== Solution
+=== Solution
 Consider a linear basis for $Mat_n (FF)$ consisting of single entry matrices
 $
 e^((ell k))_(i j) = cases(1 : i = ell \, j = k, 0 : "otherwise")
@@ -190,3 +214,7 @@ e^((j i)) e^((i j))
 $
 and thus $f(e^((i i)) - e^((j j))) = 0$ and $f(e^((i i))) = f(e^((j j)))$. Now we fix $lambda = f(e^((1 1)))$ and immediately get $lambda = f(e^((i i)))$ for all $i$ as well as $0 = f(e^((i j)))$ for $i != j$, which finishes the proof.
 
+= Lecture
+== Question
+=== Statement
+Test
