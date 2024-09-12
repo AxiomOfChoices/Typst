@@ -258,5 +258,104 @@ Show that the bracket gives a Lie Algebra structure on $V$.
 == Solution
 First let us check anti-commutativity
 $
-[L_m,]
+[L_m,L_n]
+&= (m - n) L_(m+n) + (m^3 - m) / 12 delta_(m,-n) C
+\ &= -(n - m) L_(m+n) + ((-n)^3 - (-n)) / 12 delta_(-m,n) C
+\ &= -(n - m) L_(m+n) - (n^3 - n) / 12 delta_(-m,n) C
+\ &= [L_n,L_m]
+$
+and anti-commutativity with $C$ is clear. We now have to check the Jacobi identity, if any of the arguments is $C$ then the whole expression vanishes so we can ignore that case and assume that all the arguments are $L_n$ for some $n$.
+$
+& [L_n,[L_m, L_p]] + [L_m, [L_p, L_n]] + [L_p, [L_n, L_m]]
+\ = & [L_n,(m-p)L_(m+p) + (m^3-m) / 12 delta_(m,-p) C]
+\ + & [L_m,(p-n)L_(p+n) + (p^3-p) / 12 delta_(p,-n) C]
+\ + & [L_p,(n-m)L_(n+m) + (n^3-n) / 12 delta_(n,-m) C]
+$
+Now since $C$ is central we can cancel it from every bracket
+$
+&[L_n,(m-p)L_(m+p)] + [L_m,(p-n) L_(p+n)] + [L_p,(n-m) L_(n+m)]
+\ = &(m-p) [L_n,L_(m+p)] + (p-n)[L_m,L_(p+n)] + (n-m)[L_p,L_(n+m)]
+\ = &(m-p) (n - m - p) L_(n+m+p) + (m-p)(n^3-n) / 12 delta_(n,-m-p) C
+\ + &(p-n) (m - p - n) L_(n+m+p) + (p-n)(m^3-m) / 12 delta_(m,-p-n) C
+\ + &(n-m) (p - n - m) L_(n+m+p) + (n-m)(p^3-p) / 12 delta_(p,-n-m) C
+$
+Collecting like terms we get
+$
+((m-p)(n-m-p)+(p-n)(m-p-n)+(n-m)(p-n-m)) L_(n+m+p)
+\ +(((m-p)(n^3-n)+(p-n) (m^3-m)+(n-m)(p^3-p)) / 12) delta_(n+m+p,0) C.
+$
+Now we first deal with the first coefficient
+$
+&col(m n, #red) - col(m^2, #green) - col(m p, #blue) - col(p n, #yellow) + col(p m, #blue) + col(p^2, #purple)
+\ + &col(p m, #blue) - col(p^2, #purple) - col(p n, #yellow) - col(n m, #red) + col(n p, #yellow) + col(n^2, #orange)
+\ + &col(n p, #yellow) - col(n^2, #orange) - col(n m, #red) - col(m p,#blue) + col(m n, #red) + col(m^2, #green)
+$
+As we can see by the highlighted groups everything cancels out and we get exactly $0$.
+
+For the second coefficient it can only possibly be non-zero if $delta_(n+m+p,0) = 1$ that is if $n + m + p = 0$. With that in mind we compute
+$
+((m-p)(n^3-n)+(p-n) (m^3-m)+(n-m)(p^3-p))
+\ = m n^3 - col(m n, #red) - p n^3 + col(p n, #green) + p m^3 - col(p m, #blue) - n m^3 + col(n m, #red) + n p^3 - col(n p, #green) - m p^3 + col(m p, #blue)
+\ = m n^3 - p n^3 + p m^3 - n m^3 + n p^3 - m p^3
+$
+we can now replace $n$ with $- m - p$ and we get
+$
+&m (-m-n)^3 - p (-m - p)^3 + p m^3 - (-m-p) m^3 + (-m-p)p^3 - m p^3
+\ = &- m (col(m^3,#red)+3m^2p+3m p^2+p^3)
++ p (m^3 + 3m^2p+3m p^2 +col(p^3,#green))
+\ + & p m^3 + col(m^4,#red) + p m^3 - m p^3 - col(p^4,#green) - m p^3
+\ = &- col(3m^3 p,#green) - col(3m^2 p^2,#red) - col(m p^3, #blue) + col(p m^3,#green) + col(3m^2p^2,#red) + col(3m p^3, #blue) + col(p m^3,#green) + col(p m^3, #green) - col(m p^3, #blue) - col(m p^3, #blue)
+\ =&0
+$
+So all together our final result is $0$ so the Jacobi identity holds and thus this is indeed a Lie algebra.
+
+= Exercise
+== Statement
+Let ${x_i, x_j} in A$ be choices of elements of $A$, the algebra of smooth functions in the variables $x_1,...,x_n.$ Now define the bracket operation
+$
+{f,g} = sum_(i,j=1)^n (diff f) / (diff x_i) (diff g) / (diff x_j) {x_i, x_j}.
+$
+Show that this bracket gives $A$ the structure of a Lie algebra if and only it is anti-commutative and satisfies the Jacobi identity for any triplet $x_i,x_j,x_k$.
+== Solution
+We compute
+$
+{f,g} + {g,f}
+&= sum_(i,j=1)^n (diff f) / (diff x_i) (diff g) / (diff x_j) {x_i,x_j}
++ sum_(i,j=1)^n (diff g) / (diff x_i) (diff f) / (diff x_j) {x_i,x_j}
+$
+then after swapping indices in the second sum we get
+$
+sum_(i,j=1)^n (diff f) / (diff x_i) (diff g) / (diff x_j) {x_i,x_j}
++ sum_(j,i=1)^n (diff g) / (diff x_j) (diff f) / (diff x_i) {x_j,x_i}
+= sum_(i,j=1)^n (diff f) / (diff x_i) (diff g) / (diff x_j) (
+  {x_i,x_j} + {x_j,x_i}
+).
+$
+So ${dot,dot}$ is anti-symmetric iff it is anti-symmetric on $x_i,x_j$ for all $i,j$.
+
+Next we check the Jacobi identities, for brevity we will denote $(diff f)/(diff x_i)$ as $f_i$
+$
+{f,{g,h}} + {g,{f,h}} + {h,{f,g}}
+\ = sum_(i,j=1)^n (
+  {f, g_i h_j {x_i,x_j}}
+  + {g, h_i f_j {x_i,x_j}}
+  + {h, f_i g_j {x_i,x_j}}
+)
+\ = sum_(i,j=1)^n sum_(k,ell=1)^n (
+  f_k (
+    g_(i ell) h_j {x_i,x_j}
+    + g_i h_(j ell) {x_i,x_j}
+    + g_i h_j {x_i,x_j}_ell
+  ){x_k,x_ell}
+  \ + g_k (
+    h_(i ell) f_j {x_i,x_j}
+    + h_i f_(j ell) {x_i,x_j}
+    + h_i f_j {x_i,x_j}_ell
+  ){x_k,x_ell}
+  \ + h_k (
+    f_(i ell) g_j {x_i,x_j}
+    + f_i g_(j ell) {x_i,x_j}
+    + f_i g_j {x_i,x_j}_ell
+  ){x_k,x_ell}
+)
 $

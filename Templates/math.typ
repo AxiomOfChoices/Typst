@@ -45,6 +45,7 @@
 #let AntiSym = math.op("ASym")
 #let div = math.op("div")
 #let tp = math.op("tp")
+#let iso = math.tilde.equiv
 #let diam = math.op("Diam")
 #let Lip = math.op("Lip")
 #let Aut = math.op("Aut")
