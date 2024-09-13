@@ -47,6 +47,7 @@
 #let col(x, clr) = text(fill: clr)[$#x$]
 #let bar(el) = $overline(#el)$
 #show: NumberingAfter
+#set enum(numbering: "(a)")
 
 = Exercise
 == Statement
@@ -317,45 +318,428 @@ $
 $
 Show that this bracket gives $A$ the structure of a Lie algebra if and only it is anti-commutative and satisfies the Jacobi identity for any triplet $x_i,x_j,x_k$.
 == Solution
-We compute
-$
-{f,g} + {g,f}
-&= sum_(i,j=1)^n (diff f) / (diff x_i) (diff g) / (diff x_j) {x_i,x_j}
-+ sum_(i,j=1)^n (diff g) / (diff x_i) (diff f) / (diff x_j) {x_i,x_j}
-$
-then after swapping indices in the second sum we get
-$
-sum_(i,j=1)^n (diff f) / (diff x_i) (diff g) / (diff x_j) {x_i,x_j}
-+ sum_(j,i=1)^n (diff g) / (diff x_j) (diff f) / (diff x_i) {x_j,x_i}
-= sum_(i,j=1)^n (diff f) / (diff x_i) (diff g) / (diff x_j) (
-  {x_i,x_j} + {x_j,x_i}
-).
-$
-So ${dot,dot}$ is anti-symmetric iff it is anti-symmetric on $x_i,x_j$ for all $i,j$.
+// We compute
+// $
+// {f,g} + {g,f}
+// &= sum_(i,j=1)^n (diff f) / (diff x_i) (diff g) / (diff x_j) {x_i,x_j}
+// + sum_(i,j=1)^n (diff g) / (diff x_i) (diff f) / (diff x_j) {x_i,x_j}
+// $
+// then after swapping indices in the second sum we get
+// $
+// sum_(i,j=1)^n (diff f) / (diff x_i) (diff g) / (diff x_j) {x_i,x_j}
+// + sum_(j,i=1)^n (diff g) / (diff x_j) (diff f) / (diff x_i) {x_j,x_i}
+// = sum_(i,j=1)^n (diff f) / (diff x_i) (diff g) / (diff x_j) (
+//   {x_i,x_j} + {x_j,x_i}
+// ).
+// $
+// So ${dot,dot}$ is anti-symmetric iff it is anti-symmetric on $x_i,x_j$ for all $i,j$.
+//
+// Next we check the Jacobi identities, for brevity we will denote $(diff f)/(diff x_i)$ as $f_i$
+// $
+// {f,{g,h}} + {g,{f,h}} + {h,{f,g}}
+// \ = sum_(i,j=1)^n (
+//   {f, g_i h_j {x_i,x_j}}
+//   + {g, h_i f_j {x_i,x_j}}
+//   + {h, f_i g_j {x_i,x_j}}
+// )
+// \ = sum_(i,j=1)^n sum_(k,ell=1)^n (
+//   f_k (
+//     g_(i ell) h_j {x_i,x_j}
+//     + g_i h_(j ell) {x_i,x_j}
+//     + g_i h_j {x_i,x_j}_ell
+//   ){x_k,x_ell}
+//   \ + g_k (
+//     h_(i ell) f_j {x_i,x_j}
+//     + h_i f_(j ell) {x_i,x_j}
+//     + h_i f_j {x_i,x_j}_ell
+//   ){x_k,x_ell}
+//   \ + h_k (
+//     f_(i ell) g_j {x_i,x_j}
+//     + f_i g_(j ell) {x_i,x_j}
+//     + f_i g_j {x_i,x_j}_ell
+//   ){x_k,x_ell}
+// )
+// $
 
-Next we check the Jacobi identities, for brevity we will denote $(diff f)/(diff x_i)$ as $f_i$
+If the Poisson bracket defines a Lie algebra structure for some choice of values $lr({x_i , x_j})$, then in particular, the axioms of a Lie algebra must be satisfied for brackets of terms $x_i$. The interesting question is whether the converse holds. We suppose then that the $lr({x_i , x_j})$ are chosen so that $lr({x_i , x_j}) = - lr({x_j , x_i})$, and so that the Jacobi identity is satisfied for triples $x_i , x_j , x_k$.
+
+The bilinearity of the bracket follows from the linearity of differentiation, and the skew-symmetry follows from the assumption of the skew symmetry on the $x_i$.
+
+At this point we introduce some shorthands to simplify what follows. If $f$ is any function, we write $f_i$ for the derivative of $f$ with respect to $x_i$. When we are discussing an expression $e$ in terms of three functions $f , g$, h, we will write $op("CS") lr((e))$ for the ’cyclic summation’ of $e$, the expression formed by summing those obtained from $e$ by permuting the $f , g , h$ cyclically. In particular, the Jacobi identity will be $op("CS") lr(({ f , { g , h } })) = 0$.
+
+First we calculate the iterated bracket of monomials $x_i$ :
+
 $
-{f,{g,h}} + {g,{f,h}} + {h,{f,g}}
-\ = sum_(i,j=1)^n (
-  {f, g_i h_j {x_i,x_j}}
-  + {g, h_i f_j {x_i,x_j}}
-  + {h, f_i g_j {x_i,x_j}}
-)
-\ = sum_(i,j=1)^n sum_(k,ell=1)^n (
-  f_k (
-    g_(i ell) h_j {x_i,x_j}
-    + g_i h_(j ell) {x_i,x_j}
-    + g_i h_j {x_i,x_j}_ell
-  ){x_k,x_ell}
-  \ + g_k (
-    h_(i ell) f_j {x_i,x_j}
-    + h_i f_(j ell) {x_i,x_j}
-    + h_i f_j {x_i,x_j}_ell
-  ){x_k,x_ell}
-  \ + h_k (
-    f_(i ell) g_j {x_i,x_j}
-    + f_i g_(j ell) {x_i,x_j}
-    + f_i g_j {x_i,x_j}_ell
-  ){x_k,x_ell}
-)
+lr({x_i , lr({x_j , x_k})}) = sum_l lr({x_j , x_k})_l lr({x_i , x_l}) upright(" (an example of the shorthands described). ")
 $
+
+Now the iterated bracket of any three polynomials (or functions) $f , g$ and $h$ is:
+
+$
+{
+  h , {f , g}
+} = sum_(i , j , k , l) lr([f_(i l) g_j h_k + g_(j l) f_i h_k]) lr({x_i , x_j}) lr({x_k , x_l}) + sum_(i , j , k , l) f_i g_j h_k lr({x_i , x_j})_l lr({x_k , x_l})
+$
+
+By the assumption that the Jacobi identity holds on the $x_i$, we have (for any $i , j , k$):
+$ sum_l op("CS") lr((f_i g_j h_k)) lr({x_i , x_j})_l lr({x_k , x_l}) = 0 $
+for cyclicly permuting the $f , g , h$ corresponds to cyclicly permuting the $i , j , k$ (in the opposite order). Thus we have:
+
+$
+op("CS") lr(({ h , { f , g } })) = sum_(i , j , k , l) op("CS") lr((f_(i l) g_j h_k + g_(j l) f_i h_k)) lr({x_i , x_j}) lr({x_k , x_l})
+$
+
+The remaining task can be viewed as finding the $lr({x_alpha , x_beta}) lr({x_gamma , x_delta})$ coefficient in this expression, where we substitute all appearances of $lr({x_beta , x_alpha})$ for $- lr({x_alpha , x_beta})$, and so on. To do so, we tabulate all the appearances of terms which are multiples of $lr({x_alpha , x_beta}) lr({x_gamma , x_delta})$. We may as well assume here that $alpha < beta$ and $gamma < delta$.
+
+#figure(
+  align(center)[#table(
+      columns: 7,
+      align: (col, row) => (
+        center,
+        center,
+        center,
+        center,
+        center,
+        center,
+        center,
+        center,
+        center,
+        center,
+      ).at(col),
+      stroke: none,
+      inset: 6pt,
+      [order],
+      [$i$],
+      [$j$],
+      [$k$],
+      [$l$],
+      table.vline(),
+      [multiple of $lr({x_alpha , x_beta}) lr({x_gamma , x_delta})$],
+      table.vline(),
+      [group],
+      table.hline(),
+      table.cell(rowspan: 8)[$f,g,h$],
+      [$alpha$],
+      [$beta$],
+      [$gamma$],
+      [$delta$],
+      [$+ f_(alpha delta) g_beta h_gamma + g_(beta delta) f_alpha h_gamma$],
+      [#col(1, green)],
+      [$gamma$],
+      [$delta$],
+      [$alpha$],
+      [$beta$],
+      [$+ f_(gamma beta) g_delta h_alpha + g_(delta beta) f_gamma h_alpha$],
+      [#col(1, red)],
+      [$beta$],
+      [$alpha$],
+      [$gamma$],
+      [$delta$],
+      [$- f_(beta delta) g_alpha h_gamma - g_(alpha delta) f_beta h_gamma$],
+      [#col(10, red)],
+      [$delta$],
+      [$gamma$],
+      [$alpha$],
+      [$beta$],
+      [$- f_(delta beta) g_gamma h_alpha - g_(gamma beta) f_delta h_alpha$],
+      [#col(10, green)],
+      [$alpha$],
+      [$beta$],
+      [$delta$],
+      [$gamma$],
+      [$- f_(alpha gamma) g_beta h_delta - g_(beta gamma) f_alpha h_delta$],
+      [#col(4, red)],
+      [$gamma$],
+      [$delta$],
+      [$beta$],
+      [$alpha$],
+      [$- f_(gamma alpha) g_delta h_beta - g_(delta alpha) f_gamma h_beta$],
+      [#col(4, green)],
+      [$beta$],
+      [$alpha$],
+      [$delta$],
+      [$gamma$],
+      [$+ f_(beta gamma) g_alpha h_delta + g_(alpha gamma) f_beta h_delta$],
+      [#col(7, green)],
+      [$delta$],
+      [$gamma$],
+      [$beta$],
+      [$alpha$],
+      [$+ f_(delta alpha) g_gamma h_beta + g_(gamma alpha) f_delta h_beta$],
+      [#col(7, red)],
+      table.hline(),
+      table.cell(rowspan: 8)[$g,h,f$],
+      [$alpha$],
+      [$beta$],
+      [$gamma$],
+      [$delta$],
+      [$+ g_(alpha delta) h_beta f_gamma + h_(beta delta) g_alpha f_gamma$],
+      [#col(5, green)],
+      [$gamma$],
+      [$delta$],
+      [$alpha$],
+      [$beta$],
+      [$+ g_(gamma beta) h_delta f_alpha + h_(delta beta) g_gamma f_alpha$],
+      [#col(5, red)],
+      [$beta$],
+      [$alpha$],
+      [$gamma$],
+      [$delta$],
+      [$- g_(beta delta) h_alpha f_gamma - h_(alpha delta) g_beta f_gamma$],
+      [#col(2, red)],
+      [$delta$],
+      [$gamma$],
+      [$alpha$],
+      [$beta$],
+      [$- g_(delta beta) h_gamma f_alpha - h_(gamma beta) g_delta f_alpha$],
+      [#col(2, green)],
+      [$alpha$],
+      [$beta$],
+      [$delta$],
+      [$gamma$],
+      [$- g_(alpha gamma) h_beta f_delta - h_(beta gamma) g_alpha f_delta$],
+      [#col(8, red)],
+      [$gamma$],
+      [$delta$],
+      [$beta$],
+      [$alpha$],
+      [$- g_(gamma alpha) h_delta f_beta - h_(delta alpha) g_gamma f_beta$],
+      [#col(8, green)],
+      [$beta$],
+      [$alpha$],
+      [$delta$],
+      [$gamma$],
+      [$+ g_(beta gamma) h_alpha f_delta + h_(alpha gamma) g_beta f_delta$],
+      [#col(11, green)],
+      [$delta$],
+      [$gamma$],
+      [$beta$],
+      [$alpha$],
+      [$+ g_(delta alpha) h_gamma f_beta + h_(gamma alpha) g_delta f_beta$],
+      [#col(11, red)],
+      table.hline(),
+      table.cell(rowspan: 8)[$h,f,g$],
+      [$alpha$],
+      [$beta$],
+      [$gamma$],
+      [$delta$],
+      [$+ h_(alpha delta) f_beta g_gamma + f_(beta delta) h_alpha g_gamma$],
+      [#col(9, green)],
+      [$gamma$],
+      [$delta$],
+      [$alpha$],
+      [$beta$],
+      [$+ h_(gamma beta) f_delta g_alpha + f_(delta beta) h_gamma g_alpha$],
+      [#col(9, red)],
+      [$beta$],
+      [$alpha$],
+      [$gamma$],
+      [$delta$],
+      [$- h_(beta delta) f_alpha g_gamma - f_(alpha delta) h_beta g_gamma$],
+      [#col(6, red)],
+      [$delta$],
+      [$gamma$],
+      [$alpha$],
+      [$beta$],
+      [$- h_(delta beta) f_gamma g_alpha - f_(gamma beta) h_delta g_alpha$],
+      [#col(6, green)],
+      [$alpha$],
+      [$beta$],
+      [$delta$],
+      [$gamma$],
+      [$- h_(alpha gamma) f_beta g_delta - f_(beta gamma) h_alpha g_delta$],
+      [#col(12, red)],
+      [$gamma$],
+      [$delta$],
+      [$beta$],
+      [$alpha$],
+      [$- h_(gamma alpha) f_delta g_beta - f_(delta alpha) h_gamma g_beta$],
+      [#col(12, green)],
+      [$beta$],
+      [$alpha$],
+      [$delta$],
+      [$gamma$],
+      [$+ h_(beta gamma) f_alpha g_delta + f_(alpha gamma) h_beta g_delta$],
+      [#col(3, green)],
+      [$delta$],
+      [$gamma$],
+      [$beta$],
+      [$alpha$],
+      [$+ h_(delta alpha) f_gamma g_beta + f_(gamma alpha) h_delta g_beta$],
+      [#col(3, red)],
+    )],
+)
+The table describes how to cancel out these terms, we group them into to groups, as dictated by the color, then the number dictate an ordering on the groups such that for two adjacent number they cancel out exactly two terms.
+
+= Exercise
+== Statement
+Let $phi : frak(g)_1 -> frak(g)_2$ be a homomorphism. Then:
++ $ker phi$ is an ideal of $frak(g)_1$.
++ $im phi$ is a subalgebra of $frak(g)_2$.
++ $im phi iso frak(g)_1 quo ker phi$.
+== Solution
++ Clearly $ker phi$ is a subspace, then for any $x in frak(g)_1, y in ker phi$ we have
+  $
+  phi([x,y]) = [phi(x),phi(y)] = [phi(x), 0] = 0.
+  $
+  so $[x,y] in ker phi$.
++ Let $phi(x), phi(y) in im phi$, then we have
+  $
+  [phi(x), phi(y)] = phi([x,y])
+  $
+  which is also in the image of $phi$
++ We define an isomorphism $psi : frak(g)_1 quo ker phi -> im phi$ by $psi([x]) = phi(x)$, this is well defined because for any $z_1,z_2 in ker phi$
+  $
+  phi([x+z_1,y+z_2])
+  =
+  phi([x,y]+[x,z_2]+[z_1,y]+[z_1,z_2])
+  =
+  phi([x,y])
+  $
+  because the kernel is an ideal.
+  This is by definition surjective, and it is injective since if $psi([x]) = 0$ then $phi(x) = 0$ so $x in ker phi$.
+
+= Exercise
+== Statement
+Given $B in Mat_n (FF)$, let $O_(n,B) (A) = { g in Gl_n (A) : g^T B g = B }$. Show that this family of groups is a family of algebraic groups.
+== Solution
+For $g,h in O_(n,B) (A)$ we have
+$
+(g h)^T B (g h) = h^T g^T B g h = h^T (g^T B g) h = h^T B h = B,
+$
+so $g h in O_(n, B) (A)$ and thus $O_(n, B) (A)$ is a group.
+
+Now note the fact that
+$
+g^T B g
+$
+is a matrix with polynomial entries with the variables being the entries of $g$. Hence $g^T B g = B$ is a polynomial equation in the entries of $g$. Thus $O_(n, B) (A)$ is an algebraic group.
+
+= Exercise
+== Statement
+Prove that $Lie Sl_n = sl_n (FF)$ and $Lie O_(n,B) = o_(FF^n, B)$.
+== Solution
+We check first for $Sl_n$, it is defined by $det(g) = 1$ so we have
+$
+det(I+epsilon X)
+= sum_(sigma in S_n) product_(i=1)^n (I+epsilon X)_(i sigma(i))
+= sum_(sigma in S_n) product_(i=1)^n
+(delta_(i sigma(i)) + epsilon X_(i sigma(i)))
+$
+now if $sigma$ is any non-trivial permutation then it has at least two non-fixed points. Thus the product at least two factors of $epsilon$, so it vanishes in the sum. Thus we are left with
+$
+det(I+epsilon X) = product_(i=1)^n (delta_(i i) + epsilon X_(i i))
+$
+now expanding this, since only terms with one or less $epsilon$'s survive we get
+$
+det(I + epsilon X) = 1 + epsilon sum_(i=1)^n X_(i i)
+$
+so we must have $sum_i^n X_(i i) = tr(X) = 0$ which is precisely the definition for $sl_n (FF)$.
+
+Next for $O_(n, B)$, it is defined by $g^T B g = B$ so we have
+$
+(I + epsilon X)^T B (I + epsilon X) =
+B + epsilon X^T B + B epsilon X + epsilon X^T B epsilon X =
+B + epsilon (X^T B + B X)
+$
+we thus have $I + epsilon X in O_(n, B)$ if and only if $X^T B + B X = 0$ which is also precisely the definition of $o_(FF^n, B)$.
+
+#update_lecture()
+= Exercise
+== Statement
+Show that $Z(gl_n (FF)) = FF I_n$ where $Z$ is the center of a Lie algebra.
+Show that $Z(sl_n (FF)) = 0$ if $op("char") FF divides.not n$ and $FF I_n$ otherwise.
+== Solution
+Let $A$ be a matrix in $Z(gl_n (FF))$ then $A$ commutes with all other matrices in $gl_n (FF)$. Now using the Jordan normal theorem, since conjugation does not change commutativity, we may assume that $A$ is in its Jordan normal form. Further more, assume that $A$ is not in $FF I_n$, then it either has a Jordan block of size 2 or more, two Jordan blocks with different eigenvalues.
+
+Thus we have that $A = mat(B, 0; 0, *)$ where we either have $B = mat(lambda, 0; 0, rho)$ or $B = mat(lambda, 1;0,lambda)$. In the first case we set
+$
+C := mat(0, 1;1,0)
+$
+making
+$
+[B,C]
+= mat(0, lambda;rho, 0) - mat(0, rho;lambda,0)
+= mat(0, lambda - rho;rho-lambda, 0)
+$
+which is non-zero. In the second case we get
+$
+[B,C] = mat(1, lambda;lambda, 0) - mat(0, lambda;lambda, 1) = mat(1,0;0,-1)
+$
+Then we have
+$
+[mat(B,0;0,*),mat(C,0;0,0)] != 0
+$
+in either case so if $A$ is not in $FF I_n$ it cannot commute with everything. On the other hand if $A$ is in $FF I_n$ then it clearly commutes with everything so we are done.
+
+Since the matrix $mat(C,0;0,0)$ we constructed is in $sl_n (FF)$ the argument in $sl_n$ is identical, the only difference is that we replace $FF I_n$ with $FF I_n sect sl_n (FF)$ which is empty if $I in.not sl_n (FF)$, which happens precisely when $tr(I) = n != 0$ in $FF$, i.e. when $op("char") F divides.not n$.
+
+= Exercise
+== Statement
+Let $n = dim frak(g)$, show that $dim Z(frak(g)) != n-1$.
+== Solution
+Assume this is the case, then let $e_1, ..., e_(n-1)$ be a basis of $Z(frak(g))$ and $e_n$ be any vector not in $Z (frak(g))$ making $e_1,...,e_n$ a basis for $frak(g)$. We know that $[e_n, e_i] = 0$ for all $i <= n-1$ and we also know that $[e_n, e_n] = 0$ so we get that $e_n in Z(frak(g))$, contradicting the choice of $e_n$.
+
+= Exercise
+== Statement
+Prove that any $n$-dimensional Lie algebra with $dim Z(frak(g)) = n - 2$ is isomorphic to either $op("ab")_(n-3) plus.circle op("heis")_3$ or $op("ab")_(n-2) plus.circle eta$ where $eta$ is the canonical non-abelian Lie algebra of dimension 2.
+== Solution
+Write $frak(g) = Z(frak(g)) plus.circle V$ where this is a vector space direct sum, let $v_1,v_2$ be a basis of $V$. Now we consider $[v_1,v_2]$, first assume that $[v_1,v_2] in Z(frak(g))$, then find a basis $e_1,...,e_(n-2)$ for $Z(frak(g))$ that includes $[v_1,v_2]$ as a basic vector, we then have
+$
+v_1,v_2,[v_1,v_2]=e_1,e_2,e_3,...,e_(n-2)
+$
+is a basis for $frak(g)$ so since clearly $span(v_1,v_2,[v_1,v_2]) iso op("heis")_3$ then we get exactly the decomposition as Lie algebras $frak(g) = op("heis")_3 plus.circle op("ab")_(n-3)$.
+
+On the other hand if $[v_1,v_2] in.not Z(frak(g))$ then
+$
+[v_1,v_2] = a v_1 + b v_2 + z
+$
+for some vector $z in Z(frak(g))$. Now either $a$ or $b$ are non-zero, assume WLOG that $a != 0$, we then have
+$
+[v_1 + b / a v_2 + 1 / a z, 1 / a v_2] = 1 / a [v_1, v_2] + b / a^2 [
+  v_2,v_2
+] + 1 / a [z,v_2] = v_1 + b / a v_2 + 1 / a z
+$
+so if we define $v'_1 := v_1 + b/a v_2 + 1/a z, v'_2 = 1/a v_2$ then $[v'_1,v'_2] = v'_1$ and so $span(v'_1,v'_2) iso eta$ as a Lie algebra and thus we get the decomposition $frak(g) = eta plus.circle op("ab")_(n-2)$.
+
+= Exercise
+== Statement
+Show that if $dim V <= infinity$, then $A$ is a nilpotent operator on $V$ if and only if all its eigenvalues are $0$.
+== Solution
+Clearly if $A$ is nilpotent then the minimal polynomial for $A$ is of the form $p(x) = x^n$ for some $n$, so since the eigenvalues of $A$ are roots of the minimal polynomial in $FF$ then they must all be zero.
+
+On the other hand if the eigenvalues of $A$ are all 0, then the minimal polynomial only has $0$ as a root, so it is of the form $x^n$ for some $n$ so we know that $A^n = 0$ and so it is nilpotent.
+
+= Exercise
+== Statement
+Construct in $sl_3 (FF)$ a 2-dimensional subspace, consisting of nilpotent matrices, which do not share a common eigenvector.
+== Solution
+Consider the matrices
+$
+A = mat(0,1,0;0,0,1;0,0,0),
+quad
+B = mat(0,0,0;-1,0,0;0,1,0)
+$
+they span a $2$ dimensional subspace, and we have
+$
+mat(0,a,0;-b,0,a;0,b,0)^3
+&=
+mat(0,a,0;-b,0,a;0,b,0)
+mat(0,a,0;-b,0,a;0,b,0)
+mat(0,a,0;-b,0,a;0,b,0)
+=
+mat(-a b,0,a^2;0,0,0;-b^2,0,a b)
+mat(0,a,0;-b,0,a;0,b,0)
+\ &=
+mat(0,0,0;0,0,0;0,0,0)
+$
+so all the matrices in this subspace are nilpotent. However, they do not all share a common eigenvector, for assume this is the case for a vector $v = vec(a,b,c)$ then we have
+$
+0 = A vec(a,b,c) = vec(b,c,0)
+$
+so $b= c = 0$. But then
+$
+0 = B vec(a,0,0) = vec(0,-a,0)
+$
+so $a = 0$ and thus $v = 0$.
+
