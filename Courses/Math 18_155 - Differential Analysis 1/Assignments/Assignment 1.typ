@@ -12,6 +12,12 @@
 }
 #set page(numbering: "1")
 #let bar(el) = $overline(#el)$
+
+
+*Sources consulted* \
+Classmates: Henry Hu, Panos Tsimpos. \
+Texts: Class Notes, Evan's PDEs.
+
 = Question
 == Statement
 Consider the Green functions, for $n = 2$ we have

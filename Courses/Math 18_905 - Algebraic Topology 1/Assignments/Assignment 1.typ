@@ -12,6 +12,9 @@
   pagebreak(weak: true)
 }
 #let bar(el) = $overline(#el)$
+*Sources consulted* \
+Texts: Class Notes, Wikipedia page for simplicial sets.
+
 = Question
 == Statement
 Write down a semisimplicial set $X$, with $X_3 = nothing, X_4 = nothing, ...$ which has non-zero second homology group $H_2 (X)$. You should
@@ -44,15 +47,15 @@ We will try to create a semisimplicial set which is the triangulation of a spher
   \ d_1 d_2 (B) = d_1 (d) = a = d_1 (f) = d_1 d_1 (B)
   $
   and so indeed the simplicial identities are satisfied.
-+ Now since $F$ and $B$ have the same simplicial maps, $partial F = partial B$ so we have $partial (F - B) = 0$ and thus we have non-zero kernel for $partial : S_2 (X) -> S_1 (X)$. But the image of $partial : S_3 (X) -> S_2 (X)$ is trivial because $S_3 (X)$ is trivial so $H_3 (X) = Z_3 (X)$ is non-zero.
++ Now since $F$ and $B$ have the same simplicial maps, $d F = d B$ so we have $d (F - B) = 0$ and thus we have non-zero kernel for $d : S_2 (X) -> S_1 (X)$. But the image of $d : S_3 (X) -> S_2 (X)$ is trivial because $S_3 (X)$ is trivial so $H_3 (X) = Z_3 (X)$ is non-zero.
 = Question
 == Statement
-Let $X$ be a semisimplicial set. For each $n >= 1$, prove that the composite of the group homomorphisms $partial : S_n (X) -> S_(n-1) (X)$ and $partial : S_(n-1) (X) -> S_(n-2) (X)$ is the zero homomorphism. Conclude that $B_(n-1) (X)$ is a subgroup of $Z_(n-1) (X)$.
+Let $X$ be a semisimplicial set. For each $n >= 1$, prove that the composite of the group homomorphisms $d : S_n (X) -> S_(n-1) (X)$ and $d : S_(n-1) (X) -> S_(n-2) (X)$ is the zero homomorphism. Conclude that $B_(n-1) (X)$ is a subgroup of $Z_(n-1) (X)$.
 == Solution
 We can directly compute, for some element $sigma in X_n$,
 $
-partial partial sigma & = partial sum_(i=0)^n (-1)^i d_i sigma
-= sum_(i=0)^n (-1)^i partial (d_i sigma)
+d d sigma & = d sum_(i=0)^n (-1)^i d_i sigma
+= sum_(i=0)^n (-1)^i d (d_i sigma)
 = sum_(i=0)^n (-1)^i sum_(j=0)^(n-1) (-1)^(j) d_j d_i sigma
 \ &= sum_(i=0)^n (-1)^i sum_(j=0)^(n-1) (-1)^(j) d_j d_i sigma
 = sum_(0<=j<i<=n) (-1)^(j+i) d_j d_i sigma

@@ -49,6 +49,9 @@
 #show: NumberingAfter
 #set enum(numbering: "(a)")
 
+*Sources consulted* \
+Classmates: Julia Meng. \
+Texts: Class Notes.
 = Exercise
 == Statement
 Let $A$ be an algebra, and $A\_$ be the algebra with the commutator bracket $[a,b] = a b - b a$. For each of the following conditions on $A$ prove that $A\_$ carries the structure of a Lie Algebra.

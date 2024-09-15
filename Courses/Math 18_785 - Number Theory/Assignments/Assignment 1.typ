@@ -12,6 +12,11 @@
 }
 #set page(numbering: "1")
 #let bar(el) = $overline(#el)$
+
+*Sources consulted* \
+Classmates: Julia Meng, Michael Panner, Ayan Nath. \
+Texts: Class Notes, Algebraic Number Theory by Milne, Elementry and Analytic Theory of Algebraic Numbers by Narkiewicz.
+
 = Question
 == Statement
 Write down a monic polynomial $f in ZZ[x]$ with $sqrt(2) + sqrt(3)$ as a root.
@@ -156,7 +161,7 @@ First we compute the discriminant, it turns out to be
 $
 det mat(3,0,0;0,0,6;0,6,0) = - 108.
 $
-Now assume that $2 | [ O_K : ZZ[2^(1 slash 3)]]$, then we have
+Now assume that $2 divides [ O_K : ZZ[2^(1 slash 3)]]$, then we have
 $
 (a_0 + a_1 al + a_2 al2) / 2 in O_K
 $
@@ -166,11 +171,60 @@ al2 (a_0 + a_1 al + a_2 al2) / 2 = a_0 / 2 al2 + (a_1 + a_2 al)
 $
 so we have $a_0 al2 / 2 in O_K$. If it is instead $a_1$ or $a_2$ that does not divide $2$ then a similar calculation shows that $a_1 al2 / 2$ or $a_2 al2 / 2$ are in $O_K$, we shall assume WLOG it is $a_0$. We thus have
 $
-8 N_(K quo Q) (a_0 al2 / 2) = N_(K quo Q) (a_0 al2) = a_0^3 N_(K quo Q) (al)^2
+8 N_(K quo QQ) (a_0 al2 / 2) = N_(K quo QQ) (a_0 al2) = a_0^3 N_(K quo QQ) (al)^2
 $
-But we know that $N_(K quo Q) (al)$ is equal (up to a sign) to the constant term in the minimal polynomial of $al$ which is $2$. So we get
+But we know that $N_(K quo QQ) (al)$ is equal (up to a sign) to the constant term in the minimal polynomial of $al$ which is $2$. So we get
 $
-2 N_(K quo Q) (a_0 al2 / 2) = a_0^3
+2 N_(K quo QQ) (a_0 al2 / 2) = a_0^3
 $
-and so $2$ does infact divide $a_0$, and so we are done.
+and so $2$ does infact divide $a_0$, contradicting the choice of $a_0$, proving that $2 divides.not [O_k | ZZ[al]]$.
 
+We now replace the minimal polynomial $f(x) = x^3 - 2$ with $f(x+2) = x^3 + 6x^2 + 12 x + 6$. Now the roots of this polynomial in the algebraic closure have all been shifted, but since we have the formula $product_(i,j) (theta_i - theta_j)^2$ for the descriminant where $theta_i$ are the roots, then we know that the discriminant has not changed. Now assume that $3 divides [O_K : ZZ[al]]$, then we have that
+$
+  (b_0 + b_1 (al - 2) + b_2 (al - 2)^2)/3 in O_k
+$
+for some $b_0,b_1,b_2$ such that at least one is not divisible by $3$. By the exact same argument as before we have for some $b_i$ that is not divisible by 3
+$
+  27 N_(K quo QQ) ( b_i ((al - 2)^2)/3)
+  = N_(K quo QQ) (b_i (al - 2)^2)
+  = b_i^3 (N_(K quo QQ) (al - 2))^2
+$
+and again we know that $N_(K quo QQ) (al - 2) = 6$ up to a sign. This gives us
+$
+  3 N_(K quo QQ) ( b_i ((al - 2)^2)/3) = 4 b_i^3
+$
+and so $b_i$ is divisible by 3. This shows that $3 divides.not [O_k : ZZ[al]]$, so since $[O_k : ZZ[al]] divides 108$ this shows that $[O_k : ZZ[al]] = 1$. Hence $O_k = ZZ[al]$ so $O_k$ is monogenic.
+
+#counter(heading).step()
+= Question
+== Statement
+Another example of a non-monogenic $O_K$ is $K = QQ[theta]$ where $theta$ is a root of $f(X) = X^3 - X - 4$.
+#set enum(numbering: "(a)")
++ Show that $O_K$ aasdasas
+
+// Follow Milne's notes in Algebraic Number Theory page 44, Exercise 2-6 to show that for $K = QQ[sqrt(2), sqrt(7)]$, its ring of integer $O_k$ is not monogenic.
+// == Solution
+// Consider the algebraic integers
+// $
+//   alpha_1 = (1 + sqrt(7))(1 + sqrt(10))\
+//   alpha_2 = (1 + sqrt(7))(1 - sqrt(10))\
+//   alpha_3 = (1 - sqrt(7))(1 + sqrt(10))\
+//   alpha_4 = (1 - sqrt(7))(1 - sqrt(10))
+// $
+// Let us compute the products of these integers,
+// $
+//   alpha_1 alpha_2 = (1 + sqrt(7))^2 (1 - 10) = -9 (8 + 2 sqrt(7))\
+//   alpha_1 alpha_3 = (1 - 7)(1 + sqrt(10))^2 = -6 (11 + 2 sqrt(10))\
+//   alpha_1 alpha_4 = (1 - 7)(1 - 10) = 54 \
+//   alpha_2 alpha_3 = (1 - 7)(1 - 10) = 54 \
+//   alpha_2 alpha_4 = (1 - 7)(1 - sqrt(10))^2 = -6 (11 - 2 sqrt(10)) \
+//   alpha_3 alpha_4 = (1 - sqrt(7))^2(1 - 10) = -9 (8 - 2 sqrt(7)),
+// $
+// Clearly all of these products are divisible by 3. However, the trace of $alpha_i$ is
+// $ 
+//   alpha_1 + alpha_2 + alpha_3 + alpha_4 = 4
+// $
+// so we have 
+//
+//
+//
