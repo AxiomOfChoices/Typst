@@ -171,7 +171,9 @@ al2 (a_0 + a_1 al + a_2 al2) / 2 = a_0 / 2 al2 + (a_1 + a_2 al)
 $
 so we have $a_0 al2 / 2 in O_K$. If it is instead $a_1$ or $a_2$ that does not divide $2$ then a similar calculation shows that $a_1 al2 / 2$ or $a_2 al2 / 2$ are in $O_K$, we shall assume WLOG it is $a_0$. We thus have
 $
-8 N_(K quo QQ) (a_0 al2 / 2) = N_(K quo QQ) (a_0 al2) = a_0^3 N_(K quo QQ) (al)^2
+8 N_(K quo QQ) (a_0 al2 / 2) = N_(K quo QQ) (a_0 al2) = a_0^3 N_(K quo QQ) (
+  al
+)^2
 $
 But we know that $N_(K quo QQ) (al)$ is equal (up to a sign) to the constant term in the minimal polynomial of $al$ which is $2$. So we get
 $
@@ -181,62 +183,97 @@ and so $2$ does infact divide $a_0$, contradicting the choice of $a_0$, proving 
 
 We now replace the minimal polynomial $f(x) = x^3 - 2$ with $f(x+2) = x^3 + 6x^2 + 12 x + 6$. Now the roots of this polynomial in the algebraic closure have all been shifted, but since we have the formula $product_(i,j) (theta_i - theta_j)^2$ for the descriminant where $theta_i$ are the roots, then we know that the discriminant has not changed. Now assume that $3 divides [O_K : ZZ[al]]$, then we have that
 $
-  (b_0 + b_1 (al - 2) + b_2 (al - 2)^2)/3 in O_k
+(b_0 + b_1 (al - 2) + b_2 (al - 2)^2) / 3 in O_k
 $
 for some $b_0,b_1,b_2$ such that at least one is not divisible by $3$. By the exact same argument as before we have for some $b_i$ that is not divisible by 3
 $
-  27 N_(K quo QQ) ( b_i ((al - 2)^2)/3)
-  = N_(K quo QQ) (b_i (al - 2)^2)
-  = b_i^3 (N_(K quo QQ) (al - 2))^2
+27 N_(K quo QQ) (b_i ((al - 2)^2) / 3)
+= N_(K quo QQ) (b_i (al - 2)^2)
+= b_i^3 (N_(K quo QQ) (al - 2))^2
 $
 and again we know that $N_(K quo QQ) (al - 2) = 6$ up to a sign. This gives us
 $
-  3 N_(K quo QQ) ( b_i ((al - 2)^2)/3) = 4 b_i^3
+3 N_(K quo QQ) (b_i ((al - 2)^2) / 3) = 4 b_i^3
 $
 and so $b_i$ is divisible by 3. This shows that $3 divides.not [O_k : ZZ[al]]$, so since $[O_k : ZZ[al]] divides 108$ this shows that $[O_k : ZZ[al]] = 1$. Hence $O_k = ZZ[al]$ so $O_k$ is monogenic.
 
 #counter(heading).step()
 = Question
 == Statement
-Show that $O_K$ for $K = QQ[Theta]$ where $Theta$ is a root of $f(X) = X^3 - X - 4$ is monogenic.
+Consider $O_K$ for $K = QQ[Theta]$ where $Theta$ is a root of $f(X) = X^3 - X - 4$, is it monogenic? Explain.
 == Solution
 We compute the discriminant, to do so we need to get the minimal polynomial for $theta^2,theta^3$ and $theta^4$. For $theta^2$ we get
 $
-  theta^4 = theta(theta + 4) = theta^2 + 4 theta\
-  theta^6 = (theta + 4)^2 = theta^2 + 8 theta + 16
+theta^4 = theta(theta + 4) = theta^2 + 4 theta\
+theta^6 = (theta + 4)^2 = theta^2 + 8 theta + 16
 $
 so
 $
-  (theta^2)^3 - 2 (theta^2)^2 + theta^2 - 16 = 0
+(theta^2)^3 - 2 (theta^2)^2 + theta^2 - 16 = 0
 $
 for $theta^3$ we get
 $
-  theta^3 = theta + 4 \
-  theta^6 = theta^2 + 8 theta + 16 \
-  theta^9 = (theta + 4)^3 = theta^3 + 12 theta^2 + 48 theta + 64
-  = 12 theta^2 + 49 theta + 68
+theta^3 = theta + 4 \
+theta^6 = theta^2 + 8 theta + 16 \
+theta^9 = (theta + 4)^3 = theta^3 + 12 theta^2 + 48 theta + 64
+= 12 theta^2 + 49 theta + 68
 $
 so
 $
-  (theta^3)^3 - 12 (theta^3)^2 = -47 theta - 124\
-  (theta^3)^3 - 12 (theta^3)^2 + 47 (theta^3) = 64.
+(theta^3)^3 - 12 (theta^3)^2 = -47 theta - 124\
+(theta^3)^3 - 12 (theta^3)^2 + 47 (theta^3) = 64.
 $
 Finally for $theta^4$ we have
 $
-  theta^4 = theta^2 + 4 theta\
-  theta^8 = (theta^2 + 4 theta)^2 = theta^4 + 8 theta^3 + 16 theta^2
-  = theta^2 + 4 theta + 8 theta +32 + 16 theta^2
-  = 17 theta^2 + 12 theta + 32\
-  theta^12 = (theta + 4)^4 = theta^4 + 16 theta^3 + 96 theta^2 + 256 theta + 256
-  = 97 theta^2 + 276 theta + 320
+theta^4 = theta^2 + 4 theta\
+theta^8 = (theta^2 + 4 theta)^2 = theta^4 + 8 theta^3 + 16 theta^2
+= theta^2 + 4 theta + 8 theta + 32 + 16 theta^2
+= 17 theta^2 + 12 theta + 32\
+theta^12 = (theta + 4)^4 = theta^4 + 16 theta^3 + 96 theta^2 + 256 theta + 256
+= 97 theta^2 + 276 theta + 320
 $
 so we get
 $
-  (theta^4)^3 - 2 (theta^4)^2 - 63 (theta^4) - 256 = 0.
+(theta^4)^3 - 2 (theta^4)^2 - 63 (theta^4) - 256 = 0.
 $
 
 Now the trace is equal to the negative of second coefficient in the minimal polynomial, so we we get $tr(theta) = 0, tr(theta^2) = 2, tr(theta^3) = 12, tr(theta^4) = 2$. Plugging this into a matrix gives us
+
+Now I claim that $ZZ[(theta+theta^2)/2] seq O_K$, first note that if $alpha = (theta + theta^2)/2$ then
 $
-  Delta(1,theta,theta^2) = det mat(3,0,2;0,2,12;2,12,2) = -428 = - 2^2 dot 107
+alpha^2 = (2 theta^2 + 6 theta + 8) / 4\
+alpha^3 = 1 / 8 (2 theta^2 + 6 theta + 8)(theta + theta^2)
+= 1 / 8 (2 theta^4 + 2 theta^3 + 6 theta^3 + 6 theta^2 + 8theta^2 + 8 theta)
+\ = 1 / 8 (2 theta^2 + 8 theta + 8 theta + 32 + 14theta^2 + 8 theta) = 1 / 8 (
+  16theta^2 + 24 theta + 32
+) = 2 theta^2 + 3 theta + 4.
 $
-Hence $Delta_K$ is either $107$ or $428$. But we know that $107 = 3 mod 4$ so by a previous question we know that it cannot be $Delta_K$ so $Delta_K = 428 = Delta(1,theta,theta^2)$ so $O_K$ is monogenic.
+Thus we have that $alpha$ is a root of
+$
+X^3 - X^2 - 3 X - 2 = 0
+$
+and thus clearly in $O_K$. Now $theta in ZZ[alpha]$ because
+$
+((theta+theta^2) / 2)^2
+- (theta + theta^2) / 2
+= (theta^4 + 2 theta^3 + theta^2) / 4 - (theta + theta^2) / 2
+\ = (theta^2 + 4theta + 2theta + 8 + theta^2) / 4 - (2theta + 2theta^2) / 4
+= (4theta + 8) / 4
+= theta + 2
+$
+so we can consider the discriminant of $1,theta,alpha$. We have
+$
+tr(theta) = 0, \
+tr(alpha) = (tr(theta^2) + tr(theta)) / 2 = 1,\
+tr(theta^2) = 2,\
+tr(alpha^2) = (2 tr(theta^2) + 6 tr(theta) + tr(8)) / 4 = (4 + 0 +24) / 4 = 7, \
+tr(theta alpha) = (tr(theta^3 + theta^2)) / 2
+= (tr(theta + 4 + theta^2)) / 2
+= (2 + 12) / 2 = 7.
+$
+This gives us
+$
+Delta(1,theta,alpha) = det mat(3,0,1;0,2,7;1,7,7) = -107
+$
+which is prime and thus square free and thus equal to $Delta_K$, meaning that $O_K = ZZ[alpha]$ is monogenic.
+
