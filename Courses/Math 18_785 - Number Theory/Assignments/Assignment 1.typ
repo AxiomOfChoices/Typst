@@ -198,33 +198,45 @@ and so $b_i$ is divisible by 3. This shows that $3 divides.not [O_k : ZZ[al]]$, 
 #counter(heading).step()
 = Question
 == Statement
-Another example of a non-monogenic $O_K$ is $K = QQ[theta]$ where $theta$ is a root of $f(X) = X^3 - X - 4$.
-#set enum(numbering: "(a)")
-+ Show that $O_K$ aasdasas
+Show that $O_K$ for $K = QQ[Theta]$ where $Theta$ is a root of $f(X) = X^3 - X - 4$ is monogenic.
+== Solution
+We compute the discriminant, to do so we need to get the minimal polynomial for $theta^2,theta^3$ and $theta^4$. For $theta^2$ we get
+$
+  theta^4 = theta(theta + 4) = theta^2 + 4 theta\
+  theta^6 = (theta + 4)^2 = theta^2 + 8 theta + 16
+$
+so
+$
+  (theta^2)^3 - 2 (theta^2)^2 + theta^2 - 16 = 0
+$
+for $theta^3$ we get
+$
+  theta^3 = theta + 4 \
+  theta^6 = theta^2 + 8 theta + 16 \
+  theta^9 = (theta + 4)^3 = theta^3 + 12 theta^2 + 48 theta + 64
+  = 12 theta^2 + 49 theta + 68
+$
+so
+$
+  (theta^3)^3 - 12 (theta^3)^2 = -47 theta - 124\
+  (theta^3)^3 - 12 (theta^3)^2 + 47 (theta^3) = 64.
+$
+Finally for $theta^4$ we have
+$
+  theta^4 = theta^2 + 4 theta\
+  theta^8 = (theta^2 + 4 theta)^2 = theta^4 + 8 theta^3 + 16 theta^2
+  = theta^2 + 4 theta + 8 theta +32 + 16 theta^2
+  = 17 theta^2 + 12 theta + 32\
+  theta^12 = (theta + 4)^4 = theta^4 + 16 theta^3 + 96 theta^2 + 256 theta + 256
+  = 97 theta^2 + 276 theta + 320
+$
+so we get
+$
+  (theta^4)^3 - 2 (theta^4)^2 - 63 (theta^4) - 256 = 0.
+$
 
-// Follow Milne's notes in Algebraic Number Theory page 44, Exercise 2-6 to show that for $K = QQ[sqrt(2), sqrt(7)]$, its ring of integer $O_k$ is not monogenic.
-// == Solution
-// Consider the algebraic integers
-// $
-//   alpha_1 = (1 + sqrt(7))(1 + sqrt(10))\
-//   alpha_2 = (1 + sqrt(7))(1 - sqrt(10))\
-//   alpha_3 = (1 - sqrt(7))(1 + sqrt(10))\
-//   alpha_4 = (1 - sqrt(7))(1 - sqrt(10))
-// $
-// Let us compute the products of these integers,
-// $
-//   alpha_1 alpha_2 = (1 + sqrt(7))^2 (1 - 10) = -9 (8 + 2 sqrt(7))\
-//   alpha_1 alpha_3 = (1 - 7)(1 + sqrt(10))^2 = -6 (11 + 2 sqrt(10))\
-//   alpha_1 alpha_4 = (1 - 7)(1 - 10) = 54 \
-//   alpha_2 alpha_3 = (1 - 7)(1 - 10) = 54 \
-//   alpha_2 alpha_4 = (1 - 7)(1 - sqrt(10))^2 = -6 (11 - 2 sqrt(10)) \
-//   alpha_3 alpha_4 = (1 - sqrt(7))^2(1 - 10) = -9 (8 - 2 sqrt(7)),
-// $
-// Clearly all of these products are divisible by 3. However, the trace of $alpha_i$ is
-// $ 
-//   alpha_1 + alpha_2 + alpha_3 + alpha_4 = 4
-// $
-// so we have 
-//
-//
-//
+Now the trace is equal to the negative of second coefficient in the minimal polynomial, so we we get $tr(theta) = 0, tr(theta^2) = 2, tr(theta^3) = 12, tr(theta^4) = 2$. Plugging this into a matrix gives us
+$
+  Delta(1,theta,theta^2) = det mat(3,0,2;0,2,12;2,12,2) = -428 = - 2^2 dot 107
+$
+Hence $Delta_K$ is either $107$ or $428$. But we know that $107 = 3 mod 4$ so by a previous question we know that it cannot be $Delta_K$ so $Delta_K = 428 = Delta(1,theta,theta^2)$ so $O_K$ is monogenic.
