@@ -200,7 +200,7 @@ and so $b_i$ is divisible by 3. This shows that $3 divides.not [O_k : ZZ[al]]$, 
 #counter(heading).step()
 = Question
 == Statement
-Consider $O_K$ for $K = QQ[Theta]$ where $Theta$ is a root of $f(X) = X^3 - X - 4$, is it monogenic? Explain.
+Consider $O_K$ for $K = QQ[theta]$ where $theta$ is a root of $f(X) = X^3 - X - 4$, is it monogenic? Explain.
 == Solution
 We compute the discriminant, to do so we need to get the minimal polynomial for $theta^2,theta^3$ and $theta^4$. For $theta^2$ we get
 $
