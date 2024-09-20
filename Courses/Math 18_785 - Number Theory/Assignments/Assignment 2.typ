@@ -16,7 +16,7 @@
 // #show math.equation: set text(font: "Latin Modern Math")
 
 *Sources consulted* \
-Classmates: Michael Panner.\
+Classmates: Michael Panner, Julia Meng.\
 Texts: Class Notes, Algebraic Number Theory by Milne, Elementry and Analytic Theory of Algebraic Numbers by Narkiewicz, Number Fields by Marcus.
 
 = Question
@@ -241,4 +241,80 @@ Now if $a = c$ then $b$ is related to $-b$ through the first generator. If $a < 
 
 = Question
 == Statement
+Calculate the class number of $K = QQ(sqrt(D))$ when
+$
+Delta = -3,-7,-15,-20.
+$
+Whenever $K$ in the above list is not a UFD, give an explicit example of non-unique factorization into irreducible elements.
+== Solution
+Since elements of $Cl (K)$ are in bijection with elements of $qu$ then we can simply check the number of reduced quadratic forms of discriminant $Delta$.
 
+For $Delta = -3$, the bound from the previous question gives us
+$
+a dot c <= 1
+$
+so $a = c = 1$ is the only solution, which forces $b = 1$. Thus $H(QQ(sqrt(-3))) = 1$.
+
+For $Delta = -7$, the bound is
+$
+a dot c <= 2
+$
+so $a = c = 1$ and $a = 1, c = 2$ are the only solutions. The first one cannot correspond to a form since $b^2 + 7 = 4$ has no solutions. The second one has $a = b = 1, c = 2$. Again $H(QQ(sqrt(-7))) = 1$.
+
+For $Delta = -15$, the bound is
+$
+a dot c <= 5
+$
+but we also need $a dot c >= 4$ to have any hope of a solution, so only
+$
+a = 1, c = 4 quad a = 1, c = 5 quad a = b = 2
+$
+are possible solutions. From there we check that $a = b = 1, c = 4$ and $a = c = 2, b = 1$ are the only solutions. This gives us $H(QQ(sqrt(-15))) = 2$.
+
+For $Delta = -20$, the bound is
+$
+5 <= a dot c <= 6
+$
+which gives us
+$
+a = 1, c = 5 quad a = 1, c = 6 quad a = 2, c = 3
+$
+then we check that $a = 1, b = 0, c = 5$ and $a = b = 2, c = 3$ are the only solutions. This gives us $H(QQ(sqrt(-20))) = 2$.
+
+We now give examples of non-uniqueness, in $QQ(sqrt(-15))$
+$
+(1 - sqrt(-15)) / 2
+(1 + sqrt(-15)) / 2
+=
+(1 + 15) / 4 = 4 = 2^2
+$
+
+Now we know that norm of a general element
+$
+N_(K quo QQ) (a + b (1 + sqrt(-15)) / 2) = (a + b / 2)^2 + 15 / 4 b^2
+$
+and so $N_(K quo QQ) ((1 - sqrt(-15))/2) = N_(K quo QQ) ((1+sqrt(-15))/2)= 1/4 +15/4 = 4$ and $N_(K quo QQ) (2) = 4$, but there are no elements with norm $2$ because
+$
+a^2 + a b + 4 b^2 = 2
+$
+clearly has no solutions so they are all irreducible.
+
+For $QQ(sqrt(-20)) = QQ(sqrt(-5))$, we have
+$
+(1 + sqrt(-5))
+(1 - sqrt(-5))
+=
+1 + 5
+=
+6
+=
+2 dot 3
+$
+these have norms $6,6,4,9$ but no elements have norms, $2,3$ so these are all irreducible and so we are done.
+
+= Question
+== Statement
+Assume further that $Delta equiv 1 mod 4$. Show that $Cl_K$ is trivial if and only if $x^2 - x + (1 - Delta)/4$ represents prime numbers for all $x = 1,2,...,(abs(Delta) - 3)/4$.
+== Solution
+First note that $a = 1, b = 1, c = (1 - Delta)/4$ is a reduced positive definite quadratic form that represents an element of $Cl_K$. Now all other quadratic forms that are reduced must have $b^2 equiv 1 mod 4$ so we have
+$$

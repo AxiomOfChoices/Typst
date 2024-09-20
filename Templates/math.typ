@@ -45,6 +45,7 @@
 #let AntiSym = math.op("ASym")
 #let div = math.op("div")
 #let tp = math.op("tp")
+#let Cl = math.op("Cl")
 #let Lie = math.bold(math.op("Lie"))
 #let iso = math.tilde.equiv
 #let diam = math.op("Diam")
