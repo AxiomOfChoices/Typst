@@ -322,9 +322,3 @@ $
 $
 these have norms $6,6,4,9$ but no elements have norms, $2,3$ so these are all irreducible and so we are done.
 
-= Question
-== Statement
-Assume further that $Delta equiv 1 mod 4$. Show that $Cl_K$ is trivial if and only if $x^2 - x + (1 - Delta)/4$ represents prime numbers for all $x = 1,2,...,(abs(Delta) - 3)/4$.
-== Solution
-First note that $a = 1, b = 1, c = (1 - Delta)/4$ is a reduced positive definite quadratic form that represents an element of $Cl_K$. Now all other quadratic forms that are reduced must have $b^2 equiv 1 mod 4$ so we have
-$$
