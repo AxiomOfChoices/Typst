@@ -45,6 +45,7 @@
 #let AntiSym = math.op("ASym")
 #let div = math.op("div")
 #let tp = math.op("tp")
+#let heis = math.op("heis")
 #let char = math.op("char")
 #let ad = math.op("ad")
 #let Cl = math.op("Cl")

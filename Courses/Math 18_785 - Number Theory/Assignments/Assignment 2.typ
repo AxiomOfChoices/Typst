@@ -25,9 +25,9 @@ Let $cal(O)_K$ be the ring of integers of an imaginary quadratic field $K$ and l
 + Prove that $cal(O) := ZZ + c cal(O)_K$ is an order, and that $c cal(O)_K$ is the conductor and $c = [cal(O)_K, cal(O)]$.
 + These exhaust all orders of $cal(O)_K$.
 == Solution
-+ Clearly $ZZ + c cal(O)_K$ is a subring, but its fractional field must be the same as that of $cal(O)_K$ since we can simply divide by $c$ to get back any element of $cal(O)_K$. Now clearly $c cal(O)_K$ is an ideal, but using second isomorphism theorem $cal(O) quo c cal(O)_K iso ZZ quo (c) = ZZ_(c)$, the subrings of which are all of the form $(m)$ for $m divides c$. These are in bijection then to ideals of $cal(O)$ containing $c cal(O)_K$.
++ Clearly $ZZ + c cal(O)_K$ is a sub-ring, but its fractional field must be the same as that of $cal(O)_K$ since we can simply divide by $c$ to get back any element of $cal(O)_K$. Now clearly $c cal(O)_K$ is an ideal, but using second isomorphism theorem $cal(O) quo c cal(O)_K iso ZZ quo (c) = ZZ_(c)$, the subrings of which are all of the form $(m)$ for $m divides c$. These are in bijection then to ideals of $cal(O)$ containing $c cal(O)_K$.
   
-  But now these ideals are all of the form $(m) + c cal(O)_K$ so they are not ideals of $cal(O)_k$ since they do not contain elements in $c cal(O)_K backslash m cal(O)_K$. Since an ideal of $cal(O)_K$ contained in $cal(O)$ would also be ideals of $cal(O)$ this exhausts all such ideals and thus $c cal(O)_K$ is indeed the conductor. Finally the cosets of $cal(O)$ are of the form $cal(O) + m cal(O)_K$ for integers $m$ with $0 <= m < c$ so the index is exactly $c$.
+  But now these ideals are all of the form $(m) + c cal(O)_K$ so they are not ideals of $cal(O)_k$ since they do not contain elements in $c cal(O)_K backslash m cal(O)_K$. Since an ideal of $cal(O)_K$ contained in $cal(O)$ would also be ideals of $cal(O)$ this exhausts all such ideals and thus $c cal(O)_K$ is indeed the conductor. Finally the co-sets of $cal(O)$ are of the form $cal(O) + m cal(O)_K$ for integers $m$ with $0 <= m < c$ so the index is exactly $c$.
 + Let $cal(O)$ be an arbitrary order of $cal(O)_K$. Set $c = [cal(O)_K:cal(O)]$, then we have $c cal(O)_K seq cal(O)$ and thus we also have $ZZ + c cal(O)_K seq cal(O)$. But we know that $[cal(O)_K : ZZ + c cal(O)_K] = c$ so we have $cal(O) = ZZ + c cal(O)_K$.
 
 = Question
@@ -247,7 +247,7 @@ As we showed in the previous question, the elements of $qu$ are in bijection wit
 $
 Delta = b^2 - 4 a c >= a c - 4 a c >= - 3 a c
 $
-so we have $a c <= - Delta/ 3$. But since $a,c$ are both positive there are finitely many such $a,c$'s that can satisfy this bound, specifically at most $Delta^2$ such pairs. Since each product would uniquely determine a $b$ (if such a $b$ exists) then there at most $Delta^2$ positive definite reduced quadratic forms with discriminant $Delta$, and so $abs(qu) <= Delta^2$.
+so we have $a c <= - Delta/ 3$. But since $a,c$ are both positive there are finitely many such $a,c$'s that can satisfy this bound, specifically at most $Delta^2$ such pairs. Since each product would uniquely determine a $b$ up to a sign (if such a $b$ exists) then there at most $Delta^2$ positive definite reduced quadratic forms with discriminant $Delta$, and so $abs(qu) <= Delta^2$.
 
 = Question
 == Statement

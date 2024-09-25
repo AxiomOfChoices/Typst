@@ -122,4 +122,4 @@ $
 
 Now to show it is a measure, consider for any compact $K seq RR^n$ the inclusion $C_c^infinity (K) seq C(K)$. By the Hahn-Banach theorem, since the functional $u$ is bounded by the norm in $C(K)$ then we can extend $u$ to a functional $hat(u)_K : C(K) -> RR$. By the Riesz–Markov–Kakutani theorem we then know that $pair(hat(u)_K, f) = integral_(K) f d mu_K$. We know that the measure is positive because the functional is positive.
 
-We take the sequence $K_n = ov(B_n (0))$ and then the
+We take the sequence $K_n = ov(B_n (0))$ and define a measure on all of $RR^n$ by taking the limit of these measures, which makes sense as they must agree on their intersection.
