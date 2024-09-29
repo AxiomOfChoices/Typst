@@ -1,6 +1,7 @@
 #import "@preview/ctheorems:1.1.1": *
 
 // Various symbols
+#let rank = math.op("rank")
 #let supp = $op("supp")$
 #let Mat = $op("Mat")$
 #let Top = $bold(op("Top"))$
