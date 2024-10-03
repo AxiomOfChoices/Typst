@@ -1,4 +1,5 @@
 #import "@preview/commute:0.2.0": node, arr, commutative-diagram
+#import "@preview/cetz:0.2.2"
 #import "/Templates/generic.typ": latex, header
 #import "@preview/ctheorems:1.1.0": *
 #import "/Templates/math.typ": *
@@ -217,5 +218,68 @@ In this exercise, we will define for each topological space $X$ a natural map $k
     k_X (sigma) = (sigma times id_[0,1])_* (k_(Delta^n) (1_(Delta^n)))
   $
   Hence $k_X (sigma)$ is fully determined by $k_(Delta^n) (1_(Delta^n))$.
-+ 
++ We will set $k_(Delta^1) (1_(Delta^1))$ to be the element $a - b in S_2 (Delta^1 times [0,1])$ described in the following diagram.
+  #align(center)[#cetz.canvas({
+    import cetz.draw: *
+    merge-path(fill: rgb("#ff413640"), {
+      line((3,0), (0,0), name: "wx")
+      line((0,0), (3,3), name: "xz")
+      line((3,3), (3,0), name: "wz")
+    })
+    merge-path(fill: rgb("#2ecc4040"), {
+      line((0,0), (3,3), name: "xz")
+      line((0,0), (0,3), name: "yx")
+      line((0,3), (3,3), name: "yz")
+    })
+    arc((2.25,0.75), start: -45deg, delta: -270deg, radius: 0.3, mark: (end: ">"), name:"a")
+    arc((0.75,2.25), start: 135deg, delta: 270deg, radius: 0.3, mark: (end: ">"), name:"b")
+    content("a.origin", $a$)
+    content("b.origin", $b$)
+
+    mark((3,0), (1.5,0), symbol: ">", fill:black)
+    mark((0,3), (0,1.5), symbol: ">", fill:black)
+    mark((0,3), (1.5,3), symbol: ">", fill:black)
+    mark((3,0), (3,1.5), symbol: ">", fill:black)
+    mark((0,0), (1.5,1.5), symbol: ">", fill:black)
+    
+    content((1.5,0), $Delta$, anchor: "north", padding: .1)
+    content((1.5,3), $Delta$, anchor: "south", padding: .1)
+    content((0,1.5), $[0,1]$, anchor: "east", padding: .1)
+    content((3,1.5), $[0,1]$, anchor: "west", padding: .1)
+    content((0,0), $x$, anchor: "north-east", padding: .1)
+    content((0,3), $y$, anchor: "south-east", padding: .1)
+    content((3,3), $z$, anchor: "south-west", padding: .1)
+    content((3,0), $w$, anchor: "north-west", padding: .1)
+  })]
+  We record here that $d a = arrow(x z) - arrow(w z) + arrow(w x)$ and $d b = arrow(x z) - arrow(y z) + arrow(y x)$.
++ We check now that $diff h_1 + h_0 diff = S_1 (f) - S_1 (g)$, applying this to a specific element $sigma in S_1 (X)$ gives us
+  $
+    diff h_1 sigma + h_0 diff sigma &= f_* sigma - g_* sigma
+    \ diff (h_* (k_X sigma)) + h_* (k_X diff sigma) &= f_* sigma - g_* sigma
+  $
+  now analyzing the first term on its own, we have
+  $
+    diff (h_* (k_X sigma)) 
+    &= h_* (diff (sigma times id_[0,1])_* (k_(Delta^1) (1_(Delta^n))))
+    = h_* ((sigma times id_[0,1])_* (diff (a - b))) \
+    &= h_* (sigma times id_[0,1])_* (arrow(w x) - arrow(y x) + arrow(y z) - arrow(w z)).
+  $
+  For the second term we have
+  $
+    h_* (k_X (diff sigma))
+    &=
+    h_* (k_X (d_1 sigma - d_0 sigma))
+    \ &=
+    h_* ((d_1 sigma times id_[0,1])_* (k_(Delta^0) (1_(Delta^0))) - (d_0 sigma times id_[0,1])_* (k_(Delta^0) (1_(Delta^0))))
+  $
+  Now by identifying $d_0 sigma times id_[0,1]$ with $-arrow(y x)$ and $d_1 sigma times id_[0,1]$ with $arrow(w z)$, we get
+  $
+    h_* (k_X (diff sigma))
+    &= h_* (sigma times id_[0,1])_* (arrow(y x) + arrow(w z)).
+  $
+  Now we get
+  $
+    diff h_1 sigma + h_0 diff sigma = h_* (sigma times id_[0,1])_* (arrow(w x) + arrow(y z))
+  $
+
 
