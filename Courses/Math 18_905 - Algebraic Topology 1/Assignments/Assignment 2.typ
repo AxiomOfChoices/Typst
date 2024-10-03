@@ -281,5 +281,9 @@ In this exercise, we will define for each topological space $X$ a natural map $k
   $
     diff h_1 sigma + h_0 diff sigma = h_* (sigma times id_[0,1])_* (arrow(w x) + arrow(y z))
   $
-
-
+  Finally we have that $f_* sigma = h_* (iota_0)_* sigma$ where $iota_0$ is the inclusion of $Delta^1$ along $arrow(w x)$, and $g_* sigma = h_* (iota_1)_* sigma$ where $iota_1$ is the inclusion along $- arrow(y z)$.
+  Together we get
+  $
+    f_* sigma = h_* (sigma times id_[0,1])_* (arrow(w x) + arrow(y z))
+  $
+  which is exactly what we wanted.
