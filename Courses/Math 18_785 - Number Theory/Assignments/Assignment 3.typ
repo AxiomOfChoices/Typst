@@ -2,7 +2,7 @@
 #import "@preview/ctheorems:1.1.0": *
 #import "/Templates/math.typ": *
 #import "/Templates/assignment.typ": *
-#show: doc => header(title: "Assignment 2", name: "Jacob Reznikov", doc)
+#show: doc => header(title: "Assignment 3", name: "Jacob Reznikov", doc)
 #show: latex
 #show: NumberingAfter
 #show: thmrules
