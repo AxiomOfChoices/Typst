@@ -282,9 +282,15 @@ In this exercise, we will define for each topological space $X$ a natural map $k
   $
     diff h_1 sigma + h_0 diff sigma = h_* (sigma times id_[0,1])_* (arrow(y z) - arrow(x w))
   $
-  Finally we have that $f_* sigma = h_* (iota_1)_* sigma$ where $iota_1$ is the inclusion of $Delta^1$ along $arrow(w x)$, and $g_* sigma = h_* (iota_1)_* sigma$ where $iota_1$ is the inclusion along $- arrow(y z)$.
+  Finally we have that $f_* sigma = h_* (iota_1)_* sigma$ where $iota_1$ is the inclusion of $Delta^1$ along $arrow(y z)$, and $g_* sigma = h_* (iota_0)_* sigma$ where $iota_0$ is the inclusion along $- arrow(x w)$.
   Together we get
   $
-    f_* sigma = h_* (sigma times id_[0,1])_* (arrow(w x) + arrow(y z))
+    f_* sigma = h_* (sigma times id_[0,1])_* (arrow(y z))
+    \
+    g_* sigma = h_* (sigma times id_[0,1])_* (arrow(x w))
   $
-  which is exactly what we wanted.
+  which is exactly what we wanted because then
+  $
+    f_* sigma - g_* sigma = h_* (sigma times id_[0,1])_* (arrow(y z) - arrow(x w))
+  $
+  which finishes the proof.

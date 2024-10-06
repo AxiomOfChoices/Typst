@@ -80,6 +80,6 @@ Set $alpha = root(3,5)$.
 
 = Question
 == Statement
-Fo every ideal $frak(p)$ of $cal(O)_K$, show that there exists an order $A = ZZ[theta] seq cal(O)_K$ such that its conductor (defined as the ideal ${c in cal(O)_K : c cal(O)_K seq A }$) is coprime to $frak(p)$.
+For every ideal $frak(p)$ of $cal(O)_K$, show that there exists an order $A = ZZ[theta] seq cal(O)_K$ such that its conductor (defined as the ideal ${c in cal(O)_K : c cal(O)_K seq A }$) is coprime to $frak(p)$.
 == Solution
 We have $NN(I) = n$ for some integer $n$ and thus 
