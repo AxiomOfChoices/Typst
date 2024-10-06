@@ -15,7 +15,8 @@
 #let bar(el) = $overline(#el)$
 #set enum(numbering: "(a)")
 *Sources consulted* \
-Texts: Class Notes, Wikipedia page for simplicial sets.
+Students: Jiahui Yu, Nick \
+Texts: Class Notes.
 
 = Question
 == Statement
@@ -27,17 +28,17 @@ Texts: Class Notes, Wikipedia page for simplicial sets.
   $
   such that $A$ is not isomorphic to $B$.
 == Solution
-+ #v(-3pt) Let us name the morphisms $ZZ ->^f A ->^g ZZ$ Assume let $x$ be any element of $A$ which maps to $1$ under $g$. We have that $x$ must generate an infinite order subgroup of $A$, as otherwise it would contradict the existence of $g$ since we would have $g(0) = g(n x) = n$. Now we consider the map $ZZ plus.circle ZZ -> A$ given by $h : (a,b) |-> f(a) + b x$. This is clearly a homomorphism, it is injective because $(x)$ and $im f$ have zero intersection by construction. To see it is surjective, fix $y in A$, set $m = g(y)$ and consider the element $m x$. We have $g(y - m x) = g(y) - g(m x) = m - m = 0$ so by exactness $y - m x in im f$. Then we for some $a in ZZ$, $y = m x + f(a)$ so $y$ is in the image of $h$.
-+ Consider $A = (ZZ quo 2 ZZ)^2$ and $B = ZZ quo 4 ZZ$. We clearly have these as short exact sequences since the maps $f_1 (x) = (x,0), g_1 (x,y) = y$ and the maps $f_2 (x) = 2 x, g_2 (x) = x mod 2$ make them short exact sequences. It is also clear that $(ZZ quo 2 ZZ)^2 iso.not ZZ quo 4 ZZ$.
++ #v(-3pt) Let us name the morphisms $ZZ ->^f A ->^g ZZ$, then let $x$ be any element of $A$ which maps to $1$ under $g$. We have that $x$ must generate an infinite order subgroup of $A$, as otherwise it would contradict the existence of $g$ since we would have $g(0) = g(n x) = n$. Now we consider the map $ZZ plus.circle ZZ -> A$ given by $h : (a,b) |-> f(a) + b x$. This is clearly a homomorphism, it is injective because $gen(x)$ and $im f$ have zero intersection by construction. To see it is surjective, fix $y in A$, set $m = g(y)$ and consider the element $m x$. We have $g(y - m x) = g(y) - g(m x) = m - m = 0$ so by exactness $y - m x in im f$. Then we for some $a in ZZ$, $y = m x + f(a)$ so $y$ is in the image of $h$.
++ Consider $A = (ZZ quo 2 ZZ)^2$ and $B = ZZ quo 4 ZZ$. We clearly have these as short exact sequences since the maps $f_1 (x) = (x,0), g_1 (x,y) = y$ and the maps $f_2 (x) = 2 x, g_2 (x) = x mod 2$ make them short exact sequences. It is also clear that $(ZZ quo 2 ZZ)^2 iso.not ZZ quo 4 ZZ$, since $ZZ quo 4 ZZ$ contains an element of order $4$ and $(ZZ quo 2 ZZ)^2$ does not.
 
 = Question
 == Statement
 + Consider the first $6$ letters in standard LaTeX font: A, B, C, D, E, and F. Viewed as subsets of $RR^2$, which of these letters are homotopy equivalent? No proofs are required.
 + Prove that if a space $A$ is homotopy equivalent to another space $B$, and $C$ is homotopy equivalent to $D$, then the product spaces $A times C$ and $B times D$ are homotopy equivalent.
 == Solution
-+ The three homotopy equivalence classes are ${A,D}$, ${C,E}$ and ${B}$.
-+ Let $f_1,g_1$ be a homotopy equivalence of $A$ and $B$, in the sense that $f_1 compose g_1 tilde.eq id_B$ and $g_1 compose f_1 tilde.eq id_A$. Similarly let $f_2,g_2$ are a homotopy equivalence of $C$ and $D$. We then have a map $h : A times I -> A$ with $h(x,0) = g_1 compose f_1$ and $h(x,1) = id_A$, and similarly $p(x,0) = g_2 compose f_2$, $p(x,0) = id_C$.
-  We now define the homotopy $rho : A times C times I -> A times C$ given by
++ The three homotopy equivalence classes are ${A,D}$, ${C,E,F}$ and ${B}$.
++ Let $f_1,g_1$ be a homotopy equivalence of $A$ and $B$, in the sense that $f_1 compose g_1 tilde.eq id_B$ and $g_1 compose f_1 tilde.eq id_A$. Similarly let $f_2,g_2$ are a homotopy equivalence of $C$ and $D$. We then have a map $h : A times [0,1] -> A$ with $h(x,0) = g_1 compose f_1$ and $h(x,1) = id_A$, and similarly $p(x,0) = g_2 compose f_2$, $p(x,0) = id_C$.
+  We now define the homotopy $rho : A times C times [0,1] -> A times C$ given by
   $
     rho(x,y,t) = (h(x,t), p(y,t)),
   $
@@ -231,13 +232,13 @@ In this exercise, we will define for each topological space $X$ a natural map $k
       line((0,0), (0,3), name: "yx")
       line((0,3), (3,3), name: "yz")
     })
-    arc((2.25,0.75), start: -45deg, delta: -270deg, radius: 0.3, mark: (end: ">"), name:"a")
-    arc((0.75,2.25), start: 135deg, delta: 270deg, radius: 0.3, mark: (end: ">"), name:"b")
+    arc((1.1,1.9), start: -45deg, delta: -270deg, radius: 0.3, mark: (end: ">"), name:"a")
+    arc((1.9,1.1), start: 135deg, delta: 270deg, radius: 0.3, mark: (end: ">"), name:"b")
     content("a.origin", $a$)
     content("b.origin", $b$)
 
-    mark((3,0), (1.5,0), symbol: ">", fill:black)
-    mark((0,3), (0,1.5), symbol: ">", fill:black)
+    mark((0,0), (1.5,0), symbol: ">", fill:black)
+    mark((0,0), (0,1.5), symbol: ">", fill:black)
     mark((0,3), (1.5,3), symbol: ">", fill:black)
     mark((3,0), (3,1.5), symbol: ">", fill:black)
     mark((0,0), (1.5,1.5), symbol: ">", fill:black)
@@ -251,7 +252,7 @@ In this exercise, we will define for each topological space $X$ a natural map $k
     content((3,3), $z$, anchor: "south-west", padding: .1)
     content((3,0), $w$, anchor: "north-west", padding: .1)
   })]
-  We record here that $d a = arrow(x z) - arrow(w z) + arrow(w x)$ and $d b = arrow(x z) - arrow(y z) + arrow(y x)$.
+  We record here that $d a = arrow(y z) - arrow(x z) + arrow(x y)$ and $d b = arrow(w z) - arrow(x z) + arrow(x w)$.
 + We check now that $diff h_1 + h_0 diff = S_1 (f) - S_1 (g)$, applying this to a specific element $sigma in S_1 (X)$ gives us
   $
     diff h_1 sigma + h_0 diff sigma &= f_* sigma - g_* sigma
@@ -262,7 +263,7 @@ In this exercise, we will define for each topological space $X$ a natural map $k
     diff (h_* (k_X sigma)) 
     &= h_* (diff (sigma times id_[0,1])_* (k_(Delta^1) (1_(Delta^n))))
     = h_* ((sigma times id_[0,1])_* (diff (a - b))) \
-    &= h_* (sigma times id_[0,1])_* (arrow(w x) - arrow(y x) + arrow(y z) - arrow(w z)).
+    &= h_* (sigma times id_[0,1])_* (arrow(y z) + arrow(x y) - arrow(w z) - arrow(x w)).
   $
   For the second term we have
   $
@@ -272,16 +273,16 @@ In this exercise, we will define for each topological space $X$ a natural map $k
     \ &=
     h_* ((d_1 sigma times id_[0,1])_* (k_(Delta^0) (1_(Delta^0))) - (d_0 sigma times id_[0,1])_* (k_(Delta^0) (1_(Delta^0))))
   $
-  Now by identifying $d_0 sigma times id_[0,1]$ with $-arrow(y x)$ and $d_1 sigma times id_[0,1]$ with $arrow(w z)$, we get
+  Now by identifying $d_0 sigma times id_[0,1]$ with $arrow(x y)$ and $d_1 sigma times id_[0,1]$ with $arrow(w z)$, we get
   $
     h_* (k_X (diff sigma))
-    &= h_* (sigma times id_[0,1])_* (arrow(y x) + arrow(w z)).
+    &= h_* (sigma times id_[0,1])_* (-arrow(x y) + arrow(w z)).
   $
   Now we get
   $
-    diff h_1 sigma + h_0 diff sigma = h_* (sigma times id_[0,1])_* (arrow(w x) + arrow(y z))
+    diff h_1 sigma + h_0 diff sigma = h_* (sigma times id_[0,1])_* (arrow(y z) - arrow(x w))
   $
-  Finally we have that $f_* sigma = h_* (iota_0)_* sigma$ where $iota_0$ is the inclusion of $Delta^1$ along $arrow(w x)$, and $g_* sigma = h_* (iota_1)_* sigma$ where $iota_1$ is the inclusion along $- arrow(y z)$.
+  Finally we have that $f_* sigma = h_* (iota_1)_* sigma$ where $iota_1$ is the inclusion of $Delta^1$ along $arrow(w x)$, and $g_* sigma = h_* (iota_1)_* sigma$ where $iota_1$ is the inclusion along $- arrow(y z)$.
   Together we get
   $
     f_* sigma = h_* (sigma times id_[0,1])_* (arrow(w x) + arrow(y z))
