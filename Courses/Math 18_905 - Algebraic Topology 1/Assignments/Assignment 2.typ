@@ -15,7 +15,7 @@
 #let bar(el) = $overline(#el)$
 #set enum(numbering: "(a)")
 *Sources consulted* \
-Students: Jiahui Yu, Nick \
+Students: Jiahui Yu, Zack \
 Texts: Class Notes.
 
 = Question

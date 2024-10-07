@@ -78,8 +78,54 @@ Set $alpha = root(3,5)$.
   $
   is the prime decomposition we were missing.
 
+#counter(heading).step()
 = Question
 == Statement
-For every ideal $frak(p)$ of $cal(O)_K$, show that there exists an order $A = ZZ[theta] seq cal(O)_K$ such that its conductor (defined as the ideal ${c in cal(O)_K : c cal(O)_K seq A }$) is coprime to $frak(p)$.
+Let $L_1, L_2$ be finite extensions of a number field $K$. If a prime ideal $frak(p)$ of $cal(O)_K$ is split completely in $L_1,L_2$, then it is so in the composition $L_1 L_2$.
 == Solution
-We have $NN(I) = n$ for some integer $n$ and thus 
+Assume that we have complete splittings
+$
+  frak(p) = frak(A)_1  dots.c frak(A)_r quad "in" L_1
+  \
+  frak(p) = frak(B)_1  dots.c frak(B)_s quad "in" L_2
+$
+
+#counter(heading).step()
+#counter(heading).step()
+= Question
+== Statement
+Show that for every finite abelian group $G$ there exists a Galois extension $K$ of $QQ$ such that $Gal(K quo QQ) iso G$.
+== Solution
+We know from class that $Gal(K quo QQ) = (ZZ quo n ZZ)^times$ for $K = QQ(zeta_n)$ where $zeta_n$ is the $n$-th root of unity. Now also from class we know that $(ZZ quo p ZZ)^times iso ZZ quo (p-1) ZZ$ for any prime $p$.
+
+Next we recall that every finite abelian group $G$ has the form
+$
+  G iso (ZZ quo n_1 ZZ) times (ZZ quo n_2 ZZ) times dots.c times (ZZ quo n_k ZZ).
+$
+Now fix any given $n_i$ and recall that by Dirichlet's Theorem there are infinitely many primes satisfying $p = 1 mod n_i$ so pick one of these primes and denote it $p_i$, with $p_i - 1 = m_i n_i$ for some integer $m_i$. We can pick $p_i$ such that they are all distinct We thus get that
+$
+  G seq (ZZ quo (p_1-1) ZZ) times (ZZ quo (p_2-1) ZZ) times dots.c times (ZZ quo (p_k - 1) ZZ).
+$
+now the group on the right is exactly the group of units for $ZZ quo (p_1 p_2 p_3 ... p_k) ZZ$ so we get that 
+$
+  G seq ZZ quo (p_1 p_2 ... p_k) ZZ iso Gal(QQ(zeta_(p_1 p_2... p_k)) quo QQ)
+$
+and by the fundamental theorem of Galois theory we know that this subgroup then corresponds to some subfield of $QQ(zeta_(p_1 ... p_k))$ and thus that subfield is an extension of $QQ$ with the desired property.
+
+= Question
+== Statement
+Show that every quadratic field is a subfield of some cyclotomic field.
+== Solution
+Let $m$ be some square free integer and let $m = plus.minus p_1 dots.c p_n$ be the prime decomposition of $m$, with all prime distinct because it is square free, we then have $sqrt(m) = sqrt(plus.minus 1) sqrt(p_1) dots.c sqrt(p_n)$ so it is enough to show that $sqrt(p)$ is contained in $QQ[zeta_n]$ for some $n$.
+
+To that end first assume that $p$ is an odd prime, then we have that $Delta_K = p^(p-2)$ where $K = QQ[zeta_p]$ which we saw in class. But we also know from class that
+$
+  Delta_K = product_(1 <= i < j <= p) (zeta_p^(i-1) - zeta_p^(j-1))^2
+$
+and so
+$
+  product_(1 <= i < j <= p) (zeta_p^(i-1) - zeta_p^(j-1)) = p^((p-2)/2) = p^((p-3)/2) sqrt(p).
+$
+Now $p^((p-3)/2)$ is an integer and thus invertible in $QQ$ and so $sqrt(p)$ is in $QQ[zeta_p]$
+
+Now if $p = 2$ then we have $sqrt(2) in QQ[zeta_8]$ because $zeta_8 = sqrt(2)/2 + i sqrt(2)/2$, this also contains $sqrt(-1)$. Thus we $QQ[zeta_(8 m)]$ will always contain $sqrt(m)$ and so we are done.
