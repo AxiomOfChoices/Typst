@@ -315,7 +315,102 @@ and so the $i$-th component is given by $partial_(x_j) f_i|_(x = a)$ which is ex
 + Given algebraically independent polynomials in $y_1,...,y_m$ in $FF[x_1,...,x_m]$, show that the field extension $FF(x_1, ..., x_m) supset.eq F(y_1,...,y_m)$ is finite, in the sense that each $x_i$ satisfies a non-zero polynomial equation over $FF(y_1,...,y_m)$.
 + For each $i = 1,2,...,m$ take a polynomial equation satisfied by $x_i$ over $FF(f_1,...,f_m)$ and clear the denominators to get a polynomial over $FF[f_1,...,f_m]$ and let $p_i (f_1,...,f_m)$ be the leading coefficient of this polynomial. Show that the set of points
   $
-    {y in FF^m | p_i (y) != 0 "for" i = 1,2,...m}
+    {y in FF^m | p_i (y) != 0 "for" i = 1,2,...,m}
   $
   is contained in $f(FF^m)$.
+== Solution
++ Since
+  $
+    F(f_1,...,f_m) = 0
+  $
+  then we have by chain rule
+  $
+    partial_(x_i) F(f_1,...,f_m) = sum_j (partial F)/(partial f_j) (partial f_j)/(partial x_i) = 0
+  $
+  so the matrix-covector product has
+  $
+    (partial F)/(partial f_j) (partial f_j)/(partial x_i) = 0.
+  $ 
+  Now at any point we have either $(partial F)/(partial f_j) = 0$ or the image of $(partial f_j)/(partial x_i)$ is contained in the kernel of $(partial F)/(partial f_j)$. We thus have
+  $
+    FF^m = (sect.big_(j) V((partial F)/(partial f_j))) union V(det (partial f_j)/(partial x_i)),
+  $
+  but as union of Zariski closed sets one of these sets must equal the entirety of $FF^m$. Now this cannot be
+  $
+    sect.big_(j) V((partial F)/(partial f_j))
+  $
+  as at least one polynomial here is non-trivial if $F$ is not constant (I am assuming that $F != 0$), hence $FF^m = V(det (partial f_j)/(partial x_i))$.
++ Clearly $FF(y_1,...,y_m)$ has transcendence degree $m$ and thus if $FF(x_1,...,x_m)$ was not a finite extension it would have transcendence degree at least $m + 1$. But clearly it also has transcendence degree $m$ so it is a finite extension.
++ Construct $p_i (f_1,...,f_m)$ as in the question, let $y in FF^m$ be such that $p_i (y) != 0$ for $i = 1,2,...,m}$, then we can define the homomorphism
+  $
+    G : FF[f_1,...,f_m] &-> FF\
+        f_i &|-> y_i
+  $
+  and so since $p_i (y)$ are non-zero then we get that $p_i$ gets mapped to a non-zero element of $FF$, and thus $G(p_i)$ is invertible. We can thus define an extension
+  $
+    tilde(G) : FF[f_1,...,f_m, p_1^(-1),...,p_m^(-1)] -> FF.
+  $
+  Now inside the ring $FF[f_1,...,f_m, p_1^(-1),...,p_m^(-1)]$ we can divide the polynomial solved by $x_i$ by its leading coefficient to get a monic polynomial, making $x_i$ integral. Since we assumed that $FF$ is algebraically closed and noting that $FF[x_1,...,x_m]$ is an integral extension of $FF[f_1,...,f_m, p_1^(-1),...,p_m^(-1)]$ we thus get another extension of $G$,
+  $
+    ov(G) : FF[x_1,...,x_m] -> FF.
+  $
+  Now by construction we have that the tuple
+  $
+    (ov(G)(x_1),...,ov(G)(x_n))
+  $
+  is such that
+  $
+    f_i (ov(G)(x_1),...,ov(G)(x_n)) = y_u
+  $
+  so we get that
+  $
+    f(ov(G)(x_1),...,ov(G)(x_n)) = y
+  $
+  and so indeed $y$ is in $f(FF^m)$.
+
+Finally we note that ${y in FF^m | p_i (y) != 0 "for" i = 1,2,...,m}$ is a Zariski open set and thus $f(FF^m)$ contains a Zariski open set.
+
+= Question
+== Statement
+Let $frak(g) = sl_2 (RR)$. Show that $frak(h)_1 = RR mat(1, 0;0, -1)$ and $frak(h)_2 = RR mat(0, 1;-1, 0)$ are Cartan subalgebras of $frak(g)$, but they are not conjugate by any automorphism of $frak(g)$.
+== Solution
+We already know from class that $frak(h)_1$ is Cartan so we only check $frak(h)_2$. Now $frak(h)_2$ is clearly nilpotent, so we check $frak(n)_frak(h)_2 frak(g)$. For any $mat(a,b;c,-a)$ we have
+$
+  [mat(a,b;c,-a), mat(0,1;-1,0)]
+  &=
+  mat(a,b;c,-a) mat(0,1;-1,0)
+  -
+  mat(0,1;-1,0) mat(a,b;c,-a)
+  =
+  mat(-b,a;a,c)
+  -
+  mat(c,-a;-a,-b)
+  \ &=
+  mat(-b-c, 2 a; 2a, b+c)
+$
+which is never in $frak(h)_2$ unless it is equal to zero, in which case $a = 0$ and $b + c = 0$ and hence $frak(n)_frak(h)_2 frak(g) = frak(h)_2$.
+
+Now to see that they are not conjugate by any automorphism, we recall that $frak(h)_1$ has two weight spaces, with weights $2,-2$. On the other hand we can compute for $frak(h)_2$,
+$
+  (ad mat(0, 1; -1, 0)) mat(a, b; c, -a)
+  =
+  mat(b+c,-2a;-2a,-b-c)
+$
+so if it is in an eigenspace we have
+$
+  b + c = lambda a, - 2 a = lambda b, - 2 a = lambda c
+$
+for some $lambda$. From this we immediately get $c = b$ so
+$
+  2 b = lambda a, - 2 a = lambda b
+$
+so
+$
+  2 b =  lambda^2/(-2) b.
+$
+now if $b = 0$ then we get $a = 0$ and so no weight space there, on the other hand if $b != 0$ then
+$
+  -4 = lambda^2
+$
+so $lambda = 2 i$. Thus $frak(h)_2$ has no decomposition into a real weight space, so it cannot be conjugate to $frak(h)_1$ by a real automorphism.
 
