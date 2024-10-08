@@ -83,14 +83,15 @@ Set $alpha = root(3,5)$.
 == Statement
 Let $L_1, L_2$ be finite extensions of a number field $K$. If a prime ideal $frak(p)$ of $cal(O)_K$ is split completely in $L_1,L_2$, then it is so in the composition $L_1 L_2$.
 == Solution
-Assume that we have complete splittings
-$
-  frak(p) = frak(A)_1  dots.c frak(A)_r quad "in" L_1
-  \
-  frak(p) = frak(B)_1  dots.c frak(B)_s quad "in" L_2
-$
+Let $F$ be any normal extension containing $L_1 L_2$, then let $frak(q)$ be any prime lying over $frak(p)$. Let now, $D_frak(q)$ be the decomposition subgroup of $frak(q)$, then we consider $F^(D_frak(q))$, the elements of $F$ fixed under $I_frak(q)$. As we see in Marcus's book, the field $F^(D_frak(q))$ is the largest subfield of $F$ in which every $frak(p)$ completely splits, but then since $frak(p)$ completely splits in $L_1$ and in $L_2$ then we must have that $L_1$ and $L_2$ are subfields of $F^(D_frak(q))$. Thus $L_1 L_2$ is also a subfield of $F^(D_frak(q))$ and thus $frak(p)$ splits in $L_1 L_2$.
 
-#counter(heading).step()
+= Question
+== Statement
+Let $L quo K$ be a finite Galois extension of number fields with non-cyclic Galois group. Show that there are only finitely many non-split primes in $cal(O)_K$.
+== Solution
+
+
+
 #counter(heading).step()
 = Question
 == Statement
@@ -110,7 +111,8 @@ now the group on the right is exactly the group of units for $ZZ quo (p_1 p_2 p_
 $
   G seq ZZ quo (p_1 p_2 ... p_k) ZZ iso Gal(QQ(zeta_(p_1 p_2... p_k)) quo QQ)
 $
-and by the fundamental theorem of Galois theory we know that this subgroup then corresponds to some subfield of $QQ(zeta_(p_1 ... p_k))$ and thus that subfield is an extension of $QQ$ with the desired property.
+now for an abelian group any subgroup is also a quotient, which you can easily see by Chinese Remainder Theorem.
+Now by the fundamental theorem of Galois theory we know that this quotient then corresponds to some subfield of $QQ(zeta_(p_1 ... p_k))$ and thus that subfield is an extension of $QQ$ with the desired property.
 
 = Question
 == Statement
@@ -124,8 +126,8 @@ $
 $
 and so
 $
-  product_(1 <= i < j <= p) (zeta_p^(i-1) - zeta_p^(j-1)) = p^((p-2)/2) = p^((p-3)/2) sqrt(p).
+  product_(1 <= i < j <= p) (zeta_p^(i-1) - zeta_p^(j-1)) = plus.minus p^((p-2)/2) = plus.minus p^((p-3)/2) sqrt(p).
 $
-Now $p^((p-3)/2)$ is an integer and thus invertible in $QQ$ and so $sqrt(p)$ is in $QQ[zeta_p]$
+Now $p^((p-3)/2)$ is an integer and thus invertible in $QQ$ and so $sqrt(p)$ is in $QQ[zeta_p]$.
 
 Now if $p = 2$ then we have $sqrt(2) in QQ[zeta_8]$ because $zeta_8 = sqrt(2)/2 + i sqrt(2)/2$, this also contains $sqrt(-1)$. Thus we $QQ[zeta_(8 m)]$ will always contain $sqrt(m)$ and so we are done.
