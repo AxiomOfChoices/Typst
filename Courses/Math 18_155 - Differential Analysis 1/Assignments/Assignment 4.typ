@@ -100,3 +100,90 @@ so since this is true for any test function $eta$ we have $(u * phi) * psi = u *
 Let $U seq RR^n, V seq RR^m, W seq RR^ell$, and let $u in cal(D)'(U), v in cal(D)'(V), w in cal(D)'(W)$
 + $supp (u times.circle v) = supp u times supp v$.
 + If $u_k -> u$ in $cal(D)'(U)$ and $v_k -> v$ in $cal(D)'(V)$, then $u_k times.circle v_k -> u times.circle v$ in $cal(D)'(U times V)$.
++ $diff_(x_j) (u times.circle v) = (diff_(x_j) u) times.circle v$ and $diff_(y_j) (u times.circle v) = u times.circle (diff_(y_j) v)$.
+== Solution
++ Let $(x,y) in.not supp u times supp v$, then either $x in.not supp u$ or $y in.not supp v$. In the first case, we find neighborhood $U'$ such that $u|_(U') = 0$, and we get for any $phi in C_c^infinity (U' times V)$,
+  $
+    pair(u times.circle v, phi) = pair(u, v(phi)(x)) 
+  $
+  but $v(phi)(x)$ can only be non-zero at the $x$ for which $phi(x,y)$ is a non-zero function of $y$ which means $supp (v(phi)) seq U'$ and thus 
+  $
+    pair(u, v(phi)(x)) = 0.
+  $
+  Similarly in the second case, we can find a neighborhood $V'$ such that $v|_(V') = 0$, and we get for any $phi in C_c^infinity (U times V')$ that
+  $
+    pair(u times.circle v, phi) = pair(u, v(phi)(x))
+  $
+  but $supp phi(x,y) seq V'$ for any fixed $x$ so $v(phi)$ is always zero and thus
+  $
+    pair(u, v(phi)(x)) = 0.
+  $
+  In either case $(x,y) in.not supp (u times.circle v)$.
+
+  On the other hand, assume that $(x,y) in supp u times supp v$, then take any neighborhood $U' times V'$ of $(x,y)$. By assumption there exists some test function $phi in C_c^infinity (U')$ such that $pair(u, phi) != 0$, similarly there exists some test function $psi in C_c^infinity (V')$ such that $pair(v, psi) != 0$. We thus have
+  $
+    pair(u times.circle v, phi(x) psi(y))
+    =
+    pair(u, v(phi(x) psi(y)))
+    =
+    pair(u, phi(x) v(psi(y)))
+    =
+    pair(u, phi) pair(v, psi)
+    != 0
+  $
+  and so $(x,y) in supp (u times.circle v)$.
++ We simply compute for any $phi in C_c^infinity (U times V)$,
+  $
+    pair(u_k times.circle v_k - u times.circle v, phi)
+    =
+    pair(u_k times.circle v_k - u_k times.circle v + u_k times.circle v - u times.circle v, phi)
+  $
+  now we can split this into two terms, first we have
+  $
+    pair(u_k times.circle v - u times.circle v, phi)
+    =
+    pair(u_k - u, pair(v, phi)) -> 0
+  $
+  since $u_k -> u$. Next we have
+  $
+    pair(u_k times.circle v_k - u_k times.circle v, phi)
+    =
+    pair(u_k, pair((v_k - v)(y), phi(x,y)))
+  $
+  now by uniform boundedness principle (see Theorem 4.16 in Dyatlov's notes) we have that there exists a constant $C$ and an integer $N$ such that
+  $
+    abs(pair(u_k, pair((v_k - v)(y), phi(x,y)))) 
+    <= C norm(pair((v_k - v)(y), phi(x,y)))_(C^N)
+  $
+  but we know by definition that $pair((v_k - v)(y), phi(x,y)) -> 0$ in $C_c^infinity (U)$ so 
+  $
+    pair(u_k, pair((v_k - v)(y), phi(x,y))) -> 0
+  $
++ Finally we can compute
+  $
+    pair(diff_(x_j) (u times.circle v), phi)
+    &=
+    - pair((u times.circle v), diff_(x_j) phi)
+    =
+    - pair(u, pair(v(y), diff_(x_j) phi(x,y)))
+    \ &=
+    - pair(u, diff_(x_j) pair(v(y), phi(x,y)))
+    = 
+    pair(diff_(x_j) u,pair(v(y), phi(x,y)))
+    \ &= 
+    pair(diff_(x_j) u times.circle v, phi)
+  $
+  where the important step was $pair(v(y), diff_(x_j) phi(x,y)) = diff_(x_j) pair(v(y), phi(x,y))$ which is true because we saw in class that partial pairing with a distribution does not affect derivatives in the other variables.
+  Similarly we also get
+  $
+    pair(diff_(y_j) (u times.circle v), phi)
+    &=
+    - pair((u times.circle v), diff_(y_j) phi)
+    =
+    - pair(u, pair(v(y), diff_(y_j) phi(x,y)))
+    \ &=
+    pair(u, pair(diff_(y_j) v(y), phi(x,y)))
+    =
+    pair(u times.circle diff_(y_j) v, phi).
+  $
+  which finishes the proof.
