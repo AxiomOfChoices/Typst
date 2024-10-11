@@ -1,6 +1,7 @@
 #import "@preview/ctheorems:1.1.1": *
 
 // Various symbols
+#let Frob = math.op("Frob")
 #let adj = math.op("adj")
 #let Gal = math.op("Gal")
 #let rank = math.op("rank")
