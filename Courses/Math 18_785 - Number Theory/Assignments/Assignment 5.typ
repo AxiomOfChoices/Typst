@@ -87,4 +87,7 @@ so by uniqueness above we get that $Frob_(frak(q), L slash K)|_M = Frob_(frak(q)
     (p/q) (q/p) = (-1)^((p-1)/2 (q-1)/2).
   $
 == Solution
-+ We know that the discriminant of $QQ(zeta_p)$ is  $p^(p-2)$, so if $QQ(alpha)$ is a quadratic subfield its discriminant must be divide $p^(p-2)$. Now let $K = QQ(sqrt(n))$ be a quadratic field, we either have $Delta_K = n$ if $n = 1 mod 4$ or $Delta_K = 4 n$ if $n = 2,3 mod 4$. So since $p$ is odd we may assume that $n = 1 mod 4$, and that $n divides p^(p-2)$. Now since $n$ is square free this means $n = plus.minus p$. Now if $p = 1 mod 4$ then we must have $n = p$, and if $p = 3 mod 4$ then we have
++ We know that the discriminant of $QQ(zeta_p)$ is  $p^(p-2)$, so if $QQ(alpha)$ is a quadratic subfield its discriminant must be divide $p^(p-2)$. Now let $K = QQ(sqrt(n))$ be a quadratic field, we either have $Delta_K = n$ if $n = 1 mod 4$ or $Delta_K = 4 n$ if $n = 2,3 mod 4$. So since $p$ is odd we may assume that $n = 1 mod 4$, and that $n divides p^(p-2)$. Now since $n$ is square free this means $n = plus.minus p$. Now if $p = 1 mod 4$ then we must have $n = p$, and if $p = 3 mod 4$ then we have $n = -p$ and it is easy to see that $(-1)^((p-1)/2) p$ matches both cases.
+
+  It remains to show that $QQ(sqrt(p^*))$ is indeed a quadratic subfield, we saw in the previous assignment that $sqrt(plus.minus p)$ is contained in $QQ(zeta_p)$ so the result follows immediately.
++ Let $n = q_1^(m_1) dots.c q_k^(m_k)$, then we can use Chinese remainder theorem to reduce to the case of $ZZ quo q_i^(m_i) ZZ$. 
