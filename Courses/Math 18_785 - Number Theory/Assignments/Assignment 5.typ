@@ -98,4 +98,18 @@ so by uniqueness above we get that $Frob_(frak(q), L slash K)|_M = Frob_(frak(q)
   $
     (sum_(i=0)^(n-1) a_i zeta_n^i)^p = sum_(i=0)^(n-1) a_i^p zeta^(p i)_n  + p dot (...)
   $
-  and so for any prime $frak(p)$ lying above $(p)$ we get that these two are equal, and so the Frobenius element of $frak(p)$ is indeed the one corresponding to $p$. 
+  and so for any prime $frak(p)$ lying above $(p)$ we get that these two are equal, and so the Frobenius element of $frak(p)$ is indeed the one corresponding to $p$ in $(ZZ quo n ZZ)^times$.
++ Consider the field extension $K = QQ(sqrt(p^*))$, a question in assignment 1 shows that $(q)$ splits inside $cal(O)_K$ if and only if $(p^* /q) = 1$. On the other hand we know that $L = QQ(zeta_p)$ is an extension of $K$, so $(q)$ splits in $K$ if and only if the decomposition group $D_(L slash QQ, (q))$ fixes $K$. Now since $K$ is quadratic, it is fixed by an element $sigma in Gal(L slash QQ)$ if and only if $sigma$ is a square, so since $D_(L slash QQ, (q)) = gen(q mod p)$ we get that this group consists solely of squares if and only if $q$ is a square $mod p$, which is equivalent to $(q/p) = 1$.
+  This shows that
+  $
+    (p^* /q) = 1 <=> (q/p) = 1 
+  "which implies"
+    (p^* /q) (q/p) = 1
+  $
+  and expanding the definition of $p^*$ we get
+  $
+    1 = (p^* /q) (q/p)
+    = (-1/q)^((p-1)/2) (p/q) (q/p)
+    = ((-1)^((q-1)/2))^((p-1)/2) (p/q) (q/p)
+    = (-1)^( (q-1)/2 (p-1)/2 ) (p/q) (q/p)
+  $
