@@ -51,6 +51,33 @@ and the third holds because any automorphism of $L$ must map the primes over $fr
 == Statement
 Let $L slash K$ be a finite extension of number fields. Show that a prime of $K$ splits completely in $L$ if and only if it splits completely in the normal closure of $L slash K$.
 == Solution
+Lets name $N$ the normal closure of $L slash K$ and let $frak(q)$ be a prime in $N$ lying over $frak(p) := frak(q) sect cal(O)_K$. If $frak(q)$ splits completely over $N$ then we know that
+$
+  [cal(O)_N quo frak(q) : cal(O)_K quo frak(p)] = 1
+$
+but since
+$
+  [cal(O)_N quo frak(q) : cal(O)_K quo frak(p)] =
+  [cal(O)_N quo frak(q) : cal(O)_L quo (frak(q) sect cal(O)_L)]
+  [cal(O)_L quo (frak(q) sect cal(O)_L) : cal(O)_K quo frak(p)]
+$
+and so both these degrees are equal to $1$ and so in particular $f_(frak(q) sect cal(O)_L) = 1$. A similar argument applies to the exponents, giving us $e_(frak(q) sect cal(O)_L) = 1$. And since this applies to every prime $frak(q)'$ over $frak(p)$, we get that $frak(p)$ is split over $L$.
+
+On the other hand assume that it is split over $L$, then set $H = Gal(N slash L)$ and consider the set of double cosets $H backslash Gal(N slash L) slash D_(frak(q))$, as in equivalence classes of the relation $x tilde h x d$ for all $h in H, d in D_(frak(q))$. This set has a natural map to the set $P$ of prime ideals of $cal(O)_L$ over $frak(p)$, given by 
+$
+  g : H x D_(frak(q)) |-> (x frak(q)) sect cal(O)_L
+$
+this map is certainly a surjection because $N$ is normal, any prime over $frak(p)$ can be mapped to any other. On the other hand, it is also an injection, since if $(x frak(q)) sect cal(O)_L = (y frak(q)) sect cal(O)_L$ then since they are two primes in $cal(O)_L$ by normality of $N$ we know that for some $z in H$ we have $z x frak(q) = y frak(q)$. Then $y^(-1) z x$ clearly fixes $frak(q)$ so it is contained in $D_frak(q)$. We now know that $x = z^(-1) y (y^(-1) z x)$ and so $x tilde y$.
+
+Now since we assumed that $frak(p)$ is totally split over $cal(O)_L$ then we must have
+$
+  H backslash Gal(N slash L) slash D_frak(q) = abs(P) = [L : K] 
+$
+but we know that every double coset of $H backslash Gal(N slash L) slash D_frak(q)$ is union of cosets of $H backslash Gal(N slash L)$ which itself has cardinality $[G : H] = [L : K]$ by Galois theory. Thus every double coset is in fact a single right coset of $H$ which implies that for every $h x d$ there exists some $h' in H$ such that 
+$
+  h x d = h' x => x d x^(-1) = h^(-1) h'
+$
+so $H$ contains all conjugates of $D_frak(q)$, and hence the set of conjugates of $D_frak(q)$ is a subgroup of $G$ contained in $H$. Hence $H$ contains some normal subgroup $H'$, but such a normal subgroup would correspond to a normal field extension of $L$ but is strictly contained in $N$ if $H'$ is non-trivial. This is not possible, however, because this contradicts the assumption that $N$ is the normal closure. We thus must have $H'$ be trivial and hence $D_frak(q)$ must be trivial. This then implies that $frak(p)$ splits completely over $N$.
 
 = Question
 == Statement
@@ -113,3 +140,4 @@ so by uniqueness above we get that $Frob_(frak(q), L slash K)|_M = Frob_(frak(q)
     = ((-1)^((q-1)/2))^((p-1)/2) (p/q) (q/p)
     = (-1)^( (q-1)/2 (p-1)/2 ) (p/q) (q/p)
   $
+
