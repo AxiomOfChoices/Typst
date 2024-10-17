@@ -14,9 +14,6 @@
 #let bar(el) = $overline(#el)$
 #set enum(numbering: "a)")
 
-*Sources consulted* \
-Classmates: . \
-Texts: Class Notes.
 
 = Question
 == Statement
@@ -137,3 +134,39 @@ $
   = pair(x (partial u)/(partial y) - y (partial u)/(partial x), phi) 
 $
 which is exactly what we wanted to show.
+
+= Question
+== Statement
+Let $L = sum_(abs(alpha) <= N) a_alpha partial^alpha$ be a non-zero linear differential operator in $RR^n$ with constant coefficients.
+
+Prove that if $u in cal(E)' (RR^n)$ satisfies $L u = 0$ in the space of distributions, then $u = 0$.
+== Solution
+We know by definition of the derivative that
+$
+  pair(L u, phi) = pair(u, ov(L) phi)
+$
+where $ov(L)$ is defined by $sum_(abs(alpha) <= N) (-1)^(abs(alpha)) a_alpha partial^(ov(alpha))$ and $ov(alpha)$ is the multi-index which is $alpha$ reversed.
+
+Now set $phi = e^(i k x)$ be our test function, we have that 
+$
+  pair(u, ov(L) e^(i k x)) = 0.
+$
+Now it is clear that $ov(L) e^(i k x)$ is equal to $p(k_1,...,k_n) e^(i k x)$ for some polynomial $p$ because each derivative of $e^(i k x)$ just brings down an extra factor of $k$.
+
+We thus have
+$
+  p(k_1,...,k_n) pair(u, e^(i k x))
+  = pair(u, p(k_1,...,k_n) e^(i k x))
+  = 0
+$
+for all vectors $k_1,...,k_n$. Now one can check by inspection that
+$
+  p(k_1,...,k_n) = sum_(abs(alpha) <= N) (-1)^(abs(alpha)) a_(alpha) k^(ov(alpha))
+$
+where the monomials $k^alpha$ are defined by
+$
+  k^(alpha) = product_(i=1)^abs(alpha) k_(alpha_i)
+$
+Now from this representation, we see that because $L$ is a non-zero operator, $p$ is a non-zero polynomial, thus we have that $p(k_1,...,k_n) != 0$ on an open dense set.
+
+But now we see that $pair(u, e^(i k x)) = 0$ on an open dense set of $k$'s. But this quantity is continuous in $k$ because $e^(i k_n x) -> e^(i k x)$ on any compact set if $k_n -> k$. We thus know that $pair(u, e^(i k x)) = 0$ everywhere and so since $e^(i k x)$ are dense in $C^infinity (RR^n)$ we get that $pair(u, phi) = 0$ for all $phi in C^infinity (RR^n)$ and thus $u = 0$.
