@@ -74,18 +74,37 @@ Let $f$ be a measurable function on $RR$ satisfying $abs(f(x)) <= abs(x)^(-2024)
 == Solution
 Let $V$ be the subspace of $C_c^infinity (RR)$ defined by
 $
-  V := { phi : phi^(k) (0) = 0, k <= 2024}.
+  V := { phi : phi^(k) (0) = 0, k <= 2024} = {phi : pair(delta_0^(k), phi) = 0, k <= 2024 }
 $
+which is clearly closed as an intersection of closed kernels.
 For any $phi in V$ we have $phi = x^(2024) psi$ for some smooth compactly supported function $psi$, so we have
 $
-  abs(integral f phi) = abs(integral f x^2024 psi) <= integral abs(psi) < infinity
+  abs(integral f phi) = abs(integral f x^2024 psi) <= integral abs(psi)
 $
-Now also note that $ov(V) = V$ trivially so fix some bump function $psi$ supported on $[-1,1]$ and equal to 1 on $[-0.5, 0.5]$ and notice that we can always write $phi = p psi + x^2024 phi.alt$, so we will define
+also if $phi$ is supported within some compact set $K$ then so is $psi$ so we have
 $
-  pair(u, phi) = pair(u, p psi + x^(2024) phi) := integral f x^(2024) phi.
+  integral abs(psi) <= C_K norm(phi)_(C^n (K))
 $
-This is clearly linear, and it is continuous because $V$ is closed.
+for some constant $C_K$, hence the functional on $V$ defined by
+$
+  pair(u, phi) = integral f phi
+$
+is a well defined continuous linear functional.
 
+Now consider the linear map $g : C_c^infinity (RR) -> C_c^infinity (RR)$ defined by first fixing a bump function
+ $eta$ which is supported on $[-1,1]$ and identically 1 on $[-0.5,0.5]$, and then setting 
+$
+  g(phi) = phi - eta dot (sum_(i=0)^(2024) phi^i (0) x^i)
+$
+one can easily check that the image of this map is in fact contained in $V$ and that $g$ is stationary on $V$. Then since this map amounts to just evaluating the $delta$ functional and its derivatives at $phi$ it is clearly a continuous map, we thus know that this is a continuous linear projection onto $V$. 
+
+I now claim that the distribution $pair(u', phi) := pair(u, g(phi))$ is in fact the distribution we are looking for, to see this let $phi$ be compactly supported on $(-infinity, 0) union (0, infinity)$, then we must have $supp phi seq K seq (-infinity, 0) union (0, infinity)$ and thus $K$ is bounded some distance away from $0$ and so $phi (x) = 0$ for all $x in (-epsilon, epsilon)$ for sufficiently small $epsilon$.
+
+We then just notice that for such a function, $phi^i (0) = 0$ for all $i in NN$ so $phi in V$ and thus $g(phi) = phi$. We thus have 
+$
+  pair(u', phi) = pair(u, g(phi)) = pair(u, phi) = integral f phi = pair(f, phi)
+$
+as was desired.
 = Question
 == Statement
 Let $R_theta = mat(cos theta, - sin theta; sin theta, cos theta)$ denote the rotation in $RR^2$ with angle $theta$. For a distribution $u in cal(D)' (RR^2)$, define $u compose R_theta$ by $pair(u compose R_theta, phi) = pair(u, f compose R_(-theta))$. The distribution $u$ is called radial of $u compose R_theta = u$ for all $theta$. Prove that any radial distribution $u in cal(D)' (RR^2)$ satisfies
