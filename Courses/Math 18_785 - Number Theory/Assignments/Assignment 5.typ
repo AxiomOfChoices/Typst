@@ -16,7 +16,7 @@
 // #show math.equation: set text(font: "Latin Modern Math")
 
 *Sources consulted* \
-Classmates: Frank Wang, Michael Panner, Julia Meng. We discussed essentially every single problem together.\
+Classmates: Frank Wang. He helped a lot with questions 3 and 4.\
 Texts: Class Notes, Algebraic Number Theory by Milne, Elementary and Analytic Theory of Algebraic Numbers by Narkiewicz, Number Fields by Marcus.
 
 = Question
