@@ -69,4 +69,4 @@ Let us consider the following commutative diagram
   node-padding: (25pt, 25pt),
 )
 ]
-the fact that $P$ is a pushout guarantees the existence of the unique dashed map $f$, and the fact that $P'$ is a pushout guarantees the existence of the unique dashed map $g$, both of which make the diagram above commute. On the other hand, clearly the map $id_P : P -> P$ also makes the diagram above commute, and so the fact that $P$ is a pushout te
+the fact that $P$ is a pushout guarantees the existence of the unique dashed map $f$, and the fact that $P'$ is a pushout guarantees the existence of the unique dashed map $g$, both of which make the diagram above commute. Now this diagram clearly shows that the map $g compose f$ satisfies the pushout property for $P$ on itself, but also clearly $id_P$ also satisfies that property. By uniqueness, we then must have $g compose f = id_P$. An identical and symmetric argument shows that $f compose g = id_(P')$.
