@@ -220,6 +220,147 @@ We can give the Klein bottle the following CW structure
     content("bottom.mid", anchor: "north", padding: .2, [$A$])
     content("left.mid", anchor: "east", padding: .16, [$B$])
     content("right.mid", anchor: "west", padding: .1, [$B$])
-    content("diagonal.mid", anchor: "north-west", padding: .1, [$C$])
+    content(("diagonal.start", 70%, "diagonal.end"), anchor: "north-west", [$C$])
+    content((0.5,1.5), $X$)
+    content((1.5,0.5), $Y$)
+    content((0,0), $e_0$, anchor: "north-east")
+    content((2,0), $e_0$, anchor: "north-west")
+    content((2,2), $e_0$, anchor: "south-west", padding: .05)
+    content((0,2), $e_0$, anchor: "south-east", padding: .05)
   })
 ]
+From there we already know that $H_n (K) = 0$ for $n >= 3$ since we have no 3-cells, next we have two 2-cells, $X$ and $Y$, and we have
+$
+  d X = C - B + A, wide
+  d Y = A - C + B
+$
+so the kernel of $d$ in $S_2 (K)$ is empty since these are linearly independent over $ZZ$, we hence have $H_2 (K) = 0$. Now we have for the 1-cells $A,B,C$
+$
+  diff A = diff B = diff C = e_0 - e_0 = 0
+$ 
+so $ker d = S_1 (K) iso ZZ^3$, we hence have
+$
+  H_1 (K) iso ZZ^3 quo (gen((1,-1,1)\, (1,1,-1)).
+$
+But let us analyze this quotient space, we define the map
+$
+  f : ZZ^3 quo gen((1,-1,1)\, (1,1,-1)) &-> ZZ_2 times ZZ\
+  [(x,y,z)] &|-> (x+y mod 2, y+z)
+$
+and I now claim that this is an isomorphism, first we check that it is well defined, this is simple since 
+$
+  [(1,-1,1)] |-> (0, 0) wide [(1,1,-1)] |-> (0,0)
+$
+then we also see that it is surjective since
+$
+  [(x,0,y)] |-> (x mod 2, y).
+$
+Finally to check injectivity, let us assume that $f([(x,y,z)]) = 0$, then we must have that $x - y = 0 mod 2$ as well as $y + z = 0$. This then allows us to get the following decomposition
+$
+  (x,y,z) = (x,y,-y) = (x - y, 0, 0) + y (1,1,-1)
+$
+but since $x - y = 0 mod 2$ we know that $x - y = 2 k$ for some integer $k$ so
+$
+  (x, y, z) = k (2, 0, 0) + y (1, 1, -1) = k ((1,-1,1) + (1,1,-1)) + y (1, 1, -1).
+$
+and hence $(x,y,z) in gen((1,-1,1)\, (1,1,-1))$ and so $f$ is injective. We thus have $H_1 (K) iso ZZ_2 times ZZ$. Finally, $K$ has only one connected component so clearly $H_0 (K) iso ZZ$.
+
+= Question
+== Statement
++ Suppose that $f: S^n -> S^n$ is a continuous map that is not surjective. Prove that the degree of $f$ is $0$.
++ Suppose that a function $f : S^n -> S^n$ has no fixed points. Prove that $f$ is homotopic to the antipodal map, and hence has degree $(-1)^(n+1)$.
++ Suppose that a group $G$ acts continuously and freely on an even-dimensional sphere $S^(2n)$. Use part $(b)$ to construct an injective group homomorphism from $G$ to ${-1,+1}$, deduce that the order of $G$ is either $1$ or $2$.
++ Write down a continuous and free action of the group of order $2$ on $S^2$.
+== Solution
++ If $f$ is not surjecitve, let $x$ not be in the image and consider the factorization of $f$
+  $
+    S^n ->^(tilde(f)) S^n - {x} ->^iota S^n.
+  $
+  This factorization gets functorially mapped to the factorization of $f_*$
+  $
+    H_n (S^n) ->^(tilde(f)_*) H_n (S^n - {x}) ->^(iota_*) H_n (S^n).
+  $
+  Clearly $S^n - {x}$ is homeomorphic to $RR^n$ by stereographic projection, so it has $H_n (S^n - {x}) = 0$ and so $tilde(f)_* = 0$. But then since $f_* = iota_* compose tilde(f)_*$ then we clearly have $f_* = 0$ and so the degree of $f_*$ is $0$.
++ We consider the homotopy
+  $
+    h(x,t)
+    = ((1 - t)f(x) - t x)/abs((1-t)f(x) - t x).
+  $
+  This is well defined and continuous as long as $(1-t) f(x) - t x$ is never zero, but we can compute this is equivalent
+  $(1-t) f(x) = t x$
+  but both $t$ and $1-t$ are positive on $[0,1]$ and both $x$ and $f(x)$ are of equal magnitude, so this can only happen if $x = f(x)$, which we assumed was not the case. We now just notice that at the endpoints we have
+  $
+    h(x,0) 
+    = (f(x))/abs(f(x)) = f(x)
+    wide
+    h(x,1) 
+    = (-x)/abs(-x) = -x
+  $
+  so this is indeed a homotopy from $f(x)$ to the antipodal map $-x$. The degree of this map is the same as that of the antipodal map, now note that it is the composition of $n+1$ reflections, so it is enough to show that each reflection on the sphere has degree $-1$. Now by symmetry we may assume that the reflection map $g$ is the map taking $(x_1,...)$ to $(-x_1,...)$, we now give $S^n$ the CW structure where 
++ Since $G$ acts freely, every non-identity element of $G$ acts by a map with degree $(-1)^(n+1)$ which is just $-1$ because $n$ is even, so we have a map $G -> {-1,+1}$ given by taking the degree of the action. Now the kernel of this map consists of those actions with degree $+1$, but since the action is free and $n$ is even only the identity in $G$ has degree $+1$ so the kernel is trivial and hence this map is injective. We thus have that $G$ can be identified with a subgroup of ${-1,+1}$ and hence has order $1$ or $2$.
++ A continuous and free action of ${-1,+1}$ on $S^2$ is given by $1 |-> (x -> x)$ and $-1 |-> (x -> -x)$.
+
+= Question
+== Statement
+A normalized non-zero vector field on $S^n$ is a continuous function $f: S^n -> S^n$ such that the dot product of $x$ with $f(x)$ is always 0.
++ Suppose that $f$ is a non-zero vector field on $S^n$. Does $f$ have any fixed points?
++ Suppose that $f$ is a non-zero vector field on $S^n$. Consider the function
+  $
+    h(x,t) = cos((pi t)/2) x + sin((pi t)/2) f(x)
+  $
+  prove that $h$ provides a homotopy between $1_(S^n)$ and $f$.
++ Prove that non non-zero vector field can exist on an even-dimensional sphere.
+== Solution
++ Clearly $f$ cannot have any fixed points, since if it did then $f(x) = x$ for some $x$ but then $f(x) dot x = x dot x = norm(x)^2 = 1$ which contradicts the fact that $f(x) dot x = 0$.
++ First let us check that $h(x,t)$ is indeed a map $h : S^n times I -> S^n$,
+  $
+    norm(h(x,t)) 
+    &= ip(cos((pi t)/2) x + sin((pi t)/2) f(x), cos((pi t)/2) x + sin((pi t)/2) f(x))
+    \ &= cos((pi t)/2)^2 ip(x,x) + 2 cos((pi t)/2) sin((pi t)/2) cancel(ip(x, f(x))) + sin((pi t)/2)^2 ip(f(x),f(x))
+    \ &= cos((pi t)/2)^2 ip(x,x) + sin((pi t)/2)^2 ip(f(x),f(x))
+  $
+  now since $x in S^n$ and $f(x) in S^n$ we have 
+  $
+    norm(h(x,t)) &= cos((pi t)/2)^2  + sin((pi t)/2)^2 = 1
+  $
+  so indeed $h(x,t)$ lands inside $S^n$. Next we see that it is clearly continuous, so it remains to check that
+  $
+    h(x,0) = cos(0) x + sin(0) f(x) = x\
+    h(x,1) = cos(pi/2) x + sin(pi/2) f(x) = f(x)
+  $
+  so indeed $h$ is a homotopy from $1_(S^n)$ and $f(x)$.
++ Assume such a vector field $f$ existed, using question 4 part $(b)$ we know that since $f$ has no fixed points it has degree $(-1)^(n+1) = -1$, but then by part $(b)$ of this question it is homotopic to the identity map, which has degree $1$. This is a contradiction since degree is homotopy equivalent, so such a vector field cannot exist.
+
+= Question
+== Statement
++ If $V$ is a vector space over a field $k$, we use $dim(V)$ to refer to the dimension of $V$. Suppose that
+  $
+    0 -> A -> B -> C -> 0
+  $
+  is an exact sequence of finite dimensional vector spaces over some field $k$. Prove that $dim(B) = dim(A) + dim (C)$.
++ Suppose that $X$ is a finite CW complex. Prove that, for any field $k$, the Euler characteristic $chi(X)$ can be calculated as $chi(X) = sum_(n) (-1)^n dim(H_n (X; k))$.
+== Solution
++ We simply use rank nullity theorem, we have by definition a map $f : B -> C$ with $A iso ker f$ so we have by rank nullity theorem
+  $
+    dim(A) + dim(C) = dim(ker f) + dim(im f) = dim (B)
+  $
++ First note that we have the short exact sequences
+  $
+  0 -> B_n (X; k) -> Z_n (X; k) -> H_n (X; k) -> 0
+  $
+  which give us that $dim(H_n (X; k)) = dim (Z_n (X; k)) - dim (B_n (X; k))$. Next we also have the SES
+  $
+  0 -> Z_n (X; k) -> C_n (X; k) -> B_(n-1) (X; k) -> 0
+  $ 
+  which gives us $dim (C_n (X; k)) = dim(Z_n (X; k)) + dim(B_(n-1) (X; k))$. Using the two together we get 
+  $
+    chi(X) 
+    &= sum_(n) (-1)^n dim(H_n (X; k))
+    \ &= sum_(n) (-1)^n dim(Z_n (X; k) quo B_n (X; k))
+    \ &= sum_(n) (-1)^n (dim(Z_n (X; k)) - dim (B_n (X; k)))
+    \ &= sum_(n) (-1)^n dim(Z_n (X; k)) - sum_(n) (-1)^(n) dim (B_n (X; k))
+    \ &= sum_(n) (-1)^n dim(Z_n (X; k)) - sum_(n) (-1)^(n-1) dim (B_(n-1) (X; k))
+    \ &= sum_(n) (-1)^n (dim(Z_n (X; k)) + dim (B_(n-1) (X; k)))
+    \ &= sum_(n) (-1)^n dim(C_n (X; k)) = sum_n (-1)^(n) a_k
+  $
+  which is exactly the Euler characteristic.
