@@ -364,3 +364,52 @@ A normalized non-zero vector field on $S^n$ is a continuous function $f: S^n -> 
     \ &= sum_(n) (-1)^n dim(C_n (X; k)) = sum_n (-1)^(n) a_k
   $
   which is exactly the Euler characteristic.
+
+= Question
+== Statement
+Suppose $cal(C)$ is a category. There is an associated simplicial set $N(cal(C))$, called the nerve of $cal(C)$. One defines the set of $n$-simplices $N(cal(C))_n$ to be the set of strings of $n$ composable arrows in $cal(C)$. Explicitly, there is a single $n$-simplex in $N(cal(C))$ for every diagram
+#align(center)[
+  #commutative-diagram(
+    node((0,0), $c_0$),
+    node((0,1), $c_1$),
+    node((0,2), $c_2$),
+    node((0,3), $...$),
+    node((0,4), $c_n$),
+    arr($c_0$, $c_1$, $f_1$),
+    arr($c_1$, $c_2$, $f_2$),
+    arr($c_2$, $...$, $f_3$),
+    arr($...$, $c_n$, $f_n$),
+    node-padding: (40pt,25pt),
+    arr-clearance: 5pt
+  )
+]
+consisting of $n$ morphisms and $n+1$ objects in $cal(C)$.
+
++ Fill out some more details of this construction by defining maps #h(1fr)
+  $
+    s_0 : N(cal(C))_0 -> N(cal(C))_1 \
+    d_0,d_1 : N(cal(C))_1 -> N(cal(C))_0 \
+    s_0,1_1 : N(cal(C))_1 -> N(cal(C))_2 \
+    d_0,d_1,d_2 : N(cal(C))_2 -> N(cal(C))_1
+  $
++ Prove the simplicial identity that $d_1 s_1$ is the identity function from $N(cal(C))_1$ to itself.
++ Suppose that $sigma$ and $sigma'$ are two elements of $N(cal(C))_2$ such that $d_1 sigma = d_1 sigma'$, $d_2 sigma = d_0 sigma'$, and $d_0 sigma = d_2 sigma'$. If $d_1 sigma$ is an identity morphism in $cal(C)$, prove that $d_2 sigma$ is an isomorphism.
++ Suppose that $sigma_1$ and $sigma_2$ are two elements of $N(cal(C))_2$ such that $d_2 sigma_2 = d_1 sigma_1$. Prove that there exist other 2-simplices $sigma_3$ and $sigma_4$ such that $d_0 sigma_3 = d_0 sigma_2$, $d_2 sigma_3 = d_0 sigma_1$, $d_2 sigma_4 = d_2 sigma_1$, $d_0 sigma_4 = d_1 sigma_3$, and $d_1 sigma_4 = d_1 sigma_2$.
+== Solution
++ We define the maps to be #h(1fr)
+  $
+    s_0 : c |-> (c ->^(id_c) c)\
+    d_0 : (c_0 -> c_1) |-> c_1 \
+    d_1 : (c_0 -> c_1) |-> c_0 \
+    s_0 : (c_0 ->^f c_1) |-> (c_0 ->^(id_(c_0)) c_0 ->^f c_1)\
+    s_1 : (c_0 ->^f c_1) |-> (c_0 ->^f c_1 ->^(id_(c_1)) c_1)\
+    d_0 : (c_0 ->^f c_1 ->^g c_2) |-> (c_1 ->^g c_2)\
+    d_1 : (c_0 ->^f c_1 ->^g c_2) |-> (c_0 ->^(g compose f) c_2)\
+    d_2 : (c_0 ->^f c_1 ->^g c_2) |-> (c_0 ->^f c_1)\
+  $
++ We check, for an arbitrary chain $c_0 ->^f c_1$ in $N(cal(C))_1$, 
+  $
+    s_1 (c_0 ->^f c_1) = c_0 ->^f c_1 ->^(id_(c_1)) c_1\
+    d_1 (c_0 ->^f c_1 ->^(id_(c_1)) c_1) = c_0 ->^(id_(c_1) compose f) c_1 = c_0 ->^(f) c_1
+  $
+  which is indeed what we started with.
