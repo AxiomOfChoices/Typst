@@ -179,12 +179,47 @@ Here the map $f$ from $S^0$ to $S^2$ takes one point to the north pole of $S^2$ 
 
   For $n = 1$ we take the exact sequence
   $
-    ... -> H_1 (D^1) plus.circle H_1 (S^2) -> H_1 (P) -> H_0 (S^0) -> H_0 (D^1) plus.circle H_0 (S^2) -> ...
+    ... -> H_1 (D^1) plus.circle H_1 (S^2) -> H_1 (P) -> H_0 (S^0) -> H_0 (D^1) plus.circle H_0 (S^2)  -> ...
   $
   and we again get
   $
-    ... -> 0 -> H_1 (P) -> ZZ times ZZ -> ZZ times ZZ -> ...
+    0 -> H_1 (P) -> ZZ times ZZ ->^f ZZ times ZZ -> ...
   $
+  here the map $f$ is given by $(x,y) -> (x+y, -x-y)$ which has kernel $ZZ$ so $H_1 (P) iso ZZ$. Finally $H_0 (P) = ZZ$ because $P$ has one connected component.
 
-
-
+= Question
+== Statement
+Calculate the homology groups of the Klein bottle.
+== Solution
+We can give the Klein bottle the following CW structure
+#align(center)[
+  #cetz.canvas({
+    import cetz.draw: *
+    rect((0,0), (2,2), fill: gray)
+    line((2, 0), (0, 0),
+    stroke: red,
+    name: "bottom")
+    line((0, 2), (2, 2),
+    stroke: red,
+    name: "top")
+    line((0, 2), (0, 0),
+    stroke: blue,
+    name: "left")
+    line((2, 2), (2, 0),
+    stroke: blue,
+    name: "right")
+    line((2, 2), (0, 0),
+    stroke: yellow,
+    name: "diagonal")
+    mark("bottom.mid", "bottom.end", anchor: "center", symbol:">", offset: 0.85, fill: red, stroke: red)
+    mark("top.mid", "top.end", anchor: "center", symbol:">", offset: 0.85, fill: red, stroke: red)
+    mark("left.mid", "left.end", anchor: "center", symbol:">", offset: 0.85, fill: blue, stroke: blue)
+    mark("right.mid", "right.end", anchor: "center", symbol:">", offset: 0.85, fill: blue, stroke: blue)
+    mark("diagonal.mid", "diagonal.end", anchor: "center", symbol:">", offset: 1.2, fill: yellow, stroke: yellow)
+    content("top.mid", anchor: "south", padding: .2, [$A$])
+    content("bottom.mid", anchor: "north", padding: .2, [$A$])
+    content("left.mid", anchor: "east", padding: .16, [$B$])
+    content("right.mid", anchor: "west", padding: .1, [$B$])
+    content("diagonal.mid", anchor: "north-west", padding: .1, [$C$])
+  })
+]
